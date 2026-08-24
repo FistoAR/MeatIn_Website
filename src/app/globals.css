@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Chau+Philomene+One&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Chau+Philomene+One&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,6 +12,7 @@
     --font-manrope: 'Manrope', sans-serif;
     --font-inter: 'Inter', sans-serif;
     --font-dm-serif: 'DM Serif Display', serif;
+    --font-barlow-condensed: 'Barlow Condensed', sans-serif;
   }
 
   html {
@@ -65,4 +66,12 @@
 
 .font-dm-serif {
   font-family: 'DM Serif Display', serif;
+}
+
+.font-barlow-condensed {
+  font-family: var(--font-barlow-condensed);
+}
+
+.font-manrope, .font-Manrope {
+  font-family: var(--font-manrope);
 }
