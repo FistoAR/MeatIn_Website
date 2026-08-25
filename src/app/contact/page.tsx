@@ -1,0 +1,575 @@
+'use client';
+
+import React, { useState } from 'react';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, ChevronUp, CheckCircle } from 'lucide-react';
+import CareersBanner from '@/components/layout/CareersBanner';
+
+interface ContactInfoItem {
+  icon: string;
+  label: string;
+  value: string;
+  link: string;
+}
+
+const contactInfo: ContactInfoItem[] = [
+  {
+    icon: "/ContactUs/contact-us-icons/phone-icon.svg",
+    label: "Call Us",
+    value: "+91 9946616162",
+    link: "tel:+919946616162",
+  },
+  {
+    icon: "/ContactUs/contact-us-icons/email-icon.svg",
+    label: "Email Us",
+    value: "info@meatinfoods.com",
+    link: "mailto:info@meatinfoods.com",
+  },
+  {
+    icon: "/ContactUs/contact-us-icons/address-icon.svg",
+    label: "Our Location",
+    value: "15/809E, Panchami Complex, Perumpilavu, Karikkad P.O., Thrissur - 680519, Kerala, India",
+    link: "https://maps.google.com/?q=Panchami+Complex+Perumpilavu",
+  },
+  {
+    icon: "/ContactUs/contact-us-icons/whatsapp-icon.svg",
+    label: "WhatsApp",
+    value: "+91 98765 43210",
+    link: "https://wa.me/919876543210",
+  }
+];
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+const faqs: FaqItem[] = [
+  {
+    question: "How do I apply for a job at MEATIN?",
+    answer: "You can apply directly using our careers form! Scroll down to the 'Join Our Team' banner below, click 'Apply Now', upload your resume, and submit. Our HR team will review your details."
+  },
+  {
+    question: "How can I become a distributor / trader for MEATIN Product?",
+    answer: "We are always expanding our distribution network! Please submit an enquiry using the form above, selecting 'Distributor Enquiry' as the type, or email us directly at info@meatinfoods.com with your location and business profile."
+  },
+  {
+    question: "What documents are required for franchise application?",
+    answer: "Typically, you will need business registration proofs, food safety licenses (FSSAI), identity verification (Aadhaar/PAN), and floor layouts of your proposed retail location. Our executive team will share a detailed checklist once you submit a request."
+  },
+  {
+    question: "How can I partner with MEATIN for business collaborations?",
+    answer: "We welcome strategic partnerships and corporate tie-ups. Please reach out to our Business Development team via enquiry form, or drop a detailed proposal at info@meatinfoods.com."
+  }
+];
+
+export default function ContactPage() {
+  // Form fields state
+  const [fullName, setFullName] = useState('');
+  const [enquiryType, setEnquiryType] = useState('');
+  const [message, setMessage] = useState('');
+  const [agreePrivacy, setAgreePrivacy] = useState(false);
+
+  // Dropdown & Success states
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // FAQ accordion state
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  const enquiryTypes = [
+    'General Enquiry',
+    'Sales Enquiry',
+    'Distribution Enquiry',
+    'Careers',
+    'Partnership Enquiry',
+    'Franchise Enquiry'
+  ];
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    if (!fullName.trim()) newErrors.fullName = 'Full name is required';
+    if (!enquiryType) newErrors.enquiryType = 'Please select enquiry type';
+    if (!message.trim()) newErrors.message = 'Message details are required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateForm()) {
+      setIsSubmitted(true);
+    }
+  };
+
+  const resetForm = () => {
+    setFullName('');
+    setEnquiryType('');
+    setMessage('');
+    setErrors({});
+    setIsSubmitted(false);
+  };
+
+  const toggleFaq = (index: number) => {
+    setActiveFaq(activeFaq === index ? null : index);
+  };
+
+  return (
+    <div className="min-h-screen bg-[#F3F3F3] font-manrope">
+      
+      {/* 1. HERO HEADER BANNER SECTION */}
+      <section className="relative w-full bg-[#153520] pt-[120px] pb-24 md:pt-[150px] md:pb-36 overflow-hidden">
+        {/* Background Image Overlay with full opacity from public folder */}
+        <div className="absolute inset-0 pointer-events-none">
+          <Image
+            src="/ContactUs/contact-us-bg.webp"
+            alt="MEATIN Delivery Truck"
+            fill
+            priority
+            className="object-cover object-center lg:object-right"
+          />
+        </div>
+        {/* Left side gradient overlay to ensure heading readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent pointer-events-none" />
+
+        <div className="relative w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left flex flex-col items-center md:items-start">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-3"
+          >
+            <h1 className="text-5xl sm:text-6xl md:text-7.5xl font-extrabold font-barlow tracking-normal uppercase">
+              <span className="text-[#7CB325] mr-4">CONTACT</span>
+              <span className="text-white">US</span>
+            </h1>
+            <p className="text-slate-200 text-sm sm:text-base md:text-lg font-medium max-w-xl leading-relaxed">
+              We're here to connect, collaborate and grow together.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 2. FLOATING CONTACT INFO BLOCK */}
+      <section className="relative px-4 sm:px-6 lg:px-8 -mt-16 md:-mt-20 z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto bg-white rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.035)] border border-slate-100 py-3 md:py-4 px-4 sm:px-6 md:px-8"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-6 md:gap-y-8 lg:gap-y-0">
+            {contactInfo.map((item, idx) => {
+              // Custom responsive borders for 1col on mobile, 2x2 on md, 1x4 on lg
+              const borderClass = 
+                idx === 0 ? "border-b md:border-b-0 md:border-r border-slate-150" :
+                idx === 1 ? "border-b lg:border-b-0 lg:border-r border-slate-150" :
+                idx === 2 ? "border-b md:border-b-0 md:border-r border-slate-150" :
+                "";
+              return (
+                <a
+                  href={item.link}
+                  key={idx}
+                  target={idx === 2 ? "_blank" : undefined}
+                  rel={idx === 2 ? "noopener noreferrer" : undefined}
+                  className={`group flex items-center text-left py-2 px-3 md:py-2.5 lg:px-4 transition-transform hover:-translate-y-0.5 duration-300 gap-4 ${borderClass}`}
+                >
+                <div className="w-14 h-14 shrink-0 rounded-full bg-[#EEF6E8] flex items-center justify-center transition-colors group-hover:bg-[#395B20] duration-300">
+                  <div className="relative w-6 h-6 group-hover:brightness-0 group-hover:invert transition-all duration-300">
+                    <Image
+                      src={item.icon}
+                      alt={item.label}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-xs sm:text-sm font-bold text-slate-800 tracking-normal mb-0.5">
+                    {item.label}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-bold text-[#395B20] transition-colors break-words leading-relaxed font-manrope">
+                    {item.value}
+                  </p>
+                </div>
+              </a>
+              );
+            })}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* 3. FORM AND SIDEBAR SPLIT LAYOUT */}
+      <section className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-stretch">
+          
+          {/* Form Side */}
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-20px" }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-md p-6 sm:p-8 lg:p-10 relative overflow-hidden h-full"
+          >
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#153520] font-manrope mb-6">
+              Send Us a Message
+            </h2>
+
+            {!isSubmitted ? (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  
+                  {/* Full Name */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="relative w-5 h-5">
+                        <Image
+                          src="/ContactUs/contact-us-icons/full-name-icon.svg"
+                          alt="Name Icon"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                      <label className="text-xs sm:text-sm font-bold text-slate-700">Full Name <span className="text-[#D62828]">*</span></label>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Enter your full name"
+                      value={fullName}
+                      onChange={(e) => {
+                        setFullName(e.target.value);
+                        if (errors.fullName) {
+                          setErrors(prev => {
+                            const next = { ...prev };
+                            delete next.fullName;
+                            return next;
+                          });
+                        }
+                      }}
+                      className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 ${errors.fullName ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                    />
+                    {errors.fullName && <p className="text-xs text-[#D62828]">{errors.fullName}</p>}
+                  </div>
+
+                  {/* Enquiry Type Dropdown */}
+                  <div className="space-y-1.5 relative">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="relative w-5 h-5">
+                        <Image
+                          src="/ContactUs/contact-us-icons/enquiry-type.svg"
+                          alt="Enquiry Icon"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                      <label className="text-xs sm:text-sm font-bold text-slate-700">Enquiry Type <span className="text-[#D62828]">*</span></label>
+                    </div>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setShowDropdown(!showDropdown)}
+                        className={`w-full px-4 py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all bg-white ${errors.enquiryType ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20]'}`}
+                      >
+                        <span className={enquiryType ? 'text-slate-800 font-medium' : 'text-slate-400'}>
+                          {enquiryType || 'Select enquiry type'}
+                        </span>
+                        <ChevronDown className="w-4 h-4 text-[#395B20] shrink-0" />
+                      </button>
+
+                      {showDropdown && (
+                        <div
+                          data-lenis-prevent
+                          className="absolute left-0 right-0 top-[98%] mt-0 bg-white border-2 border-slate-400 rounded-xl shadow-2xl max-h-56 overflow-y-auto z-30 font-medium text-sm"
+                        >
+                          {enquiryTypes.map((type, idx) => (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => {
+                                setEnquiryType(type);
+                                setShowDropdown(false);
+                                setErrors(prev => {
+                                  const next = { ...prev };
+                                  delete next.enquiryType;
+                                  return next;
+                                });
+                              }}
+                              className={`w-full text-left px-4 py-2.5 transition-colors ${enquiryType === type ? 'bg-[#395B20] text-white' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
+                            >
+                              {type}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    {errors.enquiryType && <p className="text-xs text-[#D62828]">{errors.enquiryType}</p>}
+                  </div>
+
+                </div>
+
+                {/* Message TextArea */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="relative w-5 h-5">
+                      <Image
+                        src="/ContactUs/contact-us-icons/message-icon.svg"
+                        alt="Message Icon"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <label className="text-xs sm:text-sm font-bold text-slate-700">Message <span className="text-[#D62828]">*</span></label>
+                  </div>
+                  <textarea
+                    rows={5}
+                    placeholder="Write your message here..."
+                    value={message}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                      if (errors.message) {
+                        setErrors(prev => {
+                          const next = { ...prev };
+                          delete next.message;
+                          return next;
+                        });
+                      }
+                    }}
+                    className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 resize-none ${errors.message ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                  />
+                  {errors.message && <p className="text-xs text-[#D62828]">{errors.message}</p>}
+                </div>
+
+                {/* Submit block */}
+                <div className="flex justify-end pt-2">
+
+                  <button
+                    type="submit"
+                    className="bg-[#7CB325] hover:bg-[#68941E] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl uppercase transition-all duration-300 flex items-center justify-center gap-2.5 shadow-md active:scale-95 hover:shadow-lg self-end md:self-auto"
+                  >
+                    <div className="relative w-6 h-6">
+                      <Image
+                        src="/ContactUs/contact-us-icons/bitcoin-icons_share-filled.svg"
+                        alt="Submit"
+                        fill
+                        className="object-contain brightness-0 invert"
+                      />
+                    </div>
+                    Submit Enquiry
+                  </button>
+                </div>
+              </form>
+            ) : (
+              // Success Screen View
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-4"
+              >
+                <div className="w-16 h-16 rounded-full bg-[#7CB325]/10 flex items-center justify-center text-[#7CB325] mb-2">
+                  <CheckCircle className="w-10 h-10" />
+                </div>
+                <h2 className="text-2xl sm:text-2xl font-extrabold text-[#153520] uppercase font-manrope">
+                  Enquiry Submitted!
+                </h2>
+                <p className="text-slate-600 font-medium text-sm sm:text-base max-w-md leading-relaxed">
+                  Successful submission! Thank you for reaching out to us. Our support executives will contact you shortly.
+                </p>
+                <button
+                  onClick={resetForm}
+                  className="!mt-6 bg-[#395B20] hover:bg-[#1E3C11] text-white font-bold text-xs sm:text-sm px-8 py-3.5 rounded-xl uppercase transition-all shadow-md active:scale-95"
+                >
+                  Send another message
+                </button>
+              </motion.div>
+            )}
+          </motion.div>
+
+          {/* Sidebar Info Card: We value your time */}
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-20px" }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="bg-[#F8FAF7] rounded-[24px] border border-[#E5EAE1] shadow-[0_12px_36px_rgba(0,0,0,0.06)] p-6 sm:p-8 flex flex-col items-center text-center space-y-6 h-full"
+          >
+            <div className="w-16 h-16 rounded-full bg-[#EAF3E7] flex items-center justify-center">
+              <div className="relative w-9 h-9">
+                <Image
+                  src="/ContactUs/contact-us-icons/headset-icon.svg"
+                  alt="Headset Support"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#1F5A3C] font-manrope">
+                We value your time
+              </h3>
+              <p className="text-xs sm:text-sm text-[#535353] font-medium leading-relaxed max-w-xs">
+                Our team will get back to you as soon as possible.
+              </p>
+            </div>
+
+            {/* List */}
+            <div className="w-full text-left space-y-6 pt-2">
+              
+              <div className="flex gap-4 items-center">
+                <div className="w-12 h-12 shrink-0 rounded-full bg-[#EAF3E7] flex items-center justify-center">
+                  <div className="relative w-6 h-6">
+                    <Image
+                      src="/ContactUs/contact-us-icons/email-outline.svg"
+                      alt="Quick Response"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-[#000000]">Quick Response</h4>
+                  <p className="text-xs text-[#535353] font-medium mt-0.5">We usually respond within 24 hours.</p>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-center">
+                <div className="w-12 h-12 shrink-0 rounded-full bg-[#EAF3E7] flex items-center justify-center">
+                  <div className="relative w-6 h-6">
+                    <Image
+                      src="/ContactUs/contact-us-icons/safeguard-outline.svg"
+                      alt="Safe Info"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-[#000000]">Your Information is Safe</h4>
+                  <p className="text-xs text-[#535353] font-medium leading-normal mt-0.5">
+                    We respond your privacy and keep your information secure.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-center">
+                <div className="w-12 h-12 shrink-0 rounded-full bg-[#EAF3E7] flex items-center justify-center">
+                  <div className="relative w-6 h-6">
+                    <Image
+                      src="/ContactUs/contact-us-icons/dedicated-support.svg"
+                      alt="Dedicated support"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-[#000000]">Dedicated Support</h4>
+                  <p className="text-xs text-[#535353] font-medium mt-0.5">
+                    Our team is here to help you with all your queries.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* 4. FAQ ACCORDION SECTION */}
+      <section className="bg-white py-10 md:py-14 border-t border-b border-slate-100">
+        <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+            
+            {/* Title Block */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 sm:gap-6"
+            >
+              <div className="w-20 h-20 shrink-0 rounded-full bg-[#EAF3E7] flex items-center justify-center">
+                <div className="relative w-10 h-10">
+                  <Image
+                    src="/ContactUs/contact-us-icons/faq-icon.svg"
+                    alt="FAQ"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              <div className="flex-1 min-w-0">
+                <h2 className="text-2xl md:text-3xl font-extrabold text-[#000000] font-manrope">
+                  Frequently Asked Questions
+                </h2>
+                <div className="h-[3px] w-14 bg-[#7CB325] mt-2 mb-3 mx-auto sm:mx-0" />
+                <p className="text-sm text-[#535353] font-medium leading-relaxed">
+                  Find quick answers to common questions about working and partnering with MEATIN.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Accordion Block */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="lg:col-span-2 space-y-4"
+            >
+              {faqs.map((faq, idx) => {
+                const isOpen = activeFaq === idx;
+                return (
+                  <div
+                    key={idx}
+                    className={`border rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? 'border-[#395B20] bg-[#EEF6E8]/10' : 'border-slate-200 bg-white hover:border-slate-350'}`}
+                  >
+                    <button
+                      onClick={() => toggleFaq(idx)}
+                      className="w-full flex items-center justify-between text-left p-5 font-bold text-sm sm:text-base text-[#153520] outline-none"
+                    >
+                      <span>{faq.question}</span>
+                      {isOpen ? (
+                        <ChevronUp className="w-4 h-4 text-[#395B20] shrink-0 ml-4" />
+                      ) : (
+                        <ChevronDown className="w-4 h-4 text-slate-400 shrink-0 ml-4" />
+                      )}
+                    </button>
+                    
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.25 }}
+                        >
+                          <div className="p-5 pt-0 border-t border-slate-100 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+                            {faq.answer}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 5. REUSABLE CAREERS BANNER */}
+      <div className="py-10 md:py-14">
+        <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
+          <CareersBanner />
+        </div>
+      </div>
+
+    </div>
+  );
+}
