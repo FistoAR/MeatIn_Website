@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Linkedin, Mail } from 'lucide-react';
+import CareersBanner from '@/components/layout/CareersBanner';
 
 interface TeamMember {
   name: string;
@@ -47,15 +48,11 @@ const ledByMembers: TeamMember[] = [
 ];
 
 const directors: TeamMember[] = [
+  // Row 1 (5 cards)
   {
-    name: "Mohamed Gadhafi Pilakal",
+    name: "Mohamed Asharaf K",
     role: "Director",
-    image: "/MeetOurTeam/directors-persons/Mohamed Gadhafi Pilakal.webp",
-  },
-  {
-    name: "Nasir Neriyar",
-    role: "Director",
-    image: "/MeetOurTeam/directors-persons/Nasir Neriyar.webp",
+    image: "/MeetOurTeam/directors-persons/Mohamed Asharaf K.webp",
   },
   {
     name: "Nazeer VM",
@@ -63,14 +60,30 @@ const directors: TeamMember[] = [
     image: "/MeetOurTeam/directors-persons/Nazeer VM.webp",
   },
   {
-    name: "Rafi Abdu Rahman",
+    name: "Jadeer Akthar M",
     role: "Director",
-    image: "/MeetOurTeam/directors-persons/Rafi Abdu Rahman.webp",
+    image: "/MeetOurTeam/directors-persons/Jadeer Akthar M.webp",
+  },
+  {
+    name: "Arshad Asharaf",
+    role: "Director",
+    image: "/MeetOurTeam/directors-persons/Arshad Asharaf.webp",
   },
   {
     name: "Rooshid Mohiyudheen C A",
     role: "Director",
     image: "/MeetOurTeam/directors-persons/Rooshid Mohiyudheen C A.webp",
+  },
+  // Row 2 (4 cards)
+  {
+    name: "Nasir Neriyar",
+    role: "Director",
+    image: "/MeetOurTeam/directors-persons/Nasir Neriyar.webp",
+  },
+  {
+    name: "Moosakutty MM",
+    role: "Director",
+    image: "/MeetOurTeam/directors-persons/Moosakutty MM.webp",
   },
   {
     name: "Sabeer Abdul Rahman",
@@ -82,31 +95,22 @@ const directors: TeamMember[] = [
     role: "Director",
     image: "/MeetOurTeam/directors-persons/Abbas Chemban.webp",
   },
-  {
-    name: "Arshad Asharaf",
-    role: "Director",
-    image: "/MeetOurTeam/directors-persons/Arshad Asharaf.webp",
-  },
+  // Row 3 (3 cards)
   {
     name: "Hydros Villan",
     role: "Director",
     image: "/MeetOurTeam/directors-persons/Hydros Villan.webp",
   },
   {
-    name: "Jadeer Akthar M.",
+    name: "Rafi Abdu Rahman",
     role: "Director",
-    image: "/MeetOurTeam/directors-persons/Jadeer Akthar M.webp",
+    image: "/MeetOurTeam/directors-persons/Rafi Abdu Rahman.webp",
   },
   {
-    name: "Mohamed Asharaf K.",
+    name: "Mohamed Gadhafi Pilakal",
     role: "Director",
-    image: "/MeetOurTeam/directors-persons/Mohamed Asharaf K.webp",
+    image: "/MeetOurTeam/directors-persons/Mohamed Gadhafi Pilakal.webp",
   },
-  {
-    name: "Moosakutty MM",
-    role: "Director",
-    image: "/MeetOurTeam/directors-persons/Moosakutty MM.webp",
-  }
 ];
 
 export default function TeamPage() {
@@ -177,12 +181,16 @@ export default function TeamPage() {
           <Image src="/MeetOurTeam/doodles-bg/arrow-doodle.webp" alt="Doodle" fill className="object-contain" />
         </div>
         {/* Middle-Left Leaf Branch Doodle */}
-        <div className="absolute bottom-[5%] sm:bottom-[25%] left-[-4%] sm:left-[0%] w-[180px] h-[180px] sm:w-[250px] sm:h-[250px] lg:w-[340px] lg:h-[340px] select-none pointer-events-none rotate-[15deg]">
+        <div className="absolute bottom-[5%] sm:bottom-[8%] left-[-4%] sm:left-[0%] w-[180px] h-[180px] sm:w-[250px] sm:h-[250px] lg:w-[340px] lg:h-[340px] select-none pointer-events-none rotate-[15deg]">
           <Image src="/MeetOurTeam/doodles-bg/leaf-sparkle-doodle.webp" alt="Doodle" fill className="object-contain" />
         </div>
         {/* Top-Right Lightbulb Doodle */}
         <div className="absolute top-[2%] sm:top-[8%] right-[-3%] sm:right-[-1%] w-[200px] h-[160px] sm:w-[240px] sm:h-[240px] lg:w-[340px] lg:h-[340px] select-none pointer-events-none">
           <Image src="/MeetOurTeam/doodles-bg/big_bult_light_growth_doodle.webp" alt="Doodle" fill className="object-contain" />
+        </div>
+        {/* Bottom-right: Arrow/cursor doodle */}
+        <div className="absolute bottom-[8%] right-[-1%] w-[130px] h-[130px] sm:w-[180px] sm:h-[180px] lg:w-[240px] lg:h-[240px]  select-none pointer-events-none rotate-[-10deg]">
+          <Image src="/MeetOurTeam/doodles-bg/arrow_right_doodle.webp" alt="Doodle" fill className="object-contain" />
         </div>
         <div className="w-full max-w-[1400px] lg:max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw]">
           
@@ -193,7 +201,7 @@ export default function TeamPage() {
               <span className="w-2.5 h-2.5 rounded-full bg-[#D4A437]" />
             </div>
             
-            <h2 className="text-3xl sm:text-4xl font-extrabold font-barlow text-[#153520] tracking-wider uppercase px-4 sm:px-6">
+            <h2 className="text-3xl sm:text-4xl font-extrabold font-barlow text-[#153520] tracking-relaxed uppercase px-4 sm:px-6">
               LED BY
             </h2>
             
@@ -204,7 +212,7 @@ export default function TeamPage() {
           </div>
 
           {/* Flexbox layout to cleanly wrap and center the rows */}
-          <div className="flex flex-wrap justify-center gap-x-10 gap-y-16 lg:gap-x-[3vw] xl:gap-x-[3.5vw] lg:gap-y-20 max-w-7xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-x-10 gap-y-16 lg:gap-x-[3vw] xl:gap-x-[2.5vw] lg:gap-y-20 max-w-7xl xl:max-w-[1350px] 2xl:max-w-[1400px] mx-auto">
             {ledByMembers.map((member, idx) => (
               <motion.div
                 key={idx}
@@ -212,17 +220,23 @@ export default function TeamPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: (idx % 4) * 0.1 }}
-                className="group relative flex flex-col items-center w-[250px] sm:w-[240px] md:w-[240px] lg:w-[220px] xl:w-[250px] 2xl:w-[260px]"
+                className="group relative flex flex-col items-center w-[270px] sm:w-[260px] md:w-[260px] lg:w-[260px] xl:w-[275px] 2xl:w-[285px]"
               >
                 {/* Photo container */}
                 <div className="relative w-full h-[220px] sm:h-[240px] md:h-[240px] lg:h-[210px] xl:h-[240px] 2xl:h-[250px]">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-contain object-bottom transition-transform duration-500 group-hover:scale-105"
-                    sizes="260px"
-                  />
+                  {/* Left partition (approx 6%): Right-angled red triangle */}
+                  <div className="absolute left-0 bottom-0 w-0 h-0 border-b-[12px] border-b-[#D62828] border-l-[15px] border-l-transparent z-10" />
+
+                  {/* Right partition: Portrait Image */}
+                  <div className="absolute right-0 bottom-0 w-[94%] h-full">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-contain object-bottom transition-transform duration-500 group-hover:scale-105"
+                      sizes="260px"
+                    />
+                  </div>
                   
                   {/* Floating blue LinkedIn icon */}
                   <a 
@@ -235,15 +249,12 @@ export default function TeamPage() {
                   </a>
                 </div>
 
-                {/* Bright green box with top-left red accent cut */}
-                <div className="relative w-full bg-[#7CB325] text-white p-4 pt-5 pb-5 flex flex-col items-start min-h-[85px]">
-                  {/* Left edge top diagonal red flag accent */}
-                  <div className="absolute left-0 top-0 -translate-y-full w-0 h-0 border-b-[12px] border-b-[#D62828] border-r-[20px] border-r-transparent" />
-                  
-                  <h3 className="text-[17px] font-bold text-white font-barlow tracking-wide uppercase leading-tight">
+                {/* Bright green box */}
+                <div className="relative w-full bg-[#7CB325] text-white pl-[15px] pr-3 py-3 sm:pl-[15px] sm:pr-4 sm:py-4 flex flex-col items-start">
+                  <h3 className="text-lg sm:text-xl xl:text-[1.4rem] 2xl:text-2xl font-bold text-white font-barlow tracking-relaxed leading-tight">
                     {member.name}
                   </h3>
-                  <p className="text-[10px] font-semibold text-white/90 uppercase tracking-wider mt-1.5 flex items-center gap-1 font-manrope">
+                  <p className="text-sm sm:text-md font-semibold text-white/95 tracking-wider mt-1 flex items-center gap-1.5 font-manrope">
                     <span className="text-white/80">★</span> {member.role}
                   </p>
                 </div>
@@ -253,100 +264,105 @@ export default function TeamPage() {
         </div>
       </section>
 
-      {/* Handshake callout banner */}
-      <section className="py-16 bg-[#1F5A3C] text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+      {/* Board of Directors Section */}
+      <section className="relative py-20 lg:py-28 bg-[#FCFAF7] overflow-hidden border-t border-slate-100">
         
-        {/* Handshake Doodle floating */}
-        <div className="absolute left-[8%] top-1/2 -translate-y-1/2 w-28 h-28 opacity-[0.08] select-none pointer-events-none hidden md:block">
+        {/* Background Doodles */}
+        {/* Top-right: Big bulb/growth doodle */}
+        <div className="absolute top-[0%] right-[-2%] w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] lg:w-[260px] lg:h-[260px]  select-none pointer-events-none">
           <Image src="/MeetOurTeam/doodles-bg/handshake_doodle.webp" alt="Doodle" fill className="object-contain" />
         </div>
-        
-        <div className="w-full max-w-[1400px] lg:max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw] relative z-10">
-          <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
-            <span className="text-[#D62828] uppercase font-bold tracking-widest text-xs font-manrope mb-4">
-              COLLABORATION & INTEGRITY
-            </span>
-            <blockquote className="text-lg sm:text-xl lg:text-[1.5vw] font-manrope leading-relaxed text-white/95 max-w-2xl">
-              "We leverage cutting-edge culinary technology and sustainable agricultural standards to promise the highest quality meat experience."
-            </blockquote>
-          </div>
+        {/* Bottom-left: Leaf sparkle doodle */}
+        <div className="absolute bottom-[5%] left-[0%] w-[150px] h-[150px] sm:w-[220px] sm:h-[220px] lg:w-[290px] lg:h-[290px]  select-none pointer-events-none rotate-[15deg]">
+          <Image src="/MeetOurTeam/doodles-bg/leaf-sparkle-doodle.webp" alt="Doodle" fill className="object-contain" />
         </div>
-      </section>
-
-      {/* Board of Directors Section */}
-      <section className="relative py-20 lg:py-28 bg-white border-t border-slate-100">
-        
-        {/* Floating Doodles */}
-        <div className="absolute top-1/3 right-[5%] w-24 h-24 opacity-[0.06] select-none pointer-events-none">
-          <Image src="/MeetOurTeam/doodles-bg/bulb_light_growth_doodle.webp" alt="Doodle" fill className="object-contain" />
-        </div>
-        <div className="absolute bottom-1/4 left-[5%] w-28 h-28 opacity-[0.05] select-none pointer-events-none">
+        {/* Top-left: Paper airplane doodle */}
+        <div className="absolute top-[8%] left-[-2%] w-[140px] h-[140px] sm:w-[200px] sm:h-[200px] lg:w-[260px] lg:h-[260px]  select-none pointer-events-none rotate-[5deg]">
           <Image src="/MeetOurTeam/doodles-bg/arrow-doodle.webp" alt="Doodle" fill className="object-contain" />
         </div>
+        {/* Left center: Bulb+growth chart doodle */}
+        <div className="absolute top-[35%] left-[-1%] w-[180px] h-[180px] sm:w-[250px] sm:h-[250px] lg:w-[320px] lg:h-[320px]  select-none pointer-events-none">
+          <Image src="/MeetOurTeam/doodles-bg/bulb_light_growth_doodle.webp" alt="Doodle" fill className="object-contain" />
+        </div>
+        {/* Right center: Handshake doodle */}
+        <div className="absolute top-[30%] right-[-1%] w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] lg:w-[280px] lg:h-[280px]  select-none pointer-events-none">
+          <Image src="/MeetOurTeam/doodles-bg/big_bult_light_growth_doodle.webp" alt="Doodle" fill className="object-contain" />
+        </div>
+        {/* Bottom-right: Arrow/cursor doodle */}
+        <div className="absolute bottom-[8%] right-[-1%] w-[130px] h-[130px] sm:w-[180px] sm:h-[180px] lg:w-[240px] lg:h-[240px]  select-none pointer-events-none rotate-[-10deg]">
+          <Image src="/MeetOurTeam/doodles-bg/arrow_right_doodle.webp" alt="Doodle" fill className="object-contain" />
+        </div>
 
-        <div className="w-full max-w-[1400px] lg:max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw]">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold font-manrope text-[#1F5A3C] tracking-wide uppercase">
-              Board of Directors
+        <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw]">
+
+          {/* Centered DIRECTORS Title with Gold Separator Lines */}
+          <div className="flex items-center justify-center mb-16">
+            <div className="flex items-center">
+              <div className="h-[2px] w-12 sm:w-20 bg-[#D4A437]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#D4A437]" />
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold font-barlow text-[#153520] tracking-relaxed uppercase px-4 sm:px-6">
+              DIRECTORS
             </h2>
-            <div className="w-12 h-1 bg-[#D62828] mx-auto mt-3 rounded-full" />
+            <div className="flex items-center">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#D4A437]" />
+              <div className="h-[2px] w-12 sm:w-20 bg-[#D4A437]" />
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-[2vw]">
+          {/* Directors Grid — 5 per row on large desktop, 4 on laptop, wraps below */}
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-14 lg:gap-x-[2vw] xl:gap-x-[1.8vw] lg:gap-y-16 max-w-[1300px] xl:max-w-[1400px] 2xl:max-w-[1500px] mx-auto">
             {directors.map((member, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 35 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: (idx % 4) * 0.1 }}
-                className="group bg-white border border-slate-50 hover:border-slate-100 rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col items-center text-center p-4 sm:p-5"
+                transition={{ duration: 0.6, delay: (idx % 5) * 0.08 }}
+                className="group relative flex flex-col items-center w-[220px] sm:w-[220px] md:w-[220px] lg:w-[210px] xl:w-[220px] 2xl:w-[230px]"
               >
-                {/* Director Avatar Rounded Square */}
-                <div className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden border border-slate-100 bg-slate-50 mb-4">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="160px"
-                  />
+                {/* Photo container */}
+                <div className="relative w-full h-[200px] sm:h-[210px] lg:h-[200px] xl:h-[210px]">
+                  {/* Left partition: Right-angled red triangle */}
+                  <div className="absolute left-0 bottom-0 w-0 h-0 border-b-[12px] border-b-[#D62828] border-l-[15px] border-l-transparent z-10" />
+                  {/* Right partition: Portrait */}
+                  <div className="absolute right-0 bottom-0 w-[94%] h-full">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-contain object-bottom transition-transform duration-500 group-hover:scale-105"
+                      sizes="230px"
+                    />
+                  </div>
+                  {/* LinkedIn icon */}
+                  <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-7 h-7 rounded-full bg-[#0077B5] hover:bg-[#005582] transition-colors flex items-center justify-center text-white shadow-md active:scale-90"
+                  >
+                    <Linkedin className="w-3.5 h-3.5 fill-white text-transparent" />
+                  </a>
                 </div>
 
-                <h3 className="text-sm sm:text-base font-extrabold text-slate-800 font-manrope tracking-wide uppercase group-hover:text-[#D62828] transition-colors line-clamp-1">
-                  {member.name}
-                </h3>
-                <p className="text-[10px] font-bold text-[#1F5A3C] uppercase tracking-widest mt-1">
-                  {member.role}
-                </p>
+                {/* Green name block */}
+                <div className="relative w-full bg-[#7CB325] text-white pl-[15px] pr-3 py-3 sm:pl-[15px] sm:pr-4 sm:py-3 flex flex-col items-start">
+                  <h3 className="text-base sm:text-lg font-bold text-white font-barlow tracking-wide leading-tight">
+                    {member.name}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-semibold text-white/95 tracking-wider mt-1 flex items-center gap-1.5 font-manrope">
+                    <span className="text-white/80">★</span> {member.role}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Join Us CTA */}
-      <section className="py-16 lg:py-20 bg-[#1f5a3c]/5 border-t border-slate-100">
-        <div className="w-full max-w-[1400px] lg:max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw] text-center">
-          <div className="max-w-xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-bold font-manrope text-[#1F5A3C] tracking-wide uppercase">
-              Want to join our mission?
-            </h2>
-            <p className="text-slate-600 mt-3 text-sm sm:text-base leading-relaxed">
-              We are always on the lookout for food scientists, logistics experts, recipe builders, and individuals who care deeply about food safety and hygiene.
-            </p>
-            <div className="mt-8">
-              <a
-                href="/contact"
-                className="inline-block bg-[#D62828] hover:bg-red-700 text-white font-bold font-manrope text-xs sm:text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95 hover:shadow-lg"
-              >
-                Send Us Your Resume
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Reusable Careers Banner */}
+      <CareersBanner />
 
     </div>
   );
