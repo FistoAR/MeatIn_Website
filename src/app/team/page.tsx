@@ -195,7 +195,13 @@ export default function TeamPage() {
         <div className="w-full max-w-[1400px] lg:max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw]">
           
           {/* Centered LED BY Title with Gold Separator Lines */}
-          <div className="flex items-center justify-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center justify-center mb-16"
+          >
             <div className="flex items-center">
               <div className="h-[2px] w-12 sm:w-20 bg-[#D4A437]" />
               <span className="w-2.5 h-2.5 rounded-full bg-[#D4A437]" />
@@ -209,7 +215,7 @@ export default function TeamPage() {
               <span className="w-2.5 h-2.5 rounded-full bg-[#D4A437]" />
               <div className="h-[2px] w-12 sm:w-20 bg-[#D4A437]" />
             </div>
-          </div>
+          </motion.div>
 
           {/* Flexbox layout to cleanly wrap and center the rows */}
           <div className="flex flex-wrap justify-center gap-x-10 gap-y-16 lg:gap-x-[3vw] xl:gap-x-[2.5vw] lg:gap-y-20 max-w-7xl xl:max-w-[1350px] 2xl:max-w-[1400px] mx-auto">
@@ -245,7 +251,9 @@ export default function TeamPage() {
                     rel="noopener noreferrer"
                     className="absolute top-2 right-2 sm:top-4 sm:right-4 z-20 w-8 h-8 rounded-full bg-[#0077B5] hover:bg-[#005582] transition-colors flex items-center justify-center text-white shadow-md active:scale-90"
                   >
-                    <Linkedin className="w-4 h-4 fill-white text-transparent" />
+                    <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
+                      <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
+                    </svg>
                   </a>
                 </div>
 
@@ -296,7 +304,13 @@ export default function TeamPage() {
         <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw]">
 
           {/* Centered DIRECTORS Title with Gold Separator Lines */}
-          <div className="flex items-center justify-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center justify-center mb-16"
+          >
             <div className="flex items-center">
               <div className="h-[2px] w-12 sm:w-20 bg-[#D4A437]" />
               <span className="w-2.5 h-2.5 rounded-full bg-[#D4A437]" />
@@ -308,7 +322,7 @@ export default function TeamPage() {
               <span className="w-2.5 h-2.5 rounded-full bg-[#D4A437]" />
               <div className="h-[2px] w-12 sm:w-20 bg-[#D4A437]" />
             </div>
-          </div>
+          </motion.div>
 
           {/* Directors Grid — 5 per row on large desktop, 4 on laptop, wraps below */}
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-14 lg:gap-x-[2vw] xl:gap-x-[1.8vw] lg:gap-y-16 max-w-[1300px] xl:max-w-[1400px] 2xl:max-w-[1500px] mx-auto">
@@ -342,7 +356,9 @@ export default function TeamPage() {
                     rel="noopener noreferrer"
                     className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-7 h-7 rounded-full bg-[#0077B5] hover:bg-[#005582] transition-colors flex items-center justify-center text-white shadow-md active:scale-90"
                   >
-                    <Linkedin className="w-3.5 h-3.5 fill-white text-transparent" />
+                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white">
+                      <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
+                    </svg>
                   </a>
                 </div>
 

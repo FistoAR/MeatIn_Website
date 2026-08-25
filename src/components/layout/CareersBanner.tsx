@@ -3,18 +3,18 @@
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowRight, 
-  Briefcase, 
-  X, 
-  User, 
-  Mail, 
-  Phone, 
-  ChevronDown, 
-  Send, 
-  CheckCircle, 
-  Pencil, 
-  Upload 
+import {
+  ArrowRight,
+  BriefcaseBusiness,
+  X,
+  User,
+  Mail,
+  Phone,
+  ChevronDown,
+  Send,
+  CheckCircle,
+  Pencil,
+  Upload
 } from 'lucide-react';
 
 export default function CareersBanner() {
@@ -117,7 +117,7 @@ export default function CareersBanner() {
     const newErrors: Record<string, string> = {};
 
     if (!fullName.trim()) newErrors.fullName = 'Full name is required';
-    
+
     if (!email.trim()) {
       newErrors.email = 'Email address is required';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
@@ -132,7 +132,7 @@ export default function CareersBanner() {
 
     if (!position) newErrors.position = 'Please select a position';
     if (!experience) newErrors.experience = 'Please select your experience';
-    
+
     if (fileName === 'No file chosen') {
       newErrors.resume = 'Please upload your resume';
     }
@@ -164,7 +164,7 @@ export default function CareersBanner() {
   };
 
   return (
-    <div className="w-full px-8 sm:px-4 lg:px-[2.5vw] py-10 lg:py-15 bg-[#FCFAF7]">
+    <div className="w-full px-8 sm:px-4 lg:px-[2.5vw] py-10 lg:py-15">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -246,7 +246,7 @@ export default function CareersBanner() {
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-            
+
             {/* Modal Box Container */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
@@ -256,7 +256,7 @@ export default function CareersBanner() {
               data-lenis-prevent
               className="bg-white rounded-2xl max-w-3xl w-full p-6 sm:p-8 relative shadow-2xl overflow-hidden max-h-[90vh] flex flex-col font-manrope text-slate-800"
             >
-              
+
               {/* Close Button top-right */}
               <button
                 onClick={handleResetAndClose}
@@ -270,17 +270,17 @@ export default function CareersBanner() {
                 <div className="overflow-y-auto pr-1 flex flex-col h-full">
                   {/* Header Title with Briefcase Icon */}
                   <div className="flex items-center gap-3 mb-6 pb-2 border-b border-slate-100">
-                    <div className="w-10 h-10 rounded-full bg-[#EEF6E8] flex items-center justify-center text-[#395B20] border border-[#EEF6E8]">
-                      <Briefcase className="w-5 h-5" />
+                    <div className="w-10 h-10 rounded-full bg-[#FAF9F5] flex items-center justify-center text-[#395B20] border border-[#EBEAE5]">
+                      <BriefcaseBusiness className="w-5 h-5" />
                     </div>
-                    <h2 className="text-xl sm:text-2xl font-extrabold text-[#153520] font-barlow uppercase">
+                    <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#153520] font-manrope uppercase">
                       Apply For A Position
                     </h2>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      
+
                       {/* Full Name Field */}
                       <div className="space-y-1">
                         <label className="text-xs sm:text-sm font-bold text-slate-700">Full Name <span className="text-[#D62828]">*</span></label>
@@ -290,7 +290,16 @@ export default function CareersBanner() {
                             type="text"
                             placeholder="Enter your full name"
                             value={fullName}
-                            onChange={(e) => setFullName(e.target.value)}
+                            onChange={(e) => {
+                              setFullName(e.target.value);
+                              if (errors.fullName) {
+                                setErrors(prev => {
+                                  const next = { ...prev };
+                                  delete next.fullName;
+                                  return next;
+                                });
+                              }
+                            }}
                             className={`w-full pl-9 pr-4 py-2.5 sm:py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-400/80 ${errors.fullName ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
                           />
                         </div>
@@ -306,7 +315,16 @@ export default function CareersBanner() {
                             type="email"
                             placeholder="Enter your email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => {
+                              setEmail(e.target.value);
+                              if (errors.email) {
+                                setErrors(prev => {
+                                  const next = { ...prev };
+                                  delete next.email;
+                                  return next;
+                                });
+                              }
+                            }}
                             className={`w-full pl-9 pr-4 py-2.5 sm:py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-400/80 ${errors.email ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
                           />
                         </div>
@@ -322,7 +340,16 @@ export default function CareersBanner() {
                             type="text"
                             placeholder="Enter your mobile number"
                             value={mobile}
-                            onChange={(e) => setMobile(e.target.value)}
+                            onChange={(e) => {
+                              setMobile(e.target.value);
+                              if (errors.mobile) {
+                                setErrors(prev => {
+                                  const next = { ...prev };
+                                  delete next.mobile;
+                                  return next;
+                                });
+                              }
+                            }}
                             className={`w-full pl-9 pr-4 py-2.5 sm:py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-400/80 ${errors.mobile ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
                           />
                         </div>
@@ -330,101 +357,105 @@ export default function CareersBanner() {
                       </div>
 
                       {/* Position Dropdown Field */}
-                      <div className="space-y-1 relative">
+                      <div className="space-y-1">
                         <label className="text-xs sm:text-sm font-bold text-slate-700">Position Interested In <span className="text-[#D62828]">*</span></label>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setShowPositionDropdown(!showPositionDropdown);
-                            setShowExperienceDropdown(false);
-                          }}
-                          className={`w-full px-4 py-2.5 sm:py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all ${errors.position ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20]'} bg-white`}
-                        >
-                          <span className={position ? 'text-slate-800' : 'text-slate-400/80'}>
-                            {position || 'Select Position'}
-                          </span>
-                          <ChevronDown className="w-4 h-4 text-[#395B20]" />
-                        </button>
-                        {showPositionDropdown && (
-                          <div 
-                            data-lenis-prevent
-                            className="absolute left-0 right-0 top-[98%] mt-0 bg-white border-2 border-slate-400 rounded-xl shadow-2xl max-h-56 overflow-y-auto z-30 font-medium text-sm"
+                        <div className="relative">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setShowPositionDropdown(!showPositionDropdown);
+                              setShowExperienceDropdown(false);
+                            }}
+                            className={`w-full px-4 py-2.5 sm:py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all ${errors.position ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20]'} bg-white`}
                           >
-                            {positions.map((p, idx) => (
-                              <button
-                                key={idx}
-                                type="button"
-                                onClick={() => {
-                                  setPosition(p);
-                                  setShowPositionDropdown(false);
-                                  setErrors(prev => {
-                                    const next = { ...prev };
-                                    delete next.position;
-                                    return next;
-                                  });
-                                }}
-                                className={`w-full text-left px-4 py-2.5 transition-colors ${position === p ? 'bg-[#395B20] text-white' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
-                              >
-                                {p}
-                              </button>
-                            ))}
-                          </div>
-                        )}
+                            <span className={position ? 'text-slate-800' : 'text-slate-400/80'}>
+                              {position || 'Select Position'}
+                            </span>
+                            <ChevronDown className="w-4 h-4 text-[#395B20] shrink-0" />
+                          </button>
+                          {showPositionDropdown && (
+                            <div
+                              data-lenis-prevent
+                              className="absolute left-0 right-0 top-[98%] mt-0 bg-white border-2 border-slate-400 rounded-xl shadow-2xl max-h-56 overflow-y-auto z-30 font-medium text-sm"
+                            >
+                              {positions.map((p, idx) => (
+                                <button
+                                  key={idx}
+                                  type="button"
+                                  onClick={() => {
+                                    setPosition(p);
+                                    setShowPositionDropdown(false);
+                                    setErrors(prev => {
+                                      const next = { ...prev };
+                                      delete next.position;
+                                      return next;
+                                    });
+                                  }}
+                                  className={`w-full text-left px-4 py-2.5 transition-colors ${position === p ? 'bg-[#395B20] text-white' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
+                                >
+                                  {p}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                         {errors.position && <p className="text-xs text-[#D62828]">{errors.position}</p>}
                       </div>
 
                       {/* Experience Dropdown Field */}
-                      <div className="space-y-1 relative">
+                      <div className="space-y-1">
                         <label className="text-xs sm:text-sm font-bold text-slate-700">Experience <span className="text-[#D62828]">*</span></label>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setShowExperienceDropdown(!showExperienceDropdown);
-                            setShowPositionDropdown(false);
-                          }}
-                          className={`w-full px-4 py-2.5 sm:py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all ${errors.experience ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20]'} bg-white`}
-                        >
-                          <span className={experience ? 'text-slate-800' : 'text-slate-400/80'}>
-                            {experience || 'Select Experience'}
-                          </span>
-                          <ChevronDown className="w-4 h-4 text-[#395B20]" />
-                        </button>
-                        {showExperienceDropdown && (
-                          <div 
-                            data-lenis-prevent
-                            className="absolute left-0 right-0 top-[98%] mt-0 bg-white border-2 border-slate-400 rounded-xl shadow-2xl max-h-48 overflow-y-auto z-30 font-medium text-sm"
+                        <div className="relative">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setShowExperienceDropdown(!showExperienceDropdown);
+                              setShowPositionDropdown(false);
+                            }}
+                            className={`w-full px-4 py-2.5 sm:py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all ${errors.experience ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20]'} bg-white`}
                           >
-                            {experiences.map((exp, idx) => (
-                              <button
-                                key={idx}
-                                type="button"
-                                onClick={() => {
-                                  setExperience(exp);
-                                  setShowExperienceDropdown(false);
-                                  setErrors(prev => {
-                                    const next = { ...prev };
-                                    delete next.experience;
-                                    return next;
-                                  });
-                                }}
-                                className={`w-full text-left px-4 py-2.5 transition-colors ${experience === exp ? 'bg-[#395B20] text-white' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
-                              >
-                                {exp}
-                              </button>
-                            ))}
-                          </div>
-                        )}
+                            <span className={experience ? 'text-slate-800' : 'text-slate-400/80'}>
+                              {experience || 'Select Experience'}
+                            </span>
+                            <ChevronDown className="w-4 h-4 text-[#395B20] shrink-0" />
+                          </button>
+                          {showExperienceDropdown && (
+                            <div
+                              data-lenis-prevent
+                              className="absolute left-0 right-0 top-[98%] mt-0 bg-white border-2 border-slate-400 rounded-xl shadow-2xl max-h-48 overflow-y-auto z-30 font-medium text-sm"
+                            >
+                              {experiences.map((exp, idx) => (
+                                <button
+                                  key={idx}
+                                  type="button"
+                                  onClick={() => {
+                                    setExperience(exp);
+                                    setShowExperienceDropdown(false);
+                                    setErrors(prev => {
+                                      const next = { ...prev };
+                                      delete next.experience;
+                                      return next;
+                                    });
+                                  }}
+                                  className={`w-full text-left px-4 py-2.5 transition-colors ${experience === exp ? 'bg-[#395B20] text-white' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
+                                >
+                                  {exp}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                         {errors.experience && <p className="text-xs text-[#D62828]">{errors.experience}</p>}
                       </div>
 
                       {/* Upload Resume File Field with Drag & Drop Zone */}
                       <div className="space-y-1">
                         <label className="text-xs sm:text-sm font-bold text-slate-700">Upload Resume <span className="text-[#D62828]">*</span></label>
-                        <div 
+                        <div
                           onDragOver={handleDragOver}
                           onDragLeave={handleDragLeave}
                           onDrop={handleDrop}
-                          className={`border rounded-xl p-1.5 flex items-center bg-white transition-all ${isDragging ? 'border-dashed border-[#395B20] bg-[#EEF6E8]/30' : errors.resume ? 'border-[#D62828]' : 'border-slate-400 focus-within:border-[#395B20]'}`}
+                          className={`border rounded-xl p-2 flex flex-wrap sm:flex-nowrap items-center gap-2 bg-white transition-all ${isDragging ? 'border-dashed border-[#395B20] bg-[#EEF6E8]/30' : errors.resume ? 'border-[#D62828]' : 'border-slate-400 focus-within:border-[#395B20]'}`}
                         >
                           {/* File input (Hidden) */}
                           <input
@@ -434,9 +465,9 @@ export default function CareersBanner() {
                             accept=".pdf,.doc,.docx"
                             className="hidden"
                           />
-                          
+
                           {/* Green square container with Upload icon */}
-                          <div className="w-10 h-10 rounded-lg bg-[#EEF6E8] flex items-center justify-center text-[#395B20] mr-2">
+                          <div className="w-10 h-10 shrink-0 rounded-lg bg-[#EEF6E8] flex items-center justify-center text-[#395B20] mr-1">
                             <Upload className="w-5 h-5" />
                           </div>
 
@@ -444,12 +475,12 @@ export default function CareersBanner() {
                           <button
                             type="button"
                             onClick={() => fileInputRef.current?.click()}
-                            className="border border-slate-200 text-[#153520] hover:bg-[#EEF6E8] hover:text-[#395B20] hover:border-[#EEF6E8] transition-all font-bold text-xs sm:text-sm px-4 py-2 rounded-lg flex items-center gap-1.5 active:scale-95 bg-white shadow-xs"
+                            className="shrink-0 border border-slate-200 text-[#153520] hover:bg-[#EEF6E8] hover:text-[#395B20] hover:border-[#EEF6E8] transition-all font-bold text-xs px-3.5 py-2.5 rounded-lg active:scale-95 bg-white shadow-xs"
                           >
                             Choose File
                           </button>
-                          
-                          <span className="text-xs sm:text-sm text-slate-500 ml-4 truncate pr-2 max-w-[100px] sm:max-w-[140px]">
+
+                          <span className="text-xs text-slate-500 truncate min-w-[70px] flex-1">
                             {fileName}
                           </span>
 
@@ -464,13 +495,13 @@ export default function CareersBanner() {
                                   alert(`Previewing is supported directly in the browser for PDF resumes. For Word docs (${selectedFile.name}), please download to view.`);
                                 }
                               }}
-                              className="ml-auto border border-[#395B20] text-[#395B20] hover:bg-[#395B20] hover:text-white transition-all font-bold text-[10px] sm:text-xs px-2 sm:px-2.5 py-1.5 rounded-lg active:scale-95"
+                              className="shrink-0 border border-[#395B20] text-[#395B20] hover:bg-[#395B20] hover:text-white transition-all font-bold text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg active:scale-95 ml-auto"
                             >
                               Preview
                             </button>
                           )}
                         </div>
-                        <p className="text-[10px] text-slate-400">PDF, DOC, DOCX (Max 5MB) • Drag & Drop supported</p>
+                        <p className="text-xs text-slate-600">PDF, DOC, DOCX (Max 5MB) • Drag & Drop supported</p>
                         {errors.resume && <p className="text-xs text-[#D62828]">{errors.resume}</p>}
                       </div>
 
@@ -512,15 +543,15 @@ export default function CareersBanner() {
                   <div className="w-16 h-16 rounded-full bg-[#7CB325]/10 flex items-center justify-center text-[#7CB325] mb-2">
                     <CheckCircle className="w-10 h-10" />
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#153520] font-barlow uppercase">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#153520] font-manrope uppercase tracking-relaxed">
                     Application Submitted!
                   </h2>
-                  <p className="text-slate-600 font-medium text-sm sm:text-base max-w-md leading-relaxed">
+                  <p className="text-slate-800 font-medium text-sm sm:text-base max-w-md leading-relaxed">
                     Successful submission! We will contact you shortly. Thank you for your interest in joining MEATIN.
                   </p>
                   <button
                     onClick={handleResetAndClose}
-                    className="mt-6 bg-[#395B20] hover:bg-[#1E3C11] text-white font-bold text-xs sm:text-sm px-8 py-3.5 rounded-xl uppercase transition-all shadow-md active:scale-95"
+                    className="mt-8 bg-[#395B20] hover:bg-[#1E3C11] text-white font-bold text-xs sm:text-sm px-8 py-3.5 rounded-xl uppercase transition-all shadow-md active:scale-95"
                   >
                     Close
                   </button>
