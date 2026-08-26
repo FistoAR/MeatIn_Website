@@ -12,7 +12,7 @@ export default function TrustedQualityBanner() {
         transition={{ duration: 0.6 }}
         className="w-full bg-white rounded-[24px] shadow-md border border-[#E5EAE1] overflow-hidden"
       >
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-1 xl:pt-10">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-1 xl:pt-7">
           
           {/* Left Column: Text content */}
           <div className="px-6 py-6 sm:px-12 md:pl-16 md:pr-4 flex flex-col justify-center space-y-3 w-full lg:-mr-[55%]">
@@ -29,7 +29,7 @@ export default function TrustedQualityBanner() {
             <div className="pt-2">
               <Link 
                 href="/products" 
-                className="inline-flex items-center gap-3 px-4 py-2 xl:mb-0 bg-[#153520] hover:bg-[#1a4428] text-white rounded-lg font-bold text-xs md:text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02]"
+                className="inline-flex items-center gap-3 px-4 py-2 bg-[#153520] hover:bg-[#1a4428] text-white rounded-lg font-bold text-xs md:text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] xl:mb-5"
               >
                 <span>Shop Now</span>
                 <span className="text-base">→</span>
