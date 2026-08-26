@@ -68,6 +68,7 @@ export default function ContactPage() {
   // Form fields state
   const [fullName, setFullName] = useState('');
   const [enquiryType, setEnquiryType] = useState('');
+  const [customEnquiryType, setCustomEnquiryType] = useState('');
   const [message, setMessage] = useState('');
   const [agreePrivacy, setAgreePrivacy] = useState(false);
 
@@ -97,13 +98,17 @@ export default function ContactPage() {
     'Distribution Enquiry',
     'Careers',
     'Partnership Enquiry',
-    'Franchise Enquiry'
+    'Franchise Enquiry',
+    'Other'
   ];
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
     if (!fullName.trim()) newErrors.fullName = 'Full name is required';
     if (!enquiryType) newErrors.enquiryType = 'Please select enquiry type';
+    if (enquiryType === 'Other' && !customEnquiryType.trim()) {
+      newErrors.customEnquiryType = 'Please specify your enquiry type';
+    }
     if (!message.trim()) newErrors.message = 'Message details are required';
 
     setErrors(newErrors);
@@ -120,6 +125,7 @@ export default function ContactPage() {
   const resetForm = () => {
     setFullName('');
     setEnquiryType('');
+    setCustomEnquiryType('');
     setMessage('');
     setErrors({});
     setIsSubmitted(false);
@@ -321,6 +327,38 @@ export default function ContactPage() {
                   </div>
 
                 </div>
+
+                {/* Custom Enquiry Type (If 'Other' is selected) */}
+                <AnimatePresence>
+                  {enquiryType === 'Other' && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                      animate={{ opacity: 1, height: 'auto', marginTop: 12 }}
+                      exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="space-y-1.5 overflow-hidden"
+                    >
+                      <label className="text-xs sm:text-sm font-bold text-slate-700">Specify Enquiry Type <span className="text-[#D62828]">*</span></label>
+                      <input
+                        type="text"
+                        placeholder="Enter your enquiry type"
+                        value={customEnquiryType}
+                        onChange={(e) => {
+                          setCustomEnquiryType(e.target.value);
+                          if (errors.customEnquiryType) {
+                            setErrors(prev => {
+                              const next = { ...prev };
+                              delete next.customEnquiryType;
+                              return next;
+                            });
+                          }
+                        }}
+                        className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 ${errors.customEnquiryType ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                      />
+                      {errors.customEnquiryType && <p className="text-xs text-[#D62828]">{errors.customEnquiryType}</p>}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 {/* Message TextArea */}
                 <div className="space-y-1.5">

@@ -12,6 +12,7 @@ interface TeamMember {
   image: string;
   linkedin?: string;
   email?: string;
+  shiftImage?: boolean;
 }
 
 const ledByMembers: TeamMember[] = [
@@ -53,6 +54,7 @@ const directors: TeamMember[] = [
     name: "Mohamed Asharaf K",
     role: "Director",
     image: "/MeetOurTeam/directors-persons/Mohamed Asharaf K.webp",
+    shiftImage: true,
   },
   {
     name: "Nazeer VM",
@@ -79,6 +81,7 @@ const directors: TeamMember[] = [
     name: "Nasir Neriyar",
     role: "Director",
     image: "/MeetOurTeam/directors-persons/Nasir Neriyar.webp",
+    shiftImage: true,
   },
   {
     name: "Moosakutty MM",
@@ -229,12 +232,12 @@ export default function TeamPage() {
                 className="group relative flex flex-col items-center w-[270px] sm:w-[260px] md:w-[260px] lg:w-[260px] xl:w-[275px] 2xl:w-[285px]"
               >
                 {/* Photo container */}
-                <div className="relative w-full h-[220px] sm:h-[240px] md:h-[240px] lg:h-[210px] xl:h-[240px] 2xl:h-[250px]">
+                <div className="relative w-full h-[220px] sm:h-[240px] md:h-[240px] lg:h-[210px] xl:h-[240px] 2xl:h-[250px] overflow-hidden">
                   {/* Left partition (approx 6%): Right-angled red triangle */}
                   <div className="absolute left-0 bottom-0 w-0 h-0 border-b-[12px] border-b-[#D62828] border-l-[15px] border-l-transparent z-10" />
 
                   {/* Right partition: Portrait Image */}
-                  <div className="absolute right-0 bottom-0 w-[94%] h-full">
+                  <div className={`absolute right-0 bottom-0 h-full ${member.shiftImage ? "w-[calc(100%-15px)]" : "w-full"}`}>
                     <Image
                       src={member.image}
                       alt={member.name}
@@ -336,11 +339,11 @@ export default function TeamPage() {
                 className="group relative flex flex-col items-center w-[220px] sm:w-[220px] md:w-[220px] lg:w-[210px] xl:w-[220px] 2xl:w-[230px]"
               >
                 {/* Photo container */}
-                <div className="relative w-full h-[200px] sm:h-[210px] lg:h-[200px] xl:h-[210px]">
+                <div className="relative w-full h-[200px] sm:h-[210px] lg:h-[200px] xl:h-[210px] overflow-hidden">
                   {/* Left partition: Right-angled red triangle */}
                   <div className="absolute left-0 bottom-0 w-0 h-0 border-b-[12px] border-b-[#D62828] border-l-[15px] border-l-transparent z-10" />
                   {/* Right partition: Portrait */}
-                  <div className="absolute right-0 bottom-0 w-[94%] h-full">
+                  <div className={`absolute right-0 bottom-0 h-full ${member.shiftImage ? "w-[calc(100%-15px)]" : "w-full"}`}>
                     <Image
                       src={member.image}
                       alt={member.name}
