@@ -12,23 +12,24 @@ export default function TrustedQualityBanner() {
         transition={{ duration: 0.6 }}
         className="w-full bg-white rounded-[24px] shadow-md border border-[#E5EAE1] overflow-hidden"
       >
-        <div className="grid grid-cols-1 md:grid-cols-12 items-stretch">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-1 xl:pt-10">
           
           {/* Left Column: Text content */}
-          <div className="md:col-span-6 lg:col-span-5 px-6 py-6 sm:px-12 md:pl-16 md:pr-4 flex flex-col justify-center space-y-4">
-            <h2 className="text-[34px] sm:text-[44px] lg:text-[50px] font-black font-barlow-condensed leading-[1.05] tracking-tight">
-              <span className="text-[#153520] block">Trusted Quality</span>
-              <span className="text-[#D62828] block">Delivery Fresh.</span>
+          <div className="px-6 py-6 sm:px-12 md:pl-16 md:pr-4 flex flex-col justify-center space-y-3 w-full lg:-mr-[55%]">
+            <h2 className="text-[40px] min-[500px]:text-[42px] sm:text-[44px] lg:text-[50px] xl:text-[3.5rem] font-bold font-barlow-condensed leading-[1.15] tracking-tight">
+              <span className="text-[#153520] block min-[500px]:inline min-[1025px]:block">Trusted Quality </span>
+              <span className="text-[#D62828] block min-[500px]:inline min-[1025px]:block">Delivery Fresh.</span>
             </h2>
             
-            <p className="text-xs sm:text-sm text-slate-700 font-semibold leading-relaxed max-w-[420px] font-manrope">
+            <p className="text-sm sm:text-md text-slate-700 xl:text-[1rem] font-semibold tracking-[-0.02em] leading-relaxed xl:leading-[1.5] max-w-[330px] sm:max-w-none min-[1025px]:max-w-[330px] xl:max-w-[40%] font-manrope">
+
               Processed under certified food safety standards and maintained through a reliable cold chain for exceptional freshness and taste.
             </p>
 
             <div className="pt-2">
               <Link 
                 href="/products" 
-                className="inline-flex items-center gap-3 px-6 py-3 bg-[#153520] hover:bg-[#1a4428] text-white rounded-lg font-bold text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02]"
+                className="inline-flex items-center gap-3 px-4 py-2 xl:mb-0 bg-[#153520] hover:bg-[#1a4428] text-white rounded-lg font-bold text-xs md:text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02]"
               >
                 <span>Shop Now</span>
                 <span className="text-base">→</span>
@@ -37,12 +38,12 @@ export default function TrustedQualityBanner() {
           </div>
 
           {/* Right Column: Product Image (styled to blend and scale seamlessly) */}
-          <div className="relative md:col-span-6 lg:col-span-7 w-full h-[210px] sm:h-[280px] md:h-[320px] lg:h-[350px]">
+          <div className="relative md:col-span-6 lg:col-span-7 w-full h-[210px] sm:h-[250px] md:h-[280px] lg:h-[320px]">
             <Image
               src="/TrustedQualityBanner/trusted-quality-banner-image.webp"
               alt="Trusted Quality background and products"
               fill
-              className="object-cover object-right-bottom md:object-contain md:object-right-bottom"
+              className="object-cover md:object-contain object-right-bottom md:object-contain md:object-right-bottom"
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
             />

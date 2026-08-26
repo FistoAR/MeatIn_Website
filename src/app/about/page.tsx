@@ -339,7 +339,7 @@ export default function AboutUsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch min-h-[550px] lg:min-h-[700px]">
           
           {/* Mission Box */}
-          <div className="relative px-6 pt-24 pb-64 sm:px-12 lg:px-20 lg:pt-32 lg:pb-80 flex flex-col justify-center text-white overflow-hidden min-h-[480px] lg:min-h-[700px]">
+          <div className="relative px-6 pt-24 pb-64 sm:px-12 lg:px-20 lg:pt-32 lg:pb-76 flex flex-col justify-center text-white overflow-hidden min-h-[480px] lg:min-h-[700px]">
             <Image
               src="/AboutUs/mission-bg.webp"
               alt="Our Mission background"
@@ -353,6 +353,7 @@ export default function AboutUsPage() {
                 <div className="relative z-10">
                   <span className="text-[#D4A437] font-black text-xs sm:text-sm tracking-wider uppercase block mb-1">OUR</span>
                   <h2 className="text-5xl sm:text-6xl font-black text-[#D62828] font-barlow-condensed tracking-tight uppercase leading-none">MISSION</h2>
+                  <div className="h-[4px] w-20 bg-[#1F5A3C] mt-3" />
                 </div>
               </div>
               <p className="text-base sm:text-lg text-slate-200 font-medium leading-relaxed max-w-lg relative z-10">
@@ -376,6 +377,7 @@ export default function AboutUsPage() {
                 <div className="relative z-10">
                   <span className="text-[#D4A437] font-black text-xs sm:text-sm tracking-wider uppercase block mb-1">OUR</span>
                   <h2 className="text-5xl sm:text-6xl font-black text-[#7CB325] font-barlow-condensed tracking-tight uppercase leading-none">VISION</h2>
+                  <div className="h-[4px] w-20 bg-[#1F5A3C] mt-3" />
                 </div>
               </div>
               <p className="text-base sm:text-lg text-slate-200 font-medium leading-relaxed max-w-lg relative z-10">
