@@ -117,22 +117,22 @@ export default function AboutUsPage() {
   const coreValues = [
     {
       title: "TRUST",
-      desc: "Honest process, always.",
+      desc: "Honest process,\nalways.",
       icon: "/AboutUs/our-values-icons/trust-icon.svg"
     },
     {
       title: "QUALITY",
-      desc: "Excellence in every product.",
+      desc: "Excellence in every\nproduct.",
       icon: "/AboutUs/our-values-icons/quality-icon.svg"
     },
     {
       title: "FRESHNESS",
-      desc: "Honest process, always.",
+      desc: "Honest process,\nalways.",
       icon: "/AboutUs/our-values-icons/freshness-icon.svg"
     },
     {
       title: "CUSTOMER SATISFACTION",
-      desc: "Your satisfaction, our promise.",
+      desc: "Your satisfaction,\nour promise.",
       icon: "/AboutUs/our-values-icons/customer-satisfaction-icon.svg"
     }
   ];
@@ -250,7 +250,7 @@ export default function AboutUsPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-6 relative w-full h-[280px] sm:h-[400px] md:h-[480px] lg:h-[520px] xl:h-[600px] 2xl:h-[680px] shadow-xl"
+              className="lg:col-span-6 relative w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[475px] xl:h-[600px] 2xl:h-[680px] shadow-xl"
             >
               <Image
                 src="/AboutUs/who-is-image.webp"
@@ -286,7 +286,7 @@ export default function AboutUsPage() {
 
               {/* Stamp Badges Row */}
               <div className="flex flex-wrap items-center gap-6 xl:gap-10 2xl:gap-20 pt-2">
-                <div className="relative w-44 sm:w-56 lg:w-52 xl:w-64 2xl:w-72 h-14 sm:h-18 lg:h-18 xl:h-20 2xl:h-24">
+                <div className="relative w-44 sm:w-56 lg:w-52 xl:w-64 2xl:w-72 h-10 sm:h-12 lg:h-12 xl:h-14 2xl:h-16">
                   <Image
                     src="/AboutUs/quality-is-our-promise.webp"
                     alt="Quality is our promise"
@@ -294,7 +294,7 @@ export default function AboutUsPage() {
                     className="object-contain object-left"
                   />
                 </div>
-                <div className="relative w-28 sm:w-36 lg:w-36 xl:w-44 2xl:w-52 h-14 sm:h-18 lg:h-18 xl:h-20 2xl:h-24">
+                <div className="relative w-28 sm:w-36 lg:w-36 xl:w-44 2xl:w-52 h-10 sm:h-12 lg:h-12 xl:h-14 2xl:h-16">
                   <Image
                     src="/AboutUs/keralas-original.webp"
                     alt="Kerala's Original Meat"
@@ -305,10 +305,10 @@ export default function AboutUsPage() {
               </div>
 
               {/* Circular Highlights badges */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:pt-3 2xl:pt-6">
                 {/* Highlight 1: Scientific Processing */}
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="w-14 h-14 relative hover:scale-105 transition-transform duration-300">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-12 lg:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 relative hover:scale-105 transition-transform duration-300">
                     <Image
                       src="/AboutUs/who-is-meatin-icons/scientific-procssing.svg"
                       alt="Scientific Processing"
@@ -323,7 +323,7 @@ export default function AboutUsPage() {
 
                 {/* Highlight 2: Hygienic Production */}
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="w-14 h-14 relative hover:scale-105 transition-transform duration-300">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-12 lg:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 relative hover:scale-105 transition-transform duration-300">
                     <Image
                       src="/AboutUs/who-is-meatin-icons/hygienic-production.svg"
                       alt="Hygienic Production"
@@ -338,7 +338,7 @@ export default function AboutUsPage() {
 
                 {/* Highlight 3: Halal Certified */}
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="w-14 h-14 relative hover:scale-105 transition-transform duration-300">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-12 lg:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 relative hover:scale-105 transition-transform duration-300">
                     <Image
                       src="/AboutUs/who-is-meatin-icons/halal-certified.svg"
                       alt="Halal Certified"
@@ -353,7 +353,7 @@ export default function AboutUsPage() {
 
                 {/* Highlight 4: Export Quality */}
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="w-14 h-14 relative hover:scale-105 transition-transform duration-300">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-12 lg:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 relative hover:scale-105 transition-transform duration-300">
                     <Image
                       src="/AboutUs/who-is-meatin-icons/export-quality.svg"
                       alt="Export Quality"
@@ -378,93 +378,151 @@ export default function AboutUsPage() {
         {/* Vertical Divider Line */}
         <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/10 z-10 hidden lg:block" />
 
-        {/* Floating Center MEATIN Logo Badge (visible on desktop) */}
+        {/* Floating Center MEATIN Logo Badge (visible on desktop screens) */}
         <div className="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 z-20 hidden lg:block">
-          <div className="relative w-24 h-24 rounded-full bg-white flex items-center justify-center shadow-lg border border-white/20">
-            {/* Decorative concentric thin circle */}
-            <div className="absolute -inset-2 rounded-full border border-[#1F5A3C]/20" />
-            <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden flex items-center justify-center p-1">
-              <Image
-                src="/logo.webp"
-                alt="MEATIN Logo"
-                width={70}
-                height={35}
-                className="object-contain"
-              />
+          <motion.div
+            initial={{ scale: 0.6, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+            className="w-full h-full"
+          >
+            <div className="relative w-24 h-24 rounded-full bg-white flex items-center justify-center shadow-lg border border-white/20">
+              {/* Decorative concentric thin circle */}
+              <div className="absolute -inset-2 rounded-full border border-[#1F5A3C]/20 animate-spin-slow" />
+              <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden flex items-center justify-center p-1">
+                <Image
+                  src="/logo.webp"
+                  alt="MEATIN Logo"
+                  width={70}
+                  height={35}
+                  className="object-contain w-[70px]"
+                />
+              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch min-h-[550px] lg:min-h-[700px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch min-h-[600px] lg:min-h-[780px] xl:min-h-[850px]">
 
           {/* Mission Box */}
-          <div className="relative px-6 pt-24 pb-64 sm:px-12 lg:px-20 lg:pt-32 lg:pb-76 flex flex-col justify-center text-white overflow-hidden min-h-[480px] lg:min-h-[700px]">
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[480px] lg:min-h-[780px] xl:min-h-[850px]"
+          >
             <Image
               src="/AboutUs/mission-bg.webp"
               alt="Our Mission background"
               fill
-              className="object-cover brightness-[0.35] z-0"
+              className="object-cover object-bottom z-0"
               sizes="50vw"
             />
+            {/* Full-height yellow-green overlay on mobile/tablet (1024px and below) for text contrast, and top-only (h-[65%]) overlay on desktop */}
+            <div className="absolute inset-0 lg:bottom-auto lg:h-[65%] bg-gradient-to-b from-[#E2F2B6]/95 via-[#E2F2B6]/85 lg:via-[#E2F2B6]/60 to-transparent z-0 pointer-events-none" />
+            
             <div className="relative z-10 space-y-6">
-              <div className="relative">
-                <span className="absolute -top-8 left-0 text-[130px] font-black text-white/15 select-none leading-none z-0">01</span>
-                <div className="relative z-10">
-                  <span className="text-[#D4A437] font-black text-xs sm:text-sm tracking-wider uppercase block mb-1">OUR</span>
-                  <h2 className="text-5xl sm:text-6xl font-black text-[#D62828] font-barlow-condensed tracking-tight uppercase leading-none">MISSION</h2>
-                  <div className="h-[4px] w-20 bg-[#1F5A3C] mt-3" />
-                </div>
+              <div className="relative w-72 sm:w-80 md:w-96 lg:w-[350px] xl:w-[380px] 2xl:w-[410px] h-24 sm:h-28 md:h-32 lg:h-[135px] xl:h-[145px] 2xl:h-[155px]">
+                <Image
+                  src="/AboutUs/mission-vision/mission-text.svg"
+                  alt="Our Mission"
+                  fill
+                  className="object-contain object-left"
+                  priority
+                />
               </div>
-              <p className="text-base sm:text-lg text-slate-200 font-medium leading-relaxed max-w-lg relative z-10">
-                Build value-added meat products, farming, and food supply chains while delivering <span className="text-[#D62828] font-bold">quality, service</span> and a <span className="text-[#D62828] font-bold">sustainable</span> food system.
+              <p
+                style={{ lineHeight: '1.5' }}
+                className="text-lg sm:text-xl lg:text-xl xl:text-[21px] text-black font-normal max-w-xl lg:max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%] relative z-10 font-manrope tracking-tight"
+              >
+                Build value-added meat products, farming and food supply chains while delivering <span className="text-[#B71C1C] font-semibold">quality, service</span> and a <span className="text-[#B71C1C] font-semibold">sustainable</span> food system.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Vision Box */}
-          <div className="relative px-6 pt-24 pb-64 sm:px-12 lg:px-20 lg:pt-32 lg:pb-80 flex flex-col justify-center text-white overflow-hidden min-h-[480px] lg:min-h-[700px]">
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[480px] lg:min-h-[780px] xl:min-h-[850px]"
+          >
+            {/* Floating Center MEATIN Logo Badge (Mobile/Tablet only, anchored directly to top seam) */}
+            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-20 lg:hidden">
+              <motion.div
+                initial={{ scale: 0.6, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, type: "spring", stiffness: 100, delay: 0.3 }}
+                className="w-full h-full"
+              >
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white flex items-center justify-center shadow-lg border border-white/20">
+                  <div className="absolute -inset-1.5 sm:-inset-2 rounded-full border border-[#1F5A3C]/20 animate-spin-slow" />
+                  <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden flex items-center justify-center p-1">
+                    <Image
+                      src="/logo.webp"
+                      alt="MEATIN logo"
+                      width={70}
+                      height={35}
+                      className="object-contain w-10 sm:w-12"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
             <Image
               src="/AboutUs/vision-bg.webp"
               alt="Our Vision background"
               fill
-              className="object-cover brightness-[0.35] z-0"
+              className="object-cover z-0"
               sizes="50vw"
             />
+            {/* Full-height vertical spruce green overlay on mobile/tablet, and left-to-right spruce green gradient on desktop to keep right workers sharp */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#081a11]/95 via-[#081a11]/75 to-[#081a11]/45 lg:bg-gradient-to-r lg:from-[#081a11]/90 lg:via-[#081a11]/60 lg:to-transparent z-0 pointer-events-none" />
+            
             <div className="relative z-10 space-y-6">
-              <div className="relative">
-                <span className="absolute -top-8 left-0 text-[130px] font-black text-white/15 select-none leading-none z-0">02</span>
-                <div className="relative z-10">
-                  <span className="text-[#D4A437] font-black text-xs sm:text-sm tracking-wider uppercase block mb-1">OUR</span>
-                  <h2 className="text-5xl sm:text-6xl font-black text-[#7CB325] font-barlow-condensed tracking-tight uppercase leading-none">VISION</h2>
-                  <div className="h-[4px] w-20 bg-[#1F5A3C] mt-3" />
-                </div>
+              <div className="relative w-72 sm:w-80 md:w-96 lg:w-[350px] xl:w-[380px] 2xl:w-[410px] h-24 sm:h-28 md:h-32 lg:h-[135px] xl:h-[145px] 2xl:h-[155px]">
+                <Image
+                  src="/AboutUs/mission-vision/vision-text.svg"
+                  alt="Our Vision"
+                  fill
+                  className="object-contain object-left"
+                  priority
+                />
               </div>
-              <p className="text-base sm:text-lg text-slate-200 font-medium leading-relaxed max-w-lg relative z-10">
-                Become a leader in <span className="text-[#7CB325] font-bold">value-added</span> meat processing and a trusted premium-quality food supplier.
+              <p
+                style={{ lineHeight: '1.5' }}
+                className="text-lg sm:text-xl lg:text-xl xl:text-[21px] text-white font-normal max-w-xl lg:max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%] relative z-10 font-manrope tracking-tight"
+              >
+                Become a leader in <span className="text-[#8CC63F] font-semibold">value-added</span> meat processing and a trusted premium-quality food supplier.
               </p>
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
         {/* 5. FLOATING CORE VALUES CONTAINER CARD */}
-        <div className="absolute bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 w-full max-w-[950px] lg:max-w-[55vw] px-4 sm:px-6 lg:px-8 z-20">
+        <div className="relative lg:absolute lg:bottom-12 left-0 lg:left-1/2 lg:-translate-x-1/2 w-full max-w-[1100px] lg:max-w-[65vw] px-4 sm:px-6 lg:px-8 mx-auto lg:mx-0 -mt-20 lg:-mt-0 z-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-[#F6F5F0] rounded-[32px] border border-[#E5EAE1] shadow-[0_12px_36px_rgba(0,0,0,0.06)] p-5 sm:p-6 lg:py-6 lg:px-8 text-center space-y-6"
+            className="bg-[#F6F5F0] rounded-[32px] border border-[#E5EAE1] shadow-[0_12px_36px_rgba(0,0,0,0.06)] p-4 sm:p-5 lg:py-5 lg:px-8 xl:px-12 text-center space-y-4"
           >
-            <h3 className="text-xs sm:text-sm font-bold text-[#1F5A3C] tracking-widest uppercase flex items-center justify-center gap-3">
-              <span className="w-10 h-[2px] bg-[#D62828]" /> OUR VALUES <span className="w-10 h-[2px] bg-[#7CB325]" />
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#1F5A3C] tracking-tight uppercase flex items-center justify-center gap-3 sm:gap-4 font-barlow leading-none">
+              <span className="w-8 sm:w-12 h-[2px] bg-[#D62828]" /> OUR VALUES <span className="w-8 sm:w-12 h-[2px] bg-[#D62828]" />
             </h3>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-4 divide-y sm:divide-y-0 lg:divide-x divide-[#E2E8DC] items-start">
+            <div className="grid grid-cols-2 lg:grid-cols-[0.85fr_1fr_1fr_1.15fr] gap-y-6 lg:gap-y-0 divide-y divide-[#7CB325]/30 sm:divide-y-0 lg:divide-y-0 lg:divide-x lg:divide-[#7CB325] w-full items-start">
               {coreValues.map((val, idx) => {
                 return (
-                  <div key={idx} className="flex flex-col items-center text-center px-4 pt-4 sm:pt-0 border-t border-[#E2E8DC] sm:border-t-0">
+                  <div key={idx} className="flex flex-col items-center text-center px-2 sm:px-4 lg:px-6 pt-4 sm:pt-0 border-t border-[#7CB325]/30 sm:border-t-0 lg:border-t-0">
                     {/* SVG Vector Icon (Direct render without circular bg) */}
-                    <div className="relative w-10 h-10 mb-2">
+                    <div className="relative w-9 h-9 sm:w-10 sm:h-10 lg:w-10 lg:h-10 xl:w-12 xl:h-12 mb-1.5">
                       <Image
                         src={val.icon}
                         alt={val.title}
@@ -472,8 +530,15 @@ export default function AboutUsPage() {
                         className="object-contain"
                       />
                     </div>
-                    <h4 className="text-[17px] sm:text-[19px] font-black text-[#1F5A3C] font-barlow-condensed tracking-wide uppercase mb-1 leading-none">{val.title}</h4>
-                    <p className="text-[12px] text-slate-500 font-semibold leading-normal max-w-[160px] mx-auto">{val.desc}</p>
+                    <h4 className="text-base sm:text-[17px] lg:text-[15px] xl:text-[18px] 2xl:text-[21px] font-bold text-[#127431] font-barlow tracking-wide uppercase mb-1 leading-none whitespace-nowrap">{val.title}</h4>
+                    <p className="text-xs sm:text-sm lg:text-[13px] xl:text-sm 2xl:text-[15px] text-slate-700 font-normal leading-normal max-w-[140px] sm:max-w-[160px] lg:max-w-[150px] xl:max-w-[185px] mx-auto">
+                      {val.desc.split('\n').map((line, lIdx) => (
+                        <React.Fragment key={lIdx}>
+                          {line}
+                          {lIdx < val.desc.split('\n').length - 1 && <br />}
+                        </React.Fragment>
+                      ))}
+                    </p>
                   </div>
                 );
               })}
