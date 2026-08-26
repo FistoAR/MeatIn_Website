@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import {
   Building2,
   Warehouse,
@@ -18,6 +18,44 @@ import {
   FlaskConical
 } from 'lucide-react';
 import TrustedQualityBanner from '@/components/layout/TrustedQualityBanner';
+
+function Counter({ value }: { value: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const [count, setCount] = useState(0);
+
+  const numericString = value.replace(/[^\d]/g, '');
+  const suffix = value.replace(/[\d,]/g, '');
+  const target = parseInt(numericString, 10) || 0;
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    const duration = 2000; // 2 seconds
+    const startTime = performance.now();
+    let animationFrameId: number;
+
+    const updateCount = (timestamp: number) => {
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3); // Cubic ease out
+      setCount(Math.floor(easeProgress * target));
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(updateCount);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(updateCount);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isInView, target]);
+
+  return (
+    <span ref={ref}>
+      {count.toLocaleString()}
+      {suffix}
+    </span>
+  );
+}
 
 export default function AboutUsPage() {
   const stats = [
@@ -161,7 +199,7 @@ export default function AboutUsPage() {
                   <div key={idx} className="flex flex-col items-start text-left px-2 sm:px-4 lg:px-6 lg:first:pl-0 lg:last:pr-0 col-span-1 last:col-span-2 lg:last:col-span-1">
                     {/* Big Value Number */}
                     <div className="text-3xl sm:text-4xl lg:text-[2.2vw] xl:text-[2.4rem] font-medium text-[#8CC63F] font-chau tracking-tight leading-none">
-                      {stat.value}
+                      <Counter value={stat.value} />
                     </div>
                     {/* Red underline bar under the number */}
                     <div className="w-10 sm:w-12 lg:w-10 h-[2px] bg-[#D62828] mt-1.5 mb-3" />
@@ -189,9 +227,9 @@ export default function AboutUsPage() {
       </section>
 
       {/* 3. WHO IS MEATIN SECTION */}
-      <section className="relative w-full py-16 md:py-24 bg-[#F3F3F3] overflow-hidden">
+      <section className="relative w-full py-14 md:py-18 bg-[#F3F3F3] overflow-hidden">
         {/* Background pattern image */}
-        <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.8]">
           <Image
             src="/AboutUs/who-is-bg.webp"
             alt="Background Pattern"
@@ -200,7 +238,7 @@ export default function AboutUsPage() {
             priority
           />
           {/* Soft overlay to tone down background doodles exactly like the reference image */}
-          <div className="absolute inset-0 bg-[#F3F3F3]/90" />
+          {/* <div className="absolute inset-0 bg-[#F3F3F3]/90" /> */}
         </div>
 
         <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -212,7 +250,7 @@ export default function AboutUsPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-6 relative w-full h-[300px] sm:h-[450px] lg:h-[530px] shadow-xl"
+              className="lg:col-span-6 relative w-full h-[280px] sm:h-[400px] md:h-[480px] lg:h-[520px] xl:h-[600px] 2xl:h-[680px] shadow-xl"
             >
               <Image
                 src="/AboutUs/who-is-image.webp"
@@ -232,7 +270,7 @@ export default function AboutUsPage() {
               className="lg:col-span-6 space-y-6"
             >
               <div className="space-y-2">
-                <h2 className="text-5xl sm:text-6xl font-black font-barlow-condensed tracking-tight uppercase leading-none">
+                <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4vw] xl:text-[4.5vw] 2xl:text-[5.5rem] font-bold font-barlow-condensed tracking-normal uppercase leading-none">
                   <span className="text-[#1F5A3C] block">WHO IS</span>
                   <span className="text-[#D62828] block">MEATIN?</span>
                 </h2>
@@ -240,15 +278,15 @@ export default function AboutUsPage() {
               </div>
 
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-[#153520]">Building a better meat ecosystem.</h3>
-                <p className="text-sm sm:text-base text-slate-700 font-medium leading-relaxed">
-                  MEATIN delivers safe, hygienic meat through scientific processing and controlled cold-chain systems, built on quality, safety, and halal-certified standards. Our integrated approach ensures reliable production and distribution. From responsible sourcing to advanced infrastructure, we are building a better meat ecosystem.
+                <h3 className="text-lg sm:text-xl font-bold text-[#153520]">Building a better meat ecosystem.</h3>
+                <p className="text-xs sm:text-sm lg:text-[13px] xl:text-sm 2xl:text-base text-slate-700 font-medium leading-relaxed max-w-[600px]">
+                  MEATIN delivers safe, hygienic meat through scientific processing and controlled cold-chain systems. Built on quality, safety, and Halal-certified standards, our integrated approach ensures reliable production and distribution. From responsible sourcing to advanced infrastructure, we are building a better meat ecosystem.
                 </p>
               </div>
 
               {/* Stamp Badges Row */}
-              <div className="flex flex-wrap items-center gap-6 pt-2">
-                <div className="relative w-48 sm:w-56 h-20">
+              <div className="flex flex-wrap items-center gap-6 xl:gap-10 2xl:gap-20 pt-2">
+                <div className="relative w-44 sm:w-56 lg:w-52 xl:w-64 2xl:w-72 h-14 sm:h-18 lg:h-18 xl:h-20 2xl:h-24">
                   <Image
                     src="/AboutUs/quality-is-our-promise.webp"
                     alt="Quality is our promise"
@@ -256,7 +294,7 @@ export default function AboutUsPage() {
                     className="object-contain object-left"
                   />
                 </div>
-                <div className="relative w-32 sm:w-40 h-20">
+                <div className="relative w-28 sm:w-36 lg:w-36 xl:w-44 2xl:w-52 h-14 sm:h-18 lg:h-18 xl:h-20 2xl:h-24">
                   <Image
                     src="/AboutUs/keralas-original.webp"
                     alt="Kerala's Original Meat"
@@ -267,47 +305,63 @@ export default function AboutUsPage() {
               </div>
 
               {/* Circular Highlights badges */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-300">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
                 {/* Highlight 1: Scientific Processing */}
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="w-14 h-14 rounded-full bg-[#8CC63F] flex items-center justify-center text-white shadow-md hover:scale-105 transition-transform duration-300">
-                    <FlaskConical className="w-9 h-9" />
+                  <div className="w-14 h-14 relative hover:scale-105 transition-transform duration-300">
+                    <Image
+                      src="/AboutUs/who-is-meatin-icons/scientific-procssing.svg"
+                      alt="Scientific Processing"
+                      fill
+                      className="object-contain"
+                    />
                   </div>
-                  <span className="text-[10.5px] font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
+                  <span className="text-[10px] sm:text-[11px] lg:text-[10px] xl:text-xs 2xl:text-sm !mt-3 font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
                     SCIENTIFIC<br />PROCESSING
                   </span>
                 </div>
 
                 {/* Highlight 2: Hygienic Production */}
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="w-14 h-14 rounded-full bg-[#8CC63F] flex items-center justify-center text-white shadow-md hover:scale-105 transition-transform duration-300">
-                    <ShieldCheck className="w-9 h-9" />
+                  <div className="w-14 h-14 relative hover:scale-105 transition-transform duration-300">
+                    <Image
+                      src="/AboutUs/who-is-meatin-icons/hygienic-production.svg"
+                      alt="Hygienic Production"
+                      fill
+                      className="object-contain"
+                    />
                   </div>
-                  <span className="text-[10.5px] font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
+                  <span className="text-[10px] sm:text-[11px] lg:text-[10px] xl:text-xs 2xl:text-sm !mt-3 font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
                     HYGIENIC<br />PRODUCTION
                   </span>
                 </div>
 
                 {/* Highlight 3: Halal Certified */}
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="w-14 h-14 rounded-full bg-[#8CC63F] flex items-center justify-center text-white shadow-md hover:scale-105 transition-transform duration-300">
-                    <svg viewBox="0 0 24 24" className="w-11.5 h-11.5 fill-current text-white">
-                      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.2" />
-                      <text x="12" y="11.5" textAnchor="middle" fontSize="6.5" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">حلال</text>
-                      <text x="12" y="16.5" textAnchor="middle" fontSize="4.2" fontWeight="900" fontFamily="sans-serif" fill="currentColor">HALAL</text>
-                    </svg>
+                  <div className="w-14 h-14 relative hover:scale-105 transition-transform duration-300">
+                    <Image
+                      src="/AboutUs/who-is-meatin-icons/halal-certified.svg"
+                      alt="Halal Certified"
+                      fill
+                      className="object-contain"
+                    />
                   </div>
-                  <span className="text-[10.5px] font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
+                  <span className="text-[10px] sm:text-[11px] lg:text-[10px] xl:text-xs 2xl:text-sm !mt-3 font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
                     HALAL<br />CERTIFIED
                   </span>
                 </div>
 
                 {/* Highlight 4: Export Quality */}
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="w-14 h-14 rounded-full bg-[#8CC63F] flex items-center justify-center text-white shadow-md hover:scale-105 transition-transform duration-300">
-                    <Globe className="w-9 h-9" />
+                  <div className="w-14 h-14 relative hover:scale-105 transition-transform duration-300">
+                    <Image
+                      src="/AboutUs/who-is-meatin-icons/export-quality.svg"
+                      alt="Export Quality"
+                      fill
+                      className="object-contain"
+                    />
                   </div>
-                  <span className="text-[10.5px] font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
+                  <span className="text-[10px] sm:text-[11px] lg:text-[10px] xl:text-xs 2xl:text-sm !mt-3 font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
                     EXPORT<br />QUALITY
                   </span>
                 </div>
