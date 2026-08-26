@@ -3,17 +3,17 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { 
-  Building2, 
-  Warehouse, 
-  Truck, 
-  Scale, 
-  MapPin, 
-  ShieldCheck, 
-  Globe, 
-  Gem, 
-  Award, 
-  Leaf, 
+import {
+  Building2,
+  Warehouse,
+  Truck,
+  Scale,
+  MapPin,
+  ShieldCheck,
+  Globe,
+  Gem,
+  Award,
+  Leaf,
   Users,
   FlaskConical
 } from 'lucide-react';
@@ -25,31 +25,31 @@ export default function AboutUsPage() {
       value: "30+",
       label: "ACRES",
       desc: "OF INTEGRATED LAND",
-      icon: MapPin
+      icon: "/AboutUs/about-hero-icons/acres-icon.svg"
     },
     {
       value: "82,000+",
       label: "SQ.FT.",
       desc: "OF PLANT SPACE",
-      icon: Building2
+      icon: "/AboutUs/about-hero-icons/sq-ft-icon.svg"
     },
     {
       value: "45,000+",
       label: "KG",
       desc: "PROCESSING CAPACITY",
-      icon: Scale
+      icon: "/AboutUs/about-hero-icons/kg-icon.svg"
     },
     {
       value: "300+",
       label: "TONS",
       desc: "COLD STORAGE CAPACITY",
-      icon: Warehouse
+      icon: "/AboutUs/about-hero-icons/tons-icon.svg"
     },
     {
       value: "15+",
       label: "VEHICLES",
       desc: "IN LOGISTICS NETWORK",
-      icon: Truck
+      icon: "/AboutUs/about-hero-icons/vehicles-icon.svg"
     }
   ];
 
@@ -101,9 +101,9 @@ export default function AboutUsPage() {
 
   return (
     <div className="min-h-screen bg-[#F3F3F3] font-manrope overflow-x-hidden">
-      
+
       {/* 1. HERO HEADER BANNER SECTION WITH INTEGRATED STATS */}
-      <section className="relative w-full bg-black pt-[2.5rem] pb-10 md:pb-16 lg:pb-20 overflow-hidden flex flex-col justify-between">
+      <section className="relative w-full bg-black pt-[6rem] sm:pt-[6.5rem] lg:pt-[7rem] xl:pt-[7.5rem] pb-10 md:pb-16 lg:pb-8 xl:pb-10 2xl:pb-12 overflow-hidden flex flex-col justify-between">
         {/* Background Image Overlay with full opacity from public folder */}
         <div className="absolute inset-0 pointer-events-none z-0 bg-black">
           {/* On desktop: image is positioned on the right half (width 55%, starting at 45% left) */}
@@ -113,19 +113,20 @@ export default function AboutUsPage() {
               alt="MEATIN Integrated Farming"
               fill
               priority
-              className="object-cover object-left"
+              className="object-cover object-[30%_center] sm:object-left"
             />
             {/* Horizontal fade gradient on desktop to blend the image's left edge into the solid black background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/30 to-transparent hidden lg:block" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/65 to-transparent hidden lg:block" />
           </div>
 
           {/* Vignette and dark overlays for mobile / bottom fade */}
           <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-t from-black via-black/95 to-transparent hidden lg:block" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/45 to-black/95 lg:hidden" />
+          <div className="absolute inset-0 bg-black/55 lg:hidden" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/95 lg:hidden" />
         </div>
 
         {/* Top/Middle Heading Content */}
-        <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-6 sm:px-8 lg:px-12 relative z-10 flex-1 flex flex-col justify-center my-8 md:my-12">
+        <div className="w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-6 sm:px-8 lg:px-[2.5vw] relative z-10 flex-1 flex flex-col justify-center my-6 lg:my-8 xl:my-10 2xl:my-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -135,7 +136,7 @@ export default function AboutUsPage() {
             <h2 className="text-[#D4A437] font-extrabold font-manrope tracking-widest text-sm sm:text-md uppercase flex items-center gap-2">
               <span className="w-6 h-[2px] bg-[#D4A437]" /> WHAT IS MEATIN?
             </h2>
-            <h1 className="text-5xl sm:text-6xl md:text-7.5xl lg:text-[5.5vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[6.2vw] xl:text-[6.5vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
               <span className="text-white block">WE ENGINEER</span>
               <span className="text-[#8CC63F] block">QUALITY INTO</span>
               <span className="text-white block">EVERY CUT.</span>
@@ -147,32 +148,36 @@ export default function AboutUsPage() {
         </div>
 
         {/* Bottom Stats Row */}
-        <div className="w-full max-w-[1200px] lg:max-w-[90vw] mx-auto px-6 sm:px-8 lg:px-16 relative z-10 pb-8">
+        <div className="w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-6 sm:px-8 lg:px-[2.5vw] relative z-10 pb-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="w-full pt-4"
           >
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-8 md:gap-y-10 lg:gap-y-0 divide-y sm:divide-y-0 lg:divide-x items-start">
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8 lg:gap-y-0 lg:divide-x lg:divide-white/20 items-start">
               {stats.map((stat, idx) => {
-                const Icon = stat.icon;
                 return (
-                  <div key={idx} className="flex flex-col items-start text-left pt-6 sm:pt-0 px-3 lg:px-6 first:pl-0 last:pr-0 border-t border-white/20 sm:border-t-0">
+                  <div key={idx} className="flex flex-col items-start text-left px-2 sm:px-4 lg:px-6 lg:first:pl-0 lg:last:pr-0 col-span-1 last:col-span-2 lg:last:col-span-1">
                     {/* Big Value Number */}
-                    <div className="text-5xl sm:text-5xl font-bold text-[#8CC63F] font-barlow-condensed tracking-tight leading-none">
+                    <div className="text-3xl sm:text-4xl lg:text-[2.2vw] xl:text-[2.4rem] font-medium text-[#8CC63F] font-chau tracking-tight leading-none">
                       {stat.value}
                     </div>
                     {/* Red underline bar under the number */}
-                    <div className="w-14 h-[2px] bg-[#D62828] mt-2 mb-4" />
+                    <div className="w-10 sm:w-12 lg:w-10 h-[2px] bg-[#D62828] mt-1.5 mb-3" />
                     {/* Icon + Stacked Labels */}
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 rounded-full border border-[#8CC63F]/80 flex items-center justify-center text-[#8CC63F] shrink-0">
-                        <Icon className="w-4 h-4" />
+                    <div className="flex items-center gap-2 sm:gap-2.5">
+                      <div className="w-8 h-8 sm:w-9 sm:h-9 lg:w-8 lg:h-8 shrink-0 relative">
+                        <Image
+                          src={stat.icon}
+                          alt={stat.label}
+                          fill
+                          className="object-contain"
+                        />
                       </div>
                       <div className="text-left">
-                        <h4 className="text-xs md:text-sm sm:text-xs font-bold text-[#D4A437] tracking-wider leading-tight uppercase font-barlow-condensed">{stat.label}</h4>
-                        <p className="text-xs sm:text-[10px] lg:text-xs text-slate-300 font-semibold tracking-wide uppercase leading-tight mt-0.5 font-manrope">{stat.desc}</p>
+                        <h4 className="text-[10px] sm:text-xs lg:text-xs xl:text-sm font-bold text-[#D4A437] tracking-wider leading-tight uppercase font-barlow-condensed">{stat.label}</h4>
+                        <p className="text-[9px] sm:text-[10px] lg:text-[10px] xl:text-xs text-slate-300 font-semibold tracking-wide uppercase leading-tight mt-0.5 font-manrope">{stat.desc}</p>
                       </div>
                     </div>
                   </div>
@@ -200,7 +205,7 @@ export default function AboutUsPage() {
 
         <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-            
+
             {/* Left Side: Plant Image */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -269,7 +274,7 @@ export default function AboutUsPage() {
                     <FlaskConical className="w-9 h-9" />
                   </div>
                   <span className="text-[10.5px] font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
-                    SCIENTIFIC<br/>PROCESSING
+                    SCIENTIFIC<br />PROCESSING
                   </span>
                 </div>
 
@@ -279,7 +284,7 @@ export default function AboutUsPage() {
                     <ShieldCheck className="w-9 h-9" />
                   </div>
                   <span className="text-[10.5px] font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
-                    HYGIENIC<br/>PRODUCTION
+                    HYGIENIC<br />PRODUCTION
                   </span>
                 </div>
 
@@ -293,7 +298,7 @@ export default function AboutUsPage() {
                     </svg>
                   </div>
                   <span className="text-[10.5px] font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
-                    HALAL<br/>CERTIFIED
+                    HALAL<br />CERTIFIED
                   </span>
                 </div>
 
@@ -303,7 +308,7 @@ export default function AboutUsPage() {
                     <Globe className="w-9 h-9" />
                   </div>
                   <span className="text-[10.5px] font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
-                    EXPORT<br/>QUALITY
+                    EXPORT<br />QUALITY
                   </span>
                 </div>
               </div>
@@ -337,7 +342,7 @@ export default function AboutUsPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch min-h-[550px] lg:min-h-[700px]">
-          
+
           {/* Mission Box */}
           <div className="relative px-6 pt-24 pb-64 sm:px-12 lg:px-20 lg:pt-32 lg:pb-76 flex flex-col justify-center text-white overflow-hidden min-h-[480px] lg:min-h-[700px]">
             <Image
