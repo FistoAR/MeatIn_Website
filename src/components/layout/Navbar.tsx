@@ -26,6 +26,7 @@ const navItems: NavItem[] = [
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -36,12 +37,48 @@ export const Navbar: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
+  // Track scroll depth to toggle scrolled appearance
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isDarkPage = pathname === '/about' || pathname === '/contact' || pathname.startsWith('/products');
+
+  const containerBgClass = scrolled
+    ? 'bg-white/95 border-slate-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'
+    : 'bg-white/15 backdrop-blur-md border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.15)]';
+
+  const getLinkColorClass = (isActive: boolean) => {
+    if (isActive) {
+      if (scrolled) return 'text-[#D62828]';
+      return isDarkPage ? 'text-[#7CB325]' : 'text-[#D62828]';
+    }
+    if (scrolled) return 'text-slate-800 hover:text-[#1F5A3C]';
+    return isDarkPage ? 'text-white/95 hover:text-white' : 'text-slate-800 hover:text-[#1F5A3C]';
+  };
+
+  const getUnderlineColorClass = () => {
+    if (scrolled) return 'bg-[#D62828]';
+    return isDarkPage ? 'bg-[#7CB325]' : 'bg-[#D62828]';
+  };
+
+  const hamburgerColorClass = scrolled
+    ? 'text-slate-800 hover:bg-slate-100'
+    : isDarkPage
+      ? 'text-white hover:bg-white/10'
+      : 'text-slate-800 hover:bg-white/10';
+
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 w-full p-4 lg:p-[1vw] pointer-events-none">
-        <div className="w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw] py-2 lg:py-[0.5vw] flex items-center justify-between font-inter bg-white/15 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.15)] rounded-[20px] pointer-events-auto">
+        <div className={`w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw] py-2 lg:py-[0.5vw] flex items-center justify-between font-inter border transition-all duration-300 rounded-[20px] pointer-events-auto ${containerBgClass}`}>
           {/* Logo */}
-          <Logo variant="light" className="shrink-0" />
+          <Logo variant={scrolled ? 'dark' : (isDarkPage ? 'light' : 'dark')} className="shrink-0" />
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-[1.8vw] whitespace-nowrap">
@@ -52,15 +89,11 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`relative lg:text-[0.75vw] xl:text-[0.8vw] font-black font-inter tracking-wider transition-all duration-200 lg:px-[0.2vw] lg:py-[0.4vw] ${
-                    isActive
-                      ? 'text-[#D62828]'
-                      : 'text-slate-800 hover:text-[#1F5A3C]'
-                  }`}
+                  className={`relative lg:text-[0.75vw] xl:text-[0.8vw] font-black font-inter tracking-wider transition-all duration-200 lg:px-[0.2vw] lg:py-[0.4vw] ${getLinkColorClass(isActive)}`}
                 >
                   {item.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 lg:h-[0.14vw] bg-[#D62828] rounded-full" />
+                    <span className={`absolute bottom-0 left-0 right-0 lg:h-[0.14vw] rounded-full ${getUnderlineColorClass()}`} />
                   )}
                 </Link>
               );
@@ -80,7 +113,7 @@ export const Navbar: React.FC = () => {
             <button
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Toggle navigation menu"
-              className="lg:hidden p-2 rounded-xl text-slate-800 hover:bg-white/10 transition-colors"
+              className={`lg:hidden p-2 rounded-xl transition-colors ${hamburgerColorClass}`}
             >
               <Menu className="w-6 h-6" />
             </button>

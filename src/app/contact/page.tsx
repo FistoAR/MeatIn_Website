@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp, CheckCircle } from 'lucide-react';
@@ -78,6 +78,18 @@ export default function ContactPage() {
 
   // FAQ accordion state
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const enquiryTypes = [
     'General Enquiry',
@@ -255,7 +267,7 @@ export default function ContactPage() {
                   </div>
 
                   {/* Enquiry Type Dropdown */}
-                  <div className="space-y-1.5 relative">
+                  <div className="space-y-1.5 relative" ref={dropdownRef}>
                     <div className="flex items-center gap-2 mb-1">
                       <div className="relative w-5 h-5">
                         <Image
@@ -297,7 +309,7 @@ export default function ContactPage() {
                                   return next;
                                 });
                               }}
-                              className={`w-full text-left px-4 py-2.5 transition-colors ${enquiryType === type ? 'bg-[#395B20] text-white' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
+                              className={`w-full text-left px-4 py-2.5 transition-colors ${enquiryType === type ? 'bg-[#EEF6E8] text-[#395B20] font-semibold' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
                             >
                               {type}
                             </button>
