@@ -132,7 +132,7 @@ export const Footer: React.FC = () => {
         />
       </div>
 
-      <Container className="relative z-10 max-w-full px-2 sm:px-4 lg:px-[1.5vw]">
+      <Container className="relative z-10 max-w-full px-5 sm:px-6 lg:px-[1.5vw]">
         
         {/* Main Flex Container */}
         <div className="flex flex-col lg:flex-row justify-between items-stretch gap-8 lg:gap-0 pb-10 border-b border-white/20 w-full">
@@ -234,7 +234,7 @@ export const Footer: React.FC = () => {
 
           {/* Links and Contact Wrapper (Tracks Hover State to pause auto-hover) */}
           <div 
-            className="flex flex-col sm:flex-row justify-between items-stretch gap-8 lg:gap-0 w-full lg:w-[62%]"
+            className="grid grid-cols-2 sm:flex sm:flex-row justify-between items-stretch gap-6 sm:gap-0 w-full lg:w-[62%]"
             onMouseEnter={() => setIsUserHovering(true)}
             onMouseLeave={() => setIsUserHovering(false)}
           >
@@ -261,7 +261,7 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/"
-                    className={`flex items-center gap-3.5 whitespace-nowrap origin-left ${getHighlightClass(0)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(0)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -272,7 +272,7 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/about"
-                    className={`flex items-center gap-3.5 whitespace-nowrap origin-left ${getHighlightClass(1)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(1)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -283,7 +283,7 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/know-your-meat"
-                    className={`flex items-center gap-3.5 whitespace-nowrap origin-left ${getHighlightClass(2)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(2)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -294,7 +294,7 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/products"
-                    className={`flex items-center gap-3.5 whitespace-nowrap origin-left ${getHighlightClass(3)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(3)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -305,7 +305,7 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/why-choose-us"
-                    className={`flex items-center gap-3.5 whitespace-nowrap origin-left ${getHighlightClass(4)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(4)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -316,7 +316,7 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/contact"
-                    className={`flex items-center gap-3.5 whitespace-nowrap origin-left ${getHighlightClass(5)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(5)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -350,7 +350,7 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/recipes"
-                    className={`flex items-center gap-3.5 whitespace-nowrap origin-left ${getHighlightClass(6)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(6)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -361,7 +361,7 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/franchise"
-                    className={`flex items-center gap-3.5 whitespace-nowrap origin-left ${getHighlightClass(7)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(7)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -372,7 +372,7 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/team"
-                    className={`flex items-center gap-3.5 whitespace-nowrap origin-left ${getHighlightClass(8)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(8)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -383,7 +383,7 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/blog"
-                    className={`flex items-center gap-3.5 whitespace-nowrap origin-left ${getHighlightClass(9)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(9)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -394,7 +394,7 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/career"
-                    className={`flex items-center gap-3.5 whitespace-nowrap origin-left ${getHighlightClass(10)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(10)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -411,7 +411,7 @@ export const Footer: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, amount: 0.1 }}
               transition={{ duration: 0.9, delay: 0.3, ease: 'easeOut' }}
-              className="w-full sm:w-[50%] lg:w-[35%] space-y-6 shrink-0 lg:pl-8 pb-6 lg:pb-0"
+              className="col-span-2 sm:col-span-1 w-full sm:w-[50%] lg:w-[35%] space-y-6 shrink-0 lg:pl-8 pb-6 lg:pb-0"
             >
               <div className="border-b-2 border-[#FFB300] pb-1 w-fit">
                 <h3 className="font-chau text-base sm:text-lg text-white tracking-wide uppercase">
