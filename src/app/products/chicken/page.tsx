@@ -81,8 +81,52 @@ export default function ChickenProductPage() {
     img: string;
     name: string;
     startRect: { top: number; left: number; width: number; height: number };
+    targetRect?: { top: number; left: number; width: number; height: number };
     timestamp: number;
   } | null>(null);
+
+  useEffect(() => {
+    if (animatingPart && !animatingPart.targetRect && centerCircleRef.current) {
+      const updateTarget = () => {
+        if (!centerCircleRef.current) return;
+        const cr = centerCircleRef.current.getBoundingClientRect();
+        if (cr.width > 0 && cr.height > 0) {
+          let targetY = 0;
+          if (
+            detailsSectionRef.current &&
+            detailsSectionRef.current.offsetTop > 0
+          ) {
+            targetY = detailsSectionRef.current.offsetTop;
+          } else if (containerRef.current) {
+            targetY =
+              containerRef.current.offsetTop +
+              containerRef.current.offsetHeight;
+          }
+          const currentScrollY =
+            window.pageYOffset || document.documentElement.scrollTop;
+          const scrollDiff = targetY - currentScrollY;
+
+          setAnimatingPart((prev) =>
+            prev
+              ? {
+                  ...prev,
+                  targetRect: {
+                    top: cr.top - scrollDiff + cr.height / 2,
+                    left: cr.left + cr.width / 2,
+                    width: cr.width,
+                    height: cr.height,
+                  },
+                }
+              : null,
+          );
+        }
+      };
+
+      updateTarget();
+      const raf = requestAnimationFrame(updateTarget);
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [animatingPart, hasSelectedAnyPart]);
 
   const handlePartClick = (
     e: React.MouseEvent<HTMLElement>,
@@ -93,6 +137,11 @@ export default function ChickenProductPage() {
 
     setHasSelectedAnyPart(true);
     setIsLandedInSection2(false);
+
+    if (detailsSectionRef.current) {
+      detailsSectionRef.current.classList.remove("hidden");
+      detailsSectionRef.current.classList.add("block");
+    }
 
     const targetEl = e.currentTarget;
     const circleEl =
@@ -106,6 +155,62 @@ export default function ChickenProductPage() {
     const startWidth = r.width || 85;
     const startHeight = r.height || 85;
 
+    let targetY = 0;
+    if (detailsSectionRef.current && detailsSectionRef.current.offsetTop > 0) {
+      targetY = detailsSectionRef.current.offsetTop;
+    } else if (containerRef.current) {
+      targetY =
+        containerRef.current.offsetTop + containerRef.current.offsetHeight;
+    }
+
+    const currentScrollY =
+      window.pageYOffset || document.documentElement.scrollTop;
+    const scrollDiff = targetY - currentScrollY;
+
+    let targetRect:
+      | { top: number; left: number; width: number; height: number }
+      | undefined;
+
+    if (centerCircleRef.current) {
+      const cr = centerCircleRef.current.getBoundingClientRect();
+      if (cr.width > 0 && cr.height > 0) {
+        targetRect = {
+          top: cr.top - scrollDiff + cr.height / 2,
+          left: cr.left + cr.width / 2,
+          width: cr.width,
+          height: cr.height,
+        };
+      }
+    }
+
+    if (!targetRect && typeof window !== "undefined") {
+      const isMob = window.innerWidth < 768;
+      const isShort = window.innerHeight <= 620;
+      const isMed = window.innerHeight <= 750;
+      const boxW = isMob
+        ? 280
+        : isShort
+          ? 320
+          : isMed
+            ? 380
+            : window.innerWidth >= 1400
+              ? 480
+              : 440;
+      const boxH = boxW;
+      const targetLeft = isMob
+        ? window.innerWidth * 0.5
+        : window.innerWidth * 0.25 - 40;
+      const targetTop = isMob
+        ? window.innerHeight * 0.27
+        : window.innerHeight * 0.46;
+      targetRect = {
+        top: targetTop,
+        left: targetLeft,
+        width: boxW,
+        height: boxH,
+      };
+    }
+
     setAnimatingPart({
       img: item.img,
       name: item.name,
@@ -115,6 +220,7 @@ export default function ChickenProductPage() {
         width: startWidth,
         height: startHeight,
       },
+      targetRect,
       timestamp: Date.now(),
     });
 
@@ -156,16 +262,16 @@ export default function ChickenProductPage() {
       requestAnimationFrame(step);
     };
 
-    let targetY = 0;
+    let scrollTargetY = 0;
     if (detailsSectionRef.current && detailsSectionRef.current.offsetTop > 0) {
-      targetY = detailsSectionRef.current.offsetTop;
+      scrollTargetY = detailsSectionRef.current.offsetTop;
     } else if (containerRef.current) {
-      targetY =
+      scrollTargetY =
         containerRef.current.offsetTop + containerRef.current.offsetHeight;
     }
 
-    if (targetY > 0) {
-      fastSmoothScrollTo(targetY, 650);
+    if (scrollTargetY > 0) {
+      fastSmoothScrollTo(scrollTargetY, 650);
     }
   };
 
@@ -517,6 +623,11 @@ export default function ChickenProductPage() {
             padding-top: 88px !important;
             padding-bottom: 4px !important;
           }
+          .viz-beef-img-wrap {
+            height: 350px !important;
+            max-height: 48vh !important;
+            transform: translateY(-24px) !important;
+          }
           .viz-grid-wrap {
             margin-top: 0px !important;
             max-width: 1200px !important;
@@ -597,92 +708,270 @@ export default function ChickenProductPage() {
           .viz-title-tagline {
             font-size: 14px !important;
           }
-          /* Section 2 details responsive overrides */
-          .detail-section-wrap {
-            padding-top: 78px !important;
-            padding-bottom: 8px !important;
+          /* Section 2 details responsive overrides for height breakpoints */
+          @media (max-height: 620px) and (min-width: 768px) {
+            .detail-section-wrap {
+              padding-top: 100px !important;
+              padding-bottom: 4px !important;
+            }
+            .detail-showcase-box {
+              width: 320px !important;
+              height: 320px !important;
+            }
+            .detail-right-col {
+              gap: 4px !important;
+              justify-content: flex-start !important;
+              padding-top: 0px !important;
+            }
+            .detail-inner-gap {
+              gap: 4px !important;
+            }
+            .detail-title {
+              font-size: 26px !important;
+            }
+            .detail-desc {
+              font-size: 12px !important;
+              line-height: 1.2 !important;
+              max-width: 480px !important;
+              line-clamp: 2 !important;
+              overflow: hidden;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+            }
+            .detail-nutrition-grid {
+              gap: 6px !important;
+            }
+            .detail-nutrition-card {
+              min-height: 48px !important;
+              padding: 3px !important;
+              gap: 1px !important;
+            }
+            .detail-nutrition-card .relative {
+              width: 16px !important;
+              height: 16px !important;
+            }
+            .detail-nutrition-card span {
+              font-size: 9.5px !important;
+            }
+            .detail-nutrition-card span:last-of-type {
+              font-size: 11.5px !important;
+            }
+            .detail-share-btn {
+              padding-top: 3px !important;
+              padding-bottom: 3px !important;
+              font-size: 10px !important;
+            }
+            .detail-share-btn .relative {
+              width: 12px !important;
+              height: 12px !important;
+            }
+            .detail-cooking-card {
+              margin-top: 2px !important;
+            }
+            .detail-cooking-img {
+              width: 95px !important;
+            }
+            .detail-cooking-content {
+              padding: 6px 10px !important;
+              gap: 2px !important;
+            }
+            .detail-cooking-content span {
+              font-size: 11.5px !important;
+            }
+            .detail-cooking-content h5 {
+              font-size: 12px !important;
+            }
+            .detail-cooking-content p {
+              font-size: 10.5px !important;
+              line-height: 1.2 !important;
+              line-clamp: 1 !important;
+              overflow: hidden;
+              display: -webkit-box;
+              -webkit-line-clamp: 1;
+              -webkit-box-orient: vertical;
+            }
+            .detail-cooking-content button {
+              font-size: 10px !important;
+              padding: 4px 10px !important;
+              width: auto !important;
+              max-width: max-content !important;
+              white-space: nowrap !important;
+            }
           }
-          .detail-showcase-box {
-            width: 320px !important;
-            height: 320px !important;
-            margin-top: -10px !important;
+
+          @media (min-height: 621px) and (max-height: 665px) and (min-width: 768px) {
+            .detail-section-wrap {
+              padding-top: 108px !important;
+              padding-bottom: 6px !important;
+            }
+            .detail-showcase-box {
+              width: 360px !important;
+              height: 360px !important;
+            }
+            .detail-right-col {
+              gap: 6px !important;
+              justify-content: flex-start !important;
+              padding-top: 0px !important;
+            }
+            .detail-inner-gap {
+              gap: 6px !important;
+            }
+            .detail-title {
+              font-size: 28px !important;
+            }
+            .detail-desc {
+              font-size: 12.5px !important;
+              line-height: 1.28 !important;
+              max-width: 500px !important;
+              line-clamp: 2 !important;
+              overflow: hidden;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+            }
+            .detail-nutrition-grid {
+              gap: 7px !important;
+            }
+            .detail-nutrition-card {
+              min-height: 50px !important;
+              padding: 4px !important;
+              gap: 1px !important;
+            }
+            .detail-nutrition-card .relative {
+              width: 17px !important;
+              height: 17px !important;
+            }
+            .detail-nutrition-card span {
+              font-size: 9.5px !important;
+            }
+            .detail-share-btn {
+              padding-top: 4px !important;
+              padding-bottom: 4px !important;
+              font-size: 10.5px !important;
+            }
+            .detail-cooking-card {
+              margin-top: 6px !important;
+            }
+            .detail-cooking-img {
+              width: 105px !important;
+            }
+            .detail-cooking-content {
+              padding: 7px 11px !important;
+              gap: 2.5px !important;
+            }
+            .detail-cooking-content button {
+              font-size: 10.5px !important;
+              padding: 4.5px 11px !important;
+              width: auto !important;
+              max-width: max-content !important;
+              white-space: nowrap !important;
+            }
           }
-          .detail-carousel-btn {
-            width: 95px !important;
+
+          @media (min-height: 666px) and (max-height: 750px) and (min-width: 768px) {
+            .detail-section-wrap {
+              padding-top: 110px !important;
+              padding-bottom: 8px !important;
+            }
+            .detail-showcase-box {
+              width: 400px !important;
+              height: 400px !important;
+              max-width: 42vw !important;
+              max-height: 56vh !important;
+            }
+            .detail-right-col {
+              gap: 10px !important;
+              justify-content: flex-start !important;
+              padding-top: 0px !important;
+            }
+            .detail-inner-gap {
+              gap: 10px !important;
+            }
+            .detail-title {
+              font-size: 30px !important;
+            }
+            .detail-desc {
+              font-size: 13px !important;
+              line-height: 1.3 !important;
+              max-width: 520px !important;
+              line-clamp: 2 !important;
+              overflow: hidden;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+            }
+            .detail-nutrition-grid {
+              gap: 7px !important;
+            }
+            .detail-nutrition-card {
+              min-height: 52px !important;
+              padding: 4px !important;
+              gap: 1px !important;
+            }
+            .detail-nutrition-card .relative {
+              width: 18px !important;
+              height: 18px !important;
+            }
+            .detail-nutrition-card span {
+              font-size: 10px !important;
+            }
+            .detail-share-btn {
+              padding-top: 4px !important;
+              padding-bottom: 4px !important;
+              font-size: 11px !important;
+            }
+            .detail-cooking-card {
+              margin-top: 8px !important;
+            }
+            .detail-cooking-img {
+              width: 110px !important;
+            }
+            .detail-cooking-content {
+              padding: 8px 12px !important;
+              gap: 2.5px !important;
+            }
+            .detail-cooking-content button {
+              font-size: 10.5px !important;
+              padding: 4.5px 11px !important;
+              width: auto !important;
+              max-width: max-content !important;
+              white-space: nowrap !important;
+            }
           }
-          .detail-right-col {
-            gap: 8px !important;
-            justify-content: flex-start !important;
-            padding-top: 4px !important;
+
+          @media (min-height: 751px) and (min-width: 768px) {
+            .detail-section-wrap {
+              padding-top: 118px !important;
+              padding-bottom: 12px !important;
+            }
+            .detail-showcase-box {
+              width: 440px !important;
+              height: 440px !important;
+              max-width: 42vw !important;
+              max-height: 60vh !important;
+            }
+            .detail-right-col {
+              gap: 10px !important;
+              justify-content: flex-start !important;
+            }
+            .detail-inner-gap {
+              gap: 10px !important;
+            }
+            .detail-desc {
+              font-size: 15px !important;
+              line-height: 1.4 !important;
+              max-width: 580px !important;
+            }
           }
-          .detail-inner-gap {
-            gap: 8px !important;
-          }
-          .detail-title {
-            font-size: 32px !important;
-          }
-          .detail-desc {
-            font-size: 13px !important;
-            line-clamp: 2 !important;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-          }
-          .detail-nutrition-grid {
-            gap: 8px !important;
-          }
-          .detail-nutrition-card {
-            min-height: 60px !important;
-            padding: 5px !important;
-            gap: 1px !important;
-          }
-          .detail-nutrition-card .relative {
-            width: 20px !important;
-            height: 20px !important;
-          }
-          .detail-nutrition-card span {
-            font-size: 10.5px !important;
-          }
-          .detail-share-btn {
-            padding-top: 4px !important;
-            padding-bottom: 4px !important;
-            font-size: 11px !important;
-          }
-          .detail-share-btn .relative {
-            width: 14px !important;
-            height: 14px !important;
-          }
-          .detail-cooking-card {
-            margin-top: 2px !important;
-          }
-          .detail-cooking-img {
-            width: 105px !important;
-          }
-          .detail-cooking-content {
-            padding: 8px 12px !important;
-            gap: 3px !important;
-          }
-          .detail-cooking-content span {
-            font-size: 13px !important;
-          }
-          .detail-cooking-content h5 {
-            font-size: 13px !important;
-          }
-          .detail-cooking-content p {
-            font-size: 11px !important;
-            line-height: 1.2 !important;
-            line-clamp: 2 !important;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-          }
-          .detail-cooking-content button {
-            font-size: 11px !important;
-            padding-top: 4px !important;
-            padding-bottom: 4px !important;
-            max-width: 50% !important;
+
+          @media (min-width: 1400px) and (min-height: 800px) {
+            .detail-showcase-box {
+              width: 480px !important;
+              height: 480px !important;
+              max-width: 44vw !important;
+              max-height: 62vh !important;
+            }
           }
           /* Section 3 recipes responsive overrides */
           .recipe-section-wrap {
@@ -876,7 +1165,7 @@ export default function ChickenProductPage() {
             max-height: none !important;
             overflow-y: visible !important;
             overflow-x: hidden !important;
-            padding-top: 55px !important;
+            padding-top: 98px !important;
             padding-bottom: 40px !important;
             display: flex !important;
             flex-direction: column !important;
@@ -906,10 +1195,10 @@ export default function ChickenProductPage() {
             margin-top: 0px !important;
           }
           .detail-showcase-box > div:first-child {
-            width: 64px !important;
-            height: 64px !important;
-            top: -8px !important;
-            right: -8px !important;
+            width: 48px !important;
+            height: 48px !important;
+            top: -16px !important;
+            right: 8px !important;
           }
           .detail-section-wrap .flex.items-center.justify-center.gap-5 {
             margin-left: 0px !important;
@@ -998,14 +1287,13 @@ export default function ChickenProductPage() {
             overflow: hidden !important;
           }
           .detail-cooking-content button {
-            max-width: 100% !important;
+            width: auto !important;
+            max-width: max-content !important;
+            white-space: nowrap !important;
             font-size: 10px !important;
-            padding-top: 6px !important;
-            padding-bottom: 6px !important;
-            padding-left: 12px !important;
-            padding-right: 12px !important;
+            padding: 5px 12px !important;
             border-radius: 8px !important;
-            gap: 6px !important;
+            gap: 5px !important;
             letter-spacing: 0.08em !important;
           }
         }
@@ -1341,11 +1629,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="635"
                                 cy="185"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="635"
+                                    cy="185"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="635"
+                                    cy="185"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1393,11 +1722,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="625"
                                 cy="305"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="625"
+                                    cy="305"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="625"
+                                    cy="305"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1445,11 +1815,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="635"
                                 cy="345"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="635"
+                                    cy="345"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="635"
+                                    cy="345"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1497,11 +1908,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="745"
                                 cy="125"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="745"
+                                    cy="125"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="745"
+                                    cy="125"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1549,11 +2001,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="790"
                                 cy="200"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="790"
+                                    cy="200"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="790"
+                                    cy="200"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1601,11 +2094,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="860"
                                 cy="345"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="860"
+                                    cy="345"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="860"
+                                    cy="345"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1656,11 +2190,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="620"
                                 cy="170"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="620"
+                                    cy="170"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="620"
+                                    cy="170"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1708,11 +2283,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="745"
                                 cy="195"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="745"
+                                    cy="195"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="745"
+                                    cy="195"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1760,11 +2376,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="625"
                                 cy="305"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="625"
+                                    cy="305"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="625"
+                                    cy="305"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1812,11 +2469,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="645"
                                 cy="325"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="645"
+                                    cy="325"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="645"
+                                    cy="325"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1864,11 +2562,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="755"
                                 cy="110"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="755"
+                                    cy="110"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="755"
+                                    cy="110"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1916,11 +2655,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="820"
                                 cy="170"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="820"
+                                    cy="170"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="820"
+                                    cy="170"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -1968,11 +2748,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="750"
                                 cy="165"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="750"
+                                    cy="165"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="750"
+                                    cy="165"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -2020,11 +2841,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="760"
                                 cy="240"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="760"
+                                    cy="240"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="760"
+                                    cy="240"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -2072,11 +2934,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="865"
                                 cy="340"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="865"
+                                    cy="340"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="865"
+                                    cy="340"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -2124,11 +3027,52 @@ export default function ChickenProductPage() {
                               <circle
                                 cx="760"
                                 cy="310"
-                                r={r}
+                                r={active ? 7.5 : 3.5}
                                 fill={color}
                                 filter={active ? "url(#yellowGlow)" : undefined}
                                 className="transition-all duration-300"
                               />
+                              {active && (
+                                <g className="pointer-events-none">
+                                  <motion.circle
+                                    cx="760"
+                                    cy="310"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={2}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                  <motion.circle
+                                    cx="760"
+                                    cy="310"
+                                    r={7.5}
+                                    fill="none"
+                                    stroke="#F2CE07"
+                                    strokeWidth={1.5}
+                                    initial={{ r: 7.5, opacity: 0.9 }}
+                                    animate={{
+                                      r: [7.5, 22],
+                                      opacity: [0.9, 0],
+                                    }}
+                                    transition={{
+                                      duration: 1.4,
+                                      delay: 0.7,
+                                      repeat: Infinity,
+                                      ease: "easeOut",
+                                    }}
+                                  />
+                                </g>
+                              )}
                             </g>
                           );
                         })()}
@@ -2494,7 +3438,7 @@ export default function ChickenProductPage() {
                     delay: 0.1,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="relative w-[800px] max-w-[90vw] h-[480px] flex items-center justify-center -translate-y-2 z-20"
+                  className="relative w-full max-w-[780px] xl:max-w-[850px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[480px] max-h-[50vh] lg:max-h-[54vh] flex items-center justify-center -translate-y-8 lg:-translate-y-12 z-20 viz-beef-img-wrap"
                 >
                   <Image
                     src={
@@ -2510,9 +3454,11 @@ export default function ChickenProductPage() {
 
                 {/* Bottom Grassland Bar with 4 Feature Badges (Animal stands directly on this hill) */}
                 <div
-                  className="w-full absolute bottom-0 left-0 right-0 h-[175px] bg-cover bg-top flex items-end pb-5 px-8 justify-center z-10 viz-grassland-bar"
+                  className="w-full absolute bottom-[-15px] left-0 right-0 h-[175px] bg-no-repeat flex items-end pb-5 px-8 justify-center z-10 viz-grassland-bar"
                   style={{
                     backgroundImage: 'url("/Product/GoatBeef/grassLand.webp")',
+                    backgroundSize: "100% 100%",
+                    backgroundPosition: "center bottom",
                   }}
                 >
                   <div className="flex flex-wrap items-center justify-center gap-8 text-white font-barlow-condensed font-medium uppercase text-lg tracking-wider mb-1">
@@ -2577,9 +3523,9 @@ export default function ChickenProductPage() {
       {/* 2. Interactive Details Section - Only shown when activeMeatType === "chicken" */}
       <section
         ref={detailsSectionRef}
-        className={`relative z-30 w-full h-screen min-h-screen max-h-screen pt-[13vh] pb-4 bg-cover bg-center flex items-center justify-center m-0 overflow-y-auto md:overflow-hidden transition-all duration-700 detail-section-wrap ${
+        className={`relative z-30 w-full h-screen min-h-screen max-h-screen pt-[130px] md:pt-[135px] lg:pt-[140px] pb-4 bg-cover bg-center flex items-center justify-center m-0 overflow-y-auto md:overflow-hidden transition-all duration-700 detail-section-wrap ${
           hasSelectedAnyPart && activeMeatType === "chicken"
-            ? "block opacity-100"
+            ? "block opacity-100 pointer-events-auto"
             : "hidden opacity-0 pointer-events-none"
         }`}
         style={{ backgroundImage: 'url("/Product/details/bg.webp")' }}
@@ -2669,7 +3615,7 @@ export default function ChickenProductPage() {
               <button
                 onClick={() => {
                   setActiveViewTab((prev) =>
-                    prev === "raw" ? "packed" : "raw"
+                    prev === "raw" ? "packed" : "raw",
                   );
                 }}
                 className="w-8 h-8 rounded-full bg-white text-slate-800 shadow-md flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
@@ -2726,7 +3672,7 @@ export default function ChickenProductPage() {
               <button
                 onClick={() => {
                   setActiveViewTab((prev) =>
-                    prev === "raw" ? "packed" : "raw"
+                    prev === "raw" ? "packed" : "raw",
                   );
                 }}
                 className="w-8 h-8 rounded-full bg-white text-slate-800 shadow-md flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
@@ -2772,7 +3718,7 @@ export default function ChickenProductPage() {
                 },
               },
             }}
-            className="w-full md:w-1/2 h-auto md:h-full px-4 md:px-8 lg:px-10 xl:px-12 flex flex-col gap-3 lg:gap-4 xl:gap-5 select-none detail-right-col overflow-hidden pb-4 justify-center"
+            className="w-full md:w-1/2 h-auto md:h-full px-4 md:px-8 lg:px-10 xl:px-12 flex flex-col gap-2.5 md:gap-3 select-none detail-right-col overflow-hidden pb-4 justify-start"
           >
             {/* Breadcrumbs */}
             <motion.div
@@ -2842,7 +3788,7 @@ export default function ChickenProductPage() {
               </span>
             </motion.div>
 
-            <div className="flex flex-col gap-3 lg:gap-4 xl:gap-5 2xl:gap-6 detail-inner-gap">
+            <div className="flex flex-col gap-2.5 md:gap-3 detail-inner-gap">
               {/* Title Section */}
               <motion.div
                 variants={{
@@ -2886,7 +3832,7 @@ export default function ChickenProductPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[14px] lg:text-[15px] xl:text-[16px] font-medium text-slate-700 leading-relaxed font-manrope max-w-[550px] xl:max-w-[620px] detail-desc"
+                className="text-[13px] lg:text-[14px] xl:text-[15px] font-medium text-slate-700 leading-relaxed font-manrope max-w-[550px] xl:max-w-[580px] detail-desc"
               >
                 {chickenParts[manuallySelectedPartIdx].desc}
               </motion.p>
@@ -3160,21 +4106,22 @@ export default function ChickenProductPage() {
                     <p className="text-[12px] lg:text-[13px] text-slate-600 leading-relaxed font-inter">
                       A Spicy and flavourful recipe that brings out the best in
                       every{" "}
-                      {chickenParts[manuallySelectedPartIdx].name.toLowerCase()}.
+                      {chickenParts[manuallySelectedPartIdx].name.toLowerCase()}
+                      .
                     </p>
 
                     {/* CTA Button */}
                     <motion.button
                       whileHover={{
-                        scale: 1.03,
+                        scale: 1.02,
                         backgroundColor: "#b52020",
                         boxShadow: "0 6px 16px rgba(214, 40, 40, 0.35)",
                       }}
                       whileTap={{ scale: 0.97 }}
-                      className="w-full bg-[#D62828] text-white text-[13px] lg:text-[14px] font-bold py-1.5 px-5 rounded-xl flex items-center justify-center gap-3 uppercase tracking-widest font-manrope cursor-pointer transition-colors shadow-sm mt-0.5 md:max-w-[60%]"
+                      className="w-auto inline-flex items-center justify-center self-start bg-[#D62828] text-white text-[10.5px] lg:text-[11.5px] font-bold py-1.5 px-3.5 rounded-xl whitespace-nowrap gap-1.5 uppercase tracking-wider font-manrope cursor-pointer transition-colors shadow-sm mt-1"
                     >
                       <span>EXPLORE RECIPE</span>
-                      <span className="text-lg group-hover:translate-x-1 transition-transform">
+                      <span className="text-sm group-hover:translate-x-1 transition-transform">
                         →
                       </span>
                     </motion.button>
@@ -3397,8 +4344,15 @@ export default function ChickenProductPage() {
                   initial={isMobile ? { opacity: 0, y: 45 } : undefined}
                   whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                   viewport={{ once: false, amount: 0.15 }}
-                  transition={isMobile ? { duration: 0.7, ease: [0.16, 1, 0.3, 1] } : undefined}
-                  whileHover={{ y: -6, boxShadow: "0 20px 35px -5px rgba(0, 0, 0, 0.3)" }}
+                  transition={
+                    isMobile
+                      ? { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
+                      : undefined
+                  }
+                  whileHover={{
+                    y: -6,
+                    boxShadow: "0 20px 35px -5px rgba(0, 0, 0, 0.3)",
+                  }}
                   className="relative aspect-[3/4.2] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-5 select-none recipe-card-box cursor-pointer"
                 >
                   {/* Background Image */}
@@ -3561,18 +4515,20 @@ export default function ChickenProductPage() {
                 }}
                 className="text-[15px] font-normal text-slate-500 tracking-wider font-inter inline-flex flex-wrap justify-center select-none"
               >
-                {"Premium quality meat, delivery fresh to your life.".split("").map((char, charIdx) => (
-                  <motion.span
-                    key={charIdx}
-                    variants={{
-                      hidden: { opacity: 0, y: 4 },
-                      visible: { opacity: 1, y: 0 },
-                    }}
-                    transition={{ duration: 0.04 }}
-                  >
-                    {char === " " ? "\u00A0" : char}
-                  </motion.span>
-                ))}
+                {"Premium quality meat, delivery fresh to your life."
+                  .split("")
+                  .map((char, charIdx) => (
+                    <motion.span
+                      key={charIdx}
+                      variants={{
+                        hidden: { opacity: 0, y: 4 },
+                        visible: { opacity: 1, y: 0 },
+                      }}
+                      transition={{ duration: 0.04 }}
+                    >
+                      {char === " " ? "\u00A0" : char}
+                    </motion.span>
+                  ))}
               </motion.p>
             </div>
 
@@ -3651,34 +4607,41 @@ export default function ChickenProductPage() {
             zIndex: 99999,
           }}
           animate={{
-            top:
-              typeof window !== "undefined" && window.innerWidth < 768
+            top: animatingPart.targetRect
+              ? animatingPart.targetRect.top
+              : typeof window !== "undefined" && window.innerWidth < 768
                 ? "27vh"
                 : "46.3vh",
-            left:
-              typeof window !== "undefined" && window.innerWidth < 768
+            left: animatingPart.targetRect
+              ? animatingPart.targetRect.left
+              : typeof window !== "undefined" && window.innerWidth < 768
                 ? "50vw"
                 : "calc(25vw - 0.5rem)",
-            width:
-              typeof window !== "undefined" && window.innerWidth < 768
-                ? 260
-                : typeof window !== "undefined" && window.innerHeight <= 750
+            width: animatingPart.targetRect
+              ? animatingPart.targetRect.width
+              : typeof window !== "undefined" && window.innerWidth < 768
+                ? 280
+                : typeof window !== "undefined" && window.innerHeight <= 620
                   ? 320
-                  : 420,
-            height:
-              typeof window !== "undefined" && window.innerWidth < 768
-                ? 260
-                : typeof window !== "undefined" && window.innerHeight <= 750
+                  : typeof window !== "undefined" && window.innerHeight <= 750
+                    ? 380
+                    : typeof window !== "undefined" && window.innerWidth >= 1400
+                      ? 480
+                      : 440,
+            height: animatingPart.targetRect
+              ? animatingPart.targetRect.height
+              : typeof window !== "undefined" && window.innerWidth < 768
+                ? 280
+                : typeof window !== "undefined" && window.innerHeight <= 620
                   ? 320
-                  : 420,
+                  : typeof window !== "undefined" && window.innerHeight <= 750
+                    ? 380
+                    : typeof window !== "undefined" && window.innerWidth >= 1400
+                      ? 480
+                      : 440,
             opacity: 1,
             x: "-50%",
-            y:
-              typeof window !== "undefined" && window.innerWidth < 768
-                ? "-50%"
-                : typeof window !== "undefined" && window.innerHeight <= 694
-                  ? "-51.8%"
-                  : "-52.8%",
+            y: "-50%",
             scale: 1,
           }}
           transition={{
@@ -3696,7 +4659,7 @@ export default function ChickenProductPage() {
           <img
             src={animatingPart.img}
             alt={animatingPart.name}
-            className="w-full h-full object-contain filter drop-shadow-2xl"
+            className="w-full h-full object-contain"
           />
         </motion.div>
       )}
