@@ -47,7 +47,7 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isDarkPage = pathname === '/about' || pathname === '/contact' || pathname.startsWith('/products');
+  const isDarkPage = pathname === '/' || pathname === '/about' || pathname === '/contact' || pathname.startsWith('/products');
 
   const containerBgClass = scrolled
     ? 'bg-white/95 border-slate-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'
