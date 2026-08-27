@@ -75,3 +75,8 @@
 .font-manrope, .font-Manrope {
   font-family: var(--font-manrope);
 }
+
+
+.certificate-parent-card:hover {
+  transform: scale(1.05) !important;
+}
