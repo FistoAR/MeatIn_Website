@@ -1,372 +1,427 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import { motion, useTransform, useMotionValue } from 'framer-motion';
-import Lenis from 'lenis';
+import { motion } from 'framer-motion';
+import TrustedQualityBanner from '@/components/layout/TrustedQualityBanner';
 
-// Typing Animation Component for Main Headings on page load
-const BannerTitleTyping: React.FC<{ text: string; colorClass: string }> = ({ text, colorClass }) => {
-  const charVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-  };
-
-  return (
-    <h1 className={`text-4xl sm:text-5xl lg:text-[4vw] font-extrabold font-chau tracking-tight leading-[1.05] uppercase ${colorClass}`}>
-      <motion.span
-        initial="hidden"
-        animate="visible"
-        transition={{ staggerChildren: 0.08, delayChildren: 0.6 }}
-      >
-        {text.split('').map((char, index) => (
-          <motion.span
-            key={index}
-            variants={charVariants}
-            transition={{ duration: 0.15 }}
-          >
-            {char}
-          </motion.span>
-        ))}
-      </motion.span>
-    </h1>
-  );
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 50, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: 'spring' as const, stiffness: 60, damping: 14 }
+  }
 };
 
-// Container and child variants for staggered entry of left-side text elements
-const leftContainerVariants = {
+const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.4,
-    },
-  },
-};
-
-const leftItemVariants = {
-  hidden: { opacity: 0, x: -60 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.8, ease: 'easeOut' as const },
-  },
-};
-
-// Variants for quality badges to fade up staggeredly
-const badgeVariants = {
-  hidden: { opacity: 0, y: 25 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' as const },
-  },
-};
-
-// Variants for product trays image to slide in from right to center
-const productImgVariants = {
-  hidden: { opacity: 0, x: 250 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 1.2, delay: 0.8, ease: 'easeOut' as const },
-  },
+      staggerChildren: 0.15
+    }
+  }
 };
 
 export default function HomePage() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const scrollYValue = useMotionValue(0);
-
-  const [currentFrame, setCurrentFrame] = useState(1);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-
-  // Constants for slicing banner image and text contents
-  const totalPlanks = 10;
-  const staggerOffset = 90;
-  const animateWindow = 350;
-
-  // Initialize local Lenis smooth scroll and drive motion values directly from scroll event callbacks
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
-    });
-
-    let rafId: number;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
+  const storySteps = [
+    {
+      title: "RESPONSIBLE BEGINNINGS",
+      desc: "We source from trusted farms that follow responsible farming practices.",
+      icon: "/Home/brand-story/brand-story-icons/responsible-beginnings.svg",
+      image: "/Home/brand-story/images/responsible-beginnings.webp"
+    },
+    {
+      title: "HEALTHY LIVESTOCK",
+      desc: "Healthy livestock is the foundation of fresh, quality meat products.",
+      icon: "/Home/brand-story/brand-story-icons/healthy-livestock.svg",
+      image: "/Home/brand-story/images/healthy-livestock.webp"
+    },
+    {
+      title: "SCIENTIFIC PROCESSING",
+      desc: "Every product is processed using modern technology and strict hygiene standards.",
+      icon: "/Home/brand-story/brand-story-icons/scientific-processing.svg",
+      image: "/Home/brand-story/images/scientific-processing.webp"
+    },
+    {
+      title: "QUALITY WITHOUT COMPROMISE",
+      desc: "Every batch is carefully checked to ensure safety, freshness, and quality.",
+      icon: "/Home/brand-story/brand-story-icons/quality-without-compromise.svg",
+      image: "/Home/brand-story/images/quality-without-compromise.webp"
+    },
+    {
+      title: "HYGIENIC PACKAGING",
+      desc: "Products are packed in clean, safe conditions to lock in freshness.",
+      icon: "/Home/brand-story/brand-story-icons/hygienic-packaging.svg",
+      image: "/Home/brand-story/images/hygienic-packaging.webp"
+    },
+    {
+      title: "DELIVERED WITH TRUST",
+      desc: "Our cold-chain delivery keeps every product fresh from our facility to your doorstep.",
+      icon: "/Home/brand-story/brand-story-icons/delivered-with-trust.svg",
+      image: "/Home/brand-story/images/delivered-with-trust.webp"
     }
-    rafId = requestAnimationFrame(raf);
+  ];
 
-    // Bind scroll values to Framer Motion values and image frame indices
-    lenis.on('scroll', (e) => {
-      const scroll = e.scroll;
-      scrollYValue.set(scroll);
-
-      // Scrub frames (1 to 28) over 0px to 1000px scroll range
-      const progress = Math.min(1, Math.max(0, scroll / 1000));
-      const frame = Math.round(1 + progress * 27);
-      setCurrentFrame(frame);
-
-      // Manage video playback based on scroll depth
-      if (scroll >= 1000) {
-        if (!isVideoPlaying && videoRef.current) {
-          videoRef.current.currentTime = 0;
-          videoRef.current.play().catch(() => {});
-          setIsVideoPlaying(true);
-        }
-      } else {
-        if (isVideoPlaying && videoRef.current) {
-          videoRef.current.pause();
-          setIsVideoPlaying(false);
-        }
-      }
-    });
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
-    };
-  }, [scrollYValue, isVideoPlaying]);
-
-  // Video fades in as we scroll from 1000px to 1250px
-  const videoOpacity = useTransform(scrollYValue, [1000, 1250], [0, 1]);
-
-  // Dynamic Camera-Pan tracking the lorry cabin as it moves from right to left
-  const panX = useTransform(scrollYValue, [0, 1200], [72, 42]);
-  const objectPosition = useTransform(panX, (x) => `${x}% 50%`);
-
-  // Shift the first 20 frames to the right by 100vw, reaching 0vw by frame 20
-  const frameX = useTransform(scrollYValue, [0, 714, 1000], ['100vw', '0vw', '0vw']);
-
-  // Pre-generate vertical transforms for each of the 10 planks
-  const plankTransforms = Array.from({ length: totalPlanks }).map((_, index) => {
-    const startScroll = (totalPlanks - 1 - index) * staggerOffset;
-    const endScroll = startScroll + animateWindow;
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    return useTransform(scrollYValue, [startScroll, endScroll], ['0%', '-120%']);
-  });
-
-  // Helper function to render the full text and graphic overlays.
-  // By offsetting this container with style={{ left: `-${index * 10}vw` }} inside
-  // a width: 10% overflow-hidden column, the text is sliced vertically perfectly.
-  const renderBannerContent = (index: number) => {
-    return (
-      <div 
-        className="absolute top-20 w-screen h-screen flex flex-col justify-between p-6 sm:p-10 lg:p-[4vw] pt-[18vh] pb-12 select-none pointer-events-none"
-        style={{ left: `-${index * 10}vw`, width: '100vw' }}
-      >
-        {/* Top/Left Main Copy Area */}
-        <motion.div 
-          variants={leftContainerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-6 max-w-2xl"
-        >
-          {/* Typing Title Headings */}
-          <div className="space-y-1 sm:space-y-2">
-            <BannerTitleTyping text="PURE QUALITY." colorClass="text-[#153520]" />
-            <BannerTitleTyping text="TRUSTED MEAT." colorClass="text-[#B71C1C]" />
-          </div>
-
-          {/* Subheading separator line */}
-          <motion.div variants={leftItemVariants} className="flex items-center gap-2 max-w-[320px]">
-            <div className="h-[2px] bg-[#153520]/20 flex-1" />
-            <div className="w-2.5 h-2.5 rotate-45 border border-[#153520]/40 flex items-center justify-center">
-              <div className="w-1 h-1 bg-[#FFB300]" />
-            </div>
-            <div className="h-[2px] bg-[#153520]/20 flex-1" />
-          </motion.div>
-
-          {/* Subheading Text */}
-          <motion.p variants={leftItemVariants} className="text-xs sm:text-sm lg:text-base font-manrope font-semibold text-[#153520]/90 leading-relaxed max-w-[420px]">
-            From our farms to your table, we ensure premium quality, hygiene and taste in every cut.
-          </motion.p>
-
-          {/* Four circular quality badges */}
-          <motion.div variants={leftItemVariants} className="grid grid-cols-2 sm:flex sm:items-center gap-4 pt-2">
-            <motion.div variants={badgeVariants} className="flex flex-col items-center text-center gap-1.5 w-24">
-              <div className="w-12 h-12 rounded-full border-2 border-[#153520]/80 flex items-center justify-center text-[#153520]">
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              </div>
-              <span className="text-[9px] font-extrabold text-[#153520] tracking-wider leading-tight">ETHICALLY SOURCED</span>
-            </motion.div>
-            <motion.div variants={badgeVariants} className="flex flex-col items-center text-center gap-1.5 w-24">
-              <div className="w-12 h-12 rounded-full border-2 border-[#153520]/80 flex items-center justify-center text-[#153520]">
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
-              <span className="text-[9px] font-extrabold text-[#153520] tracking-wider leading-tight">HYGIENIC PROCESSING</span>
-            </motion.div>
-            <motion.div variants={badgeVariants} className="flex flex-col items-center text-center gap-1.5 w-24">
-              <div className="w-12 h-12 rounded-full border-2 border-[#153520]/80 flex items-center justify-center text-[#153520]">
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-              </div>
-              <span className="text-[9px] font-extrabold text-[#153520] tracking-wider leading-tight">COLD CHAIN DELIVERY</span>
-            </motion.div>
-            <motion.div variants={badgeVariants} className="flex flex-col items-center text-center gap-1.5 w-24">
-              <div className="w-12 h-12 rounded-full border-2 border-[#153520]/80 flex items-center justify-center text-[#153520]">
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-              </div>
-              <span className="text-[9px] font-extrabold text-[#153520] tracking-wider leading-tight">PREMIUM QUALITY</span>
-            </motion.div>
-          </motion.div>
-
-          {/* Action Button */}
-          <motion.div variants={leftItemVariants} className="pt-2">
-            <button className="flex items-center gap-3 bg-[#153520] hover:bg-[#0f2818] transition-colors duration-300 text-white font-manrope font-semibold text-xs py-2.5 px-5 rounded-full shadow-md group pointer-events-auto">
-              Know More About Us
-              <span className="w-5 h-5 rounded-full bg-white flex items-center justify-center text-[#153520] transition-transform duration-300 group-hover:translate-x-1">
-                <svg className="w-3 h-3 stroke-[3]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-              </span>
-            </button>
-          </motion.div>
-        </motion.div>
-
-        {/* Bottom Section: Product Packaging Trays Image */}
-        <div className="w-full flex flex-col items-center gap-4 mt-auto">
-          
-          {/* Product Packaging Image (Slides in from the right on page load) */}
-          <motion.div 
-            variants={productImgVariants}
-            initial="hidden"
-            animate="visible"
-            className="w-full flex justify-center hover:scale-105 transition-transform duration-300 pointer-events-auto transform -translate-y-8 sm:-translate-y-12"
-          >
-            <Image
-              src="/Home/Hero/meat.png"
-              alt="MEATIN Product Trays"
-              width={900}
-              height={300}
-              className="w-full max-w-[800px] sm:max-w-[850px] h-auto object-contain select-none pointer-events-none"
-              priority
-            />
-          </motion.div>
-
-          {/* Bottom footer text row (e.g. fresh guarantee line) */}
-          <div className="w-full flex items-center justify-center gap-6 sm:gap-12 border-t border-[#153520]/15 pt-4 text-[9px] sm:text-xs font-extrabold text-[#153520]/80 tracking-widest uppercase">
-            <span>NO HORMONES ADDED</span>
-            <span className="hidden sm:inline opacity-30">|</span>
-            <span>FRESHNESS GUARANTEED</span>
-            <span className="hidden sm:inline opacity-30">|</span>
-            <span>EXPERTLY PROCESSED</span>
-          </div>
-
-        </div>
-      </div>
-    );
-  };
-
-  // Build the formatted file path for the active image frame
-  const frameFilename = `ezgif-frame-${String(currentFrame).padStart(3, '0')}.webp`;
-  const framePath = `/Home/Hero/startFrames/${frameFilename}`;
+  const certificates = [
+    {
+      name: "FSSAI",
+      sub: "CERTIFIED",
+      desc: "Food Safety and Standards Authority of India Certified.",
+      icon: "/Home/certifications/fssai-icon-image.webp",
+      certificateImage: "/Home/certifications/fssai.webp",
+      pdf: "/Home/certifications/certificates/FSSAI Central License (New)-2025-30 (1).pdf"
+    },
+    {
+      name: "ISO",
+      sub: "CERTIFIED",
+      desc: "International Organization for Standardization.",
+      icon: "/Home/certifications/iso-icon-image.webp",
+      certificateImage: "/Home/certifications/iso-certificate-image.webp"
+    },
+    {
+      name: "HACCP",
+      sub: "CERTIFIED",
+      desc: "Hazard Analysis and Critical Control Points Compliant.",
+      icon: "/Home/certifications/haccp-icon-image.webp",
+      certificateImage: "/Home/certifications/haccp-certificate-image.webp"
+    },
+    {
+      name: "HALAL",
+      sub: "CERTIFIED",
+      desc: "Halal Certified Process and Product Assurance.",
+      icon: "/Home/certifications/halal-icon-image.webp",
+      certificateImage: "/Home/certifications/halal-certificate-image.webp",
+      pdf: "/Home/certifications/certificates/Halal Cerificate 2025-2028.pdf"
+    }
+  ];
 
   return (
-    <div className="relative w-full bg-[#FAF8F5]">
-      
-      {/* Preloader for all 28 frames to prevent scroll flickering */}
-      <div className="hidden pointer-events-none aria-hidden" aria-hidden="true">
-        {Array.from({ length: 28 }).map((_, i) => (
-          <img 
-            key={i} 
-            src={`/Home/Hero/startFrames/ezgif-frame-${String(i + 1).padStart(3, '0')}.webp`} 
-            alt="" 
+    <div className="min-h-screen bg-[#F6F5F0] overflow-x-hidden font-manrope">
+
+      {/* 1. HERO BANNER */}
+      <section className="relative w-full min-h-[90vh] lg:min-h-screen flex items-center bg-black pt-[6rem] overflow-hidden">
+        {/* Factory drone shot background */}
+        <div className="absolute inset-0 z-0 select-none pointer-events-none">
+          <Image
+            src="/Home/Hero/hero-image.webp"
+            alt="MEATIN Integrated Processing Plant"
+            fill
+            priority
+            className="object-cover object-center brightness-[0.75] lg:brightness-100"
           />
-        ))}
-      </div>
+          {/* Gradients for readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 lg:via-transparent to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black/60 to-transparent" />
+        </div>
 
-      {/* Scroll interactive viewport box (height 320vh for frame scrub + video play sequence) */}
-      <div className="relative w-full h-[320vh]">
-        
-        {/* Sticky Fullscreen Container */}
-        <div className="sticky top-0 left-0 w-screen h-screen overflow-hidden z-10">
-          
-          {/* Background Frame Sequence Player (Stacked Stack for Flicker-free Scrubbing) */}
-          <div className="absolute inset-0 w-full h-full bg-[#FAF8F5] z-0 overflow-hidden">
-            <motion.div 
-              style={{ x: frameX, objectPosition, scale: 1.3 }}
-              className="relative w-full h-full"
-            >
-              {Array.from({ length: 28 }).map((_, i) => {
-                const isCurrent = (i + 1) === currentFrame;
-                return (
-                  <Image
-                    key={i}
-                    src={`/Home/Hero/startFrames/ezgif-frame-${String(i + 1).padStart(3, '0')}.webp`}
-                    alt={`Background Frame Sequence ${i + 1}`}
-                    fill
-                    style={{ 
-                      objectPosition: 'inherit',
-                      opacity: isCurrent ? 1 : 0,
-                      visibility: isCurrent ? 'visible' : 'hidden'
-                    }}
-                    className="object-cover select-none pointer-events-none absolute inset-0"
-                    priority
-                  />
-                );
-              })}
-            </motion.div>
+        <div className="w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-6 sm:px-8 lg:px-[2.5vw] relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+            {/* Left Header content */}
+            <div className="lg:col-span-8 space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-3"
+              >
+                <h1 className="text-5xl sm:text-7xl lg:text-[6vw] xl:text-[6.5vw] font-bold font-barlow tracking-tight uppercase leading-[0.9] space-y-1">
+                  <span className="block text-[#87B71D]">MEATIN:</span>
+                  <span className="block text-white">PURE QUALITY.</span>
+                  <span className="block text-white">TRUSTED MEAT.</span>
+                </h1>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <p className="text-white text-base sm:text-lg md:text-xl font-normal leading-relaxed font-inter max-w-xl">
+                  South India&apos;s <span className="text-[#87B71D] font-bold">Largest</span> Multi Species <span className="text-[#87B71D] font-bold">Meat</span> Processing Plant
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Right stamp overlay badge */}
+            <div className="lg:col-span-4 flex justify-start lg:justify-end">
+              <motion.div
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
+                className="relative w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]"
+              >
+                <Image
+                  src="/AboutUs/keralas-original.webp"
+                  alt="Kerala's Original Meat Badge"
+                  fill
+                  className="object-contain"
+                />
+              </motion.div>
+            </div>
+
           </div>
+        </div>
+      </section>
 
-          {/* Video Player overlaying the frame sequence (fades in once frames are done) */}
+      {/* 2. SECOND SECTION (TRUCK LOGISTICS) */}
+      <section className="relative w-full bg-[#EBF6E4] pt-8 pb-14 sm:pt-16 sm:pb-28 overflow-hidden flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/Home/section-bg.webp')" }}>
+        {/* Single Full Image Container with scroll-driven slide-in */}
+        <motion.div 
+          initial={{ x: "50%", opacity: 0.7 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ type: "spring", stiffness: 35, damping: 15 }}
+          className="w-full relative h-[140px] sm:h-[220px] md:h-[280px] lg:h-[340px] z-10"
+        >
+          <Image
+            src="/Home/truck-section/delivered-fresh-image.webp"
+            alt="Meatin Delivery Truck and Features"
+            fill
+            className="object-contain"
+            priority
+          />
+        </motion.div>
+
+        {/* Wave SVG transition divider matching the Brand Story bg color */}
+        <div className="absolute bottom-0 left-0 right-0 h-[35px] sm:h-[55px] md:h-[90px] w-full z-20 pointer-events-none overflow-hidden">
+          <svg className="absolute bottom-0 w-full h-[35px] sm:h-[55px] md:h-[90px]" viewBox="0 0 1920 90" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0 0C755.182 107.73 1158.5 130.5 1920 0V130.5H0V0Z" fill="#60870C"/>
+          </svg>
+        </div>
+      </section>
+
+      {/* 3. BRAND STORY / TIMELINE SECTION */}
+      <section
+        className="relative w-full pt-20 pb-28 bg-[#61870d] text-white overflow-hidden bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/Home/section-bg.webp')" }}
+      >
+
+
+        <div className="w-full max-w-[1400px] lg:max-w-[92vw] mx-auto px-4 sm:px-6 lg:px-8 pt-8 relative z-10">
+
+          {/* Header */}
           <motion.div 
-            style={{ opacity: videoOpacity }}
-            className="absolute inset-0 w-full h-full bg-black z-10 overflow-hidden"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center flex flex-col items-center mb-16"
           >
-            <motion.video
-              ref={videoRef}
-              src="/Home/Hero/secondPart.mp4"
-              loop
-              muted
-              playsInline
-              style={{ objectPosition }}
-              className="w-full h-full object-cover select-none pointer-events-none"
-            />
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="h-[1.5px] w-8 sm:w-12 bg-white" />
+              <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-white font-manrope">
+                BRAND STORY
+              </h4>
+              <div className="h-[1.5px] w-8 sm:w-12 bg-white" />
+            </div>
+            <h2 className="text-5xl sm:text-6xl lg:text-[4vw] font-normal font-chau tracking-tight leading-none mb-4">
+              More Then Meat. It&apos; <span className="text-[#FFC72C]">Our</span> Promise.
+            </h2>
+            <p className="text-[#F6F5F0]/90 text-sm sm:text-base max-w-2xl mx-auto font-manrope font-semibold leading-relaxed">
+              From farm tp fork, every step we talk is guided by science, driven by care and delivered with trust.
+            </p>
           </motion.div>
-          
-          {/* Banner Graphic Planks Container */}
-          <div className="absolute inset-0 w-full h-full flex overflow-hidden z-20 pointer-events-none">
-            {Array.from({ length: totalPlanks }).map((_, index) => {
-              const plankY = plankTransforms[index];
 
+          {/* Timeline Cards Grid with Alternating Staggered Heights */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6 xl:gap-4 items-stretch pt-8 pb-10"
+          >
+            {storySteps.map((step, idx) => {
               return (
                 <motion.div
-                  key={index}
-                  style={{ 
-                    y: plankY,
-                    left: `${index * 10}%`,
-                    width: '10%'
-                  }}
-                  className="absolute top-0 bottom-0 h-full overflow-hidden pointer-events-auto"
+                  key={idx}
+                  variants={fadeInUp}
+                  className={`bg-white rounded-[20px] border border-white/80 shadow-lg hover:shadow-2xl hover:scale-[1.03] flex flex-col justify-between h-max overflow-hidden group transition-all duration-300 min-h-[480px] relative ${idx % 2 === 0 ? 'xl:-mt-10' : 'xl:mt-14'}`}
                 >
-                  {/* Background Image Slice */}
-                  <div 
-                    className="absolute top-0 w-screen h-screen select-none pointer-events-none"
-                    style={{ left: `-${index * 10}vw` }}
-                  >
+                  {/* Top Image Frame (with icon and title inside) */}
+                  <div className="relative w-full h-[380px] overflow-hidden flex flex-col justify-end pb-4 items-center">
                     <Image
-                      src="/Home/Hero/herobg.png"
-                      alt={`MEATIN Banner Plank ${index}`}
+                      src={step.image}
+                      alt={step.title}
                       fill
-                      className="object-cover object-center max-w-none"
-                      priority
+                      className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
                     />
+                    {/* Bottom gradient fade to white */}
+                    <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/75 to-transparent z-10" />
+
+                    {/* Icon */}
+                    <div className="relative z-20 w-[64px] h-[64px] drop-shadow-md mb-4">
+                      <Image
+                        src={step.icon}
+                        alt={`${step.title} icon`}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+
+                    {/* Title */}
+                    <h4 className="relative z-20 text-[#153520] font-extrabold text-[1.05rem] xl:text-[1rem] 2xl:text-[1.1rem] tracking-wide uppercase font-manrope leading-[1.5] text-center px-2 max-w-[90%]">
+                      {step.title}
+                    </h4>
                   </div>
 
-                  {/* Sliced Overlay Text/Content (Moves with individual plankY!) */}
-                  {renderBannerContent(index)}
+                  {/* Bottom Text Panel */}
+                  <div className="bg-white pb-8 px-4 flex-1 flex flex-col items-center justify-start text-center">
+                    <p className="text-[#3A3A3A] text-[0.8rem] 2xl:text-[0.85rem] font-semibold leading-relaxed font-manrope max-w-[195px] mx-auto">
+                      {step.desc}
+                    </p>
+                  </div>
                 </motion.div>
               );
             })}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 3. CERTIFIED EXCELLENCE SECTION */}
+      <section className="relative w-full py-16 lg:py-24 overflow-hidden">
+
+        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Creative vertical green truck graphics on left side gutter */}
+          <div className="absolute left-0 top-[-100px] w-24 h-[650px] hidden lg:block pointer-events-none z-0">
+            <div className="relative w-full h-full">
+              <Image
+                src="/Home/certifications/truck-image-certificates.webp"
+                alt="Logistic transport graphic"
+                fill
+                className="object-contain object-top"
+              />
+            </div>
           </div>
 
-        </div>
+          {/* Header */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center flex flex-col items-center mb-24"
+          >
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="h-[1.5px] w-8 sm:w-12 bg-[#D4A437]" />
+              <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#153520] font-manrope">
+                OUR PROMISE
+              </h4>
+              <div className="h-[1.5px] w-8 sm:w-12 bg-[#D4A437]" />
+            </div>
+            <h2 className="text-5xl sm:text-6xl lg:text-[4vw] font-normal font-chau tracking-tight leading-none mb-4">
+              <span className="text-[#D62828]">Certified</span> <span className="text-[#153520]">Excellence</span>
+            </h2>
+            <p className="text-slate-700 text-sm sm:text-base max-w-xl mx-auto font-manrope font-semibold leading-relaxed">
+              Our commitment to international food safety and quality standards.
+            </p>
+            <div className="flex items-center justify-center gap-1.5 mt-5">
+              <div className="h-[1.5px] w-12 sm:w-16 bg-[#D4A437]" />
+              <span className="w-2 h-2 rounded-full bg-[#D4A437]" />
+              <div className="h-[1.5px] w-12 sm:w-16 bg-[#D4A437]" />
+            </div>
+          </motion.div>
 
-      </div>
+          {/* Grid of certifications */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-y-16 md:gap-y-12 gap-x-6 lg:gap-x-8 lg:pl-12 xl:pl-24 items-stretch"
+          >
+            {certificates.map((cert, idx) => {
+              return (
+                <motion.div
+                  key={idx}
+                  variants={fadeInUp}
+                  className="bg-white rounded-[32px] border border-slate-200/80 shadow-[0_12px_36px_rgba(0,0,0,0.035)] px-3.5 py-5 pt-14 flex flex-col justify-between items-center text-center relative hover:scale-[1.04] hover:shadow-[0_20px_48px_rgba(0,0,0,0.08)] hover:border-[#1F5A3C]/20 transition-all duration-300 ease-out min-h-[480px] certificate-parent-card"
+                >
+                  {/* Top Circle logo overlay badge */}
+                  <div className="w-24 h-24 bg-white border border-slate-100 rounded-full flex items-center justify-center p-3 shadow-lg shadow-slate-200/60 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                    <div className="relative w-full h-full">
+                      <Image
+                        src={cert.icon}
+                        alt={`${cert.name} logo`}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Card Header Content */}
+                  <div className="flex flex-col items-center w-full">
+                    <h4 className="text-2xl sm:text-3xl font-extrabold text-[#1F5A3C] font-barlow tracking-wide uppercase leading-none mb-1.5">{cert.name}</h4>
+                    <span className="inline-block bg-[#7CB325] text-white px-4 py-0.5 rounded text-[11px] font-black uppercase tracking-wider mb-3 leading-none">
+                      {cert.sub}
+                    </span>
+                    <p className="text-xs text-slate-500 font-bold max-w-[200px] sm:max-w-none md:max-w-[200px] h-12 mb-4 leading-normal flex items-center justify-center">
+                      {cert.desc}
+                    </p>
+                  </div>
+
+                  {/* Certificate Image Frame */}
+                  <div className="w-full aspect-[4/3] relative rounded-2xl overflow-hidden mb-3 min-h-[250px]">
+                    <Image
+                      src={cert.certificateImage}
+                      alt={`${cert.name} Certificate`}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+
+                  {/* Action Buttons Row */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-1.5 w-full mt-auto">
+                    <button
+                      onClick={() => {
+                        if (cert.pdf) {
+                          window.open(cert.pdf, '_blank');
+                        } else {
+                          alert(`${cert.name} certificate PDF is currently unavailable and will be updated soon.`);
+                        }
+                      }}
+                      className="bg-[#153520] hover:bg-[#1c452b] text-white text-[0.62rem] xl:text-[0.68rem] font-extrabold h-12 px-1 rounded-xl transition-all duration-300 ease-in-out hover:scale-[1.03] active:scale-95 flex items-center justify-center gap-1 uppercase tracking-wide shadow-sm w-full whitespace-nowrap"
+                    >
+                      <svg className="w-3 h-3 text-[#D4A437] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                      View Certificate
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (cert.pdf) {
+                          const link = document.createElement('a');
+                          link.href = cert.pdf;
+                          link.download = cert.pdf.split('/').pop() || 'certificate.pdf';
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                        } else {
+                          alert(`${cert.name} certificate PDF is currently unavailable and will be updated soon.`);
+                        }
+                      }}
+                      className="bg-white hover:bg-slate-50 border border-[#153520] text-[#153520] text-[0.62rem] xl:text-[0.68rem] font-extrabold h-12 px-1 rounded-xl transition-all duration-300 ease-in-out hover:scale-[1.03] active:scale-95 hover:shadow-md flex items-center justify-center gap-1 uppercase tracking-wide shadow-sm w-full whitespace-nowrap"
+                    >
+                      <svg className="w-3 h-3 text-[#153520] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      Download PDF
+                    </button>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 4. TRUST BANNER (At the very end of homepage) */}
+      <TrustedQualityBanner />
 
     </div>
   );

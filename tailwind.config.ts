@@ -44,6 +44,7 @@ const config: Config = {
         inter: ["var(--font-inter)", "sans-serif"],
         poppins: ["var(--font-poppins)", "sans-serif"],
         lexend: ["var(--font-lexend)", "sans-serif"],
+        barlow: ["var(--font-barlow-condensed)", "sans-serif"],
       },
       boxShadow: {
         'premium': '0 10px 30px -5px rgba(31, 90, 60, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.05)',

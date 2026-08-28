@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Poppins, Chau_Philomene_One, Manrope, Inter } from 'next/font/google';
+import { Poppins, Chau_Philomene_One, Manrope, Inter, Barlow_Condensed } from 'next/font/google';
 import './globals.css';
 import Preloader from '@/components/layout/Preloader';
 import Navbar from '@/components/layout/Navbar';
@@ -30,6 +30,13 @@ const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
   variable: '--font-inter',
+  display: 'swap',
+});
+
+const barlow = Barlow_Condensed({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-barlow-condensed',
   display: 'swap',
 });
 
@@ -120,7 +127,7 @@ export default function RootLayout({
   return (
     <html 
       lang="en" 
-      className={`${poppins.variable} ${chau.variable} ${manrope.variable} ${inter.variable}`} 
+      className={`${poppins.variable} ${chau.variable} ${manrope.variable} ${inter.variable} ${barlow.variable}`} 
       suppressHydrationWarning
     >
       <head>
