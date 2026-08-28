@@ -100,6 +100,7 @@ export const metadata: Metadata = {
 };
 
 import SmoothScroll from '@/components/layout/SmoothScroll';
+import ScrollToTop from '@/components/layout/ScrollToTop';
 
 export default function RootLayout({
   children,
@@ -145,6 +146,7 @@ export default function RootLayout({
           </SmoothScroll>
         </main>
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );

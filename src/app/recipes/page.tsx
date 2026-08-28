@@ -1649,19 +1649,33 @@ export default function RecipesPage() {
   // Auto-scroll to recipe detail view when a recipe is selected
   useEffect(() => {
     if (selectedRecipe) {
-      const timer = setTimeout(() => {
+      const scrollExact = () => {
         const detailEl = document.getElementById('recipe-detail-section');
         if (detailEl) {
-          const navOffset = 90;
-          const elementPosition = detailEl.getBoundingClientRect().top + window.scrollY;
-          const offsetPosition = Math.max(0, elementPosition - navOffset);
+          let absoluteTop = 0;
+          let curr: HTMLElement | null = detailEl;
+          while (curr) {
+            absoluteTop += curr.offsetTop;
+            curr = curr.offsetParent as HTMLElement | null;
+          }
+
+          const navOffset = 110;
+          const targetY = Math.max(0, absoluteTop - navOffset);
           window.scrollTo({
-            top: offsetPosition,
+            top: targetY,
             behavior: 'smooth',
           });
+        } else {
+          window.scrollTo({ top: 280, behavior: 'smooth' });
         }
-      }, 100);
-      return () => clearTimeout(timer);
+      };
+
+      scrollExact();
+      const t1 = setTimeout(scrollExact, 50);
+
+      return () => {
+        clearTimeout(t1);
+      };
     }
   }, [selectedRecipe]);
 
@@ -1705,18 +1719,18 @@ export default function RecipesPage() {
             </span>
           </div>
 
-          {/* Page Title & Controls */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          {/* Page Title & Controls - Horizontal Single Row Alignment on Mobile & Desktop */}
+          <div className="flex items-center justify-between gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
             <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-barlow-condensed tracking-wide uppercase leading-tight">
+              <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold font-barlow-condensed tracking-wide uppercase leading-tight">
                 {activeMeatType.toUpperCase()} <span className="text-[#D62828]">RECIPES</span>
               </h1>
             </div>
 
             {/* Right End: Meat Category Switcher Buttons (CHICKEN | BEEF | GOAT) */}
-            <div className="flex items-center gap-3 self-start md:self-auto">
+            <div className="flex items-center shrink-0">
               {/* Segmented Switcher Tabs */}
-              <div className="flex items-center bg-white rounded-md p-1 shadow-md border border-white/60">
+              <div className="flex items-center bg-white rounded-md p-0.5 sm:p-1 shadow-md border border-white/60">
                 {(['chicken', 'beef', 'goat'] as const).map((meatType) => (
                   <button
                     key={meatType}
@@ -1724,7 +1738,7 @@ export default function RecipesPage() {
                       setActiveMeatType(meatType);
                       setSelectedRecipe(null);
                     }}
-                    className={`px-4 sm:px-5 py-2 rounded-md font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all cursor-pointer ${
+                    className={`px-2.5 sm:px-5 py-1.5 sm:py-2 rounded-md font-extrabold text-[10px] sm:text-sm uppercase tracking-wider transition-all cursor-pointer ${
                       activeMeatType === meatType
                         ? 'bg-[#D62828] text-white shadow-md'
                         : 'text-slate-700 hover:text-slate-950 hover:bg-slate-100'
@@ -1739,7 +1753,7 @@ export default function RecipesPage() {
 
           {/* 10 Chicken Parts Selector Bar - Clean Rounded White Circles with Auto Yellow Highlight */}
           <div className="pt-4">
-            <div className="flex items-center justify-around px-24 md:px-20 lg:px-18 gap-3  sm:gap-4 overflow-x-auto pb-8 pt-2 scrollbar-none select-none">
+            <div className="flex flex-wrap items-center justify-center px-2 sm:px-10 md:px-20 gap-2 sm:gap-4 pb-6 pt-2 select-none">
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -1748,7 +1762,7 @@ export default function RecipesPage() {
                   setSelectedRecipe(null);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className={`w-15 h-15 md:w-20 md:h-20 rounded-full flex items-center justify-center font-extrabold text-sm sm:text-base tracking-wider transition-all shrink-0 cursor-pointer text-white shadow-lg ${
+                className={`w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center font-extrabold text-[11px] sm:text-sm md:text-base tracking-wider transition-all shrink-0 cursor-pointer text-white shadow-lg ${
                   activeFilter === 'all' && !selectedRecipe
                     ? 'bg-white/35 backdrop-blur-xl border-2 border-white ring-4 ring-white/50 scale-105 shadow-2xl'
                     : 'bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30'
@@ -1770,7 +1784,7 @@ export default function RecipesPage() {
                       setHighlightedPartIdx(index);
                       handlePartClick(part.id);
                     }}
-                    className={`relative w-15 h-15 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center p-2 shrink-0 cursor-pointer transition-all duration-500 shadow-md ${
+                    className={`relative w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center p-1 sm:p-2 shrink-0 cursor-pointer transition-all duration-500 shadow-md ${
                       isAutoHighlighted || isSelected
                         ? 'ring-4 ring-[#E1C609] bg-[#FFFDE7] scale-110 shadow-[0_0_20px_rgba(225,198,9,0.7)]'
                         : 'border border-white/60 hover:scale-105'
@@ -1794,32 +1808,36 @@ export default function RecipesPage() {
       </section>
 
       {/* Main Interactive Content Area */}
-      <main className="relative z-20 flex-1 w-full px-[2vw] py-10">
-        <AnimatePresence mode="wait">
-          {!selectedRecipe ? (
-            /* ========================================================= */
-            /* VIEW 1: ALL CHICKEN PARTS LISTED ONE BY ONE VERTICALLY    */
-            /* ========================================================= */
-            <motion.div
-              key="all-parts-vertical-list"
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="space-y-16"
-            >
+      <main className="relative z-20 flex-1 w-full px-[2vw] py-6 sm:py-10">
+        {!selectedRecipe ? (
+          /* ========================================================= */
+          /* VIEW 1: ALL CHICKEN PARTS LISTED ONE BY ONE VERTICALLY    */
+          /* ========================================================= */
+          <motion.div
+            key="all-parts-vertical-list"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-12 sm:space-y-16"
+          >
               {partsToDisplay.map((part) => {
                 const recipes = recipesDatabase[part.id] || [];
                 return (
                   <section
                     key={part.id}
                     id={`part-section-${part.id}`}
-                    className="space-y-6 pt-4 scroll-mt-36"
+                    className="space-y-4 sm:space-y-6 pt-4 scroll-mt-28 sm:scroll-mt-36"
                   >
-                    {/* Section Label Header with Icon & Badge */}
-                    <div className="flex items-center justify-between pb-2">
-                      <div className="flex items-center gap-3">
-                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white border border-slate-200/80 p-2.5 flex items-center justify-center shadow-md shrink-0">
+                    {/* Section Label Header with Icon & Badge - AOS Scroll Animation */}
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.4 }}
+                      className="flex items-center justify-between pb-2"
+                    >
+                      <div className="flex items-center gap-2.5 sm:gap-3">
+                        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white border border-slate-200/80 p-2 sm:p-2.5 flex items-center justify-center shadow-md shrink-0">
                           <Image
                             src={part.img}
                             alt={part.name}
@@ -1829,15 +1847,15 @@ export default function RecipesPage() {
                           />
                         </div>
                         <div>
-                          <h2 className="text-3xl sm:text-4xl font-bold font-barlow-condensed uppercase text-[#127431] tracking-wide">
+                          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-barlow-condensed uppercase text-[#127431] tracking-wide">
                             {part.name} RECIPES
                           </h2>
-                          <p className="text-xs sm:text-sm font-medium text-slate-600 font-manrope">
+                          <p className="text-[11px] sm:text-sm font-medium text-slate-600 font-manrope">
                             Showing 4 curated dishes for chicken {part.name.toLowerCase()}
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
 
                     {/* 4 Recipe Cards Grid for this part */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1853,7 +1871,7 @@ export default function RecipesPage() {
                             boxShadow: '0 20px 35px -5px rgba(0, 0, 0, 0.25)',
                           }}
                           onClick={() => setSelectedRecipe(recipe)}
-                          className="relative aspect-[3/4.2] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-5 select-none recipe-card-box cursor-pointer border border-slate-200/40"
+                          className="relative aspect-[3/3.5] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-4 sm:p-5 select-none recipe-card-box cursor-pointer border border-slate-200/40"
                         >
                           {/* Top Left Red Category Tag */}
                           <span className="absolute top-4 left-4 z-20 bg-[#D62828] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
@@ -1918,7 +1936,7 @@ export default function RecipesPage() {
               className="space-y-12 relative scroll-mt-24"
             >
               {/* Decorative Graphics */}
-              <div className="absolute left-[-40px] bottom-[-40px] z-0 pointer-events-none w-[180px] sm:w-[240px] opacity-70">
+              <div className="absolute left-[-70px] bottom-[-40px] z-0 pointer-events-none w-[180px] sm:w-[360px]">
                 <Image
                   src="/Recipies/leftBottomleaf.webp"
                   alt="Decorative Leaf"
@@ -1927,7 +1945,7 @@ export default function RecipesPage() {
                   className="w-full h-auto object-contain"
                 />
               </div>
-              <div className="absolute right-[-30px] top-[40%] z-0 pointer-events-none w-[150px] sm:w-[200px] opacity-70">
+              <div className="absolute right-[-45px] top-[58%] z-0 pointer-events-none w-[140px] sm:w-[180px] ">
                 <Image
                   src="/Recipies/rightCenterleaf.webp"
                   alt="Decorative Spices"
@@ -1944,7 +1962,7 @@ export default function RecipesPage() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="lg:col-span-6 relative w-full min-h-[340px] sm:min-h-[420px] lg:min-h-[460px] rounded-2xl overflow-hidden shadow-2xl group flex flex-col justify-end select-none border border-slate-300/60"
+                  className="lg:col-span-6 relative w-full min-h-[340px] sm:min-h-[420px] lg:min-h-[460px] rounded-xl overflow-hidden shadow-2xl group flex flex-col justify-end select-none border border-slate-300/60"
                 >
                   <Image
                     src={selectedRecipe.img}
@@ -1965,22 +1983,6 @@ export default function RecipesPage() {
                     <p className="text-xs sm:text-base font-medium text-slate-200 font-manrope max-w-[480px] leading-relaxed">
                       {selectedRecipe.desc}
                     </p>
-
-                    {/* Specs Badges */}
-                    <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 pt-2 text-xs sm:text-sm font-bold text-slate-200 font-inter">
-                      <div className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-white/20">
-                        <span>🍳</span>
-                        <span>{selectedRecipe.diff}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-white/20">
-                        <span>⏱️</span>
-                        <span>{selectedRecipe.time}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-white/20">
-                        <span>👥</span>
-                        <span>{selectedRecipe.servings}</span>
-                      </div>
-                    </div>
                   </div>
                 </motion.div>
 
@@ -1995,20 +1997,20 @@ export default function RecipesPage() {
                     {/* ABOUT THIS RECIPE */}
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-lg sm:text-xl font-bold text-[#127431] tracking-wider uppercase font-barlow-condensed">
+                        <h3 className="text-[13px] md:text-[22px] font-semibold text-[#1F5807] tracking-wider uppercase font-barlow-condensed">
                           ABOUT THIS RECIPE
                         </h3>
                         <div className="flex items-center gap-3">
                           {/* BACK Button inside Recipe Detail Section */}
                           <button
                             onClick={() => setSelectedRecipe(null)}
-                            className="bg-[#D62828] hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+                            className="bg-[#D62828] hover:bg-red-700 text-white font-bold text-sm uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                           >
                             <span>←</span>
                             <span>BACK</span>
                           </button>
 
-                          <div className="relative w-14 sm:w-16 h-7 sm:h-8 shrink-0">
+                          <div className="relative w-14 sm:w-32 h-7 sm:h-16 shrink-0">
                             <Image
                               src="/Recipies/leaf.webp"
                               alt="Leaf illustration"
@@ -2106,11 +2108,17 @@ export default function RecipesPage() {
                 </motion.div>
               </section>
 
-              {/* Bottom Section: INGREDIENTS & STEPS */}
-              <section className="relative w-full pt-6 select-none font-inter relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start font-inter">
-                  {/* Left Column: INGREDIENTS */}
-                  <div className="lg:col-span-5 space-y-4 font-inter">
+              {/* Bottom Section: INGREDIENTS & STEPS (Centered Container) */}
+              <section className="relative w-full pt-6 select-none font-inter z-10">
+                <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start font-inter px-4 sm:px-6">
+                  {/* Left Column: INGREDIENTS with AOS scroll animation */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    transition={{ duration: 0.5 }}
+                    className="lg:col-span-5 space-y-4 font-inter"
+                  >
                     <div className="flex items-center gap-3">
                       <div className="relative w-8 h-8 shrink-0">
                         <Image
@@ -2152,10 +2160,16 @@ export default function RecipesPage() {
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
 
-                  {/* Right Column: STEPS */}
-                  <div className="lg:col-span-7 space-y-4 font-inter pl-0 lg:pl-6 border-t lg:border-t-0 lg:border-l border-slate-300 pt-8 lg:pt-0">
+                  {/* Right Column: STEPS with AOS scroll animation */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="lg:col-span-7 space-y-4 font-inter pl-0 lg:pl-6 border-t lg:border-t-0 lg:border-l border-slate-300 pt-8 lg:pt-0"
+                  >
                     <div className="flex items-center gap-3">
                       <div className="relative w-8 h-8 shrink-0">
                         <Image
@@ -2185,12 +2199,11 @@ export default function RecipesPage() {
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </section>
             </motion.div>
           )}
-        </AnimatePresence>
       </main>
     </div>
   );
