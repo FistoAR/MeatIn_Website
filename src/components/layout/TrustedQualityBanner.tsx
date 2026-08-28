@@ -28,7 +28,7 @@ export default function TrustedQualityBanner() {
 
             <div className="pt-2">
               <Link 
-                href="/products" 
+                href="/know-your-meat" 
                 className="inline-flex items-center gap-3 px-4 py-2 bg-[#153520] hover:bg-[#1a4428] text-white rounded-lg font-bold text-xs md:text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] xl:mb-5"
               >
                 <span>Shop Now</span>

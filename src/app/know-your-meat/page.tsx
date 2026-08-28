@@ -11,7 +11,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 
-export default function ChickenProductPage() {
+export default function KnowYourMeatPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const detailsSectionRef = useRef<HTMLDivElement>(null);
   const centerCircleRef = useRef<HTMLDivElement>(null);
@@ -39,6 +39,17 @@ export default function ChickenProductPage() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const handleMeatTabChange = (type: "chicken" | "beef" | "goat") => {
+    setActiveMeatType(type);
+    setHasSelectedAnyPart(false);
+    setSelectedPartIdx(0);
+    setManuallySelectedPartIdx(0);
+    setActiveStage("skin");
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  };
 
   const selectPartManually = (idx: number) => {
     setSelectedPartIdx(idx);
@@ -443,6 +454,400 @@ export default function ChickenProductPage() {
     },
   ];
 
+  const partRecipesMap: Record<
+    string,
+    Array<{
+      title: string;
+      label: string;
+      desc: string;
+      img: string;
+      time: string;
+      servings: string;
+      diff: string;
+    }>
+  > = {
+    wing: [
+      {
+        title: "Spicy Chicken Wing Fry",
+        label: "BEST FOR FRY",
+        desc: "Crispy and spicy chicken wings tossed in fiery chili glaze.",
+        img: "/Product/recipies/leg3.webp",
+        time: "25 mins",
+        servings: "3 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Honey Glazed BBQ Wings",
+        label: "BEST FOR BBQ",
+        desc: "Sweet and smoky glazed chicken wings cooked to sticky perfection.",
+        img: "/Product/recipies/leg2.webp",
+        time: "35 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Garlic Parmesan Wings",
+        label: "BEST FOR SNACK",
+        desc: "Tender wings coated in rich garlic butter and parmesan cheese.",
+        img: "/Product/recipies/leg4.webp",
+        time: "30 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Buffalo Wing Platter",
+        label: "BEST FOR STARTER",
+        desc: "Classic American style buffalo wings served with creamy ranch dip.",
+        img: "/Product/recipies/leg1.webp",
+        time: "20 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+    ],
+    heart: [
+      {
+        title: "Spicy Heart Skewers",
+        label: "BEST FOR GRILL",
+        desc: "Tender grilled chicken hearts seasoned with black pepper & herbs.",
+        img: "/Product/recipies/leg2.webp",
+        time: "20 mins",
+        servings: "3 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Chicken Heart Pepper Fry",
+        label: "BEST FOR FRY",
+        desc: "Sautéed chicken hearts with crushed black pepper & curry leaves.",
+        img: "/Product/recipies/leg3.webp",
+        time: "25 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "South Indian Heart Curry",
+        label: "BEST FOR CURRY",
+        desc: "Rich and aromatic chicken heart curry in coconut gravy.",
+        img: "/Product/recipies/leg1.webp",
+        time: "35 mins",
+        servings: "4 Servings",
+        diff: "Medium",
+      },
+      {
+        title: "Garlic Butter Heart Stir-Fry",
+        label: "BEST FOR STIR-FRY",
+        desc: "Cleaned chicken hearts tossed with garlic, butter & veggies.",
+        img: "/Product/recipies/leg4.webp",
+        time: "15 mins",
+        servings: "2 Servings",
+        diff: "Easy",
+      },
+    ],
+    drumette: [
+      {
+        title: "Crispy Fried Drumettes",
+        label: "BEST FOR FRY",
+        desc: "Golden deep-fried drumettes with crunchy seasoned batter.",
+        img: "/Product/recipies/leg3.webp",
+        time: "25 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Tangy BBQ Drumette Roast",
+        label: "BEST FOR BBQ",
+        desc: "Marinated drumettes slow-roasted in rich tangy barbecue sauce.",
+        img: "/Product/recipies/leg2.webp",
+        time: "40 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Spicy Lollipop Drumettes",
+        label: "BEST FOR STARTER",
+        desc: "Lollipop style drumettes served with spicy schezwan dip.",
+        img: "/Product/recipies/leg4.webp",
+        time: "30 mins",
+        servings: "4 Servings",
+        diff: "Medium",
+      },
+      {
+        title: "Herb Roasted Drumette Platter",
+        label: "BEST FOR ROAST",
+        desc: "Oven-baked drumettes with rosemary, thyme, and olive oil.",
+        img: "/Product/recipies/leg1.webp",
+        time: "35 mins",
+        servings: "3 Servings",
+        diff: "Easy",
+      },
+    ],
+    thigh: [
+      {
+        title: "Creamy Chicken Thigh Curry",
+        label: "BEST FOR CURRY",
+        desc: "Tender bone-in chicken thighs cooked in rich onion gravy.",
+        img: "/Product/recipies/leg1.webp",
+        time: "40 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Smoky Grilled Chicken Thigh",
+        label: "BEST FOR GRILL",
+        desc: "Char-broiled chicken thighs marinated in rustic Indian spices.",
+        img: "/Product/recipies/leg2.webp",
+        time: "35 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Crispy Fried Thigh Steaks",
+        label: "BEST FOR FRY",
+        desc: "Juicy thigh cuts battered and fried to crispy perfection.",
+        img: "/Product/recipies/leg3.webp",
+        time: "30 mins",
+        servings: "3 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Slow Cooked Thigh Roast",
+        label: "BEST FOR ROAST",
+        desc: "Succulent chicken thighs slow-cooked with aromatic spices.",
+        img: "/Product/recipies/leg4.webp",
+        time: "50 mins",
+        servings: "4 Servings",
+        diff: "Medium",
+      },
+    ],
+    neck: [
+      {
+        title: "Nutritious Neck Soup",
+        label: "BEST FOR SOUP",
+        desc: "Nourishing and collagen-rich chicken neck bone soup with herbs.",
+        img: "/Product/recipies/leg1.webp",
+        time: "45 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Spicy Neck Pepper Masala",
+        label: "BEST FOR GRAVY",
+        desc: "Flavorful chicken necks sautéed with spicy black pepper gravy.",
+        img: "/Product/recipies/leg3.webp",
+        time: "35 mins",
+        servings: "4 Servings",
+        diff: "Medium",
+      },
+      {
+        title: "Traditional Bone Broth Stock",
+        label: "BEST FOR BROTH",
+        desc: "Slow-simmered chicken neck stock packed with wholesome nutrients.",
+        img: "/Product/recipies/leg4.webp",
+        time: "60 mins",
+        servings: "6 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "South Indian Neck Fry",
+        label: "BEST FOR FRY",
+        desc: "Spicy and crisp fried chicken necks seasoned with curry leaves.",
+        img: "/Product/recipies/leg2.webp",
+        time: "30 mins",
+        servings: "3 Servings",
+        diff: "Easy",
+      },
+    ],
+    breast: [
+      {
+        title: "Grilled Lemon Herb Breast",
+        label: "BEST FOR HEALTHY",
+        desc: "Lean boneless breast fillets grilled with fresh lemon & olive oil.",
+        img: "/Product/recipies/leg4.webp",
+        time: "20 mins",
+        servings: "2 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Creamy Butter Breast Curry",
+        label: "BEST FOR CURRY",
+        desc: "Boneless chicken breast in rich velvety tomato butter gravy.",
+        img: "/Product/recipies/leg1.webp",
+        time: "30 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Crispy Chicken Breast Nuggets",
+        label: "BEST FOR SNACK",
+        desc: "Bite-sized chicken breast nuggets served with garlic aioli dip.",
+        img: "/Product/recipies/leg3.webp",
+        time: "25 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Healthy Chicken Breast Salad",
+        label: "BEST FOR FITNESS",
+        desc: "Sliced grilled breast on garden greens with light dressing.",
+        img: "/Product/recipies/leg2.webp",
+        time: "15 mins",
+        servings: "2 Servings",
+        diff: "Easy",
+      },
+    ],
+    back: [
+      {
+        title: "Rich Back Bone Broth",
+        label: "BEST FOR BROTH",
+        desc: "Collagen-dense chicken back bone broth simmered for deep flavor.",
+        img: "/Product/recipies/leg1.webp",
+        time: "90 mins",
+        servings: "6 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Spicy Back Piece Curry",
+        label: "BEST FOR CURRY",
+        desc: "Traditional country-style chicken back curry with coconut milk.",
+        img: "/Product/recipies/leg3.webp",
+        time: "40 mins",
+        servings: "4 Servings",
+        diff: "Medium",
+      },
+      {
+        title: "Chicken Back Soup Base",
+        label: "BEST FOR SOUP",
+        desc: "Flavor-packed chicken stock base for rich winter soups.",
+        img: "/Product/recipies/leg4.webp",
+        time: "45 mins",
+        servings: "5 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Masala Roasted Back Cuts",
+        label: "BEST FOR ROAST",
+        desc: "Spicy oven-roasted chicken back cuts with caramelized onions.",
+        img: "/Product/recipies/leg2.webp",
+        time: "35 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+    ],
+    liver: [
+      {
+        title: "Chicken Liver Pepper Fry",
+        label: "BEST FOR FRY",
+        desc: "Tender chicken liver sautéed with caramelized onions and pepper.",
+        img: "/Product/recipies/leg3.webp",
+        time: "20 mins",
+        servings: "3 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Rich Chicken Liver Masala",
+        label: "BEST FOR CURRY",
+        desc: "Thick spicy liver curry cooked with traditional aromatic spices.",
+        img: "/Product/recipies/leg1.webp",
+        time: "25 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Garlic Butter Liver Skewers",
+        label: "BEST FOR GRILL",
+        desc: "Marinated liver cubes grilled on skewers with herb butter.",
+        img: "/Product/recipies/leg2.webp",
+        time: "15 mins",
+        servings: "3 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Creamy Liver Pate Spread",
+        label: "BEST FOR SPREAD",
+        desc: "Smooth and rich chicken liver pate infused with thyme and butter.",
+        img: "/Product/recipies/leg4.webp",
+        time: "30 mins",
+        servings: "6 Servings",
+        diff: "Medium",
+      },
+    ],
+    drumstick: [
+      {
+        title: "Spicy Tandoori Drumsticks",
+        label: "BEST FOR TANDOORI",
+        desc: "Classic tandoori drumsticks charred over open flame.",
+        img: "/Product/recipies/leg2.webp",
+        time: "35 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Crispy Fried Drumstick Box",
+        label: "BEST FOR FRY",
+        desc: "Golden crunchy drumsticks seasoned with Southern spices.",
+        img: "/Product/recipies/leg3.webp",
+        time: "30 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Chettinad Drumstick Curry",
+        label: "BEST FOR CURRY",
+        desc: "Fiery South Indian drumstick curry with freshly ground spices.",
+        img: "/Product/recipies/leg1.webp",
+        time: "40 mins",
+        servings: "4 Servings",
+        diff: "Medium",
+      },
+      {
+        title: "Garlic Butter Glazed Leg",
+        label: "BEST FOR ROAST",
+        desc: "Oven-roasted drumsticks brushed with rich garlic herb butter.",
+        img: "/Product/recipies/leg4.webp",
+        time: "35 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+    ],
+    gizzard: [
+      {
+        title: "Crunchy Gizzard Pepper Fry",
+        label: "BEST FOR FRY",
+        desc: "Chewy and crispy fried gizzards with green chillies & pepper.",
+        img: "/Product/recipies/leg3.webp",
+        time: "30 mins",
+        servings: "4 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Spicy Braised Gizzard Gravy",
+        label: "BEST FOR GRAVY",
+        desc: "Slow-braised gizzards in rich caramelized onion gravy.",
+        img: "/Product/recipies/leg1.webp",
+        time: "45 mins",
+        servings: "4 Servings",
+        diff: "Medium",
+      },
+      {
+        title: "Grilled Gizzard Skewers",
+        label: "BEST FOR GRILL",
+        desc: "Marinated chicken gizzards grilled to savory perfection.",
+        img: "/Product/recipies/leg2.webp",
+        time: "25 mins",
+        servings: "3 Servings",
+        diff: "Easy",
+      },
+      {
+        title: "Pickled Gizzard Delicacy",
+        label: "BEST FOR SNACK",
+        desc: "Tangy and spicy pickled gizzards infused with mustard oil.",
+        img: "/Product/recipies/leg4.webp",
+        time: "40 mins",
+        servings: "6 Servings",
+        diff: "Medium",
+      },
+    ],
+  };
+
   // Track page scroll inside the interactive visualizer
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -575,38 +980,38 @@ export default function ChickenProductPage() {
   const categories = [
     {
       name: "CHICKEN",
-      href: "/products/chicken",
+      href: "/know-your-meat",
       icon: "/Product/Chicken/Banner/image 298.webp",
     },
     {
       name: "BUFFALO",
-      href: "/products/buffalo",
+      href: "/know-your-meat",
       icon: "/Product/Chicken/Banner/image 298 (1).webp",
     },
     {
       name: "MUTTON",
-      href: "/products/mutton",
+      href: "/know-your-meat",
       icon: "/Product/Chicken/Banner/image 298 (2).webp",
     },
     {
       name: "DUCK",
-      href: "/products/duck",
+      href: "/know-your-meat",
       icon: "/Product/Chicken/Banner/image 298 (3).webp",
     },
     {
       name: "QUAIL",
-      href: "/products/quail",
+      href: "/know-your-meat",
       icon: "/Product/Chicken/Banner/image 298 (4).webp",
     },
     {
       name: "BURGER PATTY",
-      href: "/products/burger-patty",
+      href: "/know-your-meat",
       icon: "/Product/Chicken/Banner/image 298.webp",
     },
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#E4E4E4] relative font-manrope selection:bg-white/20 selection:text-white">
+    <div className="w-full min-h-screen bg-[#638913] relative font-manrope selection:bg-white/20 selection:text-white">
       {/* Background Doodle Repeat Overlay */}
       <div
         className="fixed inset-0 z-0 pointer-events-none opacity-[0.7] bg-repeat"
@@ -1304,6 +1709,14 @@ export default function ChickenProductPage() {
           activeMeatType === "chicken" ? "h-[200vh]" : "h-[100vh]"
         }`}
       >
+        {/* Section 1 Doodle Repeat Overlay */}
+        <div
+          className="absolute inset-0 z-0 pointer-events-none opacity-[0.45] bg-repeat"
+          style={{
+            backgroundImage: 'url("/Product/Chicken/doodle.webp")',
+            backgroundSize: "800px",
+          }}
+        />
         <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col justify-between pt-16 md:pt-20 lg:pt-24 xl:pt-32 pb-4 viz-sticky-wrap">
           {/* Main Visualizer Content Area */}
           <div className="flex-1 w-full px-4 md:px-8 flex items-center justify-center relative pt-2 viz-main-wrap">
@@ -1313,7 +1726,7 @@ export default function ChickenProductPage() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
-                onClick={() => setActiveMeatType("chicken")}
+                onClick={() => handleMeatTabChange("chicken")}
                 className={`px-6 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${
                   activeMeatType === "chicken"
                     ? "bg-[#D62828] text-white"
@@ -1329,7 +1742,7 @@ export default function ChickenProductPage() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.22, ease: "easeOut" }}
-                onClick={() => setActiveMeatType("beef")}
+                onClick={() => handleMeatTabChange("beef")}
                 className={`px-8 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${
                   activeMeatType === "beef"
                     ? "bg-[#D62828] text-white"
@@ -1345,7 +1758,7 @@ export default function ChickenProductPage() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.34, ease: "easeOut" }}
-                onClick={() => setActiveMeatType("goat")}
+                onClick={() => handleMeatTabChange("goat")}
                 className={`px-8 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${
                   activeMeatType === "goat"
                     ? "bg-[#D62828] text-white"
@@ -3452,9 +3865,9 @@ export default function ChickenProductPage() {
                   />
                 </motion.div>
 
-                {/* Bottom Grassland Bar with 4 Feature Badges (Animal stands directly on this hill) */}
+                {/* Bottom Grassland Bar with 4 Feature Badges (Animal stands directly on this hill - 100vw full width) */}
                 <div
-                  className="w-full absolute bottom-[-15px] left-0 right-0 h-[175px] bg-no-repeat flex items-end pb-5 px-8 justify-center z-10 viz-grassland-bar"
+                  className="w-screen absolute bottom-[-15px] left-1/2 transform -translate-x-1/2 h-[175px] bg-no-repeat flex items-end pb-5 px-8 justify-center z-10 viz-grassland-bar"
                   style={{
                     backgroundImage: 'url("/Product/GoatBeef/grassLand.webp")',
                     backgroundSize: "100% 100%",
@@ -3520,16 +3933,151 @@ export default function ChickenProductPage() {
         </div>
       </div>
 
+
+
       {/* 2. Interactive Details Section - Only shown when activeMeatType === "chicken" */}
       <section
         ref={detailsSectionRef}
-        className={`relative z-30 w-full h-screen min-h-screen max-h-screen pt-[130px] md:pt-[135px] lg:pt-[140px] pb-4 bg-cover bg-center flex items-center justify-center m-0 overflow-y-auto md:overflow-hidden transition-all duration-700 detail-section-wrap ${
+        className={`relative z-30 w-full h-screen min-h-screen max-h-screen pt-[130px] md:pt-[135px] lg:pt-[140px] pb-4 flex items-center justify-center m-0 overflow-y-auto md:overflow-hidden transition-all duration-700 detail-section-wrap ${
           hasSelectedAnyPart && activeMeatType === "chicken"
             ? "block opacity-100 pointer-events-auto"
             : "hidden opacity-0 pointer-events-none"
         }`}
-        style={{ backgroundImage: 'url("/Product/details/bg.webp")' }}
       >
+        {/* Pure Code Background: Section 1 Green (#638913) + Doodle Pattern + Cream Paper Right Panel with Layered Ripped Edge */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+          {/* Base Section 1 Green Color */}
+          <div className="absolute inset-0 bg-[#638913]" />
+
+          {/* Doodle Pattern Overlay across Green Background */}
+          <div
+            className="absolute inset-0 opacity-[0.45] bg-repeat pointer-events-none"
+            style={{
+              backgroundImage: 'url("/Product/Chicken/doodle.webp")',
+              backgroundSize: "800px",
+            }}
+          />
+
+          {/* Procedural Paper Tear SVG Filter Definition */}
+          <svg
+            className="absolute w-0 h-0 pointer-events-none"
+            aria-hidden="true"
+          >
+            <defs>
+              <filter
+                id="real-paper-tear"
+                x="-30%"
+                y="-30%"
+                width="160%"
+                height="160%"
+              >
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.015 0.035"
+                  numOctaves="3"
+                  result="noise"
+                />
+                <feDisplacementMap
+                  in="SourceGraphic"
+                  in2="noise"
+                  scale="4.0"
+                  xChannelSelector="R"
+                  yChannelSelector="G"
+                  result="displaced"
+                />
+
+                <feTurbulence
+                  type="turbulence"
+                  baseFrequency="0.002 0.02"
+                  numOctaves="2"
+                  result="spotNoise"
+                />
+                <feColorMatrix
+                  in="spotNoise"
+                  type="matrix"
+                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 4 -1.8"
+                  result="spotMask"
+                />
+
+                <feDropShadow
+                  in="displaced"
+                  dx="-3"
+                  dy="1.5"
+                  stdDeviation="2"
+                  floodColor="#061208"
+                  floodOpacity="0.3"
+                  result="fullShadow"
+                />
+
+                <feComposite
+                  in="fullShadow"
+                  in2="spotMask"
+                  operator="in"
+                  result="sporadicShadow"
+                />
+
+                <feMerge>
+                  <feMergeNode in="sporadicShadow" />
+                  <feMergeNode in="displaced" />
+                </feMerge>
+              </filter>
+            </defs>
+          </svg>
+
+          {/* Desktop Right Side Cream Paper Panel */}
+          <div className="hidden md:block absolute top-0 bottom-0 right-0 left-[46%] lg:left-[48%] xl:left-[50%] z-0 bg-[#FAF6EE]">
+            {/* Real Procedural Hand-Torn Paper SVG Edge Divider */}
+            <svg
+              className="absolute top-0 bottom-0 -left-[45px] h-full w-[50px] overflow-visible"
+              viewBox="0 0 50 1000"
+              preserveAspectRatio="none"
+              style={{ filter: "url(#real-paper-tear)" }}
+            >
+              {/* Dotted Dark Olive Green Torn Fiber Shadow 1 (Dip near y=212px) */}
+              <path
+                d="M 35.0 175.0 L 34.7 181.2 L 33.9 187.5 L 31.9 193.8 L 30.7 200.0 L 30.3 206.2 L 28.0 212.5 L 27.6 218.8 L 29.3 225.0 L 28.7 231.2 L 29.4 237.5 L 29.7 243.8 L 31.5 250.0 L 32.2 256.2 L 32.2 262.5 L 33.6 268.8"
+                fill="none"
+                stroke="#1f3204"
+                strokeWidth="3"
+                strokeDasharray="2 3"
+                strokeLinecap="round"
+                className="opacity-30"
+                transform="translate(-2, 0)"
+              />
+
+              {/* Dotted Dark Olive Green Torn Fiber Shadow 2 (Dip near y=550px) */}
+              <path
+                d="M 31.2 512.5 L 30.1 518.8 L 29.7 525.0 L 26.8 531.2 L 25.7 537.5 L 24.5 543.8 L 24.2 550.0 L 23.5 556.2 L 24.0 562.5 L 24.5 568.8 L 23.1 575.0 L 24.5 581.2 L 24.4 587.5 L 25.4 593.8 L 27.9 600.0 L 27.1 606.2"
+                fill="none"
+                stroke="#1f3204"
+                strokeWidth="3"
+                strokeDasharray="2 3"
+                strokeLinecap="round"
+                className="opacity-30"
+                transform="translate(-2, 0)"
+              />
+
+              {/* Dotted Dark Olive Green Torn Fiber Shadow 3 (Dip near y=815px) */}
+              <path
+                d="M 29.0 775.0 L 29.6 781.2 L 27.6 787.5 L 27.9 793.8 L 27.8 800.0 L 26.9 806.2 L 25.7 812.5 L 25.4 818.8 L 26.5 825.0 L 27.6 831.2 L 28.7 837.5 L 28.5 843.8 L 31.2 850.0 L 32.1 856.2 L 32.8 862.5 L 33.0 868.8"
+                fill="none"
+                stroke="#1f3204"
+                strokeWidth="3"
+                strokeDasharray="2 3"
+                strokeLinecap="round"
+                className="opacity-30"
+                transform="translate(-2, 0)"
+              />
+
+              {/* Main Cream Paper Sheet Path */}
+              <path
+                d="M 50 0 L 31.8 0.0 L 31.3 6.2 L 32.2 12.5 L 30.9 18.8 L 33.2 25.0 L 32.5 31.2 L 33.3 37.5 L 32.4 43.8 L 32.7 50.0 L 32.7 56.2 L 34.6 62.5 L 35.0 68.8 L 33.5 75.0 L 35.1 81.2 L 35.2 87.5 L 35.0 93.8 L 34.7 100.0 L 34.3 106.2 L 35.3 112.5 L 36.3 118.8 L 35.0 125.0 L 34.8 131.2 L 36.2 137.5 L 34.8 143.8 L 35.2 150.0 L 34.3 156.2 L 36.1 162.5 L 34.0 168.8 L 35.0 175.0 L 34.7 181.2 L 33.9 187.5 L 31.9 193.8 L 30.7 200.0 L 30.3 206.2 L 28.0 212.5 L 27.6 218.8 L 29.3 225.0 L 28.7 231.2 L 29.4 237.5 L 29.7 243.8 L 31.5 250.0 L 32.2 256.2 L 32.2 262.5 L 33.6 268.8 L 32.6 275.0 L 32.4 281.2 L 31.3 287.5 L 31.1 293.8 L 32.8 300.0 L 31.0 306.2 L 32.4 312.5 L 31.2 318.8 L 30.7 325.0 L 32.6 331.2 L 32.5 337.5 L 32.6 343.8 L 31.0 350.0 L 31.0 356.2 L 30.4 362.5 L 31.4 368.8 L 31.9 375.0 L 30.9 381.2 L 32.8 387.5 L 32.1 393.8 L 30.5 400.0 L 32.5 406.2 L 32.3 412.5 L 31.3 418.8 L 32.1 425.0 L 32.2 431.2 L 30.6 437.5 L 31.0 443.8 L 30.9 450.0 L 32.1 456.2 L 32.6 462.5 L 30.3 468.8 L 32.2 475.0 L 31.5 481.2 L 31.8 487.5 L 30.5 493.8 L 31.3 500.0 L 30.3 506.2 L 31.2 512.5 L 30.1 518.8 L 29.7 525.0 L 26.8 531.2 L 25.7 537.5 L 24.5 543.8 L 24.2 550.0 L 23.5 556.2 L 24.0 562.5 L 24.5 568.8 L 23.1 575.0 L 24.5 581.2 L 24.4 587.5 L 25.4 593.8 L 27.9 600.0 L 27.1 606.2 L 26.3 612.5 L 27.3 618.8 L 25.4 625.0 L 26.0 631.2 L 26.9 637.5 L 26.5 643.8 L 25.3 650.0 L 26.0 656.2 L 26.8 662.5 L 26.3 668.8 L 24.9 675.0 L 25.5 681.2 L 26.4 687.5 L 27.3 693.8 L 26.2 700.0 L 26.8 706.2 L 27.4 712.5 L 27.4 718.8 L 27.5 725.0 L 27.2 731.2 L 26.4 737.5 L 27.5 743.8 L 27.5 750.0 L 27.3 756.2 L 28.4 762.5 L 29.7 768.8 L 29.0 775.0 L 29.6 781.2 L 27.6 787.5 L 27.9 793.8 L 27.8 800.0 L 26.9 806.2 L 25.7 812.5 L 25.4 818.8 L 26.5 825.0 L 27.6 831.2 L 28.7 837.5 L 28.5 843.8 L 31.2 850.0 L 32.1 856.2 L 32.8 862.5 L 33.0 868.8 L 33.5 875.0 L 33.8 881.2 L 33.3 887.5 L 35.1 893.8 L 35.6 900.0 L 35.1 906.2 L 35.0 912.5 L 35.1 918.8 L 33.5 925.0 L 33.7 931.2 L 34.1 937.5 L 34.3 943.8 L 35.2 950.0 L 33.8 956.2 L 34.9 962.5 L 34.8 968.8 L 35.0 975.0 L 33.5 981.2 L 34.4 987.5 L 33.8 993.8 L 32.9 1000.0 L 50 1000 Z"
+                className="fill-[#FAF6EE]"
+              />
+            </svg>
+          </div>
+        </div>
+
         {/* Mobile-only close button */}
         <button
           onClick={() => setHasSelectedAnyPart(false)}
@@ -3551,7 +4099,7 @@ export default function ChickenProductPage() {
             />
           </svg>
         </button>
-        <div className="w-full h-full flex flex-col md:flex-row items-stretch px-4 md:px-10 lg:px-16">
+        <div className="relative z-10 w-full h-full flex flex-col md:flex-row items-stretch px-4 md:px-10 lg:px-16">
           {/* Left Column (50% flex) - Green panel area with centered preview & bottom carousel */}
           <motion.div
             key={`detail-left-${manuallySelectedPartIdx}`}
@@ -3752,10 +4300,10 @@ export default function ChickenProductPage() {
                 />
               </div>
               <Link
-                href="/products"
+                href="/know-your-meat"
                 className="relative inline-block hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
               >
-                Products
+                Know Your Meat
               </Link>
               <div className="relative w-2 h-3 flex items-center justify-center shrink-0">
                 <Image
@@ -4133,8 +4681,14 @@ export default function ChickenProductPage() {
         </div>
       </section>
 
-      {/* 3. Recipes Section */}
-      <section className="relative z-30 w-full bg-[#E4E4E4] pt-16 pb-28 px-4 md:px-12 lg:px-20 recipe-section-wrap overflow-hidden select-none">
+      {/* 3. Recipes Section (Hidden by default, shown ONLY after part is selected in Section 1) */}
+      <section
+        className={`relative z-30 w-full bg-[#E4E4E4] pt-16 pb-28 px-4 md:px-12 lg:px-20 recipe-section-wrap overflow-hidden select-none transition-all duration-700 ${
+          hasSelectedAnyPart
+            ? "block opacity-100"
+            : "hidden opacity-0 pointer-events-none"
+        }`}
+      >
         {/* Background Doodle Pattern Overlay */}
         <div
           className="absolute inset-0 pointer-events-none bg-repeat z-0 opacity-70"
@@ -4204,7 +4758,7 @@ export default function ChickenProductPage() {
                 className="text-5xl md:text-6xl font-bold font-barlow-condensed tracking-wide uppercase leading-[0.95] recipe-title-text"
               >
                 <span className="text-[#127431] block">
-                  {"MEAT MADE".split("").map((char, charIdx) => (
+                  {`${chickenParts[manuallySelectedPartIdx]?.name || "CHICKEN"} RECIPES`.split("").map((char, charIdx) => (
                     <motion.span
                       key={charIdx}
                       variants={{
@@ -4252,8 +4806,7 @@ export default function ChickenProductPage() {
               className="flex flex-col justify-between py-1 mt-8 gap-4 md:gap-5"
             >
               <p className="text-[17px] md:text-[18px] font-medium text-slate-700 max-w-[480px] leading-snug font-manrope recipe-desc-text">
-                Explore trending meat recipes in quick, easy &amp; delicious
-                short-form videos.
+                Explore trending {chickenParts[manuallySelectedPartIdx]?.name.toLowerCase() || "chicken"} recipes in quick, easy &amp; delicious short-form videos.
               </p>
 
               {/* Filter buttons */}
@@ -4293,44 +4846,10 @@ export default function ChickenProductPage() {
             }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 recipe-grid-wrap"
           >
-            {[
-              {
-                title: "Chicken Curry",
-                label: "BEST FOR CURRY",
-                desc: "Classic and flavourful chicken curry perfect with rice, chapati or dosa.",
-                img: "/Product/recipies/leg1.webp",
-                time: "35 mins",
-                servings: "4 Servings",
-                diff: "Easy",
-              },
-              {
-                title: "BBQ Chicken Leg",
-                label: "BEST FOR BBQ",
-                desc: "Juicy and smoky BBQ chicken leg perfect for weekend grilling.",
-                img: "/Product/recipies/leg2.webp",
-                time: "45 mins",
-                servings: "4 Servings",
-                diff: "Easy",
-              },
-              {
-                title: "Crispy Fried Chicken",
-                label: "BEST FOR FRY",
-                desc: "Crispy outside, tender inside. Perfect as a snack or side dish.",
-                img: "/Product/recipies/leg3.webp",
-                time: "25 mins",
-                servings: "3 Servings",
-                diff: "Easy",
-              },
-              {
-                title: "Grilled Chicken Leg",
-                label: "BEST FOR FRY",
-                desc: "Healthy and delicious grilled chicken leg mild spices.",
-                img: "/Product/recipies/leg4.webp",
-                time: "30 mins",
-                servings: "4 Servings",
-                diff: "Easy",
-              },
-            ].map((recipe, idx) => (
+            {(
+              partRecipesMap[chickenParts[manuallySelectedPartIdx]?.name.toLowerCase().trim() || "breast"] ||
+              partRecipesMap["breast"]
+            ).map((recipe, idx) => (
               <Link href="/recipes" key={idx} className="block cursor-pointer">
                 <motion.div
                   variants={{
@@ -4438,7 +4957,11 @@ export default function ChickenProductPage() {
       </section>
 
       {/* Bottom Panel Categories Section - Exactly matching mockup curve & overlapping mascot */}
-      <section className="bg-[#EBFFE6] rounded-t-[60px] pt-12 pb-6 relative z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] mt-[-60px] recipe-bottom-banner overflow-visible">
+      <section
+        className={`bg-[#EBFFE6] rounded-t-[60px] pt-10 pb-6 relative z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] transition-all duration-500 recipe-bottom-banner overflow-visible ${
+          hasSelectedAnyPart ? "mt-[-60px]" : "mt-[80px] md:mt-[2px]"
+        }`}
+      >
         <div className="px-16 relative flex flex-col md:flex-row gap-8 items-center">
           {/* Overlapping Mascot on the left */}
           <motion.div

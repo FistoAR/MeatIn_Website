@@ -291,17 +291,7 @@ export const Footer: React.FC = () => {
                     Know Your Meat
                   </Link>
                 </motion.li>
-                <motion.li variants={listItemVariants}>
-                  <Link
-                    href="/products"
-                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(3)}`}
-                  >
-                    <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="9 20 17 13 9 6" />
-                    </svg>
-                    Products
-                  </Link>
-                </motion.li>
+
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/why-choose-us"

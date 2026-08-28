@@ -14,7 +14,6 @@ interface NavItem {
 const navItems: NavItem[] = [
   { label: 'HOME', href: '/' },
   { label: 'ABOUT US', href: '/about' },
-  { label: 'PRODUCTS', href: '/products/chicken' },
   { label: 'KNOW YOUR MEAT', href: '/know-your-meat' },
   { label: 'RECIPES', href: '/recipes' },
   { label: 'FRANCHISE', href: '/franchise' },
@@ -47,7 +46,7 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isDarkPage = pathname === '/' || pathname === '/about' || pathname === '/contact' || pathname.startsWith('/products');
+  const isDarkPage = pathname === '/' || pathname === '/about' || pathname === '/contact' || pathname.startsWith('/know-your-meat');
 
   const containerBgClass = scrolled
     ? 'bg-white/95 border-slate-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'
@@ -55,16 +54,14 @@ export const Navbar: React.FC = () => {
 
   const getLinkColorClass = (isActive: boolean) => {
     if (isActive) {
-      if (scrolled) return 'text-[#D62828]';
-      return isDarkPage ? 'text-[#7CB325]' : 'text-[#D62828]';
+      return 'text-[#D62828]';
     }
     if (scrolled) return 'text-slate-800 hover:text-[#1F5A3C]';
     return isDarkPage ? 'text-white/95 hover:text-white' : 'text-slate-800 hover:text-[#1F5A3C]';
   };
 
   const getUnderlineColorClass = () => {
-    if (scrolled) return 'bg-[#D62828]';
-    return isDarkPage ? 'bg-[#7CB325]' : 'bg-[#D62828]';
+    return 'bg-[#D62828]';
   };
 
   const hamburgerColorClass = scrolled
@@ -81,7 +78,7 @@ export const Navbar: React.FC = () => {
           <Logo variant={scrolled ? 'dark' : (isDarkPage ? 'light' : 'dark')} className="shrink-0" />
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-[1.8vw] whitespace-nowrap">
+          <nav className="hidden lg:flex items-center gap-[2.5vw] whitespace-nowrap">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
 
