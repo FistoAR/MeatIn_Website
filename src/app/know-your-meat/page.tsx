@@ -471,7 +471,7 @@ export default function KnowYourMeatPage() {
         title: "Spicy Chicken Wing Fry",
         label: "BEST FOR FRY",
         desc: "Crispy and spicy chicken wings tossed in fiery chili glaze.",
-        img: "/Product/recipies/leg3.webp",
+        img: "/Recipies/wing/spicy-chicken-wing-fry.webp",
         time: "25 mins",
         servings: "3 Servings",
         diff: "Easy",
@@ -480,7 +480,7 @@ export default function KnowYourMeatPage() {
         title: "Honey Glazed BBQ Wings",
         label: "BEST FOR BBQ",
         desc: "Sweet and smoky glazed chicken wings cooked to sticky perfection.",
-        img: "/Product/recipies/leg2.webp",
+        img: "/Recipies/wing/honey-glazed-bbq-wings.webp",
         time: "35 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -489,7 +489,7 @@ export default function KnowYourMeatPage() {
         title: "Garlic Parmesan Wings",
         label: "BEST FOR SNACK",
         desc: "Tender wings coated in rich garlic butter and parmesan cheese.",
-        img: "/Product/recipies/leg4.webp",
+        img: "/Recipies/wing/garlic-parmesan-wings.webp",
         time: "30 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -498,7 +498,7 @@ export default function KnowYourMeatPage() {
         title: "Buffalo Wing Platter",
         label: "BEST FOR STARTER",
         desc: "Classic American style buffalo wings served with creamy ranch dip.",
-        img: "/Product/recipies/leg1.webp",
+        img: "/Recipies/wing/buffalo-wing-platter.webp",
         time: "20 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -509,7 +509,7 @@ export default function KnowYourMeatPage() {
         title: "Spicy Heart Skewers",
         label: "BEST FOR GRILL",
         desc: "Tender grilled chicken hearts seasoned with black pepper & herbs.",
-        img: "/Product/recipies/leg2.webp",
+        img: "/Recipies/heart/spicy-heart-skewers.webp",
         time: "20 mins",
         servings: "3 Servings",
         diff: "Easy",
@@ -518,7 +518,7 @@ export default function KnowYourMeatPage() {
         title: "Chicken Heart Pepper Fry",
         label: "BEST FOR FRY",
         desc: "Sautéed chicken hearts with crushed black pepper & curry leaves.",
-        img: "/Product/recipies/leg3.webp",
+        img: "/Recipies/heart/chicken-heart-pepper-fry.webp",
         time: "25 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -527,7 +527,7 @@ export default function KnowYourMeatPage() {
         title: "South Indian Heart Curry",
         label: "BEST FOR CURRY",
         desc: "Rich and aromatic chicken heart curry in coconut gravy.",
-        img: "/Product/recipies/leg1.webp",
+        img: "/Recipies/heart/south-indian-heart-curry.webp",
         time: "35 mins",
         servings: "4 Servings",
         diff: "Medium",
@@ -536,7 +536,7 @@ export default function KnowYourMeatPage() {
         title: "Garlic Butter Heart Stir-Fry",
         label: "BEST FOR STIR-FRY",
         desc: "Cleaned chicken hearts tossed with garlic, butter & veggies.",
-        img: "/Product/recipies/leg4.webp",
+        img: "/Recipies/heart/garlic-butter-heart-stir-fry.webp",
         time: "15 mins",
         servings: "2 Servings",
         diff: "Easy",
@@ -547,7 +547,7 @@ export default function KnowYourMeatPage() {
         title: "Crispy Fried Drumettes",
         label: "BEST FOR FRY",
         desc: "Golden deep-fried drumettes with crunchy seasoned batter.",
-        img: "/Product/recipies/leg3.webp",
+        img: "/Recipies/drumette/crispy-fried-drumettes.webp",
         time: "25 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -556,7 +556,7 @@ export default function KnowYourMeatPage() {
         title: "Tangy BBQ Drumette Roast",
         label: "BEST FOR BBQ",
         desc: "Marinated drumettes slow-roasted in rich tangy barbecue sauce.",
-        img: "/Product/recipies/leg2.webp",
+        img: "/Recipies/drumette/tangy-bbq-drumette-roast.webp",
         time: "40 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -565,7 +565,7 @@ export default function KnowYourMeatPage() {
         title: "Spicy Lollipop Drumettes",
         label: "BEST FOR STARTER",
         desc: "Lollipop style drumettes served with spicy schezwan dip.",
-        img: "/Product/recipies/leg4.webp",
+        img: "/Recipies/drumette/spicy-lollipop-drumettes.webp",
         time: "30 mins",
         servings: "4 Servings",
         diff: "Medium",
@@ -574,7 +574,7 @@ export default function KnowYourMeatPage() {
         title: "Herb Roasted Drumette Platter",
         label: "BEST FOR ROAST",
         desc: "Oven-baked drumettes with rosemary, thyme, and olive oil.",
-        img: "/Product/recipies/leg1.webp",
+        img: "/Recipies/drumette/hearb-roasted-drumette-platter.webp",
         time: "35 mins",
         servings: "3 Servings",
         diff: "Easy",
@@ -585,7 +585,7 @@ export default function KnowYourMeatPage() {
         title: "Creamy Chicken Thigh Curry",
         label: "BEST FOR CURRY",
         desc: "Tender bone-in chicken thighs cooked in rich onion gravy.",
-        img: "/Product/recipies/leg1.webp",
+        img: "/Recipies/thigh/cremy-chicken-thigh-curry.webp",
         time: "40 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -594,7 +594,7 @@ export default function KnowYourMeatPage() {
         title: "Smoky Grilled Chicken Thigh",
         label: "BEST FOR GRILL",
         desc: "Char-broiled chicken thighs marinated in rustic Indian spices.",
-        img: "/Product/recipies/leg2.webp",
+        img: "/Recipies/thigh/smoky-grilled-chicken-thigh.webp",
         time: "35 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -603,7 +603,7 @@ export default function KnowYourMeatPage() {
         title: "Crispy Fried Thigh Steaks",
         label: "BEST FOR FRY",
         desc: "Juicy thigh cuts battered and fried to crispy perfection.",
-        img: "/Product/recipies/leg3.webp",
+        img: "/Recipies/thigh/crispy-fried-thigh-steaks.webp",
         time: "30 mins",
         servings: "3 Servings",
         diff: "Easy",
@@ -612,7 +612,7 @@ export default function KnowYourMeatPage() {
         title: "Slow Cooked Thigh Roast",
         label: "BEST FOR ROAST",
         desc: "Succulent chicken thighs slow-cooked with aromatic spices.",
-        img: "/Product/recipies/leg4.webp",
+        img: "/Recipies/thigh/slow-cooked-thigh-roast.webp",
         time: "50 mins",
         servings: "4 Servings",
         diff: "Medium",
@@ -623,7 +623,7 @@ export default function KnowYourMeatPage() {
         title: "Nutritious Neck Soup",
         label: "BEST FOR SOUP",
         desc: "Nourishing and collagen-rich chicken neck bone soup with herbs.",
-        img: "/Product/recipies/leg1.webp",
+        img: "/Recipies/neck/nutritious-neck-soup.webp",
         time: "45 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -632,7 +632,7 @@ export default function KnowYourMeatPage() {
         title: "Spicy Neck Pepper Masala",
         label: "BEST FOR GRAVY",
         desc: "Flavorful chicken necks sautéed with spicy black pepper gravy.",
-        img: "/Product/recipies/leg3.webp",
+        img: "/Recipies/neck/spicy-neck-pepper-masala.webp",
         time: "35 mins",
         servings: "4 Servings",
         diff: "Medium",
@@ -641,7 +641,7 @@ export default function KnowYourMeatPage() {
         title: "Traditional Bone Broth Stock",
         label: "BEST FOR BROTH",
         desc: "Slow-simmered chicken neck stock packed with wholesome nutrients.",
-        img: "/Product/recipies/leg4.webp",
+        img: "/Recipies/neck/traditional-bone-broth-stock.webp",
         time: "60 mins",
         servings: "6 Servings",
         diff: "Easy",
@@ -650,7 +650,7 @@ export default function KnowYourMeatPage() {
         title: "South Indian Neck Fry",
         label: "BEST FOR FRY",
         desc: "Spicy and crisp fried chicken necks seasoned with curry leaves.",
-        img: "/Product/recipies/leg2.webp",
+        img: "/Recipies/neck/south-indian-neck-fry.webp",
         time: "30 mins",
         servings: "3 Servings",
         diff: "Easy",
@@ -661,7 +661,7 @@ export default function KnowYourMeatPage() {
         title: "Grilled Lemon Herb Breast",
         label: "BEST FOR HEALTHY",
         desc: "Lean boneless breast fillets grilled with fresh lemon & olive oil.",
-        img: "/Product/recipies/leg4.webp",
+        img: "/Recipies/breast/healthy-chicken-breast-salad.webp",
         time: "20 mins",
         servings: "2 Servings",
         diff: "Easy",
@@ -670,7 +670,7 @@ export default function KnowYourMeatPage() {
         title: "Creamy Butter Breast Curry",
         label: "BEST FOR CURRY",
         desc: "Boneless chicken breast in rich velvety tomato butter gravy.",
-        img: "/Product/recipies/leg1.webp",
+        img: "/Recipies/breast/grilled-lemon-herb-breast.webp",
         time: "30 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -679,7 +679,7 @@ export default function KnowYourMeatPage() {
         title: "Crispy Chicken Breast Nuggets",
         label: "BEST FOR SNACK",
         desc: "Bite-sized chicken breast nuggets served with garlic aioli dip.",
-        img: "/Product/recipies/leg3.webp",
+        img: "/Recipies/breast/creamy-butter-breat-curry.webp",
         time: "25 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -688,7 +688,7 @@ export default function KnowYourMeatPage() {
         title: "Healthy Chicken Breast Salad",
         label: "BEST FOR FITNESS",
         desc: "Sliced grilled breast on garden greens with light dressing.",
-        img: "/Product/recipies/leg2.webp",
+        img: "/Recipies/breast/crisppy-breast-nuggets.webp",
         time: "15 mins",
         servings: "2 Servings",
         diff: "Easy",
@@ -699,7 +699,7 @@ export default function KnowYourMeatPage() {
         title: "Rich Back Bone Broth",
         label: "BEST FOR BROTH",
         desc: "Collagen-dense chicken back bone broth simmered for deep flavor.",
-        img: "/Product/recipies/leg1.webp",
+        img: "/Recipies/back/spicy-back-piece-curry.webp",
         time: "90 mins",
         servings: "6 Servings",
         diff: "Easy",
@@ -708,7 +708,7 @@ export default function KnowYourMeatPage() {
         title: "Spicy Back Piece Curry",
         label: "BEST FOR CURRY",
         desc: "Traditional country-style chicken back curry with coconut milk.",
-        img: "/Product/recipies/leg3.webp",
+        img: "/Recipies/back/chicken-back-soup-base.webp",
         time: "40 mins",
         servings: "4 Servings",
         diff: "Medium",
@@ -717,7 +717,7 @@ export default function KnowYourMeatPage() {
         title: "Chicken Back Soup Base",
         label: "BEST FOR SOUP",
         desc: "Flavor-packed chicken stock base for rich winter soups.",
-        img: "/Product/recipies/leg4.webp",
+        img: "/Recipies/back/masala-roasted-back-cuts.webp",
         time: "45 mins",
         servings: "5 Servings",
         diff: "Easy",
@@ -726,7 +726,7 @@ export default function KnowYourMeatPage() {
         title: "Masala Roasted Back Cuts",
         label: "BEST FOR ROAST",
         desc: "Spicy oven-roasted chicken back cuts with caramelized onions.",
-        img: "/Product/recipies/leg2.webp",
+        img: "/Recipies/back/rich-back-bone-broth.webp",
         time: "35 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -737,7 +737,7 @@ export default function KnowYourMeatPage() {
         title: "Chicken Liver Pepper Fry",
         label: "BEST FOR FRY",
         desc: "Tender chicken liver sautéed with caramelized onions and pepper.",
-        img: "/Product/recipies/leg3.webp",
+        img: "/Recipies/liver/chicken-liver-pepper-fry.webp",
         time: "20 mins",
         servings: "3 Servings",
         diff: "Easy",
@@ -746,7 +746,7 @@ export default function KnowYourMeatPage() {
         title: "Rich Chicken Liver Masala",
         label: "BEST FOR CURRY",
         desc: "Thick spicy liver curry cooked with traditional aromatic spices.",
-        img: "/Product/recipies/leg1.webp",
+        img: "/Recipies/liver/garlic-butter-liver.webp",
         time: "25 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -755,7 +755,7 @@ export default function KnowYourMeatPage() {
         title: "Garlic Butter Liver Skewers",
         label: "BEST FOR GRILL",
         desc: "Marinated liver cubes grilled on skewers with herb butter.",
-        img: "/Product/recipies/leg2.webp",
+        img: "/Recipies/liver/rich-chicken-liver.webp",
         time: "15 mins",
         servings: "3 Servings",
         diff: "Easy",
@@ -764,7 +764,7 @@ export default function KnowYourMeatPage() {
         title: "Creamy Liver Pate Spread",
         label: "BEST FOR SPREAD",
         desc: "Smooth and rich chicken liver pate infused with thyme and butter.",
-        img: "/Product/recipies/leg4.webp",
+        img: "/Recipies/liver/cremy-liver-pate-spread.webp",
         time: "30 mins",
         servings: "6 Servings",
         diff: "Medium",
@@ -775,7 +775,7 @@ export default function KnowYourMeatPage() {
         title: "Spicy Tandoori Drumsticks",
         label: "BEST FOR TANDOORI",
         desc: "Classic tandoori drumsticks charred over open flame.",
-        img: "/Product/recipies/leg2.webp",
+        img: "/Recipies/drumstick/drumstick-1.webp",
         time: "35 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -784,7 +784,7 @@ export default function KnowYourMeatPage() {
         title: "Crispy Fried Drumstick Box",
         label: "BEST FOR FRY",
         desc: "Golden crunchy drumsticks seasoned with Southern spices.",
-        img: "/Product/recipies/leg3.webp",
+        img: "/Recipies/drumstick/drumstick-2.webp",
         time: "30 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -793,7 +793,7 @@ export default function KnowYourMeatPage() {
         title: "Chettinad Drumstick Curry",
         label: "BEST FOR CURRY",
         desc: "Fiery South Indian drumstick curry with freshly ground spices.",
-        img: "/Product/recipies/leg1.webp",
+        img: "/Recipies/drumstick/drumstick-3.webp",
         time: "40 mins",
         servings: "4 Servings",
         diff: "Medium",
@@ -802,7 +802,7 @@ export default function KnowYourMeatPage() {
         title: "Garlic Butter Glazed Leg",
         label: "BEST FOR ROAST",
         desc: "Oven-roasted drumsticks brushed with rich garlic herb butter.",
-        img: "/Product/recipies/leg4.webp",
+        img: "/Recipies/drumstick/drumstick-4.webp",
         time: "35 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -813,7 +813,7 @@ export default function KnowYourMeatPage() {
         title: "Crunchy Gizzard Pepper Fry",
         label: "BEST FOR FRY",
         desc: "Chewy and crispy fried gizzards with green chillies & pepper.",
-        img: "/Product/recipies/leg3.webp",
+        img: "/Recipies/gizzard/gizzard-1.webp",
         time: "30 mins",
         servings: "4 Servings",
         diff: "Easy",
@@ -822,7 +822,7 @@ export default function KnowYourMeatPage() {
         title: "Spicy Braised Gizzard Gravy",
         label: "BEST FOR GRAVY",
         desc: "Slow-braised gizzards in rich caramelized onion gravy.",
-        img: "/Product/recipies/leg1.webp",
+        img: "/Recipies/gizzard/gizzard-2.webp",
         time: "45 mins",
         servings: "4 Servings",
         diff: "Medium",
@@ -831,7 +831,7 @@ export default function KnowYourMeatPage() {
         title: "Grilled Gizzard Skewers",
         label: "BEST FOR GRILL",
         desc: "Marinated chicken gizzards grilled to savory perfection.",
-        img: "/Product/recipies/leg2.webp",
+        img: "/Recipies/gizzard/gizzard-3.webp",
         time: "25 mins",
         servings: "3 Servings",
         diff: "Easy",
@@ -840,7 +840,7 @@ export default function KnowYourMeatPage() {
         title: "Pickled Gizzard Delicacy",
         label: "BEST FOR SNACK",
         desc: "Tangy and spicy pickled gizzards infused with mustard oil.",
-        img: "/Product/recipies/leg4.webp",
+        img: "/Recipies/gizzard/gizzard-4.webp",
         time: "40 mins",
         servings: "6 Servings",
         diff: "Medium",
@@ -3933,8 +3933,6 @@ export default function KnowYourMeatPage() {
         </div>
       </div>
 
-
-
       {/* 2. Interactive Details Section - Only shown when activeMeatType === "chicken" */}
       <section
         ref={detailsSectionRef}
@@ -4758,18 +4756,20 @@ export default function KnowYourMeatPage() {
                 className="text-5xl md:text-6xl font-bold font-barlow-condensed tracking-wide uppercase leading-[0.95] recipe-title-text"
               >
                 <span className="text-[#127431] block">
-                  {`${chickenParts[manuallySelectedPartIdx]?.name || "CHICKEN"} RECIPES`.split("").map((char, charIdx) => (
-                    <motion.span
-                      key={charIdx}
-                      variants={{
-                        hidden: { opacity: 0, y: -6 },
-                        visible: { opacity: 1, y: 0 },
-                      }}
-                      transition={{ duration: 0.05 }}
-                    >
-                      {char === " " ? "\u00A0" : char}
-                    </motion.span>
-                  ))}
+                  {`${chickenParts[manuallySelectedPartIdx]?.name || "CHICKEN"} RECIPES`
+                    .split("")
+                    .map((char, charIdx) => (
+                      <motion.span
+                        key={charIdx}
+                        variants={{
+                          hidden: { opacity: 0, y: -6 },
+                          visible: { opacity: 1, y: 0 },
+                        }}
+                        transition={{ duration: 0.05 }}
+                      >
+                        {char === " " ? "\u00A0" : char}
+                      </motion.span>
+                    ))}
                 </span>
                 <span className="text-[#D62828] block">
                   {"DELICIOUS.".split("").map((char, charIdx) => (
@@ -4806,7 +4806,10 @@ export default function KnowYourMeatPage() {
               className="flex flex-col justify-between py-1 mt-8 gap-4 md:gap-5"
             >
               <p className="text-[17px] md:text-[18px] font-medium text-slate-700 max-w-[480px] leading-snug font-manrope recipe-desc-text">
-                Explore trending {chickenParts[manuallySelectedPartIdx]?.name.toLowerCase() || "chicken"} recipes in quick, easy &amp; delicious short-form videos.
+                Explore trending{" "}
+                {chickenParts[manuallySelectedPartIdx]?.name.toLowerCase() ||
+                  "chicken"}{" "}
+                recipes in quick, easy &amp; delicious short-form videos.
               </p>
 
               {/* Filter buttons */}
@@ -4847,8 +4850,11 @@ export default function KnowYourMeatPage() {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 recipe-grid-wrap"
           >
             {(
-              partRecipesMap[chickenParts[manuallySelectedPartIdx]?.name.toLowerCase().trim() || "breast"] ||
-              partRecipesMap["breast"]
+              partRecipesMap[
+                chickenParts[manuallySelectedPartIdx]?.name
+                  .toLowerCase()
+                  .trim() || "breast"
+              ] || partRecipesMap["breast"]
             ).map((recipe, idx) => (
               <Link href="/recipes" key={idx} className="block cursor-pointer">
                 <motion.div

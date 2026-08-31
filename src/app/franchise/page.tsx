@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Icon } from '@iconify/react';
+import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { Icon } from "@iconify/react";
 
 // Types for Pin Outlets
 interface OutletInfo {
@@ -18,72 +18,110 @@ interface OutletInfo {
 
 export default function FranchisePage() {
   // Map View Mode: 'full' (India Map) | 'kerala' (Kerala State Map)
-  const [mapMode, setMapMode] = useState<'full' | 'kerala'>('full');
+  const [mapMode, setMapMode] = useState<"full" | "kerala">("full");
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const [selectedOutlet, setSelectedOutlet] = useState<OutletInfo | null>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  // Ref for Map Container Column & Popup Card
+  const mapRightColRef = useRef<HTMLDivElement>(null);
+  const popupCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Close tooltip popup card when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        selectedOutlet &&
+        popupCardRef.current &&
+        !popupCardRef.current.contains(event.target as Node)
+      ) {
+        const target = event.target as HTMLElement;
+        if (!target.closest("[data-pin-element='true']")) {
+          setSelectedOutlet(null);
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [selectedOutlet]);
 
   // India Map Hotspot Outlets
   const indiaOutlets: OutletInfo[] = [
     {
-      id: 'kerala',
-      city: 'Kerala',
-      malayalam: 'കേരളം',
-      address: 'MEATIN Regional Head Office, Panchami Complex, Thrissur - 680519',
-      phone: '+91 99466 16162',
+      id: "kerala",
+      city: "Kerala",
+      malayalam: "കേരളം",
+      address:
+        "MEATIN Regional Head Office, Panchami Complex, Thrissur - 680519",
+      phone: "+91 99466 16162",
       xPercent: 47.0,
       yPercent: 78.0,
     },
     {
-      id: 'bengaluru',
-      city: 'Bengaluru',
-      malayalam: 'ബെംഗളൂരു',
-      address: 'MEATIN Express Outlet, Indiranagar, Bengaluru, Karnataka - 560038',
-      phone: '+91 99466 16162',
+      id: "bengaluru",
+      city: "Bengaluru",
+      malayalam: "ബെംഗളൂരു",
+      address:
+        "MEATIN Express Outlet, Indiranagar, Bengaluru, Karnataka - 560038",
+      phone: "+91 99466 16162",
       xPercent: 51.0,
       yPercent: 68.0,
     },
     {
-      id: 'mumbai',
-      city: 'Mumbai',
-      malayalam: 'മുംബൈ',
-      address: 'MEATIN Store, Bandra West, Mumbai, Maharashtra - 400050',
-      phone: '+91 99466 16162',
+      id: "mumbai",
+      city: "Mumbai",
+      malayalam: "മുംബൈ",
+      address: "MEATIN Store, Bandra West, Mumbai, Maharashtra - 400050",
+      phone: "+91 99466 16162",
       xPercent: 38.0,
       yPercent: 57.0,
     },
     {
-      id: 'hyderabad',
-      city: 'Hyderabad',
-      malayalam: 'ഹൈദരാബാദ്',
-      address: 'MEATIN Fresh Hub, Jubilee Hills, Hyderabad, Telangana - 500033',
-      phone: '+91 99466 16162',
+      id: "hyderabad",
+      city: "Hyderabad",
+      malayalam: "ഹൈദരാബാദ്",
+      address: "MEATIN Fresh Hub, Jubilee Hills, Hyderabad, Telangana - 500033",
+      phone: "+91 99466 16162",
       xPercent: 50.0,
       yPercent: 61.0,
     },
     {
-      id: 'kolkata',
-      city: 'Kolkata',
-      malayalam: 'കൊൽക്കത്ത',
-      address: 'MEATIN Store, Salt Lake Sector 5, Kolkata, West Bengal - 700091',
-      phone: '+91 99466 16162',
+      id: "kolkata",
+      city: "Kolkata",
+      malayalam: "കൊൽക്കത്ത",
+      address:
+        "MEATIN Store, Salt Lake Sector 5, Kolkata, West Bengal - 700091",
+      phone: "+91 99466 16162",
       xPercent: 69.0,
       yPercent: 48.0,
     },
     {
-      id: 'lucknow',
-      city: 'Lucknow',
-      malayalam: 'ലക്നൗ',
-      address: 'MEATIN Store, Gomti Nagar, Lucknow, Uttar Pradesh - 226010',
-      phone: '+91 99466 16162',
+      id: "lucknow",
+      city: "Lucknow",
+      malayalam: "ലക്നൗ",
+      address: "MEATIN Store, Gomti Nagar, Lucknow, Uttar Pradesh - 226010",
+      phone: "+91 99466 16162",
       xPercent: 55.0,
       yPercent: 37.0,
     },
     {
-      id: 'delhi',
-      city: 'Delhi',
-      malayalam: 'ഡൽഹി',
-      address: 'MEATIN Prime Hub, Connaught Place, New Delhi - 110001',
-      phone: '+91 99466 16162',
+      id: "delhi",
+      city: "Delhi",
+      malayalam: "ഡൽഹി",
+      address: "MEATIN Prime Hub, Connaught Place, New Delhi - 110001",
+      phone: "+91 99466 16162",
       xPercent: 47.0,
       yPercent: 30.0,
     },
@@ -91,103 +129,106 @@ export default function FranchisePage() {
 
   // Kerala Map Hotspot Outlets
   const keralaOutlets: OutletInfo[] = [
+  
     {
-      id: 'kasaragod',
-      city: 'Kasaragod',
-      malayalam: 'കാസർഗോഡ്',
-      address: 'MEATIN Store, MG Road, Kasaragod - 671121',
-      phone: '+91 99466 16162',
-      xPercent: 33.0,
+      id: "kannur",
+      city: "Kannur",
+      malayalam: "കണ്ണൂർ",
+      address: "MEATIN Outlet, City Centre Complex, Fort Road, Kannur - 670001",
+      phone: "+91 99466 16162",
+      xPercent: 25.0,
       yPercent: 10.0,
     },
     {
-      id: 'kannur',
-      city: 'Kannur',
-      malayalam: 'കണ്ണൂർ',
-      address: 'MEATIN Outlet, City Centre Complex, Fort Road, Kannur - 670001',
-      phone: '+91 99466 16162',
-      xPercent: 35.0,
-      yPercent: 19.0,
-    },
-    {
-      id: 'kozhikode',
-      city: 'Kozhikode',
-      malayalam: 'കോഴിക്കോട്',
-      address: 'MEATIN Outlet, Focus Mall Road, Kozhikode - 673004',
-      phone: '+91 99466 16162',
+      id: "kozhikode",
+      city: "Kozhikode",
+      malayalam: "കോഴിക്കോട്",
+      address: "MEATIN Outlet, Focus Mall Road, Kozhikode - 673004",
+      phone: "+91 99466 16162",
       xPercent: 38.0,
       yPercent: 29.0,
     },
     {
-      id: 'malappuram',
-      city: 'Malappuram',
-      malayalam: 'മലപ്പുറം',
-      address: 'MEATIN Hub, Calicut Road, Malappuram - 676505',
-      phone: '+91 99466 16162',
-      xPercent: 46.0,
+      id: "malappuram",
+      city: "Malappuram",
+      malayalam: "മലപ്പുറം",
+      address: "MEATIN Hub, Calicut Road, Malappuram - 676505",
+      phone: "+91 99466 16162",
+      xPercent: 50.0,
+      yPercent: 38.0,
+    },
+    {
+      id: "thrissur",
+      city: "Thrissur",
+      malayalam: "തൃശ്ശൂർ",
+      address: "MEATIN Flagship Store, Perumpilavu, Thrissur - 680519",
+      phone: "+91 99466 16162",
+      xPercent: 36.0,
+      yPercent: 30.0,
+    },
+    {
+      id: "ernakulam",
+      city: "Ernakulam",
+      malayalam: "എറണാകുളം",
+      address: "MEATIN Prime Outlet, MG Road, Ernakulam - 682016",
+      phone: "+91 99466 16162",
+       xPercent: 38.0,
       yPercent: 37.0,
     },
     {
-      id: 'thrissur',
-      city: 'Thrissur',
-      malayalam: 'തൃശ്ശൂർ',
-      address: 'MEATIN Flagship Store, Perumpilavu, Thrissur - 680519',
-      phone: '+91 99466 16162',
-      xPercent: 50.0,
-      yPercent: 46.0,
+      id: "kottayam",
+      city: "Kottayam",
+      malayalam: "കോട്ടയം",
+      address: "MEATIN Store, KK Road, Kottayam - 686001",
+      phone: "+91 99466 16162",
+       xPercent: 40.0,
+      yPercent: 44.0,
     },
     {
-      id: 'ernakulam',
-      city: 'Ernakulam / Kochi',
-      malayalam: 'എറണാകുളം',
-      address: 'MEATIN Prime Outlet, MG Road, Kochi - 682016',
-      phone: '+91 99466 16162',
-      xPercent: 51.0,
-      yPercent: 55.0,
+      id: "alappuzha",
+      city: "Alappuzha",
+      malayalam: "ആലപ്പുഴ",
+      address: "MEATIN Fresh Hub, Boat Jetty Road, Alappuzha - 688001",
+      phone: "+91 99466 16162",
+      xPercent: 44.0,
+      yPercent: 51.0,
     },
     {
-      id: 'kottayam',
-      city: 'Kottayam',
-      malayalam: 'കോട്ടയം',
-      address: 'MEATIN Store, KK Road, Kottayam - 686001',
-      phone: '+91 99466 16162',
-      xPercent: 54.0,
-      yPercent: 63.0,
+      id: "kollam",
+      city: "Kollam",
+      malayalam: "കൊല്ലം",
+      address: "MEATIN Outlet, Chinnakada, Kollam - 691001",
+      phone: "+91 99466 16162",
+      xPercent: 47.0,
+      yPercent: 62.0,
     },
     {
-      id: 'alappuzha',
-      city: 'Alappuzha',
-      malayalam: 'ആലപ്പുഴ',
-      address: 'MEATIN Fresh Hub, Boat Jetty Road, Alappuzha - 688001',
-      phone: '+91 99466 16162',
-      xPercent: 55.0,
-      yPercent: 70.0,
+      id: "kochi",
+      city: "Kochi",
+      malayalam: "കൊച്ചി",
+      address: "MEATIN Express Hub, Marine Drive, Kochi - 682031",
+      phone: "+91 99466 16162",
+      xPercent: 49.0,
+      yPercent: 69.0,
     },
     {
-      id: 'kollam',
-      city: 'Kollam',
-      malayalam: 'കൊല്ലം',
-      address: 'MEATIN Outlet, Chinnakada, Kollam - 691001',
-      phone: '+91 99466 16162',
-      xPercent: 57.0,
-      yPercent: 78.0,
-    },
-    {
-      id: 'thiruvananthapuram',
-      city: 'Thiruvananthapuram',
-      malayalam: 'തിരുവനന്തപുരം',
-      address: 'MEATIN Main Outlet, MG Road, Statue, Thiruvananthapuram - 695001',
-      phone: '+91 99466 16162',
-      xPercent: 68.0,
-      yPercent: 87.0,
+      id: "thiruvananthapuram",
+      city: "Thiruvananthapuram",
+      malayalam: "തിരുവനന്തപുരം",
+      address:
+        "MEATIN Main Outlet, MG Road, Statue, Thiruvananthapuram - 695001",
+      phone: "+91 99466 16162",
+      xPercent: 56.0,
+      yPercent: 80.0,
     },
   ];
 
-  const activeOutlets = mapMode === 'full' ? indiaOutlets : keralaOutlets;
+  const activeOutlets = mapMode === "full" ? indiaOutlets : keralaOutlets;
 
   // Zoom Handlers
   const handleZoomIn = () => setZoomLevel((prev) => Math.min(prev + 0.25, 2.0));
-  const handleZoomOut = () => setZoomLevel((prev) => Math.max(prev - 0.25, 0.8));
+  const handleZoomOut = () =>
+    setZoomLevel((prev) => Math.max(prev - 0.25, 0.8));
   const handleResetZoom = () => {
     setZoomLevel(1);
     setSelectedOutlet(null);
@@ -198,9 +239,9 @@ export default function FranchisePage() {
       {/* ============================================================ */}
       {/* SECTION 1: HERO & STORE SHOWCASE (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full pt-[95px] md:pt-[115px] pb-6 lg:pb-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#D8E6F5] via-[#EAF2F9] to-[#FAF7F2] overflow-hidden select-none">
+      <section className="relative w-full min-h-screen lg:h-screen lg:max-h-screen pt-[78px] sm:pt-[84px] lg:pt-[98px] [@media(max-height:710px)]:lg:pt-[86px] [@media(max-height:620px)]:lg:pt-[68px] [@media(max-height:600px)]:lg:pt-[56px] pb-4 lg:pb-2 px-3 sm:px-6 lg:px-8 bg-gradient-to-b from-[#D8E6F5] via-[#EAF2F9] to-[#FAF7F2] overflow-hidden select-none flex flex-col justify-between items-center">
         {/* Sky Cloud Background Pattern */}
-        <div className="absolute inset-0 pointer-events-none opacity-60 mix-blend-multiply">
+        <div className="absolute inset-0 pointer-events-none opacity-60 mix-blend-multiply z-0">
           <Image
             src="/Franchies/bg.webp"
             alt="Sky Background Texture"
@@ -210,7 +251,7 @@ export default function FranchisePage() {
         </div>
 
         {/* Top Right Background Doodle Accent */}
-        <div className="absolute top-0 right-0 z-0 pointer-events-none w-[180px] sm:w-[240px] md:w-[320px] opacity-75">
+        <div className="absolute top-0 right-0 z-0 pointer-events-none w-[140px] sm:w-[180px] md:w-[240px] lg:w-[280px] opacity-75">
           <Image
             src="/Franchies/topRight.webp"
             alt="Top Right Background Accent"
@@ -222,7 +263,7 @@ export default function FranchisePage() {
         </div>
 
         {/* Left Bottom Corner Trees Accent */}
-        <div className="absolute bottom-0 left-0 z-0 pointer-events-none w-[140px] sm:w-[200px] md:w-[260px] opacity-90">
+        <div className="absolute bottom-0 left-0 z-0 pointer-events-none w-[110px] sm:w-[150px] md:w-[200px] opacity-90">
           <Image
             src="/Franchies/leftBottom.webp"
             alt="Left Bottom Trees Accent"
@@ -234,30 +275,30 @@ export default function FranchisePage() {
         </div>
 
         {/* Right Bottom Corner Accent */}
-        <div className="absolute bottom-0 right-0 z-0 pointer-events-none w-[140px] sm:w-[200px] md:w-[260px] opacity-90">
+        <div className="absolute bottom-0 -right-4 z-0 pointer-events-none w-[100px] sm:w-[140px] md:w-[160px] opacity-90">
           <Image
             src="/Franchies/RightBottom.webp"
             alt="Right Bottom Accent"
-            width={260}
-            height={180}
+            width={200}
+            height={140}
             priority
             className="w-full h-auto object-contain object-bottom"
           />
         </div>
 
-        <div className="max-w-[1400px] mx-auto relative z-10">
-          {/* Header Title Block */}
-          <div className="text-center space-y-1 mb-4 lg:mb-6 mt-1 md:mt-2">
+        <div className="w-full relative z-10 flex-1 flex flex-col justify-between items-center max-w-[1600px] mx-auto h-full overflow-hidden">
+          {/* Header Title Block (Tight margin on mobile, spacious clear margin on desktop) */}
+          <div className="text-center space-y-0.5 shrink-0 mt-0 lg:mt-2.5 py-0.5">
             {/* Subtitle: — GROWTH WITH — */}
             <motion.div
               initial={{ opacity: 0, y: -12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center justify-center gap-3 text-[13px] md:text-[15px] font-bold text-[#82B224] tracking-[3px] uppercase font-manrope"
+              className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] [@media(max-height:710px)]:lg:text-[11px] [@media(max-height:620px)]:lg:text-[10px] font-bold text-gray-800 tracking-[3px] uppercase font-manrope"
             >
-              <span className="w-10 h-[2px] bg-gradient-to-r from-transparent via-[#EAB308] to-[#82B224] rounded-full" />
+              <span className="w-5 md:w-7 h-[2px] bg-gradient-to-r from-transparent via-[#EAB308] to-[#82B224] rounded-full" />
               GROWTH WITH
-              <span className="w-10 h-[2px] bg-gradient-to-l from-transparent via-[#EAB308] to-[#82B224] rounded-full" />
+              <span className="w-5 md:w-7 h-[2px] bg-gradient-to-l from-transparent via-[#EAB308] to-[#82B224] rounded-full" />
             </motion.div>
 
             {/* Main Brand Title: MEATIN */}
@@ -265,78 +306,119 @@ export default function FranchisePage() {
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-6xl sm:text-7xl md:text-8xl lg:text-[100px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[76px] [@media(max-height:710px)]:lg:text-[54px] [@media(max-height:620px)]:lg:text-[44px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none"
             >
               <span className="text-[#82B224]">MEAT</span>
               <span className="text-[#D62828]">IN</span>
             </motion.h1>
           </div>
 
-          {/* Hero Store Interactive Canvas */}
-          <div className="relative w-full max-w-[1240px] mx-auto h-[520px] sm:h-[550px] md:h-[580px] flex items-center justify-center">
-            {/* Center 3D Store Graphic */}
+          {/* Hero Store Interactive Canvas (Prominent & larger on mobile, proportional scaling on desktop) */}
+          <div className="relative w-full max-w-[1360px] h-auto lg:h-[520px] mx-auto flex items-center justify-center my-2 lg:my-auto origin-center lg:-mt-1 [@media(max-height:750px)]:lg:-mt-2 [@media(max-height:620px)]:lg:-mt-10 [@media(max-height:600px)]:lg:-mt-24 [@media(max-height:600px)]:lg:-translate-y-9 [@media(min-height:800px)]:lg:mt-4 [@media(min-height:890px)]:lg:mt-6 scale-100 lg:scale-[0.58] [@media(max-height:600px)]:lg:scale-[0.54] [@media(min-height:620px)]:lg:scale-[0.67] [@media(min-height:710px)]:lg:scale-[0.75] [@media(min-height:800px)]:lg:scale-[0.85] [@media(min-height:890px)]:lg:scale-100 transition-transform duration-300 shrink-0">
+            {/* Center 3D Store Graphic (Prominent w-[88%] on mobile screens) */}
             <motion.div
-              initial={{ opacity: 0, y: 25 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative w-[300px] sm:w-[440px] md:w-[580px] lg:w-[650px] h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500"
+              className="relative w-[88%] sm:w-[78%] md:w-[65%] lg:w-[720px] xl:w-[780px] max-w-[460px] lg:max-w-none h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500 my-1 lg:my-0"
             >
               <Image
                 src="/Franchies/imagesec1.webp"
                 alt="MEATIN Outlet Storefront"
-                width={820}
-                height={620}
+                width={920}
+                height={720}
                 priority
                 className="w-full h-auto object-contain pointer-events-none"
               />
             </motion.div>
 
-            {/* SVG Connector Dotted Lines & Red Dots Overlay (Desktop) */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-10 hidden lg:block" viewBox="0 0 1200 580" fill="none">
-              {/* Item 01 Dotted Line (Left Top) */}
-              <path d="M 220 100 L 285 100 Q 295 100 295 110 L 295 195 Q 295 205 310 205 L 365 205" stroke="#82B224" strokeWidth="1.8" strokeDasharray="4 4" />
-              <circle cx="367" cy="205" r="4.5" fill="#D62828" />
+            {/* SVG Connector Dotted Lines & Red Dots Overlay */}
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none z-30 hidden lg:block"
+              viewBox="0 0 1280 520"
+              fill="none"
+            >
+              {/* Item 01 Dotted Line (Left Top — Starts ABOVE text at y=25) */}
+              <path
+                d="M 155 25 L 155 25 Q 180 25 180 40 L 180 180 Q 180 190 210 190 L 250 190"
+                stroke="#82B224"
+                strokeWidth="2"
+                strokeDasharray="5 4"
+              />
+              <circle cx="250" cy="190" r="5" fill="#D62828" />
 
-              {/* Item 02 Dotted Line (Left Mid) */}
-              <path d="M 220 300 L 270 300 Q 290 300 290 310 L 290 380 Q 290 390 300 390 L 350 390" stroke="#82B224" strokeWidth="1.8" strokeDasharray="4 4" />
-              <circle cx="352" cy="390" r="4.5" fill="#D62828" />
+              {/* Item 02 Dotted Line (Left Mid — Straight across open space) */}
+              <path
+                d="M 155 275 L 250 275"
+                stroke="#82B224"
+                strokeWidth="2"
+                strokeDasharray="5 4"
+              />
+              <circle cx="250" cy="275" r="5" fill="#D62828" />
 
-              {/* Item 03 Dotted Line (Left Bottom) */}
-              <path d="M 220 480 C 270 480, 285 460, 335 460" stroke="#82B224" strokeWidth="1.8" strokeDasharray="4 4" />
-              <circle cx="337" cy="460" r="4.5" fill="#D62828" />
+              {/* Item 03 Dotted Line (Left Bottom — Starts BELOW text at y=495) */}
+              <path
+                d="M 155 495 L 155 495 Q 180 495 180 480 L 180 370 Q 180 360 210 360 L 250 360"
+                stroke="#82B224"
+                strokeWidth="2"
+                strokeDasharray="5 4"
+              />
+              <circle cx="250" cy="360" r="5" fill="#D62828" />
 
-              {/* Item 04 Dotted Line (Right Top) */}
-              <path d="M 980 140 L 915 140 Q 900 140 900 155 L 900 260 Q 900 270 885 270 L 845 270" stroke="#82B224" strokeWidth="1.8" strokeDasharray="4 4" />
-              <circle cx="843" cy="270" r="4.5" fill="#D62828" />
+              {/* Item 04 Dotted Line (Right Top — Connects STRAIGHT into right icon circle at y=57) */}
+              <path
+                d="M 1080 190 L 1080 190 Q 1095 190 1095 175 L 1095 72 Q 1095 57 1110 57 L 1140 57"
+                stroke="#82B224"
+                strokeWidth="2"
+                strokeDasharray="5 4"
+              />
+              <circle cx="1080" cy="190" r="5" fill="#D62828" />
 
-              {/* Item 05 Dotted Line (Right Mid) */}
-              <path d="M 980 330 L 930 330 Q 910 330 910 345 L 910 400 Q 910 410 890 410 L 850 410" stroke="#82B224" strokeWidth="1.8" strokeDasharray="4 4" />
-              <circle cx="848" cy="410" r="4.5" fill="#D62828" />
+              {/* Item 05 Dotted Line (Right Mid — Connects directly into right icon at x=1140) */}
+              <path
+                d="M 1080 275 L 1140 275"
+                stroke="#82B224"
+                strokeWidth="2"
+                strokeDasharray="5 4"
+              />
+              <circle cx="1080" cy="275" r="5" fill="#D62828" />
 
-              {/* Item 06 Dotted Line (Right Bottom) */}
-              <path d="M 980 500 L 920 500 Q 895 500 895 520 L 895 535 Q 895 535 880 535 L 835 535" stroke="#82B224" strokeWidth="1.8" strokeDasharray="4 4" />
-              <circle cx="833" cy="535" r="4.5" fill="#D62828" />
+              {/* Item 06 Dotted Line (Right Bottom — Connects directly into right icon at x=1140) */}
+              <path
+                d="M 1080 360 L 1080 360 Q 1095 360 1095 375 L 1095 480 Q 1095 495 1115 495 L 1140 495"
+                stroke="#82B224"
+                strokeWidth="2"
+                strokeDasharray="5 4"
+              />
+              <circle cx="1080" cy="360" r="5" fill="#D62828" />
             </svg>
 
             {/* LEFT 3 FEATURE BADGES (01, 02, 03) */}
-            <div className="absolute left-0 top-0 bottom-0 z-30 pointer-events-auto hidden lg:block w-[280px]">
+            <div className="absolute left-[-120px] xl:left-[-100px] 2xl:left-[-70px] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[320px]">
               {/* Feature 01: HYGIENIC PROCESSING */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="absolute top-[60px] left-0 flex items-center gap-4 group"
+                className="absolute top-[25px] left-0 flex items-center gap-3.5 group"
               >
-                <div className="w-14 h-14 rounded-full bg-white border border-slate-200/90 shadow-md flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#82B224] transition-all duration-300">
-                  <Icon icon="uit:microscope" className="w-7 h-7 text-[#127431] group-hover:text-white transition-colors" />
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                  <Icon
+                    icon="ph:microscope"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                  />
                 </div>
-                <div>
-                  <span className="text-xl font-black text-[#D62828] font-barlow-condensed leading-none block">01</span>
+                <div className="flex flex-col max-w-[170px]">
+                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                    01
+                  </span>
                   <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[14px] font-extrabold text-[#153520] uppercase tracking-wider font-barlow-condensed leading-tight">
-                    HYGIENIC<br />PROCESSING
+                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                    HYGIENIC
+                    <br />
+                    PROCESSING
                   </h3>
-                  <p className="text-[11px] text-slate-500 leading-tight mt-0.5 font-manrope max-w-[160px]">
+                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Processed under strict hygiene standards.
                   </p>
                 </div>
@@ -347,18 +429,25 @@ export default function FranchisePage() {
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="absolute top-[260px] left-0 flex items-center gap-4 group"
+                className="absolute top-[225px] left-0 flex items-center gap-3.5 group"
               >
-                <div className="w-14 h-14 rounded-full bg-white border border-slate-200/90 shadow-md flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#82B224] transition-all duration-300">
-                  <Icon icon="tdesign:secured" className="w-7 h-7 text-[#127431] group-hover:text-white transition-colors" />
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                  <Icon
+                    icon="ph:shield-check"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                  />
                 </div>
-                <div>
-                  <span className="text-xl font-black text-[#D62828] font-barlow-condensed leading-none block">02</span>
+                <div className="flex flex-col max-w-[170px]">
+                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                    02
+                  </span>
                   <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[14px] font-extrabold text-[#153520] uppercase tracking-wider font-barlow-condensed leading-tight">
-                    PREMIUM<br />QUALITY
+                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                    PREMIUM
+                    <br />
+                    QUALITY
                   </h3>
-                  <p className="text-[11px] text-slate-500 leading-tight mt-0.5 font-manrope max-w-[160px]">
+                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Handpicked for superior freshness.
                   </p>
                 </div>
@@ -369,43 +458,55 @@ export default function FranchisePage() {
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute top-[440px] left-0 flex items-center gap-4 group"
+                className="absolute top-[425px] left-0 flex items-center gap-3.5 group"
               >
-                <div className="w-14 h-14 rounded-full bg-white border border-slate-200/90 shadow-md flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#82B224] transition-all duration-300">
-                  <Icon icon="ph:farm-light" className="w-7 h-7 text-[#127431] group-hover:text-white transition-colors" />
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                  <Icon
+                    icon="ph:plant"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                  />
                 </div>
-                <div>
-                  <span className="text-xl font-black text-[#D62828] font-barlow-condensed leading-none block">03</span>
+                <div className="flex flex-col max-w-[170px]">
+                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                    03
+                  </span>
                   <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[14px] font-extrabold text-[#153520] uppercase tracking-wider font-barlow-condensed leading-tight">
+                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
                     FARM FRESH
                   </h3>
-                  <p className="text-[11px] text-slate-500 leading-tight mt-0.5 font-manrope max-w-[160px]">
+                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Sourced from trusted local farms.
                   </p>
                 </div>
               </motion.div>
             </div>
 
-            {/* RIGHT 3 FEATURE BADGES (04, 05, 06) */}
-            <div className="absolute right-0 top-0 bottom-0 z-30 pointer-events-auto hidden lg:block w-[280px]">
+            {/* RIGHT 3 FEATURE BADGES (04, 05, 06) — Shifted 5vw to the right so dotted lines connect cleanly to icon circle without touching text */}
+            <div className="absolute right-[-135px] xl:right-[-110px] 2xl:right-[-75px] translate-x-[5vw] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[320px]">
               {/* Feature 04: NO ARTIFICIAL ADDITIVES */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="absolute top-[100px] right-0 flex items-center gap-4 group"
+                className="absolute top-[25px] left-0 flex items-center gap-4 group"
               >
-                <div className="w-14 h-14 rounded-full bg-white border border-slate-200/90 shadow-md flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#82B224] transition-all duration-300">
-                  <Icon icon="famicons:leaf-outline" className="w-7 h-7 text-[#127431] group-hover:text-white transition-colors" />
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                  <Icon
+                    icon="ph:leaf"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                  />
                 </div>
-                <div>
-                  <span className="text-xl font-black text-[#D62828] font-barlow-condensed leading-none block">04</span>
+                <div className="flex flex-col max-w-[170px]">
+                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                    04
+                  </span>
                   <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[14px] font-extrabold text-[#153520] uppercase tracking-wider font-barlow-condensed leading-tight">
-                    NO ARTIFICIAL<br />ADDITIVES
+                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                    NO ARTIFICIAL
+                    <br />
+                    ADDITIVES
                   </h3>
-                  <p className="text-[11px] text-slate-500 leading-tight mt-0.5 font-manrope max-w-[160px]">
+                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Free from artificial preservatives.
                   </p>
                 </div>
@@ -416,18 +517,25 @@ export default function FranchisePage() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="absolute top-[290px] right-0 flex items-center gap-4 group"
+                className="absolute top-[225px] left-0 flex items-center gap-4 group"
               >
-                <div className="w-14 h-14 rounded-full bg-white border border-slate-200/90 shadow-md flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#82B224] transition-all duration-300">
-                  <Icon icon="material-symbols-light:box-outline" className="w-7 h-7 text-[#127431] group-hover:text-white transition-colors" />
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                  <Icon
+                    icon="ph:package"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                  />
                 </div>
-                <div>
-                  <span className="text-xl font-black text-[#D62828] font-barlow-condensed leading-none block">05</span>
+                <div className="flex flex-col max-w-[170px]">
+                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                    05
+                  </span>
                   <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[14px] font-extrabold text-[#153520] uppercase tracking-wider font-barlow-condensed leading-tight">
-                    FRESHNESS<br />GUARANTEED
+                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                    FRESHNESS
+                    <br />
+                    GUARANTEED
                   </h3>
-                  <p className="text-[11px] text-slate-500 leading-tight mt-0.5 font-manrope max-w-[160px]">
+                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Packed to lock in freshness.
                   </p>
                 </div>
@@ -438,18 +546,25 @@ export default function FranchisePage() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute top-[460px] right-0 flex items-center gap-4 group"
+                className="absolute top-[425px] left-0 flex items-center gap-4 group"
               >
-                <div className="w-14 h-14 rounded-full bg-white border border-slate-200/90 shadow-md flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#82B224] transition-all duration-300">
-                  <Icon icon="carbon:delivery" className="w-7 h-7 text-[#127431] group-hover:text-white transition-colors" />
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                  <Icon
+                    icon="ph:truck"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                  />
                 </div>
-                <div>
-                  <span className="text-xl font-black text-[#D62828] font-barlow-condensed leading-none block">06</span>
+                <div className="flex flex-col max-w-[170px]">
+                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                    06
+                  </span>
                   <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[14px] font-extrabold text-[#153520] uppercase tracking-wider font-barlow-condensed leading-tight">
-                    FAST<br />DELIVERY
+                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                    FAST
+                    <br />
+                    DELIVERY
                   </h3>
-                  <p className="text-[11px] text-slate-500 leading-tight mt-0.5 font-manrope max-w-[160px]">
+                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Fresh meat delivered to your doorstep.
                   </p>
                 </div>
@@ -457,79 +572,155 @@ export default function FranchisePage() {
             </div>
           </div>
 
-          {/* Mobile Grid Layout for 6 Features (Below 1024px) */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6 lg:hidden">
-            {[
-              { num: '01', title: 'HYGIENIC PROCESSING', desc: 'Processed under strict hygiene standards.', icon: 'uit:microscope' },
-              { num: '02', title: 'PREMIUM QUALITY', desc: 'Handpicked for superior freshness.', icon: 'tdesign:secured' },
-              { num: '03', title: 'FARM FRESH', desc: 'Sourced from trusted local farms.', icon: 'ph:farm-light' },
-              { num: '04', title: 'NO ARTIFICIAL ADDITIVES', desc: 'Free from artificial preservatives.', icon: 'famicons:leaf-outline' },
-              { num: '05', title: 'FRESHNESS GUARANTEED', desc: 'Packed to lock in freshness.', icon: 'material-symbols-light:box-outline' },
-              { num: '06', title: 'FAST DELIVERY', desc: 'Fresh meat delivered to your doorstep.', icon: 'carbon:delivery' },
-            ].map((feat, i) => (
-              <div key={i} className="bg-white/90 border border-slate-200 p-3 rounded-2xl shadow-sm flex flex-col items-start gap-2">
-                <div className="w-10 h-10 rounded-full bg-[#F3F8EF] flex items-center justify-center shrink-0">
-                  <Icon icon={feat.icon} className="w-5 h-5 text-[#127431]" />
-                </div>
-                <div>
-                  <span className="text-sm font-black text-[#D62828] font-barlow-condensed leading-none block">{feat.num}</span>
-                  <h4 className="text-[12px] font-extrabold text-slate-900 uppercase font-barlow-condensed leading-tight mt-0.5">{feat.title}</h4>
-                  <p className="text-[10px] text-slate-500 leading-tight mt-0.5 font-manrope">{feat.desc}</p>
-                </div>
-              </div>
-            ))}
+          {/* Premium Glassmorphic Mobile Grid Layout for 6 Features (Below 1024px) */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4 mt-4 lg:hidden w-full px-1">
+            {
+              [
+                {
+                  num: "01",
+                  title: "HYGIENIC PROCESSING",
+                  desc: "Processed under strict hygiene standards.",
+                  icon: "ph:microscope",
+                },
+                {
+                  num: "02",
+                  title: "PREMIUM QUALITY",
+                  desc: "Handpicked for superior freshness.",
+                  icon: "ph:shield-check",
+                },
+                {
+                  num: "03",
+                  title: "FARM FRESH",
+                  desc: "Sourced from trusted local farms.",
+                  icon: "ph:plant",
+                },
+                {
+                  num: "04",
+                  title: "NO ARTIFICIAL ADDITIVES",
+                  desc: "Free from artificial preservatives.",
+                  icon: "ph:leaf",
+                },
+                {
+                  num: "05",
+                  title: "FRESHNESS GUARANTEED",
+                  desc: "Packed to lock in freshness.",
+                  icon: "ph:package",
+                },
+                {
+                  num: "06",
+                  title: "FAST DELIVERY",
+                  desc: "Fresh meat delivered to your doorstep.",
+                  icon: "ph:truck",
+                },
+              ].map((feat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 25, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: i * 0.08 }}
+                  className="group relative bg-white/80 backdrop-blur-md border border-white/90 p-3 sm:p-4 rounded-2xl shadow-[0_8px_25px_rgba(18,116,49,0.05)] hover:shadow-[0_12px_30px_rgba(214,40,40,0.12)] flex flex-col justify-between items-start gap-2.5 transition-all duration-300 overflow-hidden active:scale-[0.98]"
+                >
+                  <div className="w-full flex items-center justify-between">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#127431]/10 to-[#82B224]/20 border border-[#82B224]/30 flex items-center justify-center text-[#127431] group-hover:bg-[#127431] group-hover:text-white transition-all duration-300 shadow-sm">
+                      <Icon icon={feat.icon} className="w-5 h-5" />
+                    </div>
+                    <span className="px-2 py-0.5 text-[11px] font-black text-[#D62828] bg-[#D62828]/10 rounded-full border border-[#D62828]/20 font-manrope">
+                      {feat.num}
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="text-[12px] sm:text-[13px] font-extrabold text-[#153520] uppercase font-manrope tracking-wider leading-tight mt-0.5 group-hover:text-[#127431] transition-colors">
+                      {feat.title}
+                    </h4>
+                    <p className="text-[10px] sm:text-[11px] text-slate-600 leading-snug mt-1 font-semibold font-manrope">
+                      {feat.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))
+            }
           </div>
         </div>
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 2: INTERACTIVE PRESENCE MAP (FULL WIDTH & 75VH MAP) */}
+      {/* SECTION 2: INTERACTIVE PRESENCE MAP (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full min-h-screen flex flex-col justify-between bg-[#F0F0F0] overflow-hidden select-none py-4 lg:py-6">
-        {/* Full-Width Section Content Wrapper (No Max-Width Constraint) */}
-        <div className="w-full px-6 sm:px-10 lg:px-14 xl:px-20 flex-1 flex flex-col justify-center relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full">
-            
-            {/* LEFT HALF (lg:col-span-6): Text Content + 3 Stat Cards in Row + Map Switcher */}
-            <div className="lg:col-span-6 space-y-6 lg:space-y-8 pr-0 lg:pr-6">
-              {/* Header Title + Subtitle Block */}
-              <div className="space-y-3">
-                <motion.h2
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+      <section className="relative w-full min-h-[100vh] lg:h-[100vh] [@media(max-height:680px)]:min-h-[640px] [@media(max-height:680px)]:h-auto pt-[92px] sm:pt-[100px] lg:pt-[108px] [@media(min-height:850px)]:pt-[12vh] pb-0 flex flex-col justify-between bg-[#EFF2EB] overflow-hidden select-none">
+        {/* Content Wrapper */}
+        <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 flex-1 flex flex-col justify-center relative z-40 max-w-[1850px] mx-auto">
+          {/* Flexbox Layout: Left Content Container & Right Map/Image Container */}
+          <div className="flex flex-col lg:flex-row items-start justify-between gap-6 lg:gap-8 xl:gap-12 2xl:gap-16 w-full my-auto">
+            {/* LEFT CONTAINER (lg:w-[42%]): Header Title, Red Underline & Stat Cards */}
+            <div className="w-full lg:w-[42%] flex flex-col justify-start space-y-4 sm:space-y-6 lg:space-y-8 shrink-0">
+              {/* Header Title + Red Underline + Subtitle */}
+              <div className="space-y-2 sm:space-y-3">
+                <div>
+                  <motion.h2
+                    initial={{ opacity: 0, x: -40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#1F5A3C]"
+                  >
+                    OUR PRESENCE
+                  </motion.h2>
+                  {/* Red Underline Accent directly under OUR PRESENCE */}
+                  <motion.h2
+                    initial={{ opacity: 0, x: -40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#1F5A3C]"
+                  >
+                    ACROSS <span className="text-[#D62828]">KERALA</span>
+                  </motion.h2>
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, scaleX: 0 }}
+                  whileInView={{ opacity: 1, scaleX: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                  className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-barlow-condensed tracking-wider uppercase leading-[1.05]"
+                  transition={{ duration: 0.5, delay: 0.15 }}
+                  className="w-16 h-[3px] bg-[#D62828] rounded-full origin-left"
+                />
+
+                <motion.p
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="text-[13px] sm:text-[14px] lg:text-[16px] font-medium text-slate-700 leading-relaxed font-manrope max-w-sm pt-0.5"
                 >
-                  <span className="text-[#127431]">OUR PRESENCE</span> <br />
-                  <span className="text-[#127431]">ACROSS</span> <span className="text-[#D62828]">{mapMode === 'kerala' ? 'KERALA' : 'INDIA'}</span>
-                </motion.h2>
-                <p className="text-[14px] lg:text-[16px] font-medium text-slate-600 leading-relaxed font-manrope max-w-lg">
-                  Building a stronger network to serve you better with freshness and trust across the state.
-                </p>
+                  Building a stronger network to serve you better with freshness
+                  and trust across the state.
+                </motion.p>
               </div>
 
               {/* 3 Stat Cards arranged Side-by-Side in a Row */}
-              <div className="grid grid-cols-3 gap-3 sm:gap-4">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3.5 max-w-lg">
                 {/* Card 1: Stores */}
                 <motion.div
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: 0.1 }}
                   whileHover={{ scale: 1.03, y: -2 }}
-                  className="bg-white/95 backdrop-blur-md border border-slate-200/80 p-4 sm:p-5 rounded-2xl shadow-md text-center flex flex-col items-center justify-between min-h-[160px]"
+                  className="bg-[#FBFFF2] border border-[#E2EBD4] p-3 sm:p-4 rounded-md shadow-sm text-center flex flex-col gap-1.5 sm:gap-2 items-center justify-between min-h-[135px] sm:min-h-[155px]"
                 >
-                  <div className="w-10 h-10 rounded-full bg-[#FEF2F2] flex items-center justify-center shrink-0 mb-1">
-                    <svg className="w-5 h-5 text-[#D62828]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#D62828] font-barlow-condensed leading-none block">
+                  <Icon
+                    icon="proicons:location"
+                    className="w-5 h-5 sm:w-7 sm:h-7 text-[#D62828] mb-1"
+                  />
+                  <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
+                    <span className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
                       100+
                     </span>
-                    <span className="text-[12px] lg:text-[13px] font-bold text-slate-900 uppercase tracking-wider font-barlow-condensed block mt-1">
+                    <span className="text-[10px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5 sm:mt-1">
                       STORES
                     </span>
-                    <span className="text-[11px] text-slate-500 font-medium font-manrope block leading-tight">
+                    <span className="text-[9px] sm:text-[11px] lg:text-[13px] text-slate-700 font-semibold font-inter block whitespace-nowrap leading-tight mt-0.5">
                       Across Kerala
                     </span>
                   </div>
@@ -537,22 +728,25 @@ export default function FranchisePage() {
 
                 {/* Card 2: Districts */}
                 <motion.div
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: 0.2 }}
                   whileHover={{ scale: 1.03, y: -2 }}
-                  className="bg-white/95 backdrop-blur-md border border-slate-200/80 p-4 sm:p-5 rounded-2xl shadow-md text-center flex flex-col items-center justify-between min-h-[160px]"
+                  className="bg-[#FBFFF2] border border-[#E2EBD4] p-3 sm:p-4 rounded-md shadow-sm text-center flex flex-col gap-1.5 sm:gap-2 items-center justify-between min-h-[135px] sm:min-h-[155px]"
                 >
-                  <div className="w-10 h-10 rounded-full bg-[#FEF2F2] flex items-center justify-center shrink-0 mb-1">
-                    <svg className="w-5 h-5 text-[#D62828]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                  </div>
-                  <div>
-                    <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#D62828] font-barlow-condensed leading-none block">
+                  <Icon
+                    icon="griddy-icons:building"
+                    className="w-5 h-5 sm:w-7 sm:h-7 text-[#D62828] mb-1"
+                  />
+                  <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
+                    <span className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
                       14
                     </span>
-                    <span className="text-[12px] lg:text-[13px] font-bold text-slate-900 uppercase tracking-wider font-barlow-condensed block mt-1">
+                    <span className="text-[10px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5 sm:mt-1">
                       DISTRICTS
                     </span>
-                    <span className="text-[11px] text-slate-500 font-medium font-manrope block leading-tight">
+                    <span className="text-[9px] sm:text-[11px] lg:text-[13px] text-slate-700 font-semibold font-inter block whitespace-nowrap leading-tight mt-0.5">
                       Strong Presence
                     </span>
                   </div>
@@ -560,58 +754,63 @@ export default function FranchisePage() {
 
                 {/* Card 3: Team Members */}
                 <motion.div
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: 0.3 }}
                   whileHover={{ scale: 1.03, y: -2 }}
-                  className="bg-white/95 backdrop-blur-md border border-slate-200/80 p-4 sm:p-5 rounded-2xl shadow-md text-center flex flex-col items-center justify-between min-h-[160px]"
+                  className="bg-[#FBFFF2] border border-[#E2EBD4] p-3 sm:p-4 rounded-md shadow-sm text-center flex flex-col gap-1.5 sm:gap-2 items-center justify-between min-h-[135px] sm:min-h-[155px]"
                 >
-                  <div className="w-10 h-10 rounded-full bg-[#FEF2F2] flex items-center justify-center shrink-0 mb-1">
-                    <svg className="w-5 h-5 text-[#D62828]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#D62828] font-barlow-condensed leading-none block">
+                  <Icon
+                    icon="ion:people-outline"
+                    className="w-5 h-5 sm:w-7 sm:h-7 text-[#D62828] mb-1"
+                  />
+                  <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
+                    <span className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
                       500+
                     </span>
-                    <span className="text-[12px] lg:text-[13px] font-bold text-slate-900 uppercase tracking-wider font-barlow-condensed block mt-1">
+                    <span className="text-[10px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5 sm:mt-1">
                       TEAM MEMBERS
                     </span>
-                    <span className="text-[11px] text-slate-500 font-medium font-manrope block leading-tight">
+                    <span className="text-[9px] sm:text-[11px] lg:text-[13px] text-slate-700 font-semibold font-inter block whitespace-nowrap leading-tight mt-0.5">
                       Serving with Pride
                     </span>
                   </div>
                 </motion.div>
               </div>
-
-              {/* Toggle Map View Switcher Button */}
-              <div>
-                <button
-                  onClick={() => {
-                    const newMode = mapMode === 'full' ? 'kerala' : 'full';
-                    setMapMode(newMode);
-                    setSelectedOutlet(null);
-                  }}
-                  className="w-full max-w-md bg-[#127431] hover:bg-[#0e5c27] text-white font-bold text-[14px] lg:text-[15px] py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider font-barlow-condensed shadow-lg transition-all duration-300 hover:shadow-emerald-900/20 cursor-pointer"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                  </svg>
-                  <span>{mapMode === 'full' ? 'VIEW KERALA DISTRICT MAP →' : '← BACK TO FULL INDIA MAP'}</span>
-                </button>
-              </div>
             </div>
 
-            {/* RIGHT HALF (lg:col-span-6): Map Display with 75vh Height */}
-            <div className="lg:col-span-6 relative h-[75vh] min-h-[520px] max-h-[760px] flex items-center justify-center">
-              {/* Dark Green Zoom Controls Pill (Top Right) */}
-              <div className="absolute top-2 right-2 z-40 bg-[#153520] text-white p-2.5 rounded-2xl shadow-xl flex flex-col items-center gap-2.5 font-manrope text-[11px]">
+            {/* RIGHT CONTAINER (lg:w-[58%]): Map Display & Right Side Elements */}
+            <div
+              ref={mapRightColRef}
+              className="w-full lg:w-[58%] relative z-50 h-[52vh] sm:h-[60vh] lg:h-[65vh] xl:h-[70vh] max-h-[720px] flex items-center justify-start shrink-0"
+            >
+              {/* Dark Green Zoom Controls Pill (Top Right, mobile horizontal / desktop vertical) */}
+              <div className="absolute top-2 sm:top-6 lg:top-8 right-2 sm:right-12 md:right-16 lg:right-24 xl:right-28 z-40 bg-[#153520] text-white p-1.5 sm:p-2.5 rounded-xl sm:rounded-2xl shadow-xl flex flex-row sm:flex-col items-center gap-2 sm:gap-2.5 font-manrope text-[9px] sm:text-[11px]">
+                {/* Back Button (Shown ONLY when viewing Kerala District Map) */}
+                {mapMode === "kerala" && (
+                  <button
+                    onClick={() => {
+                      setMapMode("full");
+                      setSelectedOutlet(null);
+                    }}
+                    className="flex flex-col items-center gap-0.5 text-[#82B224] hover:text-white transition-colors cursor-pointer border-b border-white/15 pb-2 w-full"
+                    title="Back to India Map"
+                  >
+                    <Icon icon="ph:arrow-left-bold" className="w-4 h-4" />
+                    <span className="font-bold">Back</span>
+                  </button>
+                )}
+
                 <button
                   onClick={handleZoomIn}
                   className="flex flex-col items-center gap-0.5 hover:text-[#82B224] transition-colors cursor-pointer"
                   title="Zoom In"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                  </svg>
+                  <Icon
+                    icon="ph:magnifying-glass-plus-bold"
+                    className="w-4 h-4"
+                  />
                   <span>Zoom In</span>
                 </button>
                 <button
@@ -619,9 +818,10 @@ export default function FranchisePage() {
                   className="flex flex-col items-center gap-0.5 hover:text-[#82B224] transition-colors cursor-pointer"
                   title="Zoom Out"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
-                  </svg>
+                  <Icon
+                    icon="ph:magnifying-glass-minus-bold"
+                    className="w-4 h-4"
+                  />
                   <span>Zoom Out</span>
                 </button>
                 <button
@@ -629,23 +829,32 @@ export default function FranchisePage() {
                   className="flex flex-col items-center gap-0.5 hover:text-[#82B224] transition-colors cursor-pointer"
                   title="Reset View"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
+                  <Icon
+                    icon="ph:arrow-counter-clockwise-bold"
+                    className="w-4 h-4"
+                  />
                   <span>Reset</span>
                 </button>
               </div>
 
               {/* Map Canvas Container with Zoom Transform */}
               <div
-                className="relative w-full h-full flex items-center justify-center transition-transform duration-500 ease-out"
-                style={{ transform: `scale(${zoomLevel})` }}
+                className="relative w-full h-full flex items-center justify-start transition-transform duration-500 ease-out"
+                style={{ transform: `scale(${zoomLevel * 1.22})` }}
               >
-                {/* 3D Map SVG Illustration (Sized to fill 75vh canvas) */}
-                <div className="relative h-full w-auto aspect-[908/982] max-w-full">
+                {/* 3D Map SVG Illustration */}
+                <div className="relative h-full w-auto aspect-[888/982] max-w-full translate-x-2 sm:translate-x-4 lg:translate-x-6 xl:translate-x-12 2xl:translate-x-14 translate-y-2 sm:translate-y-4 lg:translate-y-6 xl:translate-y-10 2xl:translate-y-14">
                   <Image
-                    src={mapMode === 'full' ? '/Franchies/fullMap.svg' : '/Franchies/KeralaMap.svg'}
-                    alt={mapMode === 'full' ? '3D India Map' : '3D Kerala State Map'}
+                    src={
+                      mapMode === "full"
+                        ? "/Franchies/fullMap.svg"
+                        : "/Franchies/KeralaMap.svg"
+                    }
+                    alt={
+                      mapMode === "full"
+                        ? "3D India Map"
+                        : "3D Kerala State Map"
+                    }
                     fill
                     priority
                     className="object-contain drop-shadow-2xl select-none"
@@ -658,14 +867,15 @@ export default function FranchisePage() {
                     return (
                       <div
                         key={outlet.id}
+                        data-pin-element="true"
                         className="absolute transform -translate-x-1/2 -translate-y-1/2 z-30 cursor-pointer group w-12 h-12 flex items-center justify-center"
                         style={{
                           left: `${outlet.xPercent}%`,
                           top: `${outlet.yPercent}%`,
                         }}
                         onClick={() => {
-                          if (mapMode === 'full' && outlet.id === 'kerala') {
-                            setMapMode('kerala');
+                          if (mapMode === "full" && outlet.id === "kerala") {
+                            setMapMode("kerala");
                             setSelectedOutlet(null);
                           } else {
                             setSelectedOutlet(outlet);
@@ -677,90 +887,272 @@ export default function FranchisePage() {
                           whileHover={{ scale: 1.3 }}
                           className={`w-6 h-6 rounded-full border-2 transition-all duration-300 ${
                             isSelected
-                              ? 'border-[#D62828] bg-[#D62828]/30 scale-125 shadow-lg animate-pulse'
-                              : 'border-transparent group-hover:border-[#D62828]/60 group-hover:bg-[#D62828]/20'
+                              ? "border-[#D62828] bg-[#D62828]/30 scale-125 shadow-lg animate-pulse"
+                              : "border-transparent group-hover:border-[#D62828]/60 group-hover:bg-[#D62828]/20"
                           }`}
                         />
                       </div>
                     );
                   })}
 
-                  {/* POPUP INFO CARD OVERLAY */}
-                  <AnimatePresence>
-                    {selectedOutlet && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.85, y: 15 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.85, y: 15 }}
-                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                        className="absolute z-50 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-3xl p-5 shadow-2xl w-[280px] sm:w-[310px] pointer-events-auto"
-                        style={{
-                          left: `${Math.min(Math.max(selectedOutlet.xPercent, 20), 75)}%`,
-                          top: `${Math.min(Math.max(selectedOutlet.yPercent - 10, 15), 75)}%`,
-                          transform: 'translate(-50%, -100%)',
-                        }}
-                      >
-                        {/* Red Dashed Line connecting card to pin */}
-                        <svg className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-6 h-7 pointer-events-none" viewBox="0 0 24 28">
-                          <path d="M12 0 L12 28" stroke="#D62828" strokeWidth="2" strokeDasharray="3 3" />
+                  {/* CLICKABLE OVERLAY DIRECTLY OVER GREEN KERALA STATE SHAPE */}
+                  {mapMode === "full" && (
+                    <div
+                      className="absolute z-30 cursor-pointer group pointer-events-auto"
+                      style={{
+                        left: "22.5%",
+                        top: "62%",
+                        width: "9%",
+                        height: "26%",
+                        transform: "rotate(-22deg)",
+                      }}
+                      onClick={() => {
+                        setMapMode("kerala");
+                        setSelectedOutlet(null);
+                      }}
+                      title="Click to open Kerala District Map"
+                    />
+                  )}
+
+                  {/* KERALA RED PIN + GREEN TAG OVERLAY (PIN TIP DIRECTLY INSIDE GREEN KERALA SHAPE) */}
+                  {mapMode === "full" && (
+                    <motion.div
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      whileHover={{ scale: 1.08 }}
+                      className="absolute z-40 cursor-pointer flex items-center select-none pointer-events-auto"
+                      style={{
+                        left: "26.2%",
+                        top: "70%",
+                        transform: "translate(-45%, -95%)",
+                      }}
+                      onClick={() => {
+                        setMapMode("kerala");
+                        setSelectedOutlet(null);
+                      }}
+                      title="Click to explore Kerala District Map"
+                    >
+                      {/* Red Location Pin with White Inner Dot */}
+                      <div className="relative w-[15px] sm:w-[17px] lg:w-[20px] xl:w-[22px] h-[19px] sm:h-[22px] lg:h-[25px] xl:h-[28px] shrink-0 drop-shadow-lg z-10">
+                        <svg viewBox="0 0 38 48" fill="none" className="w-full h-full">
+                          <path
+                            d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
+                            fill="url(#keralaPinGradient)"
+                          />
+                          <circle cx="19" cy="17" r="6.5" fill="white" />
+                          <defs>
+                            <linearGradient
+                              id="keralaPinGradient"
+                              x1="19"
+                              y1="0"
+                              x2="19"
+                              y2="48"
+                              gradientUnits="userSpaceOnUse"
+                            >
+                              <stop stopColor="#FF3B30" />
+                              <stop offset="1" stopColor="#C41C1C" />
+                            </linearGradient>
+                          </defs>
                         </svg>
+                      </div>
 
-                        {/* Popup Header with Close Button */}
-                        <div className="flex items-start justify-between border-b border-slate-100 pb-3 mb-3">
-                          <div>
-                            <h3 className="text-xl font-extrabold text-slate-900 tracking-wide font-barlow-condensed leading-none">
-                              {selectedOutlet.city}
-                            </h3>
-                            <span className="text-sm font-medium text-slate-500 font-manrope block mt-0.5">
-                              {selectedOutlet.malayalam}
-                            </span>
+                      {/* Dark Green "Kerala" Tag Label Pill with White Border */}
+                      <div className="-ml-1 bg-gradient-to-r from-[#063B16] via-[#0B4D1E] to-[#136127] text-white px-2 sm:px-2.5 py-[1px] rounded-r-xl rounded-l-sm border-[1.5px] border-white shadow-lg flex items-center justify-center font-bold font-manrope text-[8.5px] sm:text-[9.5px] lg:text-[10px] xl:text-[11px] tracking-wide whitespace-nowrap">
+                        <span>Kerala</span>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* KERALA DISTRICT PINS WITH DARK GREEN TAG PILLS (WHEN IN KERALA MAP MODE) */}
+                  {mapMode === "kerala" &&
+                    keralaOutlets.map((outlet) => {
+                      const isSelected = selectedOutlet?.id === outlet.id;
+                      const hasTag = [
+                        "kannur",
+                        "thrissur",
+                        "ernakulam",
+                        "kottayam",
+                        "alappuzha",
+                        "kollam",
+                        "kochi",
+                        "thiruvananthapuram",
+                      ].includes(outlet.id);
+
+                      if (!hasTag) return null;
+
+                      return (
+                        <motion.div
+                          key={`kerala-pin-${outlet.id}`}
+                          data-pin-element="true"
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          whileHover={{ scale: 1.12 }}
+                          className="absolute z-40 cursor-pointer flex items-center select-none"
+                          style={{
+                            left: `${outlet.xPercent}%`,
+                            top: `${outlet.yPercent}%`,
+                            transform: "translate(-8px, -100%)",
+                          }}
+                          onClick={() => setSelectedOutlet(outlet)}
+                          title={`Click to view ${outlet.city} details`}
+                        >
+                          {/* Red Location Pin */}
+                          <div className="relative w-[13px] sm:w-[15px] md:w-[17px] lg:w-[18px] xl:w-[20px] 2xl:w-[22px] h-[17px] sm:h-[19px] md:h-[21px] lg:h-[23px] xl:h-[25px] 2xl:h-[28px] shrink-0 drop-shadow-lg z-10">
+                            <svg viewBox="0 0 38 48" fill="none" className="w-full h-full">
+                              <path
+                                d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
+                                fill={`url(#pinGrad_${outlet.id})`}
+                              />
+                              <circle cx="19" cy="17" r="6.5" fill="white" />
+                              <defs>
+                                <linearGradient
+                                  id={`pinGrad_${outlet.id}`}
+                                  x1="19"
+                                  y1="0"
+                                  x2="19"
+                                  y2="48"
+                                  gradientUnits="userSpaceOnUse"
+                                >
+                                  <stop stopColor="#FF3B30" />
+                                  <stop offset="1" stopColor="#C41C1C" />
+                                </linearGradient>
+                              </defs>
+                            </svg>
                           </div>
-                          <button
-                            onClick={() => setSelectedOutlet(null)}
-                            className="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors cursor-pointer shrink-0 text-sm font-bold"
-                            title="Close Card"
+
+                          {/* Dark Green Tag Label Pill */}
+                          <div
+                            className={`-ml-1 bg-gradient-to-r from-[#043312] via-[#0B4D1E] to-[#125D25] text-white px-1.5 sm:px-2 py-[1px] rounded-r-lg sm:rounded-r-xl rounded-l-sm border-[1px] sm:border-[1.5px] border-white shadow-lg flex items-center justify-center font-bold font-manrope text-[8px] sm:text-[8.5px] md:text-[9px] lg:text-[9.5px] xl:text-[10px] 2xl:text-[11px] tracking-wide whitespace-nowrap transition-transform duration-300 ${
+                              isSelected
+                                ? "scale-110 border-yellow-300 ring-2 ring-yellow-400/50"
+                                : ""
+                            }`}
                           >
-                            ✕
-                          </button>
-                        </div>
-
-                        {/* Popup Content: Address & Phone */}
-                        <div className="space-y-3 text-[12px] lg:text-[13px] text-slate-700 font-manrope">
-                          <div className="flex items-start gap-2.5">
-                            <div className="w-5 h-5 rounded-full bg-[#FEF2F2] flex items-center justify-center shrink-0 mt-0.5">
-                              <svg className="w-3.5 h-3.5 text-[#D62828]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                              </svg>
-                            </div>
-                            <p className="leading-snug text-slate-700 font-medium">
-                              {selectedOutlet.address}
-                            </p>
+                            <span>{outlet.city}</span>
                           </div>
-
-                          <div className="flex items-center gap-2.5 pt-1">
-                            <div className="w-5 h-5 rounded-full bg-[#EBF3EC] flex items-center justify-center shrink-0">
-                              <svg className="w-3.5 h-3.5 text-[#127431]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                              </svg>
-                            </div>
-                            <span className="font-bold text-slate-900 tracking-wide font-manrope">
-                              {selectedOutlet.phone}
-                            </span>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        </motion.div>
+                      );
+                    })}
                 </div>
-
-              
               </div>
+
+              {/* POPUP INFO CARD OVERLAY (PLACED INSIDE mapRightColRef FOR 100% FULL MOBILE VISIBILITY) */}
+              <AnimatePresence>
+                {selectedOutlet && (
+                  <motion.div
+                    ref={popupCardRef}
+                    initial={{ opacity: 0, scale: 0.85, y: 15 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.85, y: 15 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute z-[9999] isolate bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-2xl w-[calc(100%-36px)] max-w-[300px] lg:w-[310px] pointer-events-auto"
+                    style={{
+                      left: isMobile
+                        ? "18px"
+                        : `${Math.min(Math.max(selectedOutlet.xPercent, 28), 65)}%`,
+                      top: isMobile
+                        ? `${selectedOutlet.yPercent > 55 ? "38%" : "44%"}`
+                        : `${selectedOutlet.yPercent > 55 ? Math.max(selectedOutlet.yPercent - 32, 18) : Math.min(Math.max(selectedOutlet.yPercent - 12, 15), 45)}%`,
+                      transform: isMobile ? "translate(0, -100%)" : "translate(-50%, -100%)",
+                    }}
+                  >
+                    {/* Red Dashed Line connecting card to pin */}
+                    <svg
+                      className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-6 h-7 pointer-events-none"
+                      viewBox="0 0 24 28"
+                    >
+                      <path
+                        d="M12 0 L12 28"
+                        stroke="#D62828"
+                        strokeWidth="2"
+                        strokeDasharray="3 3"
+                      />
+                    </svg>
+
+                    {/* Popup Header with Close Button */}
+                    <div className="flex items-start justify-between border-b border-slate-100 pb-3 mb-3">
+                      <div>
+                        <h3 className="text-xl font-extrabold text-slate-900 tracking-wide font-barlow-condensed leading-none">
+                          {selectedOutlet.city}
+                        </h3>
+                        <span className="text-sm font-medium text-slate-500 font-manrope block mt-0.5">
+                          {selectedOutlet.malayalam}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => setSelectedOutlet(null)}
+                        className="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors cursor-pointer shrink-0 text-sm font-bold"
+                        title="Close Card"
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    {/* Popup Content: Address & Phone */}
+                    <div className="space-y-3 text-[12px] lg:text-[13px] text-slate-700 font-manrope">
+                      <div className="flex items-start gap-2.5">
+                        <div className="w-5 h-5 rounded-full bg-[#FEF2F2] flex items-center justify-center shrink-0 mt-0.5">
+                          <svg
+                            className="w-3.5 h-3.5 text-[#D62828]"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                            />
+                          </svg>
+                        </div>
+                        <p className="leading-snug text-slate-700 font-medium">
+                          {selectedOutlet.address}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-2.5 pt-1">
+                        <div className="w-5 h-5 rounded-full bg-[#EBF3EC] flex items-center justify-center shrink-0">
+                          <svg
+                            className="w-3.5 h-3.5 text-[#127431]"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                            />
+                          </svg>
+                        </div>
+                        <span className="font-bold text-slate-900 tracking-wide font-manrope">
+                          {selectedOutlet.phone}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
 
-        {/* Bottom Slope Image Transition (Pinned to bottom of Section 2) */}
-        <div className="relative w-full h-[65px] sm:h-[95px] md:h-[120px] lg:h-[140px] shrink-0 pointer-events-none mt-4">
+        {/* 3D Mascot Character (Chicken standing in bottom right corner over bottom slope) */}
+        <div className="absolute bottom-0 right-1 sm:right-2 lg:right-4 xl:right-8 z-10 pointer-events-none w-[100px] sm:w-[130px] md:w-[155px] lg:w-[175px] xl:w-[220px]">
+          <Image
+            src="/Franchies/chicken.webp"
+            alt="MEATIN Chicken Mascot"
+            width={400}
+            height={500}
+            priority
+            className="w-full h-auto object-contain object-bottom drop-shadow-2xl"
+          />
+        </div>
+
+        {/* Bottom Slope Image Transition (Pinned to bottom of Section 2 behind mascot) */}
+        <div className="relative w-full h-[65px] sm:h-[95px] md:h-[120px] lg:h-[140px] shrink-0 pointer-events-none -mt-4 z-0">
           <Image
             src="/Franchies/bottomSlope.webp"
             alt="Green Slope Transition"
