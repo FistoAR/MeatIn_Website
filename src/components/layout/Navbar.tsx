@@ -46,27 +46,36 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const containerBgClass = 'bg-white/95 border-slate-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.08)]';
+  const isDarkPage = pathname === '/' || pathname === '/about' || pathname === '/contact' || pathname.startsWith('/know-your-meat');
+
+  const containerBgClass = scrolled
+    ? 'bg-white/95 border-slate-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'
+    : 'bg-white/15 backdrop-blur-md border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.15)]';
 
   const getLinkColorClass = (isActive: boolean) => {
     if (isActive) {
       return 'text-[#D62828]';
     }
-    return 'text-slate-800 hover:text-[#1F5A3C]';
+    if (scrolled) return 'text-slate-800 hover:text-[#1F5A3C]';
+    return isDarkPage ? 'text-white/95 hover:text-white' : 'text-slate-800 hover:text-[#1F5A3C]';
   };
 
   const getUnderlineColorClass = () => {
     return 'bg-[#D62828]';
   };
 
-  const hamburgerColorClass = 'text-slate-800 hover:bg-slate-100';
+  const hamburgerColorClass = scrolled
+    ? 'text-slate-800 hover:bg-slate-100'
+    : isDarkPage
+      ? 'text-white hover:bg-white/10'
+      : 'text-slate-800 hover:bg-white/10';
 
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 w-full p-4 lg:p-[1vw] pointer-events-none">
         <div className={`w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw] py-2 lg:py-[0.5vw] flex items-center justify-between font-inter border transition-all duration-300 rounded-[20px] pointer-events-auto ${containerBgClass}`}>
           {/* Logo */}
-          <Logo variant="dark" className="shrink-0" />
+          <Logo variant={scrolled ? 'dark' : (isDarkPage ? 'light' : 'dark')} className="shrink-0" />
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-[2.5vw] whitespace-nowrap">
@@ -91,7 +100,7 @@ export const Navbar: React.FC = () => {
           {/* Enquiry Button (Desktop) & Hamburger Menu (Mobile/Tablet) */}
           <div className="flex items-center gap-3 lg:gap-[1vw]">
             <Link
-              href="/contact"
+              href="/enquiry"
               className="hidden sm:inline-block bg-[#D62828] hover:bg-red-700 text-white font-bold font-inter text-xs lg:text-[0.7vw] xl:text-[0.75vw] px-4 lg:px-[1.2vw] py-2.5 lg:py-[0.6vw] rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95"
             >
               Enquiry Now
@@ -159,7 +168,7 @@ export const Navbar: React.FC = () => {
           })}
           <div className="pt-4 sm:hidden">
             <Link
-              href="/contact"
+              href="/enquiry"
               onClick={() => setMobileMenuOpen(false)}
               className="block w-full text-center bg-[#D62828] hover:bg-red-700 text-white font-bold font-inter text-xs py-3 rounded-xl uppercase tracking-wider transition-all"
             >

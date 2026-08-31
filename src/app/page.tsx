@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
 import TrustedQualityBanner from '@/components/layout/TrustedQualityBanner';
 
 // Animation variants
@@ -27,58 +27,6 @@ const staggerContainer = {
 };
 
 export default function HomePage() {
-  const heroRef = React.useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end end"]
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 20,
-    restDelta: 0.001
-  });
-
-  const certSectionRef = React.useRef<HTMLDivElement>(null);
-  const { scrollYProgress: certScrollProgress } = useScroll({
-    target: certSectionRef,
-    offset: ["start end", "end start"]
-  });
-  const truckY = useTransform(certScrollProgress, [0, 1], [-150, 1100]);
-  const truckOpacity = useTransform(certScrollProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
-
-  const [currentFrame, setCurrentFrame] = React.useState(1);
-  const [pointerEvents, setPointerEvents] = React.useState<'auto' | 'none'>('auto');
-
-  React.useEffect(() => {
-    // Preload all frames to avoid flickering
-    const totalFrames = 240;
-    for (let i = 1; i <= totalFrames; i++) {
-      const img = new window.Image();
-      const frameStr = String(i).padStart(5, '0');
-      img.src = `/Home/Hero/video-frames/${frameStr}.webp`;
-    }
-  }, []);
-
-  React.useEffect(() => {
-    return smoothProgress.onChange((latest) => {
-      const totalFrames = 240;
-      const frame = Math.min(
-        totalFrames,
-        Math.max(1, Math.floor(latest * totalFrames))
-      );
-      setCurrentFrame(frame);
-      if (latest > 0.4) {
-        setPointerEvents('none');
-      } else {
-        setPointerEvents('auto');
-      }
-    });
-  }, [smoothProgress]);
-
-  const heroContentOpacity = useTransform(smoothProgress, [0, 0.35], [1, 0]);
-  const heroContentY = useTransform(smoothProgress, [0, 0.35], [0, -40]);
-
   const storySteps = [
     {
       title: "RESPONSIBLE BEGINNINGS",
@@ -152,82 +100,82 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F6F5F0] overflow-x-clip font-manrope">
+    <div className="min-h-screen bg-[#F6F5F0] overflow-x-hidden font-manrope">
 
-      {/* 1. HERO BANNER WITH STICKY SCROLL SEQUENCE */}
-      <section ref={heroRef} className="relative w-full h-[300vh] bg-black">
-        <div className="sticky top-0 left-0 w-full h-screen flex items-center bg-black overflow-hidden">
-          {/* Background Frame Sequence */}
-          <div className="absolute inset-0 z-0 select-none pointer-events-none w-full h-full">
-            <img
-              src={`/Home/Hero/video-frames/${String(currentFrame).padStart(5, '0')}.webp`}
-              alt="MEATIN Integrated Processing Plant Video Frame"
-              className="w-full h-full object-cover object-center brightness-[0.75] lg:brightness-100"
-            />
-            {/* Gradients for readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 lg:via-transparent to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black/60 to-transparent" />
+      {/* 1. HERO BANNER */}
+      <section className="relative w-full min-h-[90vh] lg:min-h-screen flex items-center bg-black pt-[6rem] overflow-hidden">
+        {/* Factory drone shot background */}
+        <div className="absolute inset-0 z-0 select-none pointer-events-none">
+          <Image
+            src="/Home/Hero/hero-image.webp"
+            alt="MEATIN Integrated Processing Plant"
+            fill
+            priority
+            className="object-cover object-center brightness-[0.75] lg:brightness-100"
+          />
+          {/* Gradients for readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 lg:via-transparent to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black/60 to-transparent" />
+        </div>
+
+        <div className="w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-6 sm:px-8 lg:px-[2.5vw] relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+            {/* Left Header content */}
+            <div className="lg:col-span-8 space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-3"
+              >
+                <h1 className="text-5xl sm:text-7xl lg:text-[6vw] xl:text-[6.5vw] font-bold font-barlow tracking-tight uppercase leading-[0.9] space-y-1">
+                  <span className="block text-[#87B71D]">MEATIN:</span>
+                  <span className="block text-white">PURE QUALITY.</span>
+                  <span className="block text-white">TRUSTED MEAT.</span>
+                </h1>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <p className="text-white text-base sm:text-lg md:text-xl font-normal leading-relaxed font-inter max-w-xl">
+                  South India&apos;s <span className="text-[#87B71D] font-bold">Largest</span> Multi Species <span className="text-[#87B71D] font-bold">Meat</span> Processing Plant
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Right stamp overlay badge */}
+            <div className="lg:col-span-4 flex justify-start lg:justify-end">
+              <motion.div
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
+                className="relative w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]"
+              >
+                <Image
+                  src="/AboutUs/keralas-original.webp"
+                  alt="Kerala's Original Meat Badge"
+                  fill
+                  className="object-contain"
+                />
+              </motion.div>
+            </div>
+
           </div>
-
-          <div className="w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-6 sm:px-8 lg:px-[2.5vw] relative z-10 pt-[6rem]">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-
-              {/* Left Header content */}
-              <div className="lg:col-span-8 space-y-6">
-                <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="space-y-3"
-                >
-                  <h1 className="text-5xl sm:text-7xl lg:text-[6vw] xl:text-[6.5vw] font-bold font-barlow tracking-tight uppercase leading-[0.9] space-y-1">
-                    <span className="block text-[#87B71D]">MEATIN:</span>
-                    <span className="block text-white">PURE QUALITY.</span>
-                    <span className="block text-white">TRUSTED MEAT.</span>
-                  </h1>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                >
-                  <p className="text-white text-base sm:text-lg md:text-xl font-normal leading-relaxed font-inter max-w-xl">
-                    South India&apos;s <span className="text-[#87B71D] font-bold">Largest</span> Multi Species <span className="text-[#87B71D] font-bold">Meat</span> Processing Plant
-                  </p>
-                </motion.div>
-              </div>
-
-              {/* Right stamp overlay badge */}
-              <div className="lg:col-span-4 flex justify-start lg:justify-end">
-                <motion.div
-                  initial={{ scale: 0.5, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
-                  className="relative w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]"
-                >
-                  <Image
-                    src="/AboutUs/keralas-original.webp"
-                    alt="Kerala's Original Meat Badge"
-                    fill
-                    className="object-contain"
-                  />
-                </motion.div>
-              </div>
-
-            </div>
-            </div>
         </div>
       </section>
 
       {/* 2. SECOND SECTION (TRUCK LOGISTICS) */}
-      <section className="relative w-full bg-[#EBF6E4] pt-8 pb-14 sm:pt-16 sm:pb-28 overflow-hidden flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/Home/truck-section/truck-section-bg.webp')" }}>
+      <section className="relative w-full bg-[#EBF6E4] pt-8 pb-14 sm:pt-16 sm:pb-28 overflow-hidden flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/Home/section-bg.webp')" }}>
         {/* Single Full Image Container with scroll-driven slide-in */}
         <motion.div 
           initial={{ x: "50%", opacity: 0.7 }}
           whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: false, margin: "-100px" }}
-          transition={{ type: "tween", duration: 2.5, ease: "easeOut" }}
+          transition={{ type: "spring", stiffness: 35, damping: 15 }}
           className="w-full relative h-[140px] sm:h-[220px] md:h-[280px] lg:h-[340px] z-10"
         >
           <Image
@@ -249,20 +197,20 @@ export default function HomePage() {
 
       {/* 3. BRAND STORY / TIMELINE SECTION */}
       <section
-        className="relative w-full pt-10 pb-10 bg-[#61870d] text-white overflow-hidden bg-cover bg-center bg-no-repeat"
+        className="relative w-full pt-20 pb-28 bg-[#61870d] text-white overflow-hidden bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/Home/section-bg.webp')" }}
       >
 
 
-        <div className="w-full max-w-[1400px] lg:max-w-[92vw] mx-auto px-4 sm:px-6 lg:px-8 pt-4 relative z-10">
+        <div className="w-full max-w-[1400px] lg:max-w-[92vw] mx-auto px-4 sm:px-6 lg:px-8 pt-8 relative z-10">
 
           {/* Header */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center flex flex-col items-center mb-4 lg:mb-16"
+            className="text-center flex flex-col items-center mb-16"
           >
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="h-[1.5px] w-8 sm:w-12 bg-white" />
@@ -284,8 +232,8 @@ export default function HomePage() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, margin: "-50px" }}
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6 xl:gap-4 items-stretch pt-8 pb-2"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6 xl:gap-4 items-stretch pt-8 pb-10"
           >
             {storySteps.map((step, idx) => {
               return (
@@ -335,24 +283,11 @@ export default function HomePage() {
       </section>
 
       {/* 3. CERTIFIED EXCELLENCE SECTION */}
-      <section ref={certSectionRef} className="relative w-full py-16 lg:py-11 overflow-hidden">
-        {/* Section Background Image */}
-        <div className="absolute inset-0 pointer-events-none z-0 bg-[#DCDBDB]">
-          <Image
-            src="/Home/gray-bg-image.webp"
-            alt="Section background"
-            fill
-            className="object-cover opacity-[0.8]"
-            priority
-          />
-        </div>
+      <section className="relative w-full py-16 lg:py-24 overflow-hidden">
 
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Creative vertical green truck graphics on left side gutter */}
-          <motion.div 
-            style={{ y: truckY, opacity: truckOpacity }}
-            className="absolute left-[-70px] top-[-100px] w-32 h-[650px] hidden lg:block pointer-events-none z-0"
-          >
+          <div className="absolute left-0 top-[-100px] w-24 h-[650px] hidden lg:block pointer-events-none z-0">
             <div className="relative w-full h-full">
               <Image
                 src="/Home/certifications/truck-image-certificates.webp"
@@ -361,15 +296,15 @@ export default function HomePage() {
                 className="object-contain object-top"
               />
             </div>
-          </motion.div>
+          </div>
 
           {/* Header */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center flex flex-col items-center mb-20"
+            className="text-center flex flex-col items-center mb-24"
           >
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="h-[1.5px] w-8 sm:w-12 bg-[#D4A437]" />
@@ -396,7 +331,7 @@ export default function HomePage() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: true, margin: "-50px" }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-y-16 md:gap-y-12 gap-x-6 lg:gap-x-8 lg:pl-12 xl:pl-24 items-stretch"
           >
             {certificates.map((cert, idx) => {

@@ -206,7 +206,7 @@ export default function TeamPage() {
               <span className="w-2.5 h-2.5 rounded-full bg-[#D4A437]" />
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-extrabold font-barlow text-[#60860E] tracking-relaxed uppercase px-4 sm:px-6">
+            <h2 className="text-3xl sm:text-4xl font-extrabold font-barlow text-[#153520] tracking-relaxed uppercase px-4 sm:px-6">
               LED BY
             </h2>
 
@@ -245,8 +245,8 @@ export default function TeamPage() {
                 </div>
 
                 {/* Bright green box */}
-                <div className="relative w-full h-[70px] sm:h-[70px] bg-[#60860E] text-white pl-[15px] pr-4 sm:pr-5 flex flex-col justify-center items-start">
-                  <h3 className="text-sm min-[380px]:text-base sm:text-[1.1rem] lg:text-[1.05rem] xl:text-[1.1rem] 2xl:text-[1.2rem] font-bold text-white font-barlow tracking-relaxed leading-tight">
+                <div className="relative w-full h-[110px] sm:h-[125px] bg-[#B7A51D] text-white pl-[15px] pr-12 flex flex-col justify-center items-start">
+                  <h3 className="text-lg sm:text-xl xl:text-[1.4rem] 2xl:text-2xl font-bold text-white font-barlow tracking-relaxed leading-tight">
                     {member.name}
                   </h3>
                   <p className="text-sm sm:text-md font-semibold text-white/95 tracking-wider mt-1 flex items-center gap-1.5 font-manrope">
@@ -306,7 +306,7 @@ export default function TeamPage() {
               <div className="h-[2px] w-12 sm:w-20 bg-[#D4A437]" />
               <span className="w-2.5 h-2.5 rounded-full bg-[#D4A437]" />
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold font-barlow text-[#60860E] tracking-relaxed uppercase px-4 sm:px-6">
+            <h2 className="text-3xl sm:text-4xl font-extrabold font-barlow text-[#153520] tracking-relaxed uppercase px-4 sm:px-6">
               DIRECTORS
             </h2>
             <div className="flex items-center">
@@ -343,8 +343,8 @@ export default function TeamPage() {
                 </div>
 
                 {/* Green name block */}
-                <div className="relative w-full h-[70px] sm:h-[70px] bg-[#60860E] text-white pl-[15px] pr-4 sm:pr-5 flex flex-col justify-center items-start">
-                  <h3 className="text-sm sm:text-[0.95rem] xl:text-[1.05rem] font-bold text-white font-barlow tracking-wide leading-tight">
+                <div className="relative w-full h-[85px] sm:h-[95px] bg-[#B7A51D] text-white pl-[15px] pr-10 flex flex-col justify-center items-start">
+                  <h3 className="text-base sm:text-lg font-bold text-white font-barlow tracking-wide leading-tight">
                     {member.name}
                   </h3>
                   <p className="text-xs sm:text-sm font-semibold text-white/95 tracking-wider mt-1 flex items-center gap-1.5 font-manrope">
