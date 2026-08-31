@@ -19,9 +19,74 @@ import {
 } from 'lucide-react';
 import TrustedQualityBanner from '@/components/layout/TrustedQualityBanner';
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring' as const, stiffness: 60, damping: 14 }
+  }
+};
+
+const springScale = {
+  hidden: { opacity: 0, scale: 0.7 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { type: 'spring' as const, stiffness: 90, damping: 13 }
+  }
+};
+
+const popIn = {
+  hidden: { opacity: 0, scale: 0.5, rotate: -8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: { type: 'spring' as const, stiffness: 110, damping: 12 }
+  }
+};
+
+const slideInLeft = {
+  hidden: { opacity: 0, x: -35 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { type: 'spring' as const, stiffness: 60, damping: 14 }
+  }
+};
+
+const slideInRight = {
+  hidden: { opacity: 0, x: 35 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { type: 'spring' as const, stiffness: 60, damping: 14 }
+  }
+};
+
+const springPop = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { type: 'spring' as const, stiffness: 80, damping: 13 }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12
+    }
+  }
+};
+
 function Counter({ value }: { value: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { once: false, margin: "-50px" });
   const [count, setCount] = useState(0);
 
   const numericString = value.replace(/[^\d]/g, '');
@@ -58,6 +123,21 @@ function Counter({ value }: { value: string }) {
 }
 
 export default function AboutUsPage() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isVideoInView = useInView(videoRef, { once: false, amount: 0.3 });
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isVideoInView) {
+      video.currentTime = 0;
+      video.play().catch((err) => console.log("Video autoplay blocked or failed:", err));
+    } else {
+      video.pause();
+    }
+  }, [isVideoInView]);
+
   const stats = [
     {
       value: "30+",
@@ -188,15 +268,16 @@ export default function AboutUsPage() {
         {/* Bottom Stats Row */}
         <div className="w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-6 sm:px-8 lg:px-[2.5vw] relative z-10 pb-8">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, margin: "-50px" }}
             className="w-full pt-4"
           >
             <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8 lg:gap-y-0 lg:divide-x lg:divide-white/20 items-start">
               {stats.map((stat, idx) => {
                 return (
-                  <div key={idx} className="flex flex-col items-start text-left px-2 sm:px-4 lg:px-6 lg:first:pl-0 lg:last:pr-0 col-span-1 last:col-span-2 lg:last:col-span-1">
+                  <motion.div key={idx} variants={springScale} className="flex flex-col items-start text-left px-2 sm:px-4 lg:px-6 lg:first:pl-0 lg:last:pr-0 col-span-1 last:col-span-2 lg:last:col-span-1">
                     {/* Big Value Number */}
                     <div className="text-3xl sm:text-4xl lg:text-[2.2vw] xl:text-[2.4rem] font-medium text-[#8CC63F] font-chau tracking-tight leading-none">
                       <Counter value={stat.value} />
@@ -218,7 +299,7 @@ export default function AboutUsPage() {
                         <p className="text-[9px] sm:text-[10px] lg:text-[10px] xl:text-xs text-slate-300 font-semibold tracking-wide uppercase leading-tight mt-0.5 font-manrope">{stat.desc}</p>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
@@ -248,16 +329,16 @@ export default function AboutUsPage() {
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 0.6 }}
               className="lg:col-span-6 relative w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[475px] xl:h-[600px] 2xl:h-[680px] shadow-xl"
             >
-              <Image
-                src="/AboutUs/who-is-image.webp"
-                alt="MEATIN Plant Facility"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+              <video
+                ref={videoRef}
+                src="/AboutUs/about -us-video.webm"
+                muted
+                playsInline
+                className="w-full h-full object-cover"
               />
             </motion.div>
 
@@ -265,7 +346,7 @@ export default function AboutUsPage() {
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="lg:col-span-6 space-y-6"
             >
@@ -305,9 +386,15 @@ export default function AboutUsPage() {
               </div>
 
               {/* Circular Highlights badges */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:pt-3 2xl:pt-6">
+              <motion.div
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, margin: "-50px" }}
+                className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:pt-3 2xl:pt-6"
+              >
                 {/* Highlight 1: Scientific Processing */}
-                <div className="flex flex-col items-center text-center space-y-2">
+                <motion.div variants={popIn} className="flex flex-col items-center text-center space-y-2">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-12 lg:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 relative hover:scale-105 transition-transform duration-300">
                     <Image
                       src="/AboutUs/who-is-meatin-icons/scientific-procssing.svg"
@@ -319,10 +406,10 @@ export default function AboutUsPage() {
                   <span className="text-[10px] sm:text-[11px] lg:text-[10px] xl:text-xs 2xl:text-sm !mt-3 font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
                     SCIENTIFIC<br />PROCESSING
                   </span>
-                </div>
+                </motion.div>
 
                 {/* Highlight 2: Hygienic Production */}
-                <div className="flex flex-col items-center text-center space-y-2">
+                <motion.div variants={popIn} className="flex flex-col items-center text-center space-y-2">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-12 lg:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 relative hover:scale-105 transition-transform duration-300">
                     <Image
                       src="/AboutUs/who-is-meatin-icons/hygienic-production.svg"
@@ -334,10 +421,10 @@ export default function AboutUsPage() {
                   <span className="text-[10px] sm:text-[11px] lg:text-[10px] xl:text-xs 2xl:text-sm !mt-3 font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
                     HYGIENIC<br />PRODUCTION
                   </span>
-                </div>
+                </motion.div>
 
                 {/* Highlight 3: Halal Certified */}
-                <div className="flex flex-col items-center text-center space-y-2">
+                <motion.div variants={popIn} className="flex flex-col items-center text-center space-y-2">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-12 lg:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 relative hover:scale-105 transition-transform duration-300">
                     <Image
                       src="/AboutUs/who-is-meatin-icons/halal-certified.svg"
@@ -349,10 +436,10 @@ export default function AboutUsPage() {
                   <span className="text-[10px] sm:text-[11px] lg:text-[10px] xl:text-xs 2xl:text-sm !mt-3 font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
                     HALAL<br />CERTIFIED
                   </span>
-                </div>
+                </motion.div>
 
                 {/* Highlight 4: Export Quality */}
-                <div className="flex flex-col items-center text-center space-y-2">
+                <motion.div variants={popIn} className="flex flex-col items-center text-center space-y-2">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-12 lg:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 relative hover:scale-105 transition-transform duration-300">
                     <Image
                       src="/AboutUs/who-is-meatin-icons/export-quality.svg"
@@ -364,8 +451,8 @@ export default function AboutUsPage() {
                   <span className="text-[10px] sm:text-[11px] lg:text-[10px] xl:text-xs 2xl:text-sm !mt-3 font-black text-slate-800 tracking-wider uppercase leading-tight font-manrope">
                     EXPORT<br />QUALITY
                   </span>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
             </motion.div>
 
@@ -383,7 +470,7 @@ export default function AboutUsPage() {
           <motion.div
             initial={{ scale: 0.6, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
             className="w-full h-full"
           >
@@ -409,7 +496,7 @@ export default function AboutUsPage() {
           <motion.div
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[480px] lg:min-h-[780px] xl:min-h-[850px]"
           >
@@ -423,8 +510,14 @@ export default function AboutUsPage() {
             {/* Full-height yellow-green overlay on mobile/tablet (1024px and below) for text contrast, and top-only (h-[65%]) overlay on desktop */}
             <div className="absolute inset-0 lg:bottom-auto lg:h-[65%] bg-gradient-to-b from-[#E2F2B6]/95 via-[#E2F2B6]/85 lg:via-[#E2F2B6]/60 to-transparent z-0 pointer-events-none" />
             
-            <div className="relative z-10 space-y-6">
-              <div className="relative w-72 sm:w-80 md:w-96 lg:w-[350px] xl:w-[380px] 2xl:w-[410px] h-24 sm:h-28 md:h-32 lg:h-[135px] xl:h-[145px] 2xl:h-[155px]">
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, margin: "-50px" }}
+              className="relative z-10 space-y-6"
+            >
+              <motion.div variants={slideInLeft} className="relative w-72 sm:w-80 md:w-96 lg:w-[350px] xl:w-[380px] 2xl:w-[410px] h-24 sm:h-28 md:h-32 lg:h-[135px] xl:h-[145px] 2xl:h-[155px]">
                 <Image
                   src="/AboutUs/mission-vision/mission-text.svg"
                   alt="Our Mission"
@@ -432,21 +525,22 @@ export default function AboutUsPage() {
                   className="object-contain object-left"
                   priority
                 />
-              </div>
-              <p
+              </motion.div>
+              <motion.p
+                variants={slideInLeft}
                 style={{ lineHeight: '1.5' }}
                 className="text-lg sm:text-xl lg:text-xl xl:text-[21px] text-black font-normal max-w-xl lg:max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%] relative z-10 font-manrope tracking-tight"
               >
                 Build value-added meat products, farming and food supply chains while delivering <span className="text-[#B71C1C] font-semibold">quality, service</span> and a <span className="text-[#B71C1C] font-semibold">sustainable</span> food system.
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
           </motion.div>
 
           {/* Vision Box */}
           <motion.div
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[480px] lg:min-h-[780px] xl:min-h-[850px]"
           >
@@ -455,7 +549,7 @@ export default function AboutUsPage() {
               <motion.div
                 initial={{ scale: 0.6, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ duration: 0.5, type: "spring", stiffness: 100, delay: 0.3 }}
                 className="w-full h-full"
               >
@@ -484,8 +578,14 @@ export default function AboutUsPage() {
             {/* Full-height vertical spruce green overlay on mobile/tablet, and left-to-right spruce green gradient on desktop to keep right workers sharp */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#081a11]/95 via-[#081a11]/75 to-[#081a11]/45 lg:bg-gradient-to-r lg:from-[#081a11]/90 lg:via-[#081a11]/60 lg:to-transparent z-0 pointer-events-none" />
             
-            <div className="relative z-10 space-y-6">
-              <div className="relative w-72 sm:w-80 md:w-96 lg:w-[350px] xl:w-[380px] 2xl:w-[410px] h-24 sm:h-28 md:h-32 lg:h-[135px] xl:h-[145px] 2xl:h-[155px]">
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, margin: "-50px" }}
+              className="relative z-10 space-y-6"
+            >
+              <motion.div variants={slideInRight} className="relative w-72 sm:w-80 md:w-96 lg:w-[350px] xl:w-[380px] 2xl:w-[410px] h-24 sm:h-28 md:h-32 lg:h-[135px] xl:h-[145px] 2xl:h-[155px]">
                 <Image
                   src="/AboutUs/mission-vision/vision-text.svg"
                   alt="Our Vision"
@@ -493,14 +593,15 @@ export default function AboutUsPage() {
                   className="object-contain object-left"
                   priority
                 />
-              </div>
-              <p
+              </motion.div>
+              <motion.p
+                variants={slideInRight}
                 style={{ lineHeight: '1.5' }}
                 className="text-lg sm:text-xl lg:text-xl xl:text-[21px] text-white font-normal max-w-xl lg:max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%] relative z-10 font-manrope tracking-tight"
               >
                 Become a leader in <span className="text-[#8CC63F] font-semibold">value-added</span> meat processing and a trusted premium-quality food supplier.
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
           </motion.div>
 
         </div>
@@ -510,17 +611,23 @@ export default function AboutUsPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.6 }}
             className="bg-[#F6F5F0] rounded-[32px] border border-[#E5EAE1] shadow-[0_12px_36px_rgba(0,0,0,0.06)] p-4 sm:p-5 lg:py-5 lg:px-8 xl:px-12 text-center space-y-4"
           >
             <h3 className="text-2xl sm:text-3xl font-bold text-[#1F5A3C] tracking-tight uppercase flex items-center justify-center gap-3 sm:gap-4 font-barlow leading-none">
               <span className="w-8 sm:w-12 h-[2px] bg-[#D62828]" /> OUR VALUES <span className="w-8 sm:w-12 h-[2px] bg-[#D62828]" />
             </h3>
-            <div className="grid grid-cols-2 lg:grid-cols-[0.85fr_1fr_1fr_1.15fr] gap-y-6 lg:gap-y-0 divide-y divide-[#7CB325]/30 sm:divide-y-0 lg:divide-y-0 lg:divide-x lg:divide-[#7CB325] w-full items-start">
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, margin: "-50px" }}
+              className="grid grid-cols-2 lg:grid-cols-[0.85fr_1fr_1fr_1.15fr] gap-y-6 lg:gap-y-0 divide-y divide-[#7CB325]/30 sm:divide-y-0 lg:divide-y-0 lg:divide-x lg:divide-[#7CB325] w-full items-start"
+            >
               {coreValues.map((val, idx) => {
                 return (
-                  <div key={idx} className="flex flex-col items-center text-center px-2 sm:px-4 lg:px-6 pt-4 sm:pt-0 border-t border-[#7CB325]/30 sm:border-t-0 lg:border-t-0">
+                  <motion.div key={idx} variants={springPop} className="flex flex-col items-center text-center px-2 sm:px-4 lg:px-6 pt-4 sm:pt-0 border-t border-[#7CB325]/30 sm:border-t-0 lg:border-t-0">
                     {/* SVG Vector Icon (Direct render without circular bg) */}
                     <div className="relative w-9 h-9 sm:w-10 sm:h-10 lg:w-10 lg:h-10 xl:w-12 xl:h-12 mb-1.5">
                       <Image
@@ -539,10 +646,10 @@ export default function AboutUsPage() {
                         </React.Fragment>
                       ))}
                     </p>
-                  </div>
+                  </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
           </motion.div>
         </div>
 

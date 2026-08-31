@@ -4512,93 +4512,6 @@ export default function KnowYourMeatPage() {
                 </div>
               </motion.div>
 
-              {/* Share buttons */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, x: 30, y: 10 },
-                  visible: {
-                    opacity: 1,
-                    x: 0,
-                    y: 0,
-                    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-                  },
-                }}
-                initial={isMobile ? { opacity: 0, y: 25 } : undefined}
-                whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-1.5 lg:space-y-2"
-              >
-                <h4 className="text-[14px] lg:text-[15px] font-medium text-slate-900 tracking-wider uppercase font-manrope">
-                  SHARE THIS PRODUCT
-                </h4>
-                <div className="flex gap-2">
-                  <motion.button
-                    whileHover={{
-                      scale: 1.04,
-                      y: -2,
-                      backgroundColor: "#0b4f20",
-                      boxShadow: "0 8px 20px rgba(18, 116, 49, 0.3)",
-                    }}
-                    whileTap={{ scale: 0.96 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex-1 bg-[#127431] text-white text-[13px] font-bold py-2 px-3 rounded-xl flex items-center justify-center gap-2 tracking-wider font-manrope cursor-pointer transition-colors shadow-sm detail-share-btn"
-                  >
-                    <div className="relative w-4 h-4 shrink-0">
-                      <Image
-                        src="/Footer/whatsapp.webp"
-                        alt="WhatsApp"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span>WhatsApp</span>
-                  </motion.button>
-                  <motion.button
-                    whileHover={{
-                      scale: 1.04,
-                      y: -2,
-                      backgroundColor: "#2d4373",
-                      boxShadow: "0 8px 20px rgba(59, 89, 152, 0.3)",
-                    }}
-                    whileTap={{ scale: 0.96 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex-1 bg-[#3B5998] text-white text-[13px] font-bold py-2 px-3 rounded-xl flex items-center justify-center gap-2 tracking-wider font-manrope cursor-pointer transition-colors shadow-sm detail-share-btn"
-                  >
-                    <div className="relative w-4 h-4 shrink-0">
-                      <Image
-                        src="/Product/details/facebook.svg"
-                        alt="Facebook"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span>Facebook</span>
-                  </motion.button>
-                  <motion.button
-                    whileHover={{
-                      scale: 1.04,
-                      y: -2,
-                      borderColor: "#127431",
-                      boxShadow: "0 8px 20px rgba(0, 0, 0, 0.08)",
-                    }}
-                    whileTap={{ scale: 0.96 }}
-                    transition={{ duration: 0.2 }}
-                    className="bg-white border border-slate-200 text-slate-700 text-[13px] font-bold py-2 px-3 rounded-xl flex items-center justify-center gap-2 tracking-wider font-manrope cursor-pointer transition-colors shadow-sm detail-share-btn"
-                  >
-                    <div className="relative w-4 h-4 shrink-0">
-                      <Image
-                        src="/Product/details/link.webp"
-                        alt="Link"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span>Copy Link</span>
-                  </motion.button>
-                </div>
-              </motion.div>
-
               {/* Cooking recipe card */}
               <Link href="/recipes" className="block w-full">
                 <motion.div
@@ -4620,7 +4533,7 @@ export default function KnowYourMeatPage() {
                     borderColor: "#D62828",
                   }}
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                  className="group border border-slate-200/80 bg-[#FAF0F0] rounded-2xl overflow-hidden shadow-sm relative flex gap-0 items-stretch detail-cooking-card cursor-pointer"
+                  className="group border border-slate-200/80 bg-[#FAF0F0] rounded-2xl overflow-hidden shadow-sm relative flex gap-0 items-stretch detail-cooking-card cursor-pointer mt-3"
                 >
                   {/* Left - Square image */}
                   <div className="relative w-[130px] lg:w-[150px] shrink-0 detail-cooking-img overflow-hidden">
