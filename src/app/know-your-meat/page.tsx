@@ -24,6 +24,7 @@ export default function KnowYourMeatPage() {
   const [selectedPartIdx, setSelectedPartIdx] = useState(0);
   const [manuallySelectedPartIdx, setManuallySelectedPartIdx] = useState(0);
   const [activeViewTab, setActiveViewTab] = useState<"raw" | "packed">("raw");
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [isLandedInSection2, setIsLandedInSection2] = useState(false);
   const [hasSelectedAnyPart, setHasSelectedAnyPart] = useState(false);
   const [hoveredPart, setHoveredPart] = useState<string | null>(null);
@@ -4186,12 +4187,8 @@ export default function KnowYourMeatPage() {
 
               {/* Thumbnail 1: Raw Cut Part Image */}
               <button
-                onClick={() => setActiveViewTab("raw")}
-                className={`relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden p-2 transition-all duration-300 cursor-pointer detail-carousel-btn ${
-                  activeViewTab === "raw"
-                    ? "border-4 border-[#F2CE07] bg-amber-50 scale-105"
-                    : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
-                }`}
+                onClick={() => setLightboxImage(chickenParts[manuallySelectedPartIdx].img)}
+                className="relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden p-2 border-2 border-white/60 bg-white/20 hover:bg-white/40 hover:scale-105 transition-all duration-300 cursor-pointer detail-carousel-btn"
               >
                 <img
                   src={chickenParts[manuallySelectedPartIdx].img}
@@ -4202,12 +4199,8 @@ export default function KnowYourMeatPage() {
 
               {/* Thumbnail 2: Packed Product Image */}
               <button
-                onClick={() => setActiveViewTab("packed")}
-                className={`relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer detail-carousel-btn ${
-                  activeViewTab === "packed"
-                    ? "border-4 border-[#F2CE07] scale-105"
-                    : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
-                }`}
+                onClick={() => setLightboxImage("/Product/details/packedProduct.webp")}
+                className="relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden border-2 border-white/60 bg-white/20 hover:bg-white/40 hover:scale-105 transition-all duration-300 cursor-pointer detail-carousel-btn"
               >
                 <img
                   src="/Product/details/packedProduct.webp"
@@ -5099,6 +5092,48 @@ export default function KnowYourMeatPage() {
           />
         </motion.div>
       )}
+
+      {/* Fullscreen Lightbox Modal */}
+      <AnimatePresence>
+        {lightboxImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightboxImage(null)}
+            className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setLightboxImage(null)}
+              className="absolute top-5 right-5 text-white/80 hover:text-white hover:scale-115 active:scale-95 transition-all w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/25 rounded-full cursor-pointer"
+              aria-label="Close Fullscreen View"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 100, damping: 15 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-[90vw] max-h-[85vh] flex items-center justify-center"
+            >
+              <img
+                src={lightboxImage}
+                alt="Product Fullscreen Preview"
+                className={`object-contain rounded-2xl select-none filter drop-shadow-2xl ${
+                  lightboxImage.includes("packedProduct")
+                    ? "max-w-full max-h-[85vh]"
+                    : "w-[80vw] max-w-[500px] sm:max-w-[650px] md:max-w-[750px] lg:max-w-[850px] max-h-[85vh]"
+                }`}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

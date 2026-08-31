@@ -254,7 +254,7 @@ export default function HomePage() {
       >
 
 
-        <div className="w-full max-w-[1400px] lg:max-w-[92vw] mx-auto px-4 sm:px-6 lg:px-8 pt-8 relative z-10">
+        <div className="w-full max-w-[1400px] lg:max-w-[92vw] mx-auto px-4 sm:px-6 lg:px-8 pt-4 relative z-10">
 
           {/* Header */}
           <motion.div 
