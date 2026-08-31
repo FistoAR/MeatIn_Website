@@ -57,9 +57,12 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/logo.webp',
+    icon: [
+      { url: '/assets/logo-image.webp', type: 'image/webp' },
+      { url: '/assets/logo-image.png', type: 'image/png' },
+    ],
+    shortcut: '/assets/logo-image.webp',
+    apple: '/assets/logo-image.webp',
   },
   openGraph: {
     title: 'MEATIn | Premium Meat Experience',

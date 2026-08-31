@@ -82,8 +82,8 @@ export const Footer: React.FC = () => {
   const [isFooterInView, setIsFooterInView] = useState<boolean>(false);
   const hoverIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Total links count is 8 (4 Quick Links + 4 Explore)
-  const totalItems = 8;
+  // Total links count is 11 (6 Quick Links + 5 Explore)
+  const totalItems = 11;
 
   useEffect(() => {
     if (isFooterInView && !isUserHovering) {
@@ -291,10 +291,22 @@ export const Footer: React.FC = () => {
                     Know Your Meat
                   </Link>
                 </motion.li>
+
+                <motion.li variants={listItemVariants}>
+                  <Link
+                    href="/why-choose-us"
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(4)}`}
+                  >
+                    <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 20 17 13 9 6" />
+                    </svg>
+                    Our process
+                  </Link>
+                </motion.li>
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/contact"
-                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(3)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(5)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -328,29 +340,29 @@ export const Footer: React.FC = () => {
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/recipes"
-                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(4)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(6)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
                     </svg>
-                    Recipes
+                    Recipes &amp; Tips
                   </Link>
                 </motion.li>
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/franchise"
-                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(5)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(7)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
                     </svg>
-                    Franchise
+                    Franchise Opportunities
                   </Link>
                 </motion.li>
                 <motion.li variants={listItemVariants}>
                   <Link
                     href="/team"
-                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(6)}`}
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(8)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
@@ -360,13 +372,24 @@ export const Footer: React.FC = () => {
                 </motion.li>
                 <motion.li variants={listItemVariants}>
                   <Link
-                    href="/vlog"
-                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(7)}`}
+                    href="/blog"
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(9)}`}
                   >
                     <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 20 17 13 9 6" />
                     </svg>
-                    Vlog
+                    Blog &amp; Articles
+                  </Link>
+                </motion.li>
+                <motion.li variants={listItemVariants}>
+                  <Link
+                    href="/career"
+                    className={`flex items-center gap-2 sm:gap-3.5 origin-left ${getHighlightClass(10)}`}
+                  >
+                    <svg className="w-4 h-7 text-[#FFB300] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 20 17 13 9 6" />
+                    </svg>
+                    Careers
                   </Link>
                 </motion.li>
               </motion.ul>

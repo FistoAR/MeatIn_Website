@@ -1723,8 +1723,31 @@ export default function RecipesPage() {
           <div className="flex items-center justify-between gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
             <div>
               <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold font-barlow-condensed tracking-wide uppercase leading-tight">
-                CHICKEN <span className="text-[#D62828]">RECIPES</span>
+                {activeMeatType.toUpperCase()} <span className="text-[#D62828]">RECIPES</span>
               </h1>
+            </div>
+
+            {/* Right End: Meat Category Switcher Buttons (CHICKEN | BEEF | GOAT) */}
+            <div className="flex items-center shrink-0">
+              {/* Segmented Switcher Tabs */}
+              <div className="flex items-center bg-white rounded-md p-0.5 sm:p-1 shadow-md border border-white/60">
+                {(['chicken', 'beef', 'goat'] as const).map((meatType) => (
+                  <button
+                    key={meatType}
+                    onClick={() => {
+                      setActiveMeatType(meatType);
+                      setSelectedRecipe(null);
+                    }}
+                    className={`px-2.5 sm:px-5 py-1.5 sm:py-2 rounded-md font-extrabold text-[10px] sm:text-sm uppercase tracking-wider transition-all cursor-pointer ${
+                      activeMeatType === meatType
+                        ? 'bg-[#D62828] text-white shadow-md'
+                        : 'text-slate-700 hover:text-slate-950 hover:bg-slate-100'
+                    }`}
+                  >
+                    {meatType}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
