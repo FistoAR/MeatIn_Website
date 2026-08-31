@@ -24,6 +24,7 @@ export default function KnowYourMeatPage() {
   const [selectedPartIdx, setSelectedPartIdx] = useState(0);
   const [manuallySelectedPartIdx, setManuallySelectedPartIdx] = useState(0);
   const [activeViewTab, setActiveViewTab] = useState<"raw" | "packed">("raw");
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [isLandedInSection2, setIsLandedInSection2] = useState(false);
   const [hasSelectedAnyPart, setHasSelectedAnyPart] = useState(false);
   const [hoveredPart, setHoveredPart] = useState<string | null>(null);
@@ -4186,12 +4187,8 @@ export default function KnowYourMeatPage() {
 
               {/* Thumbnail 1: Raw Cut Part Image */}
               <button
-                onClick={() => setActiveViewTab("raw")}
-                className={`relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden p-2 transition-all duration-300 cursor-pointer detail-carousel-btn ${
-                  activeViewTab === "raw"
-                    ? "border-4 border-[#F2CE07] bg-amber-50 scale-105"
-                    : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
-                }`}
+                onClick={() => setLightboxImage(chickenParts[manuallySelectedPartIdx].img)}
+                className="relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden p-2 border-2 border-white/60 bg-white/20 hover:bg-white/40 hover:scale-105 transition-all duration-300 cursor-pointer detail-carousel-btn"
               >
                 <img
                   src={chickenParts[manuallySelectedPartIdx].img}
@@ -4202,12 +4199,8 @@ export default function KnowYourMeatPage() {
 
               {/* Thumbnail 2: Packed Product Image */}
               <button
-                onClick={() => setActiveViewTab("packed")}
-                className={`relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer detail-carousel-btn ${
-                  activeViewTab === "packed"
-                    ? "border-4 border-[#F2CE07] scale-105"
-                    : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
-                }`}
+                onClick={() => setLightboxImage("/Product/details/packedProduct.webp")}
+                className="relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden border-2 border-white/60 bg-white/20 hover:bg-white/40 hover:scale-105 transition-all duration-300 cursor-pointer detail-carousel-btn"
               >
                 <img
                   src="/Product/details/packedProduct.webp"
@@ -4512,93 +4505,6 @@ export default function KnowYourMeatPage() {
                 </div>
               </motion.div>
 
-              {/* Share buttons */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, x: 30, y: 10 },
-                  visible: {
-                    opacity: 1,
-                    x: 0,
-                    y: 0,
-                    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-                  },
-                }}
-                initial={isMobile ? { opacity: 0, y: 25 } : undefined}
-                whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-1.5 lg:space-y-2"
-              >
-                <h4 className="text-[14px] lg:text-[15px] font-medium text-slate-900 tracking-wider uppercase font-manrope">
-                  SHARE THIS PRODUCT
-                </h4>
-                <div className="flex gap-2">
-                  <motion.button
-                    whileHover={{
-                      scale: 1.04,
-                      y: -2,
-                      backgroundColor: "#0b4f20",
-                      boxShadow: "0 8px 20px rgba(18, 116, 49, 0.3)",
-                    }}
-                    whileTap={{ scale: 0.96 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex-1 bg-[#127431] text-white text-[13px] font-bold py-2 px-3 rounded-xl flex items-center justify-center gap-2 tracking-wider font-manrope cursor-pointer transition-colors shadow-sm detail-share-btn"
-                  >
-                    <div className="relative w-4 h-4 shrink-0">
-                      <Image
-                        src="/Footer/whatsapp.webp"
-                        alt="WhatsApp"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span>WhatsApp</span>
-                  </motion.button>
-                  <motion.button
-                    whileHover={{
-                      scale: 1.04,
-                      y: -2,
-                      backgroundColor: "#2d4373",
-                      boxShadow: "0 8px 20px rgba(59, 89, 152, 0.3)",
-                    }}
-                    whileTap={{ scale: 0.96 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex-1 bg-[#3B5998] text-white text-[13px] font-bold py-2 px-3 rounded-xl flex items-center justify-center gap-2 tracking-wider font-manrope cursor-pointer transition-colors shadow-sm detail-share-btn"
-                  >
-                    <div className="relative w-4 h-4 shrink-0">
-                      <Image
-                        src="/Product/details/facebook.svg"
-                        alt="Facebook"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span>Facebook</span>
-                  </motion.button>
-                  <motion.button
-                    whileHover={{
-                      scale: 1.04,
-                      y: -2,
-                      borderColor: "#127431",
-                      boxShadow: "0 8px 20px rgba(0, 0, 0, 0.08)",
-                    }}
-                    whileTap={{ scale: 0.96 }}
-                    transition={{ duration: 0.2 }}
-                    className="bg-white border border-slate-200 text-slate-700 text-[13px] font-bold py-2 px-3 rounded-xl flex items-center justify-center gap-2 tracking-wider font-manrope cursor-pointer transition-colors shadow-sm detail-share-btn"
-                  >
-                    <div className="relative w-4 h-4 shrink-0">
-                      <Image
-                        src="/Product/details/link.webp"
-                        alt="Link"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span>Copy Link</span>
-                  </motion.button>
-                </div>
-              </motion.div>
-
               {/* Cooking recipe card */}
               <Link href="/recipes" className="block w-full">
                 <motion.div
@@ -4620,7 +4526,7 @@ export default function KnowYourMeatPage() {
                     borderColor: "#D62828",
                   }}
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                  className="group border border-slate-200/80 bg-[#FAF0F0] rounded-2xl overflow-hidden shadow-sm relative flex gap-0 items-stretch detail-cooking-card cursor-pointer"
+                  className="group border border-slate-200/80 bg-[#FAF0F0] rounded-2xl overflow-hidden shadow-sm relative flex gap-0 items-stretch detail-cooking-card cursor-pointer mt-3"
                 >
                   {/* Left - Square image */}
                   <div className="relative w-[130px] lg:w-[150px] shrink-0 detail-cooking-img overflow-hidden">
@@ -5186,6 +5092,48 @@ export default function KnowYourMeatPage() {
           />
         </motion.div>
       )}
+
+      {/* Fullscreen Lightbox Modal */}
+      <AnimatePresence>
+        {lightboxImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightboxImage(null)}
+            className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setLightboxImage(null)}
+              className="absolute top-5 right-5 text-white/80 hover:text-white hover:scale-115 active:scale-95 transition-all w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/25 rounded-full cursor-pointer"
+              aria-label="Close Fullscreen View"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 100, damping: 15 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-[90vw] max-h-[85vh] flex items-center justify-center"
+            >
+              <img
+                src={lightboxImage}
+                alt="Product Fullscreen Preview"
+                className={`object-contain rounded-2xl select-none filter drop-shadow-2xl ${
+                  lightboxImage.includes("packedProduct")
+                    ? "max-w-full max-h-[85vh]"
+                    : "w-[80vw] max-w-[500px] sm:max-w-[650px] md:max-w-[750px] lg:max-w-[850px] max-h-[85vh]"
+                }`}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
