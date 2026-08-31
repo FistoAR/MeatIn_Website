@@ -262,7 +262,7 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.8 }}
-            className="text-center flex flex-col items-center mb-16"
+            className="text-center flex flex-col items-center mb-4 lg:mb-16"
           >
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="h-[1.5px] w-8 sm:w-12 bg-white" />

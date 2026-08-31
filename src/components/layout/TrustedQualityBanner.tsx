@@ -23,7 +23,7 @@ const staggerContainer = {
 
 export default function TrustedQualityBanner() {
   return (
-    <div className="w-full bg-[#DCDBDB] relative overflow-hidden py-10 md:py-16">
+    <div className="w-full bg-[#DCDBDB] relative overflow-hidden py-6 md:py-10">
       {/* Outer Background Pattern */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <Image
@@ -43,7 +43,7 @@ export default function TrustedQualityBanner() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="w-full bg-white rounded-[24px] shadow-md border border-[#E5EAE1] overflow-hidden relative z-10"
         >
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-1 xl:pt-7">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-1 xl:pt-3">
           
           {/* Left Column: Text content */}
           <motion.div 
@@ -85,13 +85,13 @@ export default function TrustedQualityBanner() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, margin: "-50px" }}
             transition={{ type: "spring", stiffness: 60, damping: 14 }}
-            className="relative md:col-span-6 lg:col-span-7 w-full h-[210px] sm:h-[250px] md:h-[280px] lg:h-[320px] z-0"
+            className="relative w-full aspect-[12/5] sm:aspect-[12/4.5] lg:aspect-auto lg:h-[320px] lg:self-end z-0"
           >
             <Image
               src="/TrustedQualityBanner/trusted-quality-banner-image.webp"
               alt="Trusted Quality background and products"
               fill
-              className="object-cover md:object-contain object-right-bottom md:object-contain md:object-right-bottom"
+              className="object-contain object-right-bottom"
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
             />
