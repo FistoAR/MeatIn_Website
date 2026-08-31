@@ -91,7 +91,7 @@ export const Navbar: React.FC = () => {
           {/* Enquiry Button (Desktop) & Hamburger Menu (Mobile/Tablet) */}
           <div className="flex items-center gap-3 lg:gap-[1vw]">
             <Link
-              href="/enquiry"
+              href="/contact"
               className="hidden sm:inline-block bg-[#D62828] hover:bg-red-700 text-white font-bold font-inter text-xs lg:text-[0.7vw] xl:text-[0.75vw] px-4 lg:px-[1.2vw] py-2.5 lg:py-[0.6vw] rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95"
             >
               Enquiry Now
@@ -159,7 +159,7 @@ export const Navbar: React.FC = () => {
           })}
           <div className="pt-4 sm:hidden">
             <Link
-              href="/enquiry"
+              href="/contact"
               onClick={() => setMobileMenuOpen(false)}
               className="block w-full text-center bg-[#D62828] hover:bg-red-700 text-white font-bold font-inter text-xs py-3 rounded-xl uppercase tracking-wider transition-all"
             >

@@ -23,15 +23,27 @@ const staggerContainer = {
 
 export default function TrustedQualityBanner() {
   return (
-    <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: false, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="w-full bg-white rounded-[24px] shadow-md border border-[#E5EAE1] overflow-hidden"
-      >
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-1 xl:pt-7">
+    <div className="w-full bg-[#DCDBDB] relative overflow-hidden py-10 md:py-16">
+      {/* Outer Background Pattern */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <Image
+          src="/Home/gray-bg-image.webp"
+          alt="Outer background"
+          fill
+          className="object-cover opacity-[0.8]"
+          priority
+        />
+      </div>
+
+      <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="w-full bg-white rounded-[24px] shadow-md border border-[#E5EAE1] overflow-hidden relative z-10"
+        >
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-1 xl:pt-7">
           
           {/* Left Column: Text content */}
           <motion.div 
@@ -87,6 +99,7 @@ export default function TrustedQualityBanner() {
 
         </div>
       </motion.div>
+      </div>
     </div>
   );
 }

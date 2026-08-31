@@ -221,7 +221,7 @@ export default function HomePage() {
       </section>
 
       {/* 2. SECOND SECTION (TRUCK LOGISTICS) */}
-      <section className="relative w-full bg-[#EBF6E4] pt-8 pb-14 sm:pt-16 sm:pb-28 overflow-hidden flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/Home/section-bg.webp')" }}>
+      <section className="relative w-full bg-[#EBF6E4] pt-8 pb-14 sm:pt-16 sm:pb-28 overflow-hidden flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/Home/truck-section/truck-section-bg.webp')" }}>
         {/* Single Full Image Container with scroll-driven slide-in */}
         <motion.div 
           initial={{ x: "50%", opacity: 0.7 }}
@@ -249,7 +249,7 @@ export default function HomePage() {
 
       {/* 3. BRAND STORY / TIMELINE SECTION */}
       <section
-        className="relative w-full pt-20 pb-28 bg-[#61870d] text-white overflow-hidden bg-cover bg-center bg-no-repeat"
+        className="relative w-full pt-10 pb-10 bg-[#61870d] text-white overflow-hidden bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/Home/section-bg.webp')" }}
       >
 
@@ -285,7 +285,7 @@ export default function HomePage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, margin: "-50px" }}
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6 xl:gap-4 items-stretch pt-8 pb-10"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6 xl:gap-4 items-stretch pt-8 pb-2"
           >
             {storySteps.map((step, idx) => {
               return (
@@ -335,7 +335,17 @@ export default function HomePage() {
       </section>
 
       {/* 3. CERTIFIED EXCELLENCE SECTION */}
-      <section ref={certSectionRef} className="relative w-full py-16 lg:py-24 overflow-hidden">
+      <section ref={certSectionRef} className="relative w-full py-16 lg:py-11 overflow-hidden">
+        {/* Section Background Image */}
+        <div className="absolute inset-0 pointer-events-none z-0 bg-[#DCDBDB]">
+          <Image
+            src="/Home/gray-bg-image.webp"
+            alt="Section background"
+            fill
+            className="object-cover opacity-[0.8]"
+            priority
+          />
+        </div>
 
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Creative vertical green truck graphics on left side gutter */}
@@ -359,7 +369,7 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.8 }}
-            className="text-center flex flex-col items-center mb-24"
+            className="text-center flex flex-col items-center mb-20"
           >
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="h-[1.5px] w-8 sm:w-12 bg-[#D4A437]" />
