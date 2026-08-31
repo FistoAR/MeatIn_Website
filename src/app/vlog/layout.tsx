@@ -1,0 +1,10 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Vlog - Coming Soon | MEATIn',
+  description: 'This page is coming soon. Stay tuned for MEATIn Vlog!',
+};
+
+export default function VlogLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
+}
