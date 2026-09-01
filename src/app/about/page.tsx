@@ -234,11 +234,11 @@ export default function AboutUsPage() {
               className="object-cover object-[30%_center] sm:object-left"
             />
             {/* Horizontal fade gradient on desktop to blend the image's left edge into the solid black background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/65 to-transparent hidden lg:block" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 via-[12%] to-transparent hidden lg:block" />
           </div>
 
           {/* Vignette and dark overlays for mobile / bottom fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-t from-black via-black/95 to-transparent hidden lg:block" />
+          <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-t from-black via-black/85 via-40% to-transparent hidden lg:block" />
           <div className="absolute inset-0 bg-black/55 lg:hidden" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/95 lg:hidden" />
         </div>
@@ -254,7 +254,7 @@ export default function AboutUsPage() {
             <h2 className="text-[#D4A437] font-extrabold font-manrope tracking-widest text-sm sm:text-md uppercase flex items-center gap-2">
               <span className="w-6 h-[2px] bg-[#D4A437]" /> WHAT IS MEATIN?
             </h2>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[6.2vw] xl:text-[6.5vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[5.6vw] xl:text-[5.8vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
               <span className="text-white block">WE ENGINEER</span>
               <span className="text-[#8CC63F] block">QUALITY INTO</span>
               <span className="text-white block">EVERY CUT.</span>
@@ -308,7 +308,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* 3. WHO IS MEATIN SECTION */}
-      <section className="relative w-full py-14 md:py-18 bg-[#F3F3F3] overflow-hidden">
+      <section className="relative w-full bg-[#F3F3F3] overflow-hidden">
         {/* Background pattern image */}
         <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.8]">
           <Image
@@ -322,16 +322,16 @@ export default function AboutUsPage() {
           {/* <div className="absolute inset-0 bg-[#F3F3F3]/90" /> */}
         </div>
 
-        <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div className="w-full relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
 
-            {/* Left Side: Plant Image */}
+            {/* Left Side: Plant Video (Docked Flush Left - Exactly 50%) */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-6 relative w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[475px] xl:h-[600px] 2xl:h-[680px] shadow-xl"
+              className="relative w-full h-full min-h-[300px] sm:min-h-[360px] lg:min-h-[460px] xl:min-h-[500px] overflow-hidden"
             >
               <video
                 ref={videoRef}
@@ -342,13 +342,13 @@ export default function AboutUsPage() {
               />
             </motion.div>
 
-            {/* Right Side: Description */}
+            {/* Right Side: Description (Right 50% Column with comfortable padding) */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="lg:col-span-6 space-y-6"
+              className="space-y-4 sm:space-y-5 px-6 sm:px-10 lg:px-12 xl:px-16 2xl:px-24 py-6 sm:py-7 lg:py-10 xl:py-12"
             >
               <div className="space-y-2">
                 <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4vw] xl:text-[4.5vw] 2xl:text-[5.5rem] font-bold font-barlow-condensed tracking-normal uppercase leading-none">
@@ -359,7 +359,7 @@ export default function AboutUsPage() {
               </div>
 
               <div className="space-y-4">
-                <h3 className="text-lg sm:text-xl font-bold text-[#153520]">Building a better meat ecosystem.</h3>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#153520]">Building a better meat ecosystem.</h3>
                 <p className="text-xs sm:text-sm lg:text-[13px] xl:text-sm 2xl:text-base text-slate-700 font-medium leading-relaxed max-w-[600px]">
                   MEATIN delivers safe, hygienic meat through scientific processing and controlled cold-chain systems. Built on quality, safety, and Halal-certified standards, our integrated approach ensures reliable production and distribution. From responsible sourcing to advanced infrastructure, we are building a better meat ecosystem.
                 </p>
@@ -528,10 +528,10 @@ export default function AboutUsPage() {
               </motion.div>
               <motion.p
                 variants={slideInLeft}
-                style={{ lineHeight: '1.5' }}
-                className="text-lg sm:text-xl lg:text-xl xl:text-[21px] text-black font-normal max-w-xl lg:max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%] relative z-10 font-manrope tracking-tight"
+                style={{ lineHeight: '1.4' }}
+                className="text-lg sm:text-xl lg:text-xl xl:text-[22px] text-black font-normal max-w-xl lg:max-w-[460px] xl:max-w-[500px] relative z-10 font-manrope tracking-tight"
               >
-                Build value-added meat products, farming and food supply chains while delivering <span className="text-[#B71C1C] font-semibold">quality, service</span> and a <span className="text-[#B71C1C] font-semibold">sustainable</span> food system.
+                Build value-added meat products, farming<br className="hidden sm:inline" /> and food supply chains while delivering<br className="hidden sm:inline" /> <span className="text-[#B71C1C] font-semibold">quality, service</span> and a <span className="text-[#B71C1C] font-semibold">sustainable</span> food system.
               </motion.p>
             </motion.div>
           </motion.div>
@@ -596,10 +596,10 @@ export default function AboutUsPage() {
               </motion.div>
               <motion.p
                 variants={slideInRight}
-                style={{ lineHeight: '1.5' }}
-                className="text-lg sm:text-xl lg:text-xl xl:text-[21px] text-white font-normal max-w-xl lg:max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%] relative z-10 font-manrope tracking-tight"
+                style={{ lineHeight: '1.4' }}
+                className="text-lg sm:text-xl lg:text-xl xl:text-[22px] text-white font-normal max-w-xl lg:max-w-[480px] xl:max-w-[520px] relative z-10 font-manrope tracking-tight"
               >
-                Become a leader in <span className="text-[#8CC63F] font-semibold">value-added</span> meat processing and a trusted premium-quality food supplier.
+                Become a leader in <span className="text-[#8CC63F] font-semibold">value-added</span> meat<br className="hidden sm:inline" /> processing and a trusted premium-quality<br className="hidden sm:inline" /> food supplier.
               </motion.p>
             </motion.div>
           </motion.div>
