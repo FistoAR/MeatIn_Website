@@ -1716,35 +1716,80 @@ export default function RecipesPage() {
     return () => clearInterval(timer);
   }, []);
 
+  // Read URL query parameters to auto-open recipe details when redirected from Know Your Meat
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const recipeId = params.get("recipeId");
+    const title = params.get("title");
+    const part = params.get("part");
+
+    if (recipeId || title || part) {
+      let found: RecipeItem | undefined;
+
+      // 1. Search by exact recipeId
+      if (recipeId) {
+        for (const key of Object.keys(recipesDatabase)) {
+          found = recipesDatabase[key].find((r) => r.id === recipeId);
+          if (found) break;
+        }
+      }
+
+      // 2. Search by title match if not found by id
+      if (!found && title) {
+        const decodedTitle = decodeURIComponent(title).toLowerCase();
+        for (const key of Object.keys(recipesDatabase)) {
+          found = recipesDatabase[key].find(
+            (r) => r.title.toLowerCase() === decodedTitle
+          );
+          if (found) break;
+        }
+      }
+
+      // 3. Fallback to first recipe of part
+      if (!found && part) {
+        const partRecipes = recipesDatabase[part.toLowerCase()];
+        if (partRecipes && partRecipes.length > 0) {
+          found = partRecipes[0];
+        }
+      }
+
+      if (found) {
+        setSelectedRecipe(found);
+        const partIdx = chickenPartsList.findIndex(
+          (p) => p.id === found?.part.toLowerCase()
+        );
+        if (partIdx !== -1) {
+          setHighlightedPartIdx(partIdx);
+        }
+      }
+    }
+  }, []);
+
   // Auto-scroll to recipe detail view when a recipe is selected
   useEffect(() => {
     if (selectedRecipe) {
       const scrollExact = () => {
         const detailEl = document.getElementById("recipe-detail-section");
         if (detailEl) {
-          let absoluteTop = 0;
-          let curr: HTMLElement | null = detailEl;
-          while (curr) {
-            absoluteTop += curr.offsetTop;
-            curr = curr.offsetParent as HTMLElement | null;
-          }
-
-          const navOffset = 110;
-          const targetY = Math.max(0, absoluteTop - navOffset);
+          const rect = detailEl.getBoundingClientRect();
+          const navOffset = 100;
+          const targetY = Math.max(0, rect.top + window.scrollY - navOffset);
           window.scrollTo({
             top: targetY,
             behavior: "smooth",
           });
-        } else {
-          window.scrollTo({ top: 280, behavior: "smooth" });
         }
       };
 
-      scrollExact();
-      const t1 = setTimeout(scrollExact, 50);
+      const t0 = requestAnimationFrame(scrollExact);
+      const t1 = setTimeout(scrollExact, 150);
+      const t2 = setTimeout(scrollExact, 400);
 
       return () => {
+        cancelAnimationFrame(t0);
         clearTimeout(t1);
+        clearTimeout(t2);
       };
     }
   }, [selectedRecipe]);
@@ -1753,6 +1798,9 @@ export default function RecipesPage() {
   const handlePartClick = (partId: string) => {
     setActiveFilter("all");
     setSelectedRecipe(null);
+    if (typeof window !== "undefined") {
+      window.history.replaceState({}, "", "/recipes");
+    }
     setTimeout(() => {
       const el = document.getElementById(`part-section-${partId}`);
       if (el) {
@@ -1798,55 +1846,85 @@ export default function RecipesPage() {
             </div>
           </div>
 
-          {/* 10 Chicken Parts Selector Bar - Clean Rounded White Circles with Auto Yellow Highlight */}
+          {/* 10 Chicken Parts Selector Bar - Clean Rounded White Circles with Part Name Below */}
           <div className="pt-4">
-            <div className="flex flex-wrap items-center justify-center px-2 sm:px-10 md:px-20 gap-2 sm:gap-4 pb-6 pt-2 select-none">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+            <div className="flex flex-wrap items-center justify-center px-2 sm:px-10 md:px-20 gap-3 sm:gap-6 md:gap-7 pb-6 pt-2 select-none">
+              {/* ALL Filter Button */}
+              <div
                 onClick={() => {
                   setActiveFilter("all");
                   setSelectedRecipe(null);
+                  if (typeof window !== "undefined") {
+                    window.history.replaceState({}, "", "/recipes");
+                  }
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className={`w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center font-extrabold text-[11px] sm:text-sm md:text-base tracking-wider transition-all shrink-0 cursor-pointer text-white shadow-lg ${
-                  activeFilter === "all" && !selectedRecipe
-                    ? "bg-white/35 backdrop-blur-xl border-2 border-white ring-4 ring-white/50 scale-105 shadow-2xl"
-                    : "bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30"
-                }`}
+                className="flex flex-col items-center gap-2.5 sm:gap-3.5 mt-1 cursor-pointer group shrink-0"
               >
-                ALL
-              </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center font-extrabold text-[11px] sm:text-sm md:text-base tracking-wider transition-all shrink-0 cursor-pointer text-white shadow-lg ${
+                    activeFilter === "all" && !selectedRecipe
+                      ? "bg-white/35 backdrop-blur-xl border-2 border-white ring-4 ring-white/50 scale-105 shadow-2xl"
+                      : "bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30"
+                  }`}
+                >
+                  ALL
+                </motion.button>
+                <span
+                  className={`text-[11px] sm:text-[13px] md:text-[14px] font-extrabold tracking-wider uppercase font-manrope transition-colors ${
+                    activeFilter === "all" && !selectedRecipe
+                      ? "text-[#E1C609] font-black drop-shadow-sm"
+                      : "text-white/90 group-hover:text-[#E1C609]"
+                  }`}
+                >
+                  ALL
+                </span>
+              </div>
 
               {chickenPartsList.map((part, index) => {
                 const isAutoHighlighted = highlightedPartIdx === index;
                 const isSelected = activeFilter === part.id;
 
                 return (
-                  <motion.button
+                  <div
                     key={part.id}
-                    whileHover={{ scale: 1.15 }}
-                    whileTap={{ scale: 0.92 }}
                     onClick={() => {
                       setHighlightedPartIdx(index);
                       handlePartClick(part.id);
                     }}
-                    className={`relative w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center p-1 sm:p-2 shrink-0 cursor-pointer transition-all duration-500 shadow-md ${
-                      isAutoHighlighted || isSelected
-                        ? "ring-4 ring-[#E1C609] bg-[#FFFDE7] scale-110 shadow-[0_0_20px_rgba(225,198,9,0.7)]"
-                        : "border border-white/60 hover:scale-105"
-                    }`}
-                    title={part.name}
+                    className="flex flex-col items-center gap-2.5 sm:gap-3.5 mt-1 cursor-pointer group shrink-0"
                   >
-                    <div className="relative w-full h-full">
-                      <Image
-                        src={part.img}
-                        alt={part.name}
-                        fill
-                        className="object-contain p-0.5"
-                      />
-                    </div>
-                  </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.12 }}
+                      whileTap={{ scale: 0.92 }}
+                      className={`relative w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center p-1 sm:p-2 shrink-0 cursor-pointer transition-all duration-500 shadow-md ${
+                        isAutoHighlighted || isSelected
+                          ? "ring-4 ring-[#E1C609] bg-[#FFFDE7] scale-110 shadow-[0_0_20px_rgba(225,198,9,0.7)]"
+                          : "border border-white/60 hover:scale-105"
+                      }`}
+                      title={part.name}
+                    >
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={part.img}
+                          alt={part.name}
+                          fill
+                          className="object-contain p-0.5"
+                        />
+                      </div>
+                    </motion.button>
+                    <span
+                      className={`text-[11px] sm:text-[13px] md:text-[14px] font-extrabold tracking-wider uppercase font-manrope transition-colors ${
+                        isAutoHighlighted || isSelected
+                          ? "text-[#E1C609] drop-shadow-sm font-black"
+                          : "text-white/90 group-hover:text-[#E1C609]"
+                      }`}
+                    >
+                      {part.name}
+                    </span>
+                  </div>
                 );
               })}
             </div>
@@ -1855,18 +1933,28 @@ export default function RecipesPage() {
       </section>
 
       {/* Main Interactive Content Area */}
-      <main className="relative z-20 flex-1 w-full px-[2vw] py-6 sm:py-10">
-        {!selectedRecipe ? (
-          /* ========================================================= */
-          /* VIEW 1: ALL CHICKEN PARTS LISTED ONE BY ONE VERTICALLY    */
-          /* ========================================================= */
-          <motion.div
-            key="all-parts-vertical-list"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-12 sm:space-y-16"
-          >
+      <main className="relative z-20 flex-1 w-full px-[2vw] py-6 sm:py-10 overflow-hidden">
+        <AnimatePresence mode="wait">
+          {!selectedRecipe ? (
+            /* ========================================================= */
+            /* VIEW 1: ALL CHICKEN PARTS LISTED ONE BY ONE VERTICALLY    */
+            /* ========================================================= */
+            <motion.div
+              key="all-parts-vertical-list"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="space-y-12 sm:space-y-16 relative"
+            >
+              {/* Background Doodle Pattern Overlay (View 1 Only) */}
+              <div
+                className="absolute inset-0 pointer-events-none bg-repeat z-0 opacity-50 filter brightness-0"
+                style={{
+                  backgroundImage: 'url("/Product/Chicken/doodle.webp")',
+                  backgroundSize: "800px",
+                }}
+              />
             {partsToDisplay.map((part) => {
               const recipes = recipesDatabase[part.id] || [];
               return (
@@ -1881,7 +1969,7 @@ export default function RecipesPage() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.4 }}
-                    className="flex items-center justify-between pb-2"
+                    className="flex items-center justify-between pb-2 max-w-[1550px] mx-auto"
                   >
                     <div className="flex items-center gap-2.5 sm:gap-3">
                       <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white border border-slate-200/80 p-2 sm:p-2.5 flex items-center justify-center shadow-md shrink-0">
@@ -1906,7 +1994,7 @@ export default function RecipesPage() {
                   </motion.div>
 
                   {/* 4 Recipe Cards Grid for this part */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-[1550px] mx-auto">
                     {recipes.map((recipe, idx) => (
                       <motion.div
                         key={recipe.id}
@@ -1918,8 +2006,17 @@ export default function RecipesPage() {
                           y: -8,
                           boxShadow: "0 20px 35px -5px rgba(0, 0, 0, 0.25)",
                         }}
-                        onClick={() => setSelectedRecipe(recipe)}
-                        className="relative aspect-[3/3.5] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-4 sm:p-5 select-none recipe-card-box cursor-pointer border border-slate-200/40"
+                        onClick={() => {
+                          setSelectedRecipe(recipe);
+                          if (typeof window !== "undefined") {
+                            window.history.replaceState(
+                              {},
+                              "",
+                              `/recipes?part=${recipe.part.toLowerCase()}&recipeId=${recipe.id}&title=${encodeURIComponent(recipe.title)}`
+                            );
+                          }
+                        }}
+                        className="relative aspect-[3/4.2] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-5 select-none recipe-card-box cursor-pointer border border-slate-200/40"
                       >
                         {/* Top Left Red Category Tag */}
                         <span className="absolute top-4 left-4 z-20 bg-[#D62828] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
@@ -1935,10 +2032,10 @@ export default function RecipesPage() {
                         />
 
                         {/* Dark Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-0" />
+                        <div className="absolute bottom-0 left-0 right-0 h-[80%] z-10 bg-gradient-to-t from-black/95 via-black/80 to-transparent pointer-events-none" />
 
                         {/* Card Content */}
-                        <div className="relative z-10 space-y-2.5 font-inter">
+                        <div className="relative z-10 space-y-3 font-inter">
                           {/* Recipe Title */}
                           <h3 className="text-2xl font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight group-hover:text-[#E1C609] transition-colors">
                             {recipe.title}
@@ -1949,18 +2046,46 @@ export default function RecipesPage() {
                             {recipe.desc}
                           </p>
 
-                          {/* Specs Row */}
-                          <div className="flex items-center gap-3 text-[11px] font-bold text-slate-300 font-manrope pt-1 border-t border-white/15">
-                            <span>🍳 {recipe.diff}</span>
-                            <span>•</span>
-                            <span>⏱️ {recipe.time}</span>
-                            <span>•</span>
-                            <span>👥 {recipe.servings}</span>
+                          {/* Spec Row (Easy, Time, Servings) */}
+                          <div className="flex items-center gap-3 text-[12px] font-bold text-slate-300 font-manrope recipe-card-spec">
+                            <div className="flex items-center gap-1.5">
+                              <div className="relative w-4 h-4 shrink-0">
+                                <img
+                                  src="/Product/recipies/easy.svg"
+                                  alt="Difficulty"
+                                  className="w-full h-full object-contain"
+                                />
+                              </div>
+                              <span>{recipe.diff}</span>
+                            </div>
+
+                            <div className="flex items-center gap-1.5">
+                              <div className="relative w-5 h-5 shrink-0">
+                                <img
+                                  src="/Product/recipies/time.svg"
+                                  alt="Time"
+                                  className="w-full h-full object-contain"
+                                />
+                              </div>
+                              <span>{recipe.time}</span>
+                            </div>
+
+                            <div className="flex items-center gap-1.5">
+                              <div className="relative w-5 h-5 shrink-0">
+                                <Image
+                                  src="/Product/recipies/servings.png"
+                                  alt="Servings"
+                                  fill
+                                  className="object-contain"
+                                />
+                              </div>
+                              <span>{recipe.servings}</span>
+                            </div>
                           </div>
 
                           {/* Action Button */}
-                          <button className="w-full bg-[#87B71D] hover:bg-[#729e16] text-slate-950 font-bold text-xs uppercase tracking-wider py-2.5 px-4 rounded-xl transition-colors cursor-pointer font-inter shadow-md mt-1">
-                            VIEW RECIPE & STEPS →
+                          <button className="w-full bg-[#82B224] hover:bg-[#6C971B] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
+                            <span>VIEW RECIPE & STEPS →</span>
                           </button>
                         </div>
                       </motion.div>
@@ -1999,15 +2124,6 @@ export default function RecipesPage() {
                 alt="Decorative Spices"
                 width={200}
                 height={200}
-                className="w-full h-auto object-contain"
-              />
-            </div>
-            <div className="absolute top-[10%] right-[25%] z-0 pointer-events-none opacity-75 sm:opacity-65 w-[440px] sm:w-[780px]">
-              <Image
-                src="/Recipies/doodle.webp"
-                alt="Decorative Recipe Doodle"
-                width={620}
-                height={620}
                 className="w-full h-auto object-contain"
               />
             </div>
@@ -2060,7 +2176,12 @@ export default function RecipesPage() {
                       <div className="flex items-center gap-3">
                         {/* BACK Button inside Recipe Detail Section */}
                         <button
-                          onClick={() => setSelectedRecipe(null)}
+                          onClick={() => {
+                            setSelectedRecipe(null);
+                            if (typeof window !== "undefined") {
+                              window.history.replaceState({}, "", "/recipes");
+                            }
+                          }}
                           className="bg-[#D62828] hover:bg-red-700 text-white font-bold text-sm uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                         >
                           <span>←</span>
@@ -2261,6 +2382,7 @@ export default function RecipesPage() {
             </section>
           </motion.div>
         )}
+        </AnimatePresence>
       </main>
     </div>
   );

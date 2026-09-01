@@ -23,9 +23,9 @@ export default function KnowYourMeatPage() {
   >("chicken");
   const [selectedPartIdx, setSelectedPartIdx] = useState(0);
   const [manuallySelectedPartIdx, setManuallySelectedPartIdx] = useState(0);
-  const [activeViewTab, setActiveViewTab] = useState<
-    "raw" | "packed" | "3d"
-  >("raw");
+  const [activeViewTab, setActiveViewTab] = useState<"raw" | "packed" | "3d">(
+    "raw",
+  );
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [isLandedInSection2, setIsLandedInSection2] = useState(false);
   const [hasSelectedAnyPart, setHasSelectedAnyPart] = useState(false);
@@ -56,10 +56,14 @@ export default function KnowYourMeatPage() {
     window.addEventListener("resize", handleResize);
 
     // Dynamically load Google <model-viewer> web component script for 360 GLB models
-    if (typeof window !== "undefined" && !document.querySelector('script[src*="model-viewer"]')) {
+    if (
+      typeof window !== "undefined" &&
+      !document.querySelector('script[src*="model-viewer"]')
+    ) {
       const script = document.createElement("script");
       script.type = "module";
-      script.src = "https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js";
+      script.src =
+        "https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js";
       document.head.appendChild(script);
     }
 
@@ -3959,7 +3963,159 @@ export default function KnowYourMeatPage() {
         </div>
       </div>
 
-      {/* 2. Interactive Details Section - Only shown when activeMeatType === "chicken" */}
+      {/* 2. Categories Section */}
+      <section className="bg-[#EBFFE6] rounded-t-[60px] pt-10 pb-6 relative z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] transition-all duration-500 recipe-bottom-banner overflow-visible mt-12 md:mt-16">
+        <div className="px-6 md:px-16 relative flex flex-col md:flex-row gap-6 md:gap-8 items-center max-w-[1400px] mx-auto">
+          {/* Overlapping Mascot on the left */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, x: -40 }}
+            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="w-[180px] h-[270px] md:w-[220px] md:h-[330px] relative -mt-20 md:-mt-28 shrink-0 pointer-events-none drop-shadow-lg"
+          >
+            <Image
+              src="/Product/Chicken/Banner/image 282.webp"
+              alt="Chicken Mascot"
+              fill
+              className="object-contain"
+            />
+          </motion.div>
+
+          {/* Heading and Categories grid */}
+          <div className="flex-1 space-y-6 flex flex-col items-center w-full">
+            <div className="space-y-2 text-center w-full">
+              {/* CATEGORIES Typewriter Title */}
+              <motion.h3
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, amount: 0.3 }}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.05,
+                    },
+                  },
+                }}
+                className="text-4xl md:text-5xl font-bold text-[#127431] font-barlow-condensed tracking-widest uppercase inline-flex justify-center select-none"
+              >
+                {"CATEGORIES".split("").map((char, charIdx) => (
+                  <motion.span
+                    key={charIdx}
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.5, y: -10 },
+                      visible: { opacity: 1, scale: 1, y: 0 },
+                    }}
+                    transition={{ duration: 0.08, ease: "easeOut" }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </motion.h3>
+
+              {/* Red Line expand from center */}
+              <motion.div
+                initial={{ scaleX: 0, opacity: 0 }}
+                whileInView={{ scaleX: 1, opacity: 1 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
+                className="w-32 h-[2.5px] bg-[#D62828] mx-auto mt-3 mb-1 origin-center"
+              />
+
+              {/* Subtitle Typewriter Text */}
+              <motion.p
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, amount: 0.3 }}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.03,
+                      delayChildren: 0.25,
+                    },
+                  },
+                }}
+                className="text-[15px] font-normal text-slate-500 tracking-wider font-inter inline-flex flex-wrap justify-center select-none"
+              >
+                {"Premium quality meat, delivery fresh to your life."
+                  .split("")
+                  .map((char, charIdx) => (
+                    <motion.span
+                      key={charIdx}
+                      variants={{
+                        hidden: { opacity: 0, y: 4 },
+                        visible: { opacity: 1, y: 0 },
+                      }}
+                      transition={{ duration: 0.04 }}
+                    >
+                      {char === " " ? "\u00A0" : char}
+                    </motion.span>
+                  ))}
+              </motion.p>
+            </div>
+
+            {/* Category Circular Badges */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.1 },
+                },
+              }}
+              className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:items-center sm:justify-around items-center justify-items-center gap-y-6 gap-x-4 sm:gap-0 px-4 sm:px-8 w-full"
+            >
+              {categories.map((cat, idx) => (
+                <React.Fragment key={idx}>
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.7, y: 25 },
+                      visible: {
+                        opacity: 1,
+                        scale: 1,
+                        y: 0,
+                        transition: { duration: 0.5, ease: "easeOut" },
+                      },
+                    }}
+                  >
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-20 h-20 rounded-full border-[5px] border-[#CCCCCC] bg-white flex items-center justify-center shadow-md shadow-slate-200/50 transition-all duration-300 hover:scale-105 hover:border-[#82B224]">
+                        <div className="w-[68px] h-[68px] rounded-full bg-[#82B224] border-2 border-white flex items-center justify-center">
+                          <div className="relative w-12 h-12">
+                            <Image
+                              src={cat.icon}
+                              alt={cat.name}
+                              fill
+                              sizes="36px"
+                              className="object-contain filter brightness-0 invert"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <span className="text-[14px] font-black text-slate-800 tracking-wider uppercase transition-colors">
+                        {cat.name}
+                      </span>
+                    </div>
+                  </motion.div>
+
+                  {idx < categories.length - 1 && (
+                    <div className="hidden sm:block w-[1px] h-10 bg-slate-300/60 self-start mt-5 shrink-0" />
+                  )}
+                </React.Fragment>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Interactive Details Section - Only shown when activeMeatType === "chicken" */}
       <section
         ref={detailsSectionRef}
         className={`relative z-30 w-full h-screen min-h-screen max-h-screen pt-[130px] md:pt-[135px] lg:pt-[140px] pb-4 flex items-center justify-center m-0 overflow-y-auto md:overflow-hidden transition-all duration-700 detail-section-wrap ${
@@ -4127,13 +4283,13 @@ export default function KnowYourMeatPage() {
           {/* Left Column (50% flex) - Green panel area with centered preview & bottom carousel */}
           <motion.div
             key={`detail-left-${manuallySelectedPartIdx}`}
-            initial={{ opacity: 0, x: -50, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="w-full md:w-1/2 relative h-auto md:h-full flex flex-col items-center justify-around py-4 md:py-8 px-6 select-none"
           >
             {/* Center Showcase Box */}
-            <div className="relative w-[280px] h-[280px] md:w-[420px] md:h-[420px] max-h-[65vh] flex items-center justify-center md:-ml-20 detail-showcase-box">
+            <div className="relative w-[430px] h-[430px] sm:w-[480px] sm:h-[480px] md:w-[420px] md:h-[420px] max-h-[65vh] flex items-center justify-center md:-ml-20 detail-showcase-box">
               {/* Showcase Box Content: Interactive 3D Model Viewer OR 2D Product Image */}
               <div
                 ref={centerCircleRef}
@@ -4147,8 +4303,9 @@ export default function KnowYourMeatPage() {
                       {/* @ts-ignore */}
                       <model-viewer
                         src={
-                          partGlbMap[chickenParts[manuallySelectedPartIdx].name] ||
-                          "/Product/details/partsGLB/full chicken.glb"
+                          partGlbMap[
+                            chickenParts[manuallySelectedPartIdx].name
+                          ] || "/Product/details/partsGLB/full chicken.glb"
                         }
                         alt={`360 3D Model of ${chickenParts[manuallySelectedPartIdx].name}`}
                         auto-rotate
@@ -4184,7 +4341,11 @@ export default function KnowYourMeatPage() {
                           : "/Product/details/packedProduct.webp"
                       }
                       alt={chickenParts[manuallySelectedPartIdx].name}
-                      className="w-full h-full object-contain filter drop-shadow-2xl"
+                      className={`w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-300 ${
+                        activeViewTab === "raw"
+                          ? "scale-[7] sm:scale-[2.8] md:scale-100"
+                          : "scale-[1.3] md:scale-100"
+                      }`}
                     />
                   </div>
                 )}
@@ -4225,7 +4386,9 @@ export default function KnowYourMeatPage() {
 
               {/* Thumbnail 1: Raw Cut Part Image */}
               <button
-                onClick={() => setLightboxImage(chickenParts[manuallySelectedPartIdx].img)}
+                onClick={() =>
+                  setLightboxImage(chickenParts[manuallySelectedPartIdx].img)
+                }
                 className="relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden p-2 border-2 border-white/60 bg-white/20 hover:bg-white/40 hover:scale-105 transition-all duration-300 cursor-pointer detail-carousel-btn"
               >
                 <img
@@ -4237,7 +4400,9 @@ export default function KnowYourMeatPage() {
 
               {/* Thumbnail 2: Packed Product Image */}
               <button
-                onClick={() => setLightboxImage("/Product/details/packedProduct.webp")}
+                onClick={() =>
+                  setLightboxImage("/Product/details/packedProduct.webp")
+                }
                 className="relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden border-2 border-white/60 bg-white/20 hover:bg-white/40 hover:scale-105 transition-all duration-300 cursor-pointer detail-carousel-btn"
               >
                 <img
@@ -4275,7 +4440,11 @@ export default function KnowYourMeatPage() {
               <button
                 onClick={() => {
                   setActiveViewTab((prev) =>
-                    prev === "raw" ? "packed" : prev === "packed" ? "3d" : "raw",
+                    prev === "raw"
+                      ? "packed"
+                      : prev === "packed"
+                        ? "3d"
+                        : "raw",
                   );
                 }}
                 className="w-8 h-8 rounded-full bg-white text-slate-800 shadow-md flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
@@ -4338,11 +4507,11 @@ export default function KnowYourMeatPage() {
               whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[13px] xl:text-[14px] font-medium text-slate-600 tracking-wider flex items-center gap-2 font-Manrope"
+              className="text-[13px] xl:text-[14px] font-medium text-white/80 md:text-slate-600 tracking-wider flex items-center gap-2 font-Manrope"
             >
               <Link
                 href="/"
-                className="relative inline-block hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
+                className="relative inline-block hover:text-[#F2CE07] md:hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#F2CE07] md:after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
               >
                 Home
               </Link>
@@ -4351,12 +4520,12 @@ export default function KnowYourMeatPage() {
                   src="/Product/details/right aroow.svg"
                   alt="arrow"
                   fill
-                  className="object-contain opacity-60"
+                  className="object-contain filter brightness-0 invert opacity-80 md:brightness-100 md:invert-0 md:opacity-60"
                 />
               </div>
               <Link
                 href="/know-your-meat"
-                className="relative inline-block hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
+                className="relative inline-block hover:text-[#F2CE07] md:hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#F2CE07] md:after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
               >
                 Know Your Meat
               </Link>
@@ -4365,7 +4534,7 @@ export default function KnowYourMeatPage() {
                   src="/Product/details/right aroow.svg"
                   alt="arrow"
                   fill
-                  className="object-contain opacity-60"
+                  className="object-contain filter brightness-0 invert opacity-80 md:brightness-100 md:invert-0 md:opacity-60"
                 />
               </div>
               <button
@@ -4374,7 +4543,7 @@ export default function KnowYourMeatPage() {
                   setIsLandedInSection2(false);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="relative inline-block hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
+                className="relative inline-block hover:text-[#F2CE07] md:hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#F2CE07] md:after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
               >
                 Chicken
               </button>
@@ -4383,10 +4552,10 @@ export default function KnowYourMeatPage() {
                   src="/Product/details/right aroow.svg"
                   alt="arrow"
                   fill
-                  className="object-contain opacity-60"
+                  className="object-contain filter brightness-0 invert opacity-80 md:brightness-100 md:invert-0 md:opacity-60"
                 />
               </div>
-              <span className="text-slate-900 font-semibold">
+              <span className="text-white md:text-slate-900 font-semibold">
                 {chickenParts[manuallySelectedPartIdx].name}
               </span>
             </motion.div>
@@ -4409,12 +4578,12 @@ export default function KnowYourMeatPage() {
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-0.5 lg:space-y-1"
               >
-                <span className="text-[17px] lg:text-[19px] font-semibold text-[#127431] tracking-wide uppercase font-manrope">
+                <span className="text-[17px] lg:text-[19px] font-semibold text-[#F2CE07] md:text-[#127431] tracking-wide uppercase font-manrope">
                   CHICKEN
                 </span>
-                <h2 className="text-4xl lg:text-5xl xl:text-[52px] font-bold text-slate-900 leading-none tracking-wide font-barlow-condensed uppercase detail-title">
+                <h2 className="text-4xl lg:text-5xl xl:text-[52px] font-bold text-white md:text-slate-900 leading-none tracking-wide font-barlow-condensed uppercase detail-title">
                   CHICKEN{" "}
-                  <span className="text-[#127431]">
+                  <span className="text-[#F2CE07] md:text-[#127431]">
                     {chickenParts[manuallySelectedPartIdx].name}
                   </span>
                 </h2>
@@ -4435,7 +4604,7 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[13px] lg:text-[14px] xl:text-[15px] font-medium text-slate-700 leading-relaxed font-manrope max-w-[550px] xl:max-w-[580px] detail-desc"
+                className="text-[13px] lg:text-[14px] xl:text-[15px] font-medium text-white/90 md:text-slate-700 leading-relaxed font-manrope max-w-[550px] xl:max-w-[580px] detail-desc"
               >
                 {chickenParts[manuallySelectedPartIdx].desc}
               </motion.p>
@@ -4472,27 +4641,27 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-3 py-1.5 lg:py-2.5 border-y border-slate-200/50"
+                className="flex items-center gap-3 py-1.5 lg:py-2.5 border-y border-white/25 md:border-slate-200/50"
               >
                 <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-[13px] md:text-[15px] font-medium text-slate-900 tracking-wider uppercase font-manrope whitespace-nowrap">
+                  <span className="text-[13px] md:text-[15px] font-medium text-white/90 md:text-slate-900 tracking-wider uppercase font-manrope whitespace-nowrap">
                     PACKAGE WEIGHT
                   </span>
-                  <span className="text-lg md:text-xl font-bold text-slate-800 font-barlow-condensed whitespace-nowrap">
+                  <span className="text-lg md:text-xl font-bold text-white md:text-slate-800 font-barlow-condensed whitespace-nowrap">
                     {chickenParts[manuallySelectedPartIdx].weight}
                   </span>
                 </div>
-                <div className="w-[1px] h-6 bg-slate-300 shrink-0" />
+                <div className="w-[1px] h-6 bg-white/40 md:bg-slate-300 shrink-0" />
                 <div className="flex items-center gap-2 shrink-0">
                   <div className="relative w-4 h-4 md:w-5 md:h-5 shrink-0">
                     <Image
                       src="/Product/details/pack.webp"
                       alt="Pack Icon"
                       fill
-                      className="object-contain"
+                      className="object-contain filter brightness-0 invert md:brightness-100 md:invert-0"
                     />
                   </div>
-                  <span className="text-[13px] md:text-[15px] font-medium text-slate-900 tracking-wider uppercase font-manrope whitespace-nowrap">
+                  <span className="text-[13px] md:text-[15px] font-medium text-white/90 md:text-slate-900 tracking-wider uppercase font-manrope whitespace-nowrap">
                     MEATIN PACK
                   </span>
                 </div>
@@ -4515,7 +4684,7 @@ export default function KnowYourMeatPage() {
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-1.5 lg:space-y-2"
               >
-                <h4 className="text-[14px] lg:text-[15px] font-medium text-slate-900 tracking-wider uppercase font-manrope">
+                <h4 className="text-[14px] lg:text-[15px] font-medium text-white md:text-slate-900 tracking-wider uppercase font-manrope">
                   NUTRITION INFORMATION (PER 100g)
                 </h4>
                 <div className="grid grid-cols-4 gap-3 lg:gap-4 detail-nutrition-grid">
@@ -4568,7 +4737,10 @@ export default function KnowYourMeatPage() {
               </motion.div>
 
               {/* Cooking recipe card */}
-              <Link href="/recipes" className="block w-full">
+              <Link
+                href={`/recipes?part=${chickenParts[manuallySelectedPartIdx].name.toLowerCase()}&recipeId=${chickenParts[manuallySelectedPartIdx].name.toLowerCase()}-1`}
+                className="block w-full"
+              >
                 <motion.div
                   variants={{
                     hidden: { opacity: 0, x: 30, y: 15 },
@@ -4659,13 +4831,13 @@ export default function KnowYourMeatPage() {
       >
         {/* Background Doodle Pattern Overlay */}
         <div
-          className="absolute inset-0 pointer-events-none bg-repeat z-0 opacity-70"
+          className="absolute inset-0 pointer-events-none bg-repeat z-0 opacity-50 filter brightness-0"
           style={{
             backgroundImage: 'url("/Product/Chicken/doodle.webp")',
             backgroundSize: "800px",
           }}
         />
-        <div className="max-w-[1400px] mx-auto space-y-12 relative z-10 recipe-container-wrap">
+        <div className="w-full space-y-12 relative z-10 recipe-container-wrap">
           {/* Section Header: Title, Description, and Filter Tabs */}
           <div className="flex flex-col md:flex-row md:items-center justify-start gap-6 md:gap-10 pb-2">
             {/* Left Column: RECIPES tagline + MEAT MADE DELICIOUS Title */}
@@ -4817,7 +4989,7 @@ export default function KnowYourMeatPage() {
                 },
               },
             }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 recipe-grid-wrap"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1400px] mx-auto recipe-grid-wrap"
           >
             {(
               partRecipesMap[
@@ -4826,7 +4998,11 @@ export default function KnowYourMeatPage() {
                   .trim() || "breast"
               ] || partRecipesMap["breast"]
             ).map((recipe, idx) => (
-              <Link href="/recipes" key={idx} className="block cursor-pointer">
+              <Link
+                href={`/recipes?part=${chickenParts[manuallySelectedPartIdx]?.name.toLowerCase().trim() || "breast"}&recipeId=${chickenParts[manuallySelectedPartIdx]?.name.toLowerCase().trim() || "breast"}-${idx + 1}&title=${encodeURIComponent(recipe.title)}`}
+                key={idx}
+                className="block cursor-pointer"
+              >
                 <motion.div
                   variants={{
                     hidden: { opacity: 0, y: 55 },
@@ -4857,6 +5033,9 @@ export default function KnowYourMeatPage() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                   />
+
+                  {/* Dark Black Gradient Overlay behind bottom text (55% height) */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[80%] z-10 bg-gradient-to-t from-black/95 via-black/80 to-transparent pointer-events-none" />
 
                   {/* Top-Left Red Badge Pill */}
                   <div className="absolute top-4 left-4 z-20">
@@ -4932,161 +5111,6 @@ export default function KnowYourMeatPage() {
         </div>
       </section>
 
-      {/* Bottom Panel Categories Section - Exactly matching mockup curve & overlapping mascot */}
-      <section
-        className={`bg-[#EBFFE6] rounded-t-[60px] pt-10 pb-6 relative z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] transition-all duration-500 recipe-bottom-banner overflow-visible ${
-          hasSelectedAnyPart ? "mt-[-60px]" : "mt-[80px] md:mt-[2px]"
-        }`}
-      >
-        <div className="px-16 relative flex flex-col md:flex-row gap-8 items-center">
-          {/* Overlapping Mascot on the left */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, x: -40 }}
-            whileInView={{ opacity: 1, scale: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-[180px] h-[270px] md:w-[220px] md:h-[330px] relative -mt-20 md:-mt-30 shrink-0 pointer-events-none drop-shadow-lg"
-          >
-            <Image
-              src="/Product/Chicken/Banner/image 282.webp"
-              alt="Chicken Mascot"
-              fill
-              className="object-contain"
-            />
-          </motion.div>
-
-          {/* Heading and Categories grid */}
-          <div className="flex-1 space-y-8 flex flex-col items-center">
-            <div className="space-y-2 text-center -ml-[13%]">
-              {/* CATEGORIES Typewriter Title */}
-              <motion.h3
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, amount: 0.3 }}
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.05,
-                    },
-                  },
-                }}
-                className="text-5xl font-bold text-[#127431] font-barlow-condensed tracking-widest uppercase inline-flex justify-center select-none"
-              >
-                {"CATEGORIES".split("").map((char, charIdx) => (
-                  <motion.span
-                    key={charIdx}
-                    variants={{
-                      hidden: { opacity: 0, scale: 0.5, y: -10 },
-                      visible: { opacity: 1, scale: 1, y: 0 },
-                    }}
-                    transition={{ duration: 0.08, ease: "easeOut" }}
-                  >
-                    {char}
-                  </motion.span>
-                ))}
-              </motion.h3>
-
-              {/* Red Line expand from center */}
-              <motion.div
-                initial={{ scaleX: 0, opacity: 0 }}
-                whileInView={{ scaleX: 1, opacity: 1 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
-                className="w-32 h-[2.5px] bg-[#D62828] mx-auto mt-3 mb-1 origin-center"
-              />
-
-              {/* Subtitle Typewriter Text */}
-              <motion.p
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, amount: 0.3 }}
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.03,
-                      delayChildren: 0.25,
-                    },
-                  },
-                }}
-                className="text-[15px] font-normal text-slate-500 tracking-wider font-inter inline-flex flex-wrap justify-center select-none"
-              >
-                {"Premium quality meat, delivery fresh to your life."
-                  .split("")
-                  .map((char, charIdx) => (
-                    <motion.span
-                      key={charIdx}
-                      variants={{
-                        hidden: { opacity: 0, y: 4 },
-                        visible: { opacity: 1, y: 0 },
-                      }}
-                      transition={{ duration: 0.04 }}
-                    >
-                      {char === " " ? "\u00A0" : char}
-                    </motion.span>
-                  ))}
-              </motion.p>
-            </div>
-
-            {/* Category Circular Badges - 2-col grid on mobile, horizontal row on desktop */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.2 }}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.1 },
-                },
-              }}
-              className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:items-center sm:justify-around items-center justify-items-center gap-y-6 gap-x-4 sm:gap-0 px-8 sm:px-12 sm:-ml-[10%] w-full"
-            >
-              {categories.map((cat, idx) => (
-                <React.Fragment key={idx}>
-                  <motion.div
-                    variants={{
-                      hidden: { opacity: 0, scale: 0.7, y: 25 },
-                      visible: {
-                        opacity: 1,
-                        scale: 1,
-                        y: 0,
-                        transition: { duration: 0.5, ease: "easeOut" },
-                      },
-                    }}
-                  >
-                    <div className="flex flex-col items-center gap-3">
-                      <div className="w-20 h-20 rounded-full border-[5px] border-[#CCCCCC] bg-white flex items-center justify-center shadow-md shadow-slate-200/50 transition-all duration-300">
-                        <div className="w-[68px] h-[68px] rounded-full bg-[#82B224] border-2 border-white flex items-center justify-center">
-                          <div className="relative w-12 h-12">
-                            <Image
-                              src={cat.icon}
-                              alt={cat.name}
-                              fill
-                              sizes="36px"
-                              className="object-contain filter brightness-0 invert"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <span className="text-[14px] font-black text-slate-800 tracking-wider uppercase transition-colors">
-                        {cat.name}
-                      </span>
-                    </div>
-                  </motion.div>
-
-                  {idx < categories.length - 1 && (
-                    <div className="hidden sm:block w-[1px] h-10 bg-slate-300/60 self-start mt-5 shrink-0" />
-                  )}
-                </React.Fragment>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
       {/* Shared Element Flying Overlay - Bonds Section 1 and Section 2 */}
       {animatingPart && (
         <motion.div
@@ -5155,10 +5179,23 @@ export default function KnowYourMeatPage() {
           }}
           className="fixed pointer-events-none flex items-center justify-center z-[99999]"
         >
-          <img
+          <motion.img
             src={animatingPart.img}
             alt={animatingPart.name}
-            className="w-full h-full object-contain"
+            initial={{ scale: 1 }}
+            animate={{
+              scale:
+                typeof window !== "undefined" && window.innerWidth < 640
+                  ? 7
+                  : typeof window !== "undefined" && window.innerWidth < 768
+                    ? 2.8
+                    : 1,
+            }}
+            transition={{
+              duration: 1.1,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="w-full h-full object-contain filter drop-shadow-2xl"
           />
         </motion.div>
       )}
@@ -5179,8 +5216,19 @@ export default function KnowYourMeatPage() {
               className="absolute top-5 right-5 text-white/80 hover:text-white hover:scale-115 active:scale-95 transition-all w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/25 rounded-full cursor-pointer"
               aria-label="Close Fullscreen View"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
             <motion.div
