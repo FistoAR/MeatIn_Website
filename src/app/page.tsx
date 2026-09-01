@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion';
 import TrustedQualityBanner from '@/components/layout/TrustedQualityBanner';
 
 // Animation variants
@@ -44,37 +44,94 @@ export default function HomePage() {
     target: certSectionRef,
     offset: ["start end", "end start"]
   });
-  const truckY = useTransform(certScrollProgress, [0, 1], [-150, 1100]);
+  const truckY = useTransform(certScrollProgress, [0, 1], [-150, 1600]);
   const truckOpacity = useTransform(certScrollProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
 
   const [currentFrame, setCurrentFrame] = React.useState(1);
   const [pointerEvents, setPointerEvents] = React.useState<'auto' | 'none'>('auto');
+  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
 
   React.useEffect(() => {
     // Preload all frames to avoid flickering
     const totalFrames = 240;
+    (window as any).__HERO_FRAMES__ = (window as any).__HERO_FRAMES__ || {};
     for (let i = 1; i <= totalFrames; i++) {
-      const img = new window.Image();
       const frameStr = String(i).padStart(5, '0');
-      img.src = `/Home/Hero/video-frames/${frameStr}.webp`;
+      const url = `/Home/Hero/video-frames/${frameStr}.webp`;
+      if (!(window as any).__HERO_FRAMES__[url]) {
+        const img = new window.Image();
+        img.src = url;
+        (window as any).__HERO_FRAMES__[url] = img;
+      }
     }
+
+    // Trigger scroll bounds re-measurement once preloader reveals DOM
+    const t1 = setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+    const t2 = setTimeout(() => window.dispatchEvent(new Event('resize')), 600);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, []);
 
+  // GPU-accelerated canvas drawing loop for smooth 60FPS video sequence
   React.useEffect(() => {
-    return smoothProgress.onChange((latest) => {
-      const totalFrames = 240;
-      const frame = Math.min(
-        totalFrames,
-        Math.max(1, Math.floor(latest * totalFrames))
-      );
-      setCurrentFrame(frame);
-      if (latest > 0.4) {
-        setPointerEvents('none');
-      } else {
-        setPointerEvents('auto');
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const frameStr = String(currentFrame).padStart(5, '0');
+    const frameUrl = `/Home/Hero/video-frames/${frameStr}.webp`;
+    
+    let img = typeof window !== 'undefined' ? (window as any).__HERO_FRAMES__?.[frameUrl] : null;
+    if (!img) {
+      img = new window.Image();
+      img.src = frameUrl;
+    }
+
+    const draw = () => {
+      const containerWidth = canvas.clientWidth || window.innerWidth;
+      const containerHeight = canvas.clientHeight || window.innerHeight;
+
+      if (canvas.width !== containerWidth || canvas.height !== containerHeight) {
+        canvas.width = containerWidth;
+        canvas.height = containerHeight;
       }
-    });
-  }, [smoothProgress]);
+
+      const imgWidth = img.naturalWidth || img.width || 1920;
+      const imgHeight = img.naturalHeight || img.height || 1080;
+
+      const hRatio = canvas.width / imgWidth;
+      const vRatio = canvas.height / imgHeight;
+      const ratio = Math.max(hRatio, vRatio);
+      const shiftX = (canvas.width - imgWidth * ratio) / 2;
+      const shiftY = (canvas.height - imgHeight * ratio) / 2;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, imgWidth, imgHeight, shiftX, shiftY, imgWidth * ratio, imgHeight * ratio);
+    };
+
+    if (img.complete) {
+      draw();
+    } else {
+      img.onload = draw;
+    }
+  }, [currentFrame]);
+
+  useMotionValueEvent(smoothProgress, 'change', (latest) => {
+    const totalFrames = 240;
+    const frame = Math.min(
+      totalFrames,
+      Math.max(1, Math.floor(latest * totalFrames))
+    );
+    setCurrentFrame(frame);
+    if (latest > 0.4) {
+      setPointerEvents('none');
+    } else {
+      setPointerEvents('auto');
+    }
+  });
 
   const heroContentOpacity = useTransform(smoothProgress, [0, 0.35], [1, 0]);
   const heroContentY = useTransform(smoothProgress, [0, 0.35], [0, -40]);
@@ -157,11 +214,10 @@ export default function HomePage() {
       {/* 1. HERO BANNER WITH STICKY SCROLL SEQUENCE */}
       <section ref={heroRef} className="relative w-full h-[300vh] bg-black">
         <div className="sticky top-0 left-0 w-full h-screen flex items-center bg-black overflow-hidden">
-          {/* Background Frame Sequence */}
+          {/* Background Frame Sequence Canvas */}
           <div className="absolute inset-0 z-0 select-none pointer-events-none w-full h-full">
-            <img
-              src={`/Home/Hero/video-frames/${String(currentFrame).padStart(5, '0')}.webp`}
-              alt="MEATIN Integrated Processing Plant Video Frame"
+            <canvas
+              ref={canvasRef}
               className="w-full h-full object-cover object-center brightness-[0.75] lg:brightness-100"
             />
             {/* Gradients for readability */}
@@ -483,10 +539,10 @@ export default function HomePage() {
             })}
           </motion.div>
         </div>
-      </section>
 
-      {/* 4. TRUST BANNER (At the very end of homepage) */}
-      <TrustedQualityBanner />
+        {/* 4. TRUST BANNER (Combined seamlessly inside same section) */}
+        <TrustedQualityBanner />
+      </section>
 
     </div>
   );

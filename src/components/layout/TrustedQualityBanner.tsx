@@ -23,18 +23,7 @@ const staggerContainer = {
 
 export default function TrustedQualityBanner() {
   return (
-    <div className="w-full bg-[#DCDBDB] relative overflow-hidden py-6 md:py-10">
-      {/* Outer Background Pattern */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <Image
-          src="/Home/gray-bg-image.webp"
-          alt="Outer background"
-          fill
-          className="object-cover opacity-[0.8]"
-          priority
-        />
-      </div>
-
+    <div className="w-full relative z-10 pt-10 sm:pt-14 lg:pt-16 pb-4">
       <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}

@@ -80,3 +80,14 @@
 .certificate-parent-card:hover {
   transform: scale(1.05) !important;
 }
+
+/* Hide Next.js Development Toast Indicator Badge */
+nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-toast-wrapper],
+[data-nextjs-dialog-overlay] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

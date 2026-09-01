@@ -1845,7 +1845,7 @@ export default function RecipesPage() {
           {/* Page Title & Controls - Animated Entrance on Load */}
           <div className="flex items-center justify-between gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
             <div>
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[76px] font-bold font-barlow-condensed tracking-wide uppercase leading-tight flex items-center gap-2.5">
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[76px] font-bold font-barlow-condensed tracking-wide uppercase leading-tight flex items-center gap-2.5 flex-wrap">
                 <motion.span
                   initial={{ opacity: 0, x: -40, y: 10 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
@@ -1860,7 +1860,11 @@ export default function RecipesPage() {
                   transition={{ duration: 0.75, ease: "easeOut", delay: 0.4 }}
                   className="text-[#D62828] inline-block"
                 >
-                  RECIPES
+                  {selectedRecipe
+                    ? selectedRecipe.part.toUpperCase()
+                    : activeFilter !== "all"
+                    ? activeFilter.toUpperCase()
+                    : "RECIPES"}
                 </motion.span>
               </h1>
             </div>
@@ -1907,8 +1911,10 @@ export default function RecipesPage() {
               </motion.div>
 
               {chickenPartsList.map((part, index) => {
-                const isAutoHighlighted = highlightedPartIdx === index;
-                const isSelected = activeFilter === part.id;
+                const isAutoHighlighted = highlightedPartIdx === index && !selectedRecipe && activeFilter === "all";
+                const isSelected = selectedRecipe
+                  ? selectedRecipe.part.toLowerCase() === part.id.toLowerCase()
+                  : activeFilter.toLowerCase() === part.id.toLowerCase();
 
                 return (
                   <motion.div
@@ -1930,7 +1936,7 @@ export default function RecipesPage() {
                       whileHover={{ scale: 1.12 }}
                       whileTap={{ scale: 0.92 }}
                       className={`relative w-11 h-11 sm:w-14 sm:h-14 lg:w-[50px] lg:h-[50px] xl:w-[62px] xl:h-[62px] 2xl:w-[76px] 2xl:h-[76px] rounded-full bg-white flex items-center justify-center p-1 sm:p-1.5 xl:p-2 shrink-0 cursor-pointer transition-all duration-500 shadow-md ${
-                        isAutoHighlighted || isSelected
+                        isSelected || isAutoHighlighted
                           ? "ring-4 ring-[#E1C609] bg-[#FFFDE7] scale-110 shadow-[0_0_20px_rgba(225,198,9,0.7)]"
                           : "border border-white/60 hover:scale-105"
                       }`}
@@ -1947,7 +1953,7 @@ export default function RecipesPage() {
                     </motion.button>
                     <span
                       className={`text-[10px] sm:text-[12px] lg:text-[11px] xl:text-[13px] 2xl:text-[14px] font-extrabold tracking-wider uppercase font-manrope transition-colors ${
-                        isAutoHighlighted || isSelected
+                        isSelected || isAutoHighlighted
                           ? "text-[#E1C609] drop-shadow-sm font-black"
                           : "text-white/90 group-hover:text-[#E1C609]"
                       }`}
@@ -2224,7 +2230,7 @@ export default function RecipesPage() {
                           className="bg-[#D62828] hover:bg-red-700 text-white font-bold text-sm uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                         >
                           <span>←</span>
-                          <span>BACK</span>
+                          <span>BACK TO ALL RECIPES</span>
                         </button>
 
                         <div className="relative w-14 sm:w-32 h-7 sm:h-16 shrink-0">
