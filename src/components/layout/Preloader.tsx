@@ -79,7 +79,7 @@ export const Preloader: React.FC = () => {
     // Instantiate DSA Asset Preload Engine (Priority Queue + Worker Pool + Set Deduplication)
     if (typeof window !== 'undefined') {
       const engine = new AssetPreloadEngine(PRELOAD_ASSETS, {
-        concurrency: 6, // Standard per-domain HTTP/1.1 socket concurrency limit
+        concurrency: 12, // Fast parallel loading for critical hero assets
         onProgress: (percent) => {
           setProgress((prev) => Math.max(prev, percent));
         },
@@ -91,10 +91,10 @@ export const Preloader: React.FC = () => {
       engine.start();
     }
 
-    // Maximum fallback safety timeout (3.5s) to guarantee fast entry
+    // Maximum fallback safety timeout (1.5s) to guarantee fast entry
     const maxTimeout = setTimeout(() => {
       finishLoading();
-    }, 3500);
+    }, 1500);
 
     return () => {
       clearTimeout(maxTimeout);
