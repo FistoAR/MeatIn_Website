@@ -223,7 +223,7 @@ export default function FranchisePage() {
     },
   ];
 
-  const activeOutlets = mapMode === "full" ? indiaOutlets : keralaOutlets;
+  const activeOutlets = mapMode === "full" ? [] : keralaOutlets;
 
   // Zoom Handlers
   const handleZoomIn = () => setZoomLevel((prev) => Math.min(prev + 0.25, 2.0));
@@ -251,7 +251,7 @@ export default function FranchisePage() {
         </div>
 
         {/* Top Right Background Doodle Accent */}
-        <div className="absolute top-0 right-0 z-0 pointer-events-none w-[140px] sm:w-[180px] md:w-[240px] lg:w-[280px] opacity-75">
+        <div className="absolute top-20 right-0 z-0 pointer-events-none w-[700px] sm:w-[100px] md:w-[130px] lg:w-[160px] opacity-50">
           <Image
             src="/Franchies/topRight.webp"
             alt="Top Right Background Accent"
@@ -263,7 +263,7 @@ export default function FranchisePage() {
         </div>
 
         {/* Left Bottom Corner Trees Accent */}
-        <div className="absolute bottom-0 left-0 z-0 pointer-events-none w-[110px] sm:w-[150px] md:w-[200px] opacity-90">
+        <div className="absolute bottom-0 left-0 z-0 pointer-events-none w-[80px] sm:w-[110px] md:w-[140px] lg:w-[160px] opacity-60">
           <Image
             src="/Franchies/leftBottom.webp"
             alt="Left Bottom Trees Accent"
@@ -274,13 +274,13 @@ export default function FranchisePage() {
           />
         </div>
 
-        {/* Right Bottom Corner Accent */}
-        <div className="absolute bottom-0 -right-4 z-0 pointer-events-none w-[100px] sm:w-[140px] md:w-[160px] opacity-90">
+        {/* Right Bottom Corner Meat Sketch Accent (Refined, Subtle & Responsive across Desktop Screens) */}
+        <div className="absolute bottom-0 right-0 z-0 pointer-events-none w-[50px] sm:w-[65px] md:w-[75px] lg:w-[85px] xl:w-[95px] 2xl:w-[110px] opacity-40">
           <Image
             src="/Franchies/RightBottom.webp"
             alt="Right Bottom Accent"
-            width={200}
-            height={140}
+            width={180}
+            height={130}
             priority
             className="w-full h-auto object-contain object-bottom"
           />
@@ -288,12 +288,13 @@ export default function FranchisePage() {
 
         <div className="w-full relative z-10 flex-1 flex flex-col justify-between items-center max-w-[1600px] mx-auto h-full overflow-hidden">
           {/* Header Title Block (Tight margin on mobile, spacious clear margin on desktop) */}
-          <div className="text-center space-y-0.5 shrink-0 mt-0 lg:mt-2.5 py-0.5">
-            {/* Subtitle: — GROWTH WITH — */}
+          <div className="text-center space-y-0.5 shrink-0 mt-0 lg:mt-3.5 py-0.5">
+            {/* Subtitle: — GROWTH WITH — (Fade in from LEFT) */}
             <motion.div
-              initial={{ opacity: 0, y: -12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
               className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] [@media(max-height:710px)]:lg:text-[11px] [@media(max-height:620px)]:lg:text-[10px] font-bold text-gray-800 tracking-[3px] uppercase font-manrope"
             >
               <span className="w-5 md:w-7 h-[2px] bg-gradient-to-r from-transparent via-[#EAB308] to-[#82B224] rounded-full" />
@@ -302,15 +303,29 @@ export default function FranchisePage() {
             </motion.div>
 
             {/* Main Brand Title: MEATIN */}
-            <motion.h1
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[76px] [@media(max-height:710px)]:lg:text-[54px] [@media(max-height:620px)]:lg:text-[44px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none"
-            >
-              <span className="text-[#82B224]">MEAT</span>
-              <span className="text-[#D62828]">IN</span>
-            </motion.h1>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[76px] [@media(max-height:710px)]:lg:text-[54px] [@media(max-height:620px)]:lg:text-[44px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none flex items-center justify-center">
+              {/* MEAT (Fade in from RIGHT) */}
+              <motion.span
+                initial={{ opacity: 0, x: 60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+                className="text-[#82B224] inline-block"
+              >
+                MEAT
+              </motion.span>
+
+              {/* IN (Fade in from RIGHT, slightly slower and delayed) */}
+              <motion.span
+                initial={{ opacity: 0, x: 60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.95, ease: "easeOut", delay: 0.45 }}
+                className="text-[#D62828] inline-block"
+              >
+                IN
+              </motion.span>
+            </h1>
           </div>
 
           {/* Hero Store Interactive Canvas (Prominent & larger on mobile, proportional scaling on desktop) */}
@@ -332,65 +347,225 @@ export default function FranchisePage() {
               />
             </motion.div>
 
-            {/* SVG Connector Dotted Lines & Red Dots Overlay */}
+            {/* CSS Keyframes for Infinite Conveyor Dotted Line Flow Animation */}
+            <style jsx>{`
+              @keyframes conveyerFlow {
+                0% {
+                  stroke-dashoffset: 0;
+                }
+                100% {
+                  stroke-dashoffset: -24px;
+                }
+              }
+              .conveyer-dotted-path {
+                stroke-dasharray: 6px 6px !important;
+                animation: conveyerFlow 0.8s linear infinite !important;
+              }
+            `}</style>
+
+            {/* SVG Connector Dotted Lines & Red Dots Overlay with Conveyor Animation */}
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none z-30 hidden lg:block"
               viewBox="0 0 1280 520"
               fill="none"
             >
-              {/* Item 01 Dotted Line (Left Top — Starts ABOVE text at y=25) */}
-              <path
-                d="M 155 25 L 155 25 Q 180 25 180 40 L 180 180 Q 180 190 210 190 L 250 190"
-                stroke="#82B224"
-                strokeWidth="2"
-                strokeDasharray="5 4"
-              />
-              <circle cx="250" cy="190" r="5" fill="#D62828" />
+              {/* Item 01 Dotted Line (Left Top) */}
+              <motion.g
+                initial={{ opacity: 0, x: -15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <path
+                  d="M 155 25 L 155 25 Q 180 25 180 40 L 180 180 Q 180 190 210 190 L 250 190"
+                  stroke="#82B224"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  className="conveyer-dotted-path"
+                />
+                <g transform="translate(250, 190)">
+                  {/* Outer Subtle Pulse Ring 2 */}
+                  <motion.circle
+                    r="10"
+                    fill="#D62828"
+                    animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                  />
+                  {/* Inner Subtle Pulse Ring 1 */}
+                  <motion.circle
+                    r="7"
+                    fill="#D62828"
+                    animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+                  />
+                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                </g>
+              </motion.g>
 
-              {/* Item 02 Dotted Line (Left Mid — Straight across open space) */}
-              <path
-                d="M 155 275 L 250 275"
-                stroke="#82B224"
-                strokeWidth="2"
-                strokeDasharray="5 4"
-              />
-              <circle cx="250" cy="275" r="5" fill="#D62828" />
+              {/* Item 02 Dotted Line (Left Mid) */}
+              <motion.g
+                initial={{ opacity: 0, x: -15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                <path
+                  d="M 155 275 L 250 275"
+                  stroke="#82B224"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  className="conveyer-dotted-path"
+                />
+                <g transform="translate(250, 275)">
+                  {/* Outer Subtle Pulse Ring 2 */}
+                  <motion.circle
+                    r="10"
+                    fill="#D62828"
+                    animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+                  />
+                  {/* Inner Subtle Pulse Ring 1 */}
+                  <motion.circle
+                    r="7"
+                    fill="#D62828"
+                    animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                  />
+                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                </g>
+              </motion.g>
 
-              {/* Item 03 Dotted Line (Left Bottom — Starts BELOW text at y=495) */}
-              <path
-                d="M 155 495 L 155 495 Q 180 495 180 480 L 180 370 Q 180 360 210 360 L 250 360"
-                stroke="#82B224"
-                strokeWidth="2"
-                strokeDasharray="5 4"
-              />
-              <circle cx="250" cy="360" r="5" fill="#D62828" />
+              {/* Item 03 Dotted Line (Left Bottom) */}
+              <motion.g
+                initial={{ opacity: 0, x: -15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+              >
+                <path
+                  d="M 155 495 L 155 495 Q 180 495 180 480 L 180 370 Q 180 360 210 360 L 250 360"
+                  stroke="#82B224"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  className="conveyer-dotted-path"
+                />
+                <g transform="translate(250, 360)">
+                  {/* Outer Subtle Pulse Ring 2 */}
+                  <motion.circle
+                    r="10"
+                    fill="#D62828"
+                    animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 1.1 }}
+                  />
+                  {/* Inner Subtle Pulse Ring 1 */}
+                  <motion.circle
+                    r="7"
+                    fill="#D62828"
+                    animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+                  />
+                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                </g>
+              </motion.g>
 
-              {/* Item 04 Dotted Line (Right Top — Connects STRAIGHT into right icon circle at y=57) */}
-              <path
-                d="M 1080 190 L 1080 190 Q 1095 190 1095 175 L 1095 72 Q 1095 57 1110 57 L 1140 57"
-                stroke="#82B224"
-                strokeWidth="2"
-                strokeDasharray="5 4"
-              />
-              <circle cx="1080" cy="190" r="5" fill="#D62828" />
+              {/* Item 04 Dotted Line (Right Top) */}
+              <motion.g
+                initial={{ opacity: 0, x: 15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.35 }}
+              >
+                <path
+                  d="M 1140 57 L 1110 57 Q 1095 57 1095 72 L 1095 175 Q 1095 190 1080 190"
+                  stroke="#82B224"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  className="conveyer-dotted-path"
+                />
+                <g transform="translate(1080, 190)">
+                  {/* Outer Subtle Pulse Ring 2 */}
+                  <motion.circle
+                    r="10"
+                    fill="#D62828"
+                    animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.65 }}
+                  />
+                  {/* Inner Subtle Pulse Ring 1 */}
+                  <motion.circle
+                    r="7"
+                    fill="#D62828"
+                    animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.35 }}
+                  />
+                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                </g>
+              </motion.g>
 
-              {/* Item 05 Dotted Line (Right Mid — Connects directly into right icon at x=1140) */}
-              <path
-                d="M 1080 275 L 1140 275"
-                stroke="#82B224"
-                strokeWidth="2"
-                strokeDasharray="5 4"
-              />
-              <circle cx="1080" cy="275" r="5" fill="#D62828" />
+              {/* Item 05 Dotted Line (Right Mid) */}
+              <motion.g
+                initial={{ opacity: 0, x: 15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.65 }}
+              >
+                <path
+                  d="M 1140 275 L 1080 275"
+                  stroke="#82B224"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  className="conveyer-dotted-path"
+                />
+                <g transform="translate(1080, 275)">
+                  {/* Outer Subtle Pulse Ring 2 */}
+                  <motion.circle
+                    r="10"
+                    fill="#D62828"
+                    animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.95 }}
+                  />
+                  {/* Inner Subtle Pulse Ring 1 */}
+                  <motion.circle
+                    r="7"
+                    fill="#D62828"
+                    animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.65 }}
+                  />
+                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                </g>
+              </motion.g>
 
-              {/* Item 06 Dotted Line (Right Bottom — Connects directly into right icon at x=1140) */}
-              <path
-                d="M 1080 360 L 1080 360 Q 1095 360 1095 375 L 1095 480 Q 1095 495 1115 495 L 1140 495"
-                stroke="#82B224"
-                strokeWidth="2"
-                strokeDasharray="5 4"
-              />
-              <circle cx="1080" cy="360" r="5" fill="#D62828" />
+              {/* Item 06 Dotted Line (Right Bottom) */}
+              <motion.g
+                initial={{ opacity: 0, x: 15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.95 }}
+              >
+                <path
+                  d="M 1140 495 L 1115 495 Q 1095 495 1095 480 L 1095 375 Q 1095 360 1080 360"
+                  stroke="#82B224"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  className="conveyer-dotted-path"
+                />
+                <g transform="translate(1080, 360)">
+                  {/* Outer Subtle Pulse Ring 2 */}
+                  <motion.circle
+                    r="10"
+                    fill="#D62828"
+                    animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 1.25 }}
+                  />
+                  {/* Inner Subtle Pulse Ring 1 */}
+                  <motion.circle
+                    r="7"
+                    fill="#D62828"
+                    animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.95 }}
+                  />
+                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                </g>
+              </motion.g>
             </svg>
 
             {/* LEFT 3 FEATURE BADGES (01, 02, 03) */}
@@ -398,14 +573,16 @@ export default function FranchisePage() {
               {/* Feature 01: HYGIENIC PROCESSING */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="absolute top-[25px] left-0 flex items-center gap-3.5 group"
+                whileInView={{ opacity: 1, x: 0 }}
+                whileHover={{ scale: 1.12 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.2, scale: { duration: 0.25, ease: "easeOut" } }}
+                className="absolute top-[25px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:microscope"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
                 <div className="flex flex-col max-w-[170px]">
@@ -427,14 +604,16 @@ export default function FranchisePage() {
               {/* Feature 02: PREMIUM QUALITY */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="absolute top-[225px] left-0 flex items-center gap-3.5 group"
+                whileInView={{ opacity: 1, x: 0 }}
+                whileHover={{ scale: 1.12 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.5, scale: { duration: 0.25, ease: "easeOut" } }}
+                className="absolute top-[225px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:shield-check"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
                 <div className="flex flex-col max-w-[170px]">
@@ -456,14 +635,16 @@ export default function FranchisePage() {
               {/* Feature 03: FARM FRESH */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute top-[425px] left-0 flex items-center gap-3.5 group"
+                whileInView={{ opacity: 1, x: 0 }}
+                whileHover={{ scale: 1.12 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.8, scale: { duration: 0.25, ease: "easeOut" } }}
+                className="absolute top-[425px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:plant"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
                 <div className="flex flex-col max-w-[170px]">
@@ -486,14 +667,16 @@ export default function FranchisePage() {
               {/* Feature 04: NO ARTIFICIAL ADDITIVES */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="absolute top-[25px] left-0 flex items-center gap-4 group"
+                whileInView={{ opacity: 1, x: 0 }}
+                whileHover={{ scale: 1.12 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.35, scale: { duration: 0.25, ease: "easeOut" } }}
+                className="absolute top-[25px] left-0 flex items-center gap-4 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:leaf"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
                 <div className="flex flex-col max-w-[170px]">
@@ -515,14 +698,16 @@ export default function FranchisePage() {
               {/* Feature 05: FRESHNESS GUARANTEED */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="absolute top-[225px] left-0 flex items-center gap-4 group"
+                whileInView={{ opacity: 1, x: 0 }}
+                whileHover={{ scale: 1.12 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.65, scale: { duration: 0.25, ease: "easeOut" } }}
+                className="absolute top-[225px] left-0 flex items-center gap-4 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:package"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
                 <div className="flex flex-col max-w-[170px]">
@@ -544,14 +729,16 @@ export default function FranchisePage() {
               {/* Feature 06: FAST DELIVERY */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute top-[425px] left-0 flex items-center gap-4 group"
+                whileInView={{ opacity: 1, x: 0 }}
+                whileHover={{ scale: 1.12 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.95, scale: { duration: 0.25, ease: "easeOut" } }}
+                className="absolute top-[425px] left-0 flex items-center gap-4 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-[#82B224] transition-all duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:truck"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors"
+                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
                 <div className="flex flex-col max-w-[170px]">
@@ -647,80 +834,92 @@ export default function FranchisePage() {
       {/* ============================================================ */}
       {/* SECTION 2: INTERACTIVE PRESENCE MAP (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full min-h-[100vh] lg:h-[100vh] [@media(max-height:680px)]:min-h-[640px] [@media(max-height:680px)]:h-auto pt-[92px] sm:pt-[100px] lg:pt-[108px] [@media(min-height:850px)]:pt-[12vh] pb-0 flex flex-col justify-between bg-[#EFF2EB] overflow-hidden select-none">
+      <section className="relative w-full min-h-screen lg:h-screen pt-20 sm:pt-28 lg:pt-[108px] pb-0 flex flex-col justify-between bg-[#EFF2EB] overflow-hidden select-none">
         {/* Content Wrapper */}
-        <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 flex-1 flex flex-col justify-center relative z-40 max-w-[1850px] mx-auto">
+        <div className="w-full px-3.5 sm:px-8 lg:px-12 flex-1 flex flex-col justify-center relative z-40 max-w-[1850px] mx-auto">
           {/* Flexbox Layout: Left Content Container & Right Map/Image Container */}
-          <div className="flex flex-col lg:flex-row items-start justify-between gap-6 lg:gap-8 xl:gap-12 2xl:gap-16 w-full my-auto">
+          <div className="flex flex-col lg:flex-row items-start justify-between gap-4 sm:gap-6 lg:gap-8 xl:gap-12 2xl:gap-16 w-full my-auto">
             {/* LEFT CONTAINER (lg:w-[42%]): Header Title, Red Underline & Stat Cards */}
-            <div className="w-full lg:w-[42%] flex flex-col justify-start space-y-4 sm:space-y-6 lg:space-y-8 shrink-0">
+            <div className="w-full lg:w-[42%] flex flex-col justify-start space-y-3 sm:space-y-6 lg:space-y-8 shrink-0">
               {/* Header Title + Red Underline + Subtitle */}
-              <div className="space-y-2 sm:space-y-3">
+              <div className="space-y-1.5 sm:space-y-3">
+                {/* Real Letter-by-Letter Typewriter Animation for Heading */}
                 <div>
-                  <motion.h2
-                    initial={{ opacity: 0, x: -40 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
-                    className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#1F5A3C]"
-                  >
-                    OUR PRESENCE
-                  </motion.h2>
-                  {/* Red Underline Accent directly under OUR PRESENCE */}
-                  <motion.h2
-                    initial={{ opacity: 0, x: -40 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#1F5A3C]"
-                  >
-                    ACROSS <span className="text-[#D62828]">KERALA</span>
-                  </motion.h2>
+                  <h2 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#1F5A3C]">
+                    <div className="block">
+                      {Array.from("OUR PRESENCE ACROSS").map((char, index) => (
+                        <motion.span
+                          key={`green-${index}`}
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          viewport={{ once: false, amount: 0.2 }}
+                          transition={{ duration: 0.04, delay: index * 0.055 }}
+                          className="inline"
+                        >
+                          {char}
+                        </motion.span>
+                      ))}
+                    </div>
+                    <div className="block text-[#D62828] mt-0.5 sm:mt-1">
+                      {Array.from("KERALA").map((char, index) => (
+                        <motion.span
+                          key={`red-${index}`}
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          viewport={{ once: false, amount: 0.2 }}
+                          transition={{ duration: 0.04, delay: 1.05 + index * 0.07 }}
+                          className="inline"
+                        >
+                          {char}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </h2>
                 </div>
 
                 <motion.div
                   initial={{ opacity: 0, scaleX: 0 }}
                   whileInView={{ opacity: 1, scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.15 }}
-                  className="w-16 h-[3px] bg-[#D62828] rounded-full origin-left"
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="w-12 sm:w-16 h-[2.5px] sm:h-[3px] bg-[#D62828] rounded-full origin-left"
                 />
 
                 <motion.p
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="text-[13px] sm:text-[14px] lg:text-[16px] font-medium text-slate-700 leading-relaxed font-manrope max-w-sm pt-0.5"
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="text-[11.5px] sm:text-[14px] lg:text-[16px] font-medium text-slate-700 leading-snug sm:leading-relaxed font-manrope max-w-sm pt-0.5"
                 >
                   Building a stronger network to serve you better with freshness
                   and trust across the state.
                 </motion.p>
               </div>
 
-              {/* 3 Stat Cards arranged Side-by-Side in a Row */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-3.5 max-w-lg">
+              {/* 3 Stat Cards arranged Side-by-Side in a Row (Mobile Compact Grid) */}
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-3.5 max-w-lg w-full">
                 {/* Card 1: Stores */}
                 <motion.div
-                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  initial={{ opacity: 0, y: 35, scale: 0.9 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: 0.1 }}
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  className="bg-[#FBFFF2] border border-[#E2EBD4] p-3 sm:p-4 rounded-md shadow-sm text-center flex flex-col gap-1.5 sm:gap-2 items-center justify-between min-h-[135px] sm:min-h-[155px]"
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: 0.55 }}
+                  whileHover={{ scale: 1.05, y: -3 }}
+                  className="bg-[#FBFFF2] border border-[#E2EBD4] p-2 sm:p-4 rounded-md shadow-sm text-center flex flex-col gap-1 sm:gap-2 items-center justify-between min-h-[110px] sm:min-h-[155px]"
                 >
                   <Icon
                     icon="proicons:location"
-                    className="w-5 h-5 sm:w-7 sm:h-7 text-[#D62828] mb-1"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#D62828] mb-0.5"
                   />
                   <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
-                    <span className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
+                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
                       100+
                     </span>
-                    <span className="text-[10px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5 sm:mt-1">
+                    <span className="text-[9px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5">
                       STORES
                     </span>
-                    <span className="text-[9px] sm:text-[11px] lg:text-[13px] text-slate-700 font-semibold font-inter block whitespace-nowrap leading-tight mt-0.5">
+                    <span className="text-[8px] sm:text-[11px] lg:text-[13px] text-slate-700 font-semibold font-inter block whitespace-nowrap leading-tight">
                       Across Kerala
                     </span>
                   </div>
@@ -728,25 +927,25 @@ export default function FranchisePage() {
 
                 {/* Card 2: Districts */}
                 <motion.div
-                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  initial={{ opacity: 0, y: 35, scale: 0.9 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: 0.2 }}
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  className="bg-[#FBFFF2] border border-[#E2EBD4] p-3 sm:p-4 rounded-md shadow-sm text-center flex flex-col gap-1.5 sm:gap-2 items-center justify-between min-h-[135px] sm:min-h-[155px]"
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: 0.70 }}
+                  whileHover={{ scale: 1.05, y: -3 }}
+                  className="bg-[#FBFFF2] border border-[#E2EBD4] p-2 sm:p-4 rounded-md shadow-sm text-center flex flex-col gap-1 sm:gap-2 items-center justify-between min-h-[110px] sm:min-h-[155px]"
                 >
                   <Icon
                     icon="griddy-icons:building"
-                    className="w-5 h-5 sm:w-7 sm:h-7 text-[#D62828] mb-1"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#D62828] mb-0.5"
                   />
                   <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
-                    <span className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
+                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
                       14
                     </span>
-                    <span className="text-[10px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5 sm:mt-1">
+                    <span className="text-[9px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5">
                       DISTRICTS
                     </span>
-                    <span className="text-[9px] sm:text-[11px] lg:text-[13px] text-slate-700 font-semibold font-inter block whitespace-nowrap leading-tight mt-0.5">
+                    <span className="text-[8px] sm:text-[11px] lg:text-[13px] text-slate-700 font-semibold font-inter block whitespace-nowrap leading-tight">
                       Strong Presence
                     </span>
                   </div>
@@ -754,25 +953,25 @@ export default function FranchisePage() {
 
                 {/* Card 3: Team Members */}
                 <motion.div
-                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  initial={{ opacity: 0, y: 35, scale: 0.9 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: 0.3 }}
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  className="bg-[#FBFFF2] border border-[#E2EBD4] p-3 sm:p-4 rounded-md shadow-sm text-center flex flex-col gap-1.5 sm:gap-2 items-center justify-between min-h-[135px] sm:min-h-[155px]"
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: 0.85 }}
+                  whileHover={{ scale: 1.05, y: -3 }}
+                  className="bg-[#FBFFF2] border border-[#E2EBD4] p-2 sm:p-4 rounded-md shadow-sm text-center flex flex-col gap-1 sm:gap-2 items-center justify-between min-h-[110px] sm:min-h-[155px]"
                 >
                   <Icon
                     icon="ion:people-outline"
-                    className="w-5 h-5 sm:w-7 sm:h-7 text-[#D62828] mb-1"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#D62828] mb-0.5"
                   />
                   <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
-                    <span className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
+                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
                       500+
                     </span>
-                    <span className="text-[10px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5 sm:mt-1">
+                    <span className="text-[9px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5">
                       TEAM MEMBERS
                     </span>
-                    <span className="text-[9px] sm:text-[11px] lg:text-[13px] text-slate-700 font-semibold font-inter block whitespace-nowrap leading-tight mt-0.5">
+                    <span className="text-[8px] sm:text-[11px] lg:text-[13px] text-slate-700 font-semibold font-inter block whitespace-nowrap leading-tight">
                       Serving with Pride
                     </span>
                   </div>
@@ -780,13 +979,17 @@ export default function FranchisePage() {
               </div>
             </div>
 
-            {/* RIGHT CONTAINER (lg:w-[58%]): Map Display & Right Side Elements */}
-            <div
+            {/* RIGHT CONTAINER (lg:w-[58%]): Map Display & Right Side Elements (Fade in from Right Side) */}
+            <motion.div
               ref={mapRightColRef}
-              className="w-full lg:w-[58%] relative z-50 h-[52vh] sm:h-[60vh] lg:h-[65vh] xl:h-[70vh] max-h-[720px] flex items-center justify-start shrink-0"
+              initial={{ opacity: 0, x: 80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }}
+              className="w-full lg:w-[58%] relative z-50 h-[310px] sm:h-[520px] lg:h-[65vh] xl:h-[70vh] max-h-[720px] flex items-center justify-center lg:justify-start shrink-0 mt-1 sm:mt-0"
             >
               {/* Dark Green Zoom Controls Pill (Top Right, mobile horizontal / desktop vertical) */}
-              <div className="absolute top-2 sm:top-6 lg:top-8 right-2 sm:right-12 md:right-16 lg:right-24 xl:right-28 z-40 bg-[#153520] text-white p-1.5 sm:p-2.5 rounded-xl sm:rounded-2xl shadow-xl flex flex-row sm:flex-col items-center gap-2 sm:gap-2.5 font-manrope text-[9px] sm:text-[11px]">
+              <div className="absolute top-0 sm:top-6 lg:top-8 right-0 sm:right-12 md:right-16 lg:right-24 xl:right-28 z-40 bg-[#153520] text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-2xl shadow-xl flex flex-row sm:flex-col items-center gap-2 sm:gap-2.5 font-manrope text-[9px] sm:text-[11px]">
                 {/* Back Button (Shown ONLY when viewing Kerala District Map) */}
                 {mapMode === "kerala" && (
                   <button
@@ -794,10 +997,10 @@ export default function FranchisePage() {
                       setMapMode("full");
                       setSelectedOutlet(null);
                     }}
-                    className="flex flex-col items-center gap-0.5 text-[#82B224] hover:text-white transition-colors cursor-pointer border-b border-white/15 pb-2 w-full"
+                    className="flex flex-col sm:flex-col items-center gap-0.5 text-[#82B224] hover:text-white transition-colors cursor-pointer border-r sm:border-r-0 sm:border-b border-white/15 pr-2 sm:pr-0 sm:pb-2 w-auto sm:w-full"
                     title="Back to India Map"
                   >
-                    <Icon icon="ph:arrow-left-bold" className="w-4 h-4" />
+                    <Icon icon="ph:arrow-left-bold" className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     <span className="font-bold">Back</span>
                   </button>
                 )}
@@ -809,7 +1012,7 @@ export default function FranchisePage() {
                 >
                   <Icon
                     icon="ph:magnifying-glass-plus-bold"
-                    className="w-4 h-4"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                   />
                   <span>Zoom In</span>
                 </button>
@@ -820,7 +1023,7 @@ export default function FranchisePage() {
                 >
                   <Icon
                     icon="ph:magnifying-glass-minus-bold"
-                    className="w-4 h-4"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                   />
                   <span>Zoom Out</span>
                 </button>
@@ -831,34 +1034,45 @@ export default function FranchisePage() {
                 >
                   <Icon
                     icon="ph:arrow-counter-clockwise-bold"
-                    className="w-4 h-4"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                   />
                   <span>Reset</span>
                 </button>
               </div>
 
-              {/* Map Canvas Container with Zoom Transform */}
+              {/* Map Canvas Container with Zoom Transform (Scaled Down on Mobile) */}
               <div
-                className="relative w-full h-full flex items-center justify-start transition-transform duration-500 ease-out"
-                style={{ transform: `scale(${zoomLevel * 1.22})` }}
+                className="relative w-full h-full flex items-center justify-center lg:justify-start transition-transform duration-500 ease-out scale-[0.85] sm:scale-100 origin-center"
+                style={{ transform: `scale(${zoomLevel * (typeof window !== "undefined" && window.innerWidth < 640 ? 0.88 : 1.22)})` }}
               >
-                {/* 3D Map SVG Illustration */}
-                <div className="relative h-full w-auto aspect-[888/982] max-w-full translate-x-2 sm:translate-x-4 lg:translate-x-6 xl:translate-x-12 2xl:translate-x-14 translate-y-2 sm:translate-y-4 lg:translate-y-6 xl:translate-y-10 2xl:translate-y-14">
-                  <Image
-                    src={
-                      mapMode === "full"
-                        ? "/Franchies/fullMap.svg"
-                        : "/Franchies/KeralaMap.svg"
-                    }
-                    alt={
-                      mapMode === "full"
-                        ? "3D India Map"
-                        : "3D Kerala State Map"
-                    }
-                    fill
-                    priority
-                    className="object-contain drop-shadow-2xl select-none"
-                  />
+                {/* 3D Map SVG Illustration with AnimatePresence Mode Toggle Animation */}
+                <div className="relative h-full w-auto aspect-[888/982] max-w-full translate-x-0 lg:translate-x-6 xl:translate-x-12 2xl:translate-x-14 translate-y-0 lg:translate-y-6 xl:translate-y-10 2xl:translate-y-14 flex items-center justify-center">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={mapMode}
+                      initial={{ opacity: 0, scale: 0.9, rotate: mapMode === "kerala" ? -2 : 2 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                      className="relative w-full h-full"
+                    >
+                      <Image
+                        src={
+                          mapMode === "full"
+                            ? "/Franchies/fullMap.svg"
+                            : "/Franchies/KeralaMap.svg"
+                        }
+                        alt={
+                          mapMode === "full"
+                            ? "3D India Map"
+                            : "3D Kerala State Map"
+                        }
+                        fill
+                        priority
+                        className="object-contain drop-shadow-2xl select-none"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
 
                   {/* INVISIBLE CLICKABLE HOTSPOTS OVER SVG BUILT-IN PINS */}
                   {activeOutlets.map((outlet) => {
@@ -883,14 +1097,7 @@ export default function FranchisePage() {
                         }}
                         title={`Click to view ${outlet.city} outlet details`}
                       >
-                        <motion.div
-                          whileHover={{ scale: 1.3 }}
-                          className={`w-6 h-6 rounded-full border-2 transition-all duration-300 ${
-                            isSelected
-                              ? "border-[#D62828] bg-[#D62828]/30 scale-125 shadow-lg animate-pulse"
-                              : "border-transparent group-hover:border-[#D62828]/60 group-hover:bg-[#D62828]/20"
-                          }`}
-                        />
+                        <div className="w-full h-full" />
                       </div>
                     );
                   })}
@@ -914,12 +1121,16 @@ export default function FranchisePage() {
                     />
                   )}
 
-                  {/* KERALA RED PIN + GREEN TAG OVERLAY (PIN TIP DIRECTLY INSIDE GREEN KERALA SHAPE) */}
+                  {/* KERALA RED PIN + GREEN TAG OVERLAY WITH ANIMATED PULSE & POP ENTRANCE */}
                   {mapMode === "full" && (
                     <motion.div
-                      initial={{ scale: 0.9, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      whileHover={{ scale: 1.08 }}
+                      initial={{ scale: 0, opacity: 0, y: -20 }}
+                      animate={{ scale: [1, 1.25, 1], opacity: 1, y: 0 }}
+                      whileHover={{ scale: 1.15 }}
+                      transition={{
+                        scale: { duration: 0.8, ease: [0.34, 1.56, 0.64, 1], delay: 0.5 },
+                        opacity: { duration: 0.3, delay: 0.5 },
+                      }}
                       className="absolute z-40 cursor-pointer flex items-center select-none pointer-events-auto"
                       style={{
                         left: "26.2%",
@@ -932,28 +1143,35 @@ export default function FranchisePage() {
                       }}
                       title="Click to explore Kerala District Map"
                     >
-                      {/* Red Location Pin with White Inner Dot */}
-                      <div className="relative w-[15px] sm:w-[17px] lg:w-[20px] xl:w-[22px] h-[19px] sm:h-[22px] lg:h-[25px] xl:h-[28px] shrink-0 drop-shadow-lg z-10">
-                        <svg viewBox="0 0 38 48" fill="none" className="w-full h-full">
-                          <path
-                            d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
-                            fill="url(#keralaPinGradient)"
-                          />
-                          <circle cx="19" cy="17" r="6.5" fill="white" />
-                          <defs>
-                            <linearGradient
-                              id="keralaPinGradient"
-                              x1="19"
-                              y1="0"
-                              x2="19"
-                              y2="48"
-                              gradientUnits="userSpaceOnUse"
-                            >
-                              <stop stopColor="#FF3B30" />
-                              <stop offset="1" stopColor="#C41C1C" />
-                            </linearGradient>
-                          </defs>
-                        </svg>
+                      {/* Red Location Pin with Centered Compact Red Glow Pulse */}
+                      <div className="relative flex items-center justify-center shrink-0">
+                        {/* Compact Red Glow Ring Centered Directly Around Pin */}
+                        <span className="absolute inset-0 m-auto w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#FF3B30]/60 animate-ping pointer-events-none z-0" />
+                        <span className="absolute inset-0 m-auto w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FF3B30]/30 animate-pulse pointer-events-none z-0" />
+
+                        {/* Red Location Pin Icon */}
+                        <div className="relative w-[18px] sm:w-[20px] lg:w-[24px] xl:w-[26px] h-[23px] sm:h-[26px] lg:h-[30px] xl:h-[33px] shrink-0 drop-shadow-lg z-10">
+                          <svg viewBox="0 0 38 48" fill="none" className="w-full h-full relative z-10">
+                            <path
+                              d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
+                              fill="url(#keralaPinGradient)"
+                            />
+                            <circle cx="19" cy="17" r="6.5" fill="white" />
+                            <defs>
+                              <linearGradient
+                                id="keralaPinGradient"
+                                x1="19"
+                                y1="0"
+                                x2="19"
+                                y2="48"
+                                gradientUnits="userSpaceOnUse"
+                              >
+                                <stop stopColor="#FF3B30" />
+                                <stop offset="1" stopColor="#C41C1C" />
+                              </linearGradient>
+                            </defs>
+                          </svg>
+                        </div>
                       </div>
 
                       {/* Dark Green "Kerala" Tag Label Pill with White Border */}
@@ -963,61 +1181,77 @@ export default function FranchisePage() {
                     </motion.div>
                   )}
 
-                  {/* KERALA DISTRICT PINS WITH DARK GREEN TAG PILLS (WHEN IN KERALA MAP MODE) */}
+                  {/* KERALA DISTRICT PINS WITH DARK GREEN TAG PILLS (ANIMATE ONE BY ONE AFTER MAP LOADS) */}
                   {mapMode === "kerala" &&
-                    keralaOutlets.map((outlet) => {
-                      const isSelected = selectedOutlet?.id === outlet.id;
-                      const hasTag = [
-                        "kannur",
-                        "thrissur",
-                        "ernakulam",
-                        "kottayam",
-                        "alappuzha",
-                        "kollam",
-                        "kochi",
-                        "thiruvananthapuram",
-                      ].includes(outlet.id);
+                    keralaOutlets
+                      .filter((outlet) =>
+                        [
+                          "kannur",
+                          "thrissur",
+                          "ernakulam",
+                          "kottayam",
+                          "alappuzha",
+                          "kollam",
+                          "kochi",
+                          "thiruvananthapuram",
+                        ].includes(outlet.id)
+                      )
+                      .map((outlet, tagIdx) => {
+                        const isSelected = selectedOutlet?.id === outlet.id;
 
-                      if (!hasTag) return null;
+                        return (
+                          <motion.div
+                            key={`kerala-pin-${outlet.id}`}
+                            data-pin-element="true"
+                            initial={{ scale: 0, opacity: 0, y: -20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            transition={{
+                              duration: 0.45,
+                              delay: 0.5 + tagIdx * 0.08,
+                              ease: [0.34, 1.56, 0.64, 1],
+                            }}
+                            whileHover={{ scale: 1.12 }}
+                            className="absolute z-40 cursor-pointer flex items-center select-none"
+                            style={{
+                              left: `${outlet.xPercent}%`,
+                              top: `${outlet.yPercent}%`,
+                              transform: "translate(-8px, -100%)",
+                            }}
+                            onClick={() => setSelectedOutlet(outlet)}
+                            title={`Click to view ${outlet.city} details`}
+                          >
+                          {/* Red Location Pin with Centered Glow Ring when Selected */}
+                          <div className="relative flex items-center justify-center shrink-0">
+                            {isSelected && (
+                              <>
+                                <span className="absolute inset-0 m-auto w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#FF3B30]/60 animate-ping pointer-events-none z-0" />
+                                <span className="absolute inset-0 m-auto w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FF3B30]/35 animate-pulse pointer-events-none z-0" />
+                              </>
+                            )}
 
-                      return (
-                        <motion.div
-                          key={`kerala-pin-${outlet.id}`}
-                          data-pin-element="true"
-                          initial={{ scale: 0.8, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          whileHover={{ scale: 1.12 }}
-                          className="absolute z-40 cursor-pointer flex items-center select-none"
-                          style={{
-                            left: `${outlet.xPercent}%`,
-                            top: `${outlet.yPercent}%`,
-                            transform: "translate(-8px, -100%)",
-                          }}
-                          onClick={() => setSelectedOutlet(outlet)}
-                          title={`Click to view ${outlet.city} details`}
-                        >
-                          {/* Red Location Pin */}
-                          <div className="relative w-[13px] sm:w-[15px] md:w-[17px] lg:w-[18px] xl:w-[20px] 2xl:w-[22px] h-[17px] sm:h-[19px] md:h-[21px] lg:h-[23px] xl:h-[25px] 2xl:h-[28px] shrink-0 drop-shadow-lg z-10">
-                            <svg viewBox="0 0 38 48" fill="none" className="w-full h-full">
-                              <path
-                                d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
-                                fill={`url(#pinGrad_${outlet.id})`}
-                              />
-                              <circle cx="19" cy="17" r="6.5" fill="white" />
-                              <defs>
-                                <linearGradient
-                                  id={`pinGrad_${outlet.id}`}
-                                  x1="19"
-                                  y1="0"
-                                  x2="19"
-                                  y2="48"
-                                  gradientUnits="userSpaceOnUse"
-                                >
-                                  <stop stopColor="#FF3B30" />
-                                  <stop offset="1" stopColor="#C41C1C" />
-                                </linearGradient>
-                              </defs>
-                            </svg>
+                            {/* Red Location Pin SVG Icon */}
+                            <div className="relative w-[13px] sm:w-[15px] md:w-[17px] lg:w-[18px] xl:w-[20px] 2xl:w-[22px] h-[17px] sm:h-[19px] md:h-[21px] lg:h-[23px] xl:h-[25px] 2xl:h-[28px] shrink-0 drop-shadow-lg z-10">
+                              <svg viewBox="0 0 38 48" fill="none" className="w-full h-full">
+                                <path
+                                  d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
+                                  fill={`url(#pinGrad_${outlet.id})`}
+                                />
+                                <circle cx="19" cy="17" r="6.5" fill="white" />
+                                <defs>
+                                  <linearGradient
+                                    id={`pinGrad_${outlet.id}`}
+                                    x1="19"
+                                    y1="0"
+                                    x2="19"
+                                    y2="48"
+                                    gradientUnits="userSpaceOnUse"
+                                  >
+                                    <stop stopColor="#FF3B30" />
+                                    <stop offset="1" stopColor="#C41C1C" />
+                                  </linearGradient>
+                                </defs>
+                              </svg>
+                            </div>
                           </div>
 
                           {/* Dark Green Tag Label Pill */}
@@ -1091,20 +1325,11 @@ export default function FranchisePage() {
                     {/* Popup Content: Address & Phone */}
                     <div className="space-y-3 text-[12px] lg:text-[13px] text-slate-700 font-manrope">
                       <div className="flex items-start gap-2.5">
-                        <div className="w-5 h-5 rounded-full bg-[#FEF2F2] flex items-center justify-center shrink-0 mt-0.5">
-                          <svg
-                            className="w-3.5 h-3.5 text-[#D62828]"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                            />
-                          </svg>
+                        <div className="w-6 h-6 rounded-full bg-[#FEF2F2] flex items-center justify-center shrink-0 mt-0.5">
+                          <Icon
+                            icon="ph:map-pin-fill"
+                            className="w-4 h-4 text-[#D62828]"
+                          />
                         </div>
                         <p className="leading-snug text-slate-700 font-medium">
                           {selectedOutlet.address}
@@ -1135,12 +1360,22 @@ export default function FranchisePage() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           </div>
         </div>
 
-        {/* 3D Mascot Character (Chicken standing in bottom right corner over bottom slope) */}
-        <div className="absolute bottom-0 right-1 sm:right-2 lg:right-4 xl:right-8 z-10 pointer-events-none w-[100px] sm:w-[130px] md:w-[155px] lg:w-[175px] xl:w-[220px]">
+        {/* 3D Mascot Character (Chicken standing in bottom right corner over bottom slope - Animated on Scroll) */}
+        <motion.div
+          initial={{ opacity: 0, y: 60, scale: 0.85 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{
+            duration: 0.75,
+            delay: 0.35,
+            ease: [0.34, 1.56, 0.64, 1],
+          }}
+          className="absolute bottom-0 right-1 sm:right-2 lg:right-4 xl:right-8 z-10 pointer-events-none w-[100px] sm:w-[130px] md:w-[155px] lg:w-[175px] xl:w-[220px]"
+        >
           <Image
             src="/Franchies/chicken.webp"
             alt="MEATIN Chicken Mascot"
@@ -1149,10 +1384,10 @@ export default function FranchisePage() {
             priority
             className="w-full h-auto object-contain object-bottom drop-shadow-2xl"
           />
-        </div>
+        </motion.div>
 
-        {/* Bottom Slope Image Transition (Pinned to bottom of Section 2 behind mascot) */}
-        <div className="relative w-full h-[65px] sm:h-[95px] md:h-[120px] lg:h-[140px] shrink-0 pointer-events-none -mt-4 z-0">
+        {/* Bottom Slope Image Transition (Pinned flush to bottom of Section 2 merging with footer) */}
+        <div className="relative w-full h-[70px] sm:h-[95px] md:h-[120px] lg:h-[140px] shrink-0 pointer-events-none -mt-4 -mb-2 z-0">
           <Image
             src="/Franchies/bottomSlope.webp"
             alt="Green Slope Transition"

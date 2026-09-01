@@ -36,15 +36,25 @@ export default function KnowYourMeatPage() {
   // GLB Model paths for 360 viewer
   const partGlbMap: Record<string, string> = {
     Wing: "/Product/details/partsGLB/wings.glb",
-    Heart: "/Product/details/partsGLB/full chicken.glb",
-    Drumette: "/Product/details/partsGLB/wings.glb",
+    wing: "/Product/details/partsGLB/wings.glb",
+    Heart: "/Product/details/partsGLB/heart.glb",
+    heart: "/Product/details/partsGLB/heart.glb",
+    Drumette: "/Product/details/partsGLB/drumtee.glb",
+    drumette: "/Product/details/partsGLB/drumtee.glb",
     Thigh: "/Product/details/partsGLB/thigh.glb",
+    thigh: "/Product/details/partsGLB/thigh.glb",
     Neck: "/Product/details/partsGLB/neck.glb",
+    neck: "/Product/details/partsGLB/neck.glb",
     Breast: "/Product/details/partsGLB/Breast.glb",
-    Back: "/Product/details/partsGLB/full chicken.glb",
+    breast: "/Product/details/partsGLB/Breast.glb",
+    Back: "/Product/details/partsGLB/back.glb",
+    back: "/Product/details/partsGLB/back.glb",
     Liver: "/Product/details/partsGLB/liver.glb",
+    liver: "/Product/details/partsGLB/liver.glb",
     Drumstick: "/Product/details/partsGLB/Drumstick.glb",
+    drumstick: "/Product/details/partsGLB/Drumstick.glb",
     Gizzard: "/Product/details/partsGLB/gizzard.glb",
+    gizzard: "/Product/details/partsGLB/gizzard.glb",
   };
 
   useEffect(() => {
@@ -4298,14 +4308,14 @@ export default function KnowYourMeatPage() {
                 {activeViewTab === "3d" ? (
                   /* CLEAN INTERACTIVE 360° 3D GLB MODEL VIEWER */
                   <div className="relative w-full h-full flex items-center justify-center pointer-events-auto z-40">
-                    {/* Google <model-viewer> Web Component */}
-                    <div className="w-full h-full relative flex items-center justify-center">
+                    {/* Google <model-viewer> Web Component (Scaled up on mobile to match image size) */}
+                    <div className="w-full h-full relative flex items-center justify-center scale-[2.4] sm:scale-[1.8] md:scale-100 transition-transform duration-300">
                       {/* @ts-ignore */}
                       <model-viewer
                         src={
                           partGlbMap[
                             chickenParts[manuallySelectedPartIdx].name
-                          ] || "/Product/details/partsGLB/full chicken.glb"
+                          ] || "/Product/details/partsGLB/Drumstick.glb"
                         }
                         alt={`360 3D Model of ${chickenParts[manuallySelectedPartIdx].name}`}
                         auto-rotate
@@ -4313,7 +4323,7 @@ export default function KnowYourMeatPage() {
                         shadow-intensity="1.5"
                         shadow-softness="0.8"
                         exposure="1.15"
-                        camera-orbit="0deg 75deg 105%"
+                        camera-orbit="0deg 75deg 80%"
                         rotation-per-second="30deg"
                         interaction-prompt="none"
                         style={{
