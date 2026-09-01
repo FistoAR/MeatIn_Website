@@ -23,12 +23,26 @@ export default function KnowYourMeatPage() {
   >("chicken");
   const [selectedPartIdx, setSelectedPartIdx] = useState(0);
   const [manuallySelectedPartIdx, setManuallySelectedPartIdx] = useState(0);
-  const [activeViewTab, setActiveViewTab] = useState<"raw" | "packed">("raw");
+  const [activeViewTab, setActiveViewTab] = useState<"raw" | "packed" | "3d">("raw");
   const [isLandedInSection2, setIsLandedInSection2] = useState(false);
   const [hasSelectedAnyPart, setHasSelectedAnyPart] = useState(false);
   const [hoveredPart, setHoveredPart] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // GLB Model paths for 360 viewer
+  const partGlbMap: Record<string, string> = {
+    Wing: "/Product/details/partsGLB/wings.glb",
+    Heart: "/Product/details/partsGLB/full chicken.glb",
+    Drumette: "/Product/details/partsGLB/wings.glb",
+    Thigh: "/Product/details/partsGLB/thigh.glb",
+    Neck: "/Product/details/partsGLB/neck.glb",
+    Breast: "/Product/details/partsGLB/Breast.glb",
+    Back: "/Product/details/partsGLB/full chicken.glb",
+    Liver: "/Product/details/partsGLB/liver.glb",
+    Drumstick: "/Product/details/partsGLB/Drumstick.glb",
+    Gizzard: "/Product/details/partsGLB/gizzard.glb",
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -37,6 +51,15 @@ export default function KnowYourMeatPage() {
     };
     handleResize();
     window.addEventListener("resize", handleResize);
+
+    // Dynamically load Google <model-viewer> web component script for 360 GLB models
+    if (typeof window !== "undefined" && !document.querySelector('script[src*="model-viewer"]')) {
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src = "https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js";
+      document.head.appendChild(script);
+    }
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -3942,10 +3965,10 @@ export default function KnowYourMeatPage() {
             : "hidden opacity-0 pointer-events-none"
         }`}
       >
-        {/* Pure Code Background: Section 1 Green (#638913) + Doodle Pattern + Cream Paper Right Panel with Layered Ripped Edge */}
+        {/* Pure Code Background: Darker Green (#46660E) + Doodle Pattern + Cream Paper Right Panel with Layered Ripped Edge */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          {/* Base Section 1 Green Color */}
-          <div className="absolute inset-0 bg-[#638913]" />
+          {/* Base Section 2 Slightly Darker Green Color */}
+          <div className="absolute inset-0 bg-[#46660E]" />
 
           {/* Doodle Pattern Overlay across Green Background */}
           <div
@@ -4108,60 +4131,75 @@ export default function KnowYourMeatPage() {
           >
             {/* Center Showcase Box */}
             <div className="relative w-[280px] h-[280px] md:w-[420px] md:h-[420px] max-h-[65vh] flex items-center justify-center md:-ml-20 detail-showcase-box">
-              {/* 360 spin badge - only shown for raw view (first card) */}
-              {activeViewTab === "raw" && (
-                <motion.div
-                  initial={{ rotate: -15, scale: 0.8, opacity: 0 }}
-                  animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="absolute -top-10 -right-4 w-24 h-24 z-30 pointer-events-none drop-shadow-xl"
-                >
-                  <Image
-                    src="/Product/details/360.webp"
-                    alt="360 View"
-                    fill
-                    className="object-contain"
-                  />
-                </motion.div>
-              )}
-
-              {/* Large Product Image (Ref attached for flying animation landing) */}
+              {/* Showcase Box Content: Interactive 3D Model Viewer OR 2D Product Image */}
               <div
                 ref={centerCircleRef}
-                className="relative w-full h-full flex items-center justify-center pointer-events-none z-30"
+                className="relative w-full h-full flex items-center justify-center z-30"
               >
-                <div
-                  className={`relative w-full h-full flex items-center justify-center transition-all duration-300 ${
-                    isLandedInSection2
-                      ? "opacity-100 scale-100"
-                      : "opacity-0 scale-95"
-                  }`}
-                >
-                  <img
-                    src={
-                      activeViewTab === "raw"
-                        ? chickenParts[manuallySelectedPartIdx].img
-                        : "/Product/details/packedProduct.webp"
-                    }
-                    alt={chickenParts[manuallySelectedPartIdx].name}
-                    className="w-full h-full object-contain filter drop-shadow-2xl"
-                  />
-                </div>
+                {activeViewTab === "3d" ? (
+                  /* CLEAN INTERACTIVE 360° 3D GLB MODEL VIEWER */
+                  <div className="relative w-full h-full flex items-center justify-center pointer-events-auto z-40">
+                    {/* Google <model-viewer> Web Component */}
+                    <div className="w-full h-full relative flex items-center justify-center">
+                      {/* @ts-ignore */}
+                      <model-viewer
+                        src={
+                          partGlbMap[chickenParts[manuallySelectedPartIdx].name] ||
+                          "/Product/details/partsGLB/full chicken.glb"
+                        }
+                        alt={`360 3D Model of ${chickenParts[manuallySelectedPartIdx].name}`}
+                        auto-rotate
+                        camera-controls
+                        shadow-intensity="1.5"
+                        shadow-softness="0.8"
+                        exposure="1.15"
+                        camera-orbit="0deg 75deg 105%"
+                        rotation-per-second="30deg"
+                        interaction-prompt="none"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          backgroundColor: "transparent",
+                          filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.35))",
+                        }}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  /* 2D Image View (Raw or Packed) */
+                  <div
+                    className={`relative w-full h-full flex items-center justify-center transition-all duration-300 pointer-events-none ${
+                      isLandedInSection2
+                        ? "opacity-100 scale-100"
+                        : "opacity-0 scale-95"
+                    }`}
+                  >
+                    <img
+                      src={
+                        activeViewTab === "raw"
+                          ? chickenParts[manuallySelectedPartIdx].img
+                          : "/Product/details/packedProduct.webp"
+                      }
+                      alt={chickenParts[manuallySelectedPartIdx].name}
+                      className="w-full h-full object-contain filter drop-shadow-2xl"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Bottom Carousel Controls Bar (natural flex item flowing with space-around) */}
+            {/* Bottom Carousel Controls Bar */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.15 }}
-              className="flex items-center justify-center gap-5 z-30 md:-ml-20"
+              className="flex items-center justify-center gap-2.5 sm:gap-3.5 z-30 md:-ml-20"
             >
               {/* Left Arrow Button */}
               <button
                 onClick={() => {
                   setActiveViewTab((prev) =>
-                    prev === "raw" ? "packed" : "raw",
+                    prev === "raw" ? "3d" : prev === "3d" ? "packed" : "raw",
                   );
                 }}
                 className="w-8 h-8 rounded-full bg-white text-slate-800 shadow-md flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
@@ -4185,7 +4223,7 @@ export default function KnowYourMeatPage() {
               {/* Thumbnail 1: Raw Cut Part Image */}
               <button
                 onClick={() => setActiveViewTab("raw")}
-                className={`relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden p-2 transition-all duration-300 cursor-pointer detail-carousel-btn ${
+                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden p-1.5 transition-all duration-300 cursor-pointer detail-carousel-btn ${
                   activeViewTab === "raw"
                     ? "border-4 border-[#F2CE07] bg-amber-50 scale-105"
                     : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
@@ -4201,7 +4239,7 @@ export default function KnowYourMeatPage() {
               {/* Thumbnail 2: Packed Product Image */}
               <button
                 onClick={() => setActiveViewTab("packed")}
-                className={`relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer detail-carousel-btn ${
+                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer detail-carousel-btn ${
                   activeViewTab === "packed"
                     ? "border-4 border-[#F2CE07] scale-105"
                     : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
@@ -4214,11 +4252,35 @@ export default function KnowYourMeatPage() {
                 />
               </button>
 
+              {/* Thumbnail 3: 360 Image with 3D View Intimation Tag */}
+              <button
+                onClick={() => setActiveViewTab("3d")}
+                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden p-1.5 transition-all duration-300 cursor-pointer detail-carousel-btn flex flex-col items-center justify-between bg-white/20 hover:bg-white/40 ${
+                  activeViewTab === "3d"
+                    ? "border-4 border-[#F2CE07] bg-white/50 scale-105"
+                    : "border-2 border-white/60"
+                }`}
+                title="Click to view 360° 3D Model"
+              >
+                {/* 360 Image */}
+                <div className="relative w-full h-[65%] flex items-center justify-center">
+                  <img
+                    src="/Product/details/360.webp"
+                    alt="360 View"
+                    className="w-full h-full object-contain filter drop-shadow"
+                  />
+                </div>
+                {/* Intimation badge below 360 image */}
+                <span className="w-full text-center bg-[#F2CE07] text-slate-900 font-extrabold text-[9px] sm:text-[10px] py-0.5 rounded-lg uppercase tracking-wider font-manrope shadow-sm border border-white/90">
+                  3D View
+                </span>
+              </button>
+
               {/* Right Arrow Button */}
               <button
                 onClick={() => {
                   setActiveViewTab((prev) =>
-                    prev === "raw" ? "packed" : "raw",
+                    prev === "raw" ? "packed" : prev === "packed" ? "3d" : "raw",
                   );
                 }}
                 className="w-8 h-8 rounded-full bg-white text-slate-800 shadow-md flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
