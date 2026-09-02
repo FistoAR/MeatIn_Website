@@ -63,13 +63,13 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 w-full p-4 lg:p-[1vw] pointer-events-none">
+      <header className="fixed top-0 left-0 right-0 z-50 w-full p-4 lg:p-[1vw] pointer-events-none" suppressHydrationWarning>
         <div className={`w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw] py-2 lg:py-[0.5vw] flex items-center justify-between font-inter border transition-all duration-300 rounded-[20px] pointer-events-auto ${containerBgClass}`}>
           {/* Logo */}
           <Logo variant="dark" className="shrink-0" />
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-[2.5vw] whitespace-nowrap">
+          <nav className="hidden lg:flex items-center gap-[2.5vw] whitespace-nowrap" suppressHydrationWarning>
             {navItems.map((item) => {
               const isActive = pathname === item.href;
 
@@ -77,6 +77,8 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={item.label}
                   href={item.href}
+                  prefetch={true}
+                  suppressHydrationWarning
                   className={`relative lg:text-[0.75vw] xl:text-[0.8vw] font-black font-inter tracking-wider transition-all duration-200 lg:px-[0.2vw] lg:py-[0.4vw] ${getLinkColorClass(isActive)}`}
                 >
                   {item.label}
@@ -92,6 +94,7 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center gap-3 lg:gap-[1vw]">
             <Link
               href="/contact"
+              suppressHydrationWarning
               className="hidden sm:inline-block bg-[#D62828] hover:bg-red-700 text-white font-bold font-inter text-xs lg:text-[0.7vw] xl:text-[0.75vw] px-4 lg:px-[1.2vw] py-2.5 lg:py-[0.6vw] rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95"
             >
               Enquiry Now
@@ -122,6 +125,7 @@ export const Navbar: React.FC = () => {
         className={`fixed top-0 right-0 bottom-0 z-[101] w-full max-w-xs bg-white/95 backdrop-blur-md shadow-2xl transition-transform duration-300 ease-out lg:hidden flex flex-col font-inter ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
+        suppressHydrationWarning
       >
         {/* Drawer Header */}
         <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
@@ -136,13 +140,15 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Drawer Navigation Links */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-2">
+        <div className="flex-1 overflow-y-auto p-5 space-y-2" suppressHydrationWarning>
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
                 key={item.label}
                 href={item.href}
+                prefetch={true}
+                suppressHydrationWarning
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold font-inter tracking-wider transition-all ${
                   isActive
@@ -160,6 +166,7 @@ export const Navbar: React.FC = () => {
           <div className="pt-4 sm:hidden">
             <Link
               href="/contact"
+              suppressHydrationWarning
               onClick={() => setMobileMenuOpen(false)}
               className="block w-full text-center bg-[#D62828] hover:bg-red-700 text-white font-bold font-inter text-xs py-3 rounded-xl uppercase tracking-wider transition-all"
             >

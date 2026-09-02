@@ -1,17 +1,19 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import Lenis from 'lenis';
 
 export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const pathname = usePathname();
+  const lenisRef = useRef<Lenis | null>(null);
+
+  // Initialize Lenis smooth scrolling
   useEffect(() => {
-    // Reset scroll to top on refresh/mount
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
-    window.scrollTo(0, 0);
 
-    // Initialize Lenis smooth scrolling
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -20,6 +22,7 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
       touchMultiplier: 1.5,
     });
 
+    lenisRef.current = lenis;
     lenis.scrollTo(0, { immediate: true });
 
     let rafId: number;
@@ -33,8 +36,22 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
+
+  // Reset scroll to 0 (top of page) whenever route/pathname changes via Navbar or navigation
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(0, { immediate: true });
+      }
+    }
+  }, [pathname]);
 
   return <>{children}</>;
 };

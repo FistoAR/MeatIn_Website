@@ -2,86 +2,105 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import Logo from './Logo';
+import { PRELOAD_ASSETS } from './preloaderAssets';
+import { AssetPreloadEngine } from './preloadEngine';
 
 export const Preloader: React.FC = () => {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  // Pre-warm Next.js route bundles on client router
   useEffect(() => {
+    const routesToPrewarm = [
+      '/',
+      '/know-your-meat',
+      '/recipes',
+      '/franchise',
+      '/meet-our-team',
+      '/vlog',
+      '/contact',
+      '/about',
+    ];
+
+    routesToPrewarm.forEach((routePath) => {
+      try {
+        router.prefetch(routePath);
+      } catch (e) {
+        // Safe fallback
+      }
+    });
+  }, [router]);
+
+  useEffect(() => {
+    // Skip preloader on internal page clicks if already preloaded during session
+    if (typeof window !== 'undefined' && sessionStorage.getItem('meatin_preloaded') === 'true') {
+      setLoading(false);
+      return;
+    }
+
     setMounted(true);
-    
-    // Check if preloader has already played in this tab session
-    if (typeof window !== 'undefined') {
-      const hasLoaded = sessionStorage.getItem('meatin-loaded');
-      if (hasLoaded === 'true') {
-        setLoading(false);
-        return;
-      }
+    if (typeof document !== 'undefined') {
+      document.body.classList.add('preloader-active');
+      document.body.style.overflow = 'hidden';
     }
 
-    let progressVal = 0;
-    let isFullyLoaded = false;
+    let isFinished = false;
 
-    // Fast finish animation once fully loaded
-    const completeLoader = () => {
-      isFullyLoaded = true;
-      sessionStorage.setItem('meatin-loaded', 'true');
-    };
+    const finishLoading = () => {
+      if (isFinished) return;
+      isFinished = true;
+      setProgress(100);
 
-    // Listen to window load event to ensure all page assets have downloaded
-    const handleLoad = () => {
-      completeLoader();
-    };
-
-    if (typeof window !== 'undefined') {
-      if (document.readyState === 'complete') {
-        completeLoader();
-      } else {
-        window.addEventListener('load', handleLoad);
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('meatin_preloaded', 'true');
       }
-    }
 
-    // Progress bar ticking mechanism
-    const progressInterval = setInterval(() => {
-      setProgress((prev) => {
-        if (isFullyLoaded) {
-          // Speed up to 100% if assets are downloaded
-          const next = prev + 15;
-          if (next >= 100) {
-            clearInterval(progressInterval);
-            
-            // Trigger page fade-out
-            setFadeOut(true);
-            setTimeout(() => {
-              setLoading(false);
-            }, 500);
-            
-            return 100;
+      setTimeout(() => {
+        setFadeOut(true);
+        setTimeout(() => {
+          if (typeof document !== 'undefined') {
+            document.body.classList.remove('preloader-active');
+            document.body.style.overflow = '';
           }
-          return next;
-        } else {
-          // Hold/slow down at 90% if assets are still downloading
-          if (prev < 90) {
-            return prev + 3;
+          setLoading(false);
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new Event('resize'));
+            window.dispatchEvent(new Event('scroll'));
           }
-          return prev;
-        }
+        }, 500);
+      }, 300);
+    };
+
+    // Instantiate DSA Asset Preload Engine (Priority Queue + Worker Pool + Set Deduplication)
+    if (typeof window !== 'undefined') {
+      const engine = new AssetPreloadEngine(PRELOAD_ASSETS, {
+        concurrency: 12, // Fast parallel loading for critical hero assets
+        onProgress: (percent) => {
+          setProgress((prev) => Math.max(prev, percent));
+        },
+        onComplete: () => {
+          finishLoading();
+        },
       });
-    }, 80);
 
-    // Safety fallback timeout (Max 4.5 seconds) in case of hung network requests
-    const fallbackTimer = setTimeout(() => {
-      completeLoader();
-    }, 4500);
+      engine.start();
+    }
+
+    // Maximum fallback safety timeout (1.5s) to guarantee fast entry
+    const maxTimeout = setTimeout(() => {
+      finishLoading();
+    }, 1500);
 
     return () => {
-      clearInterval(progressInterval);
-      clearTimeout(fallbackTimer);
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('load', handleLoad);
+      clearTimeout(maxTimeout);
+      if (typeof document !== 'undefined') {
+        document.body.classList.remove('preloader-active');
+        document.body.style.overflow = '';
       }
     };
   }, []);
@@ -90,10 +109,14 @@ export const Preloader: React.FC = () => {
 
   return (
     <div
+      id="preloader-root"
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#F4F4F2] transition-opacity duration-500 ease-in-out"
       style={{ opacity: fadeOut ? 0 : 1, pointerEvents: fadeOut ? 'none' : 'auto' }}
     >
       <style>{`
+        body.preloader-active > *:not(#preloader-root) {
+          opacity: 0 !important;
+        }
         @keyframes gentleFloat {
           0%, 100% { transform: translateY(0) scale(1.1); }
           50% { transform: translateY(-6px) scale(1.13); }
@@ -120,37 +143,51 @@ export const Preloader: React.FC = () => {
         }
       `}</style>
 
-      <div className="flex flex-col items-center justify-center gap-1.5 w-full max-w-md px-6">
+      {/* Compact Round Circular Preloader Container */}
+      <div className="relative w-52 h-52 sm:w-60 sm:h-60 rounded-full flex items-center justify-center p-1 shadow-[0_20px_50px_rgba(21,53,32,0.15)]">
         
-        {/* Brand Logo with Gentle Float Animation */}
-        <div className="animated-logo mb-0">
-          <Logo variant="dark" />
-        </div>
+        {/* Animated Running Green Circular Border */}
+        <div
+          className="absolute inset-0 rounded-full animate-spin pointer-events-none"
+          style={{
+            animationDuration: '2.2s',
+            padding: '7px',
+            background: 'conic-gradient(from 0deg, rgba(124, 179, 37, 0.15) 0%, #82B224 40%, #395B20 75%, #7CB325 100%)',
+            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMaskComposite: 'xor',
+            maskComposite: 'exclude',
+          }}
+        />
 
-        {/* Custom Animated Preloader GIF (Reduced height to eliminate blank padding gaps) */}
-        <div className="relative w-52 h-44 flex items-center justify-center rounded-2xl overflow-hidden">
-          <Image
-            src="/preloader.gif"
-            alt="Loading..."
-            fill
-            className="object-contain"
-            priority
-            unoptimized
-          />
-        </div>
+        {/* Clean Interior Circle Container (Perfectly Centered Content) */}
+        <div className="relative w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden p-4 shadow-inner">
+          {/* Content Layer Inside Circle */}
+          <div className="relative z-10 flex flex-col items-center justify-center my-auto">
+            {/* 1. Enlarged Running Chicken Mascot GIF */}
+            <div className="relative w-[170px] h-[120px] sm:w-[190px] sm:h-[135px] flex items-center justify-center shrink-0">
+              <Image
+                src="/preloader.gif?v=3"
+                alt="Loading..."
+                fill
+                className="object-contain object-center"
+                priority
+                unoptimized
+              />
+            </div>
 
-        {/* Premium Glowing Progress Bar with Shimmer Effect */}
-        <div className="relative w-64 h-2.5 bg-slate-200/80 rounded-full overflow-hidden mt-1 border border-slate-300/40 p-[1.5px]">
-          <div
-            className="h-full glowing-bar transition-all duration-150 ease-out rounded-full"
-            style={{ width: `${progress}%` }}
-          />
+            {/* 2. MEATIN Logo */}
+            <div className="animated-logo scale-100 sm:scale-105 shrink-0 -mt-2">
+              <Logo variant="dark" />
+            </div>
+          </div>
         </div>
-        
-        <p className="text-[10px] font-bold tracking-widest text-[#153520] uppercase font-manrope opacity-80 mt-1">
-          Loading Freshness...
-        </p>
+      </div>
 
+      {/* Percentage Counter Below Circle */}
+      <div className="mt-6 flex items-center justify-center">
+        <span className="text-xl sm:text-2xl font-extrabold text-[#153520] tracking-wider font-manrope">
+          {progress}%
+        </span>
       </div>
     </div>
   );

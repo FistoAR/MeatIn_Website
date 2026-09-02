@@ -136,10 +136,21 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F3F3] font-manrope">
+    <div className="min-h-screen bg-[#F3F3F3] font-manrope relative overflow-hidden">
       
+      {/* Background Doodle Pattern Overlay (Tiled & Filtered behind cards) */}
+      <div
+        className="absolute inset-0 pointer-events-none bg-repeat z-0"
+        style={{
+          backgroundImage: 'url("/Product/Chicken/doodle.webp")',
+          backgroundSize: "950px",
+          filter: "brightness(0)",
+          opacity: 0.4,
+        }}
+      />
+
       {/* 1. HERO HEADER BANNER SECTION */}
-      <section className="relative w-full bg-[#153520] pt-[120px] pb-24 md:pt-[150px] md:pb-36 overflow-hidden">
+      <section className="relative z-10 w-full bg-[#153520] pt-[120px] pb-24 md:pt-[150px] md:pb-36 overflow-hidden">
         {/* Background Image Overlay with full opacity from public folder */}
         <div className="absolute inset-0 pointer-events-none">
           <Image
@@ -220,330 +231,326 @@ export default function ContactPage() {
         </motion.div>
       </section>
 
-      {/* 3. FORM AND SIDEBAR SPLIT LAYOUT */}
-      <section className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-stretch">
-          
-          {/* Form Side */}
-          <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-20px" }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-md p-6 sm:p-8 lg:p-10 relative overflow-hidden h-full"
-          >
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#153520] font-manrope mb-6">
-              Send Us a Message
-            </h2>
+      {/* 3. FORM AND SIDEBAR SPLIT LAYOUT (Single Outer Card) */}
+      <section className="relative z-10 w-full max-w-[1400px] lg:max-w-[90vw] mx-auto pt-4 md:pt-5 pb-5">
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-20px" }}
+          transition={{ duration: 0.6 }}
+          className="w-full bg-white rounded-[24px] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.035)] p-6 sm:p-8 lg:p-10"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10 items-stretch">
+            
+            {/* Form Side (Left Column) */}
+            <div className="lg:col-span-2 flex flex-col justify-between h-full">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#153520] font-manrope mb-6">
+                Send Us a Message
+              </h2>
 
-            {!isSubmitted ? (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  
-                  {/* Full Name */}
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className="relative w-5 h-5">
-                        <Image
-                          src="/ContactUs/contact-us-icons/full-name-icon.svg"
-                          alt="Name Icon"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <label className="text-xs sm:text-sm font-bold text-slate-700">Full Name <span className="text-[#D62828]">*</span></label>
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Enter your full name"
-                      value={fullName}
-                      onChange={(e) => {
-                        setFullName(e.target.value);
-                        if (errors.fullName) {
-                          setErrors(prev => {
-                            const next = { ...prev };
-                            delete next.fullName;
-                            return next;
-                          });
-                        }
-                      }}
-                      className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 ${errors.fullName ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
-                    />
-                    {errors.fullName && <p className="text-xs text-[#D62828]">{errors.fullName}</p>}
-                  </div>
-
-                  {/* Enquiry Type Dropdown */}
-                  <div className="space-y-1.5 relative" ref={dropdownRef}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className="relative w-5 h-5">
-                        <Image
-                          src="/ContactUs/contact-us-icons/enquiry-type.svg"
-                          alt="Enquiry Icon"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <label className="text-xs sm:text-sm font-bold text-slate-700">Enquiry Type <span className="text-[#D62828]">*</span></label>
-                    </div>
-                    <div className="relative">
-                      <button
-                        type="button"
-                        onClick={() => setShowDropdown(!showDropdown)}
-                        className={`w-full px-4 py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all bg-white ${errors.enquiryType ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20]'}`}
-                      >
-                        <span className={enquiryType ? 'text-slate-800 font-medium' : 'text-slate-400'}>
-                          {enquiryType || 'Select enquiry type'}
-                        </span>
-                        <ChevronDown className="w-4 h-4 text-[#395B20] shrink-0" />
-                      </button>
-
-                      {showDropdown && (
-                        <div
-                          data-lenis-prevent
-                          className="absolute left-0 right-0 top-[98%] mt-0 bg-white border-2 border-slate-400 rounded-xl shadow-2xl max-h-56 overflow-y-auto z-30 font-medium text-sm"
-                        >
-                          {enquiryTypes.map((type, idx) => (
-                            <button
-                              key={idx}
-                              type="button"
-                              onClick={() => {
-                                setEnquiryType(type);
-                                setShowDropdown(false);
-                                setErrors(prev => {
-                                  const next = { ...prev };
-                                  delete next.enquiryType;
-                                  return next;
-                                });
-                              }}
-                              className={`w-full text-left px-4 py-2.5 transition-colors ${enquiryType === type ? 'bg-[#EEF6E8] text-[#395B20] font-semibold' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
-                            >
-                              {type}
-                            </button>
-                          ))}
+              {!isSubmitted ? (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    {/* Full Name */}
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="relative w-5 h-5">
+                          <Image
+                            src="/ContactUs/contact-us-icons/full-name-icon.svg"
+                            alt="Name Icon"
+                            fill
+                            className="object-contain"
+                          />
                         </div>
-                      )}
-                    </div>
-                    {errors.enquiryType && <p className="text-xs text-[#D62828]">{errors.enquiryType}</p>}
-                  </div>
-
-                </div>
-
-                {/* Custom Enquiry Type (If 'Other' is selected) */}
-                <AnimatePresence>
-                  {enquiryType === 'Other' && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                      animate={{ opacity: 1, height: 'auto', marginTop: 12 }}
-                      exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-1.5 overflow-hidden"
-                    >
-                      <label className="text-xs sm:text-sm font-bold text-slate-700">Specify Enquiry Type <span className="text-[#D62828]">*</span></label>
+                        <label className="text-xs sm:text-sm font-bold text-slate-700">Full Name <span className="text-[#D62828]">*</span></label>
+                      </div>
                       <input
                         type="text"
-                        placeholder="Enter your enquiry type"
-                        value={customEnquiryType}
+                        placeholder="Enter your full name"
+                        value={fullName}
                         onChange={(e) => {
-                          setCustomEnquiryType(e.target.value);
-                          if (errors.customEnquiryType) {
+                          setFullName(e.target.value);
+                          if (errors.fullName) {
                             setErrors(prev => {
                               const next = { ...prev };
-                              delete next.customEnquiryType;
+                              delete next.fullName;
                               return next;
                             });
                           }
                         }}
-                        className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 ${errors.customEnquiryType ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                        className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 ${errors.fullName ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
                       />
-                      {errors.customEnquiryType && <p className="text-xs text-[#D62828]">{errors.customEnquiryType}</p>}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      {errors.fullName && <p className="text-xs text-[#D62828]">{errors.fullName}</p>}
+                    </div>
 
-                {/* Message TextArea */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="relative w-5 h-5">
+                    {/* Enquiry Type Dropdown */}
+                    <div className="space-y-1.5 relative" ref={dropdownRef}>
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="relative w-5 h-5">
+                          <Image
+                            src="/ContactUs/contact-us-icons/enquiry-type.svg"
+                            alt="Enquiry Icon"
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                        <label className="text-xs sm:text-sm font-bold text-slate-700">Enquiry Type <span className="text-[#D62828]">*</span></label>
+                      </div>
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() => setShowDropdown(!showDropdown)}
+                          className={`w-full px-4 py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all bg-white ${errors.enquiryType ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20]'}`}
+                        >
+                          <span className={enquiryType ? 'text-slate-800 font-medium' : 'text-slate-400'}>
+                            {enquiryType || 'Select enquiry type'}
+                          </span>
+                          <ChevronDown className="w-4 h-4 text-[#395B20] shrink-0" />
+                        </button>
+
+                        {showDropdown && (
+                          <div
+                            data-lenis-prevent
+                            className="absolute left-0 right-0 top-[98%] mt-0 bg-white border-2 border-slate-400 rounded-xl shadow-2xl max-h-56 overflow-y-auto z-30 font-medium text-sm"
+                          >
+                            {enquiryTypes.map((type, idx) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => {
+                                  setEnquiryType(type);
+                                  setShowDropdown(false);
+                                  setErrors(prev => {
+                                    const next = { ...prev };
+                                    delete next.enquiryType;
+                                    return next;
+                                  });
+                                }}
+                                className={`w-full text-left px-4 py-2.5 transition-colors ${enquiryType === type ? 'bg-[#EEF6E8] text-[#395B20] font-semibold' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
+                              >
+                                {type}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      {errors.enquiryType && <p className="text-xs text-[#D62828]">{errors.enquiryType}</p>}
+                    </div>
+
+                  </div>
+
+                  {/* Custom Enquiry Type (If 'Other' is selected) */}
+                  <AnimatePresence>
+                    {enquiryType === 'Other' && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                        animate={{ opacity: 1, height: 'auto', marginTop: 12 }}
+                        exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="space-y-1.5 overflow-hidden"
+                      >
+                        <label className="text-xs sm:text-sm font-bold text-slate-700">Specify Enquiry Type <span className="text-[#D62828]">*</span></label>
+                        <input
+                          type="text"
+                          placeholder="Enter your enquiry type"
+                          value={customEnquiryType}
+                          onChange={(e) => {
+                            setCustomEnquiryType(e.target.value);
+                            if (errors.customEnquiryType) {
+                              setErrors(prev => {
+                                const next = { ...prev };
+                                delete next.customEnquiryType;
+                                return next;
+                              });
+                            }
+                          }}
+                          className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 ${errors.customEnquiryType ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                        />
+                        {errors.customEnquiryType && <p className="text-xs text-[#D62828]">{errors.customEnquiryType}</p>}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Message TextArea */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="relative w-5 h-5">
+                        <Image
+                          src="/ContactUs/contact-us-icons/message-icon.svg"
+                          alt="Message Icon"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                      <label className="text-xs sm:text-sm font-bold text-slate-700">Message <span className="text-[#D62828]">*</span></label>
+                    </div>
+                    <textarea
+                      rows={5}
+                      placeholder="Write your message here..."
+                      value={message}
+                      onChange={(e) => {
+                        setMessage(e.target.value);
+                        if (errors.message) {
+                          setErrors(prev => {
+                            const next = { ...prev };
+                            delete next.message;
+                            return next;
+                          });
+                        }
+                      }}
+                      className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 resize-none ${errors.message ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                    />
+                    {errors.message && <p className="text-xs text-[#D62828]">{errors.message}</p>}
+                  </div>
+
+                  {/* Submit block */}
+                  <div className="flex justify-end pt-2">
+
+                    <button
+                      type="submit"
+                      className="bg-[#7CB325] hover:bg-[#68941E] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl uppercase transition-all duration-300 flex items-center justify-center gap-2.5 shadow-md active:scale-95 hover:shadow-lg self-end md:self-auto"
+                    >
+                      <div className="relative w-6 h-6">
+                        <Image
+                          src="/ContactUs/contact-us-icons/bitcoin-icons_share-filled.svg"
+                          alt="Submit"
+                          fill
+                          className="object-contain brightness-0 invert"
+                        />
+                      </div>
+                      Submit Enquiry
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                // Success Screen View
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-4"
+                >
+                  <div className="w-16 h-16 rounded-full bg-[#7CB325]/10 flex items-center justify-center text-[#7CB325] mb-2">
+                    <CheckCircle className="w-10 h-10" />
+                  </div>
+                  <h2 className="text-2xl sm:text-2xl font-extrabold text-[#153520] uppercase font-manrope">
+                    Enquiry Submitted!
+                  </h2>
+                  <p className="text-slate-600 font-medium text-sm sm:text-base max-w-md leading-relaxed">
+                    Successful submission! Thank you for reaching out to us. Our support executives will contact you shortly.
+                  </p>
+                  <button
+                    onClick={resetForm}
+                    className="!mt-6 bg-[#395B20] hover:bg-[#1E3C11] text-white font-bold text-xs sm:text-sm px-8 py-3.5 rounded-xl uppercase transition-all shadow-md active:scale-95"
+                  >
+                    Send another message
+                  </button>
+                </motion.div>
+              )}
+            </div>
+
+            {/* Sidebar Info Box (Right Column Nested Inside Single Card) */}
+            <div className="bg-[#F8FAF7] rounded-2xl border border-[#E5EAE1] p-6 sm:p-8 flex flex-col items-center text-center space-y-6 h-full">
+              <div className="w-16 h-16 rounded-full bg-[#EAF3E7] flex items-center justify-center">
+                <div className="relative w-9 h-9">
+                  <Image
+                    src="/ContactUs/contact-us-icons/headset-icon.svg"
+                    alt="Headset Support"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-[#1F5A3C] font-manrope">
+                  We value your time
+                </h3>
+                <p className="text-xs sm:text-sm text-[#535353] font-medium leading-relaxed max-w-xs">
+                  Our team will get back to you as soon as possible.
+                </p>
+              </div>
+
+              {/* List */}
+              <div className="w-full text-left space-y-6 pt-2">
+                
+                <div className="flex gap-4 items-center">
+                  <div className="w-12 h-12 shrink-0 rounded-full bg-[#EAF3E7] flex items-center justify-center">
+                    <div className="relative w-6 h-6">
                       <Image
-                        src="/ContactUs/contact-us-icons/message-icon.svg"
-                        alt="Message Icon"
+                        src="/ContactUs/contact-us-icons/email-outline.svg"
+                        alt="Quick Response"
                         fill
                         className="object-contain"
                       />
                     </div>
-                    <label className="text-xs sm:text-sm font-bold text-slate-700">Message <span className="text-[#D62828]">*</span></label>
                   </div>
-                  <textarea
-                    rows={5}
-                    placeholder="Write your message here..."
-                    value={message}
-                    onChange={(e) => {
-                      setMessage(e.target.value);
-                      if (errors.message) {
-                        setErrors(prev => {
-                          const next = { ...prev };
-                          delete next.message;
-                          return next;
-                        });
-                      }
-                    }}
-                    className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 resize-none ${errors.message ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
-                  />
-                  {errors.message && <p className="text-xs text-[#D62828]">{errors.message}</p>}
+                  <div>
+                    <h4 className="text-sm font-bold text-[#000000]">Quick Response</h4>
+                    <p className="text-xs text-[#535353] font-medium mt-0.5">We usually respond within 24 hours.</p>
+                  </div>
                 </div>
 
-                {/* Submit block */}
-                <div className="flex justify-end pt-2">
-
-                  <button
-                    type="submit"
-                    className="bg-[#7CB325] hover:bg-[#68941E] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl uppercase transition-all duration-300 flex items-center justify-center gap-2.5 shadow-md active:scale-95 hover:shadow-lg self-end md:self-auto"
-                  >
+                <div className="flex gap-4 items-center">
+                  <div className="w-12 h-12 shrink-0 rounded-full bg-[#EAF3E7] flex items-center justify-center">
                     <div className="relative w-6 h-6">
                       <Image
-                        src="/ContactUs/contact-us-icons/bitcoin-icons_share-filled.svg"
-                        alt="Submit"
+                        src="/ContactUs/contact-us-icons/safeguard-outline.svg"
+                        alt="Safe Info"
                         fill
-                        className="object-contain brightness-0 invert"
+                        className="object-contain"
                       />
                     </div>
-                    Submit Enquiry
-                  </button>
-                </div>
-              </form>
-            ) : (
-              // Success Screen View
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-4"
-              >
-                <div className="w-16 h-16 rounded-full bg-[#7CB325]/10 flex items-center justify-center text-[#7CB325] mb-2">
-                  <CheckCircle className="w-10 h-10" />
-                </div>
-                <h2 className="text-2xl sm:text-2xl font-extrabold text-[#153520] uppercase font-manrope">
-                  Enquiry Submitted!
-                </h2>
-                <p className="text-slate-600 font-medium text-sm sm:text-base max-w-md leading-relaxed">
-                  Successful submission! Thank you for reaching out to us. Our support executives will contact you shortly.
-                </p>
-                <button
-                  onClick={resetForm}
-                  className="!mt-6 bg-[#395B20] hover:bg-[#1E3C11] text-white font-bold text-xs sm:text-sm px-8 py-3.5 rounded-xl uppercase transition-all shadow-md active:scale-95"
-                >
-                  Send another message
-                </button>
-              </motion.div>
-            )}
-          </motion.div>
-
-          {/* Sidebar Info Card: We value your time */}
-          <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-20px" }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="bg-[#F8FAF7] rounded-[24px] border border-[#E5EAE1] shadow-[0_12px_36px_rgba(0,0,0,0.06)] p-6 sm:p-8 flex flex-col items-center text-center space-y-6 h-full"
-          >
-            <div className="w-16 h-16 rounded-full bg-[#EAF3E7] flex items-center justify-center">
-              <div className="relative w-9 h-9">
-                <Image
-                  src="/ContactUs/contact-us-icons/headset-icon.svg"
-                  alt="Headset Support"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <h3 className="text-xl sm:text-2xl font-extrabold text-[#1F5A3C] font-manrope">
-                We value your time
-              </h3>
-              <p className="text-xs sm:text-sm text-[#535353] font-medium leading-relaxed max-w-xs">
-                Our team will get back to you as soon as possible.
-              </p>
-            </div>
-
-            {/* List */}
-            <div className="w-full text-left space-y-6 pt-2">
-              
-              <div className="flex gap-4 items-center">
-                <div className="w-12 h-12 shrink-0 rounded-full bg-[#EAF3E7] flex items-center justify-center">
-                  <div className="relative w-6 h-6">
-                    <Image
-                      src="/ContactUs/contact-us-icons/email-outline.svg"
-                      alt="Quick Response"
-                      fill
-                      className="object-contain"
-                    />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-[#000000]">Your Information is Safe</h4>
+                    <p className="text-xs text-[#535353] font-medium leading-normal mt-0.5">
+                      We respond your privacy and keep your information secure.
+                    </p>
                   </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-bold text-[#000000]">Quick Response</h4>
-                  <p className="text-xs text-[#535353] font-medium mt-0.5">We usually respond within 24 hours.</p>
-                </div>
-              </div>
 
-              <div className="flex gap-4 items-center">
-                <div className="w-12 h-12 shrink-0 rounded-full bg-[#EAF3E7] flex items-center justify-center">
-                  <div className="relative w-6 h-6">
-                    <Image
-                      src="/ContactUs/contact-us-icons/safeguard-outline.svg"
-                      alt="Safe Info"
-                      fill
-                      className="object-contain"
-                    />
+                <div className="flex gap-4 items-center">
+                  <div className="w-12 h-12 shrink-0 rounded-full bg-[#EAF3E7] flex items-center justify-center">
+                    <div className="relative w-6 h-6">
+                      <Image
+                        src="/ContactUs/contact-us-icons/dedicated-support.svg"
+                        alt="Dedicated support"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-[#000000]">Dedicated Support</h4>
+                    <p className="text-xs text-[#535353] font-medium mt-0.5">
+                      Our team is here to help you with all your queries.
+                    </p>
                   </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-bold text-[#000000]">Your Information is Safe</h4>
-                  <p className="text-xs text-[#535353] font-medium leading-normal mt-0.5">
-                    We respond your privacy and keep your information secure.
-                  </p>
-                </div>
-              </div>
 
-              <div className="flex gap-4 items-center">
-                <div className="w-12 h-12 shrink-0 rounded-full bg-[#EAF3E7] flex items-center justify-center">
-                  <div className="relative w-6 h-6">
-                    <Image
-                      src="/ContactUs/contact-us-icons/dedicated-support.svg"
-                      alt="Dedicated support"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-[#000000]">Dedicated Support</h4>
-                  <p className="text-xs text-[#535353] font-medium mt-0.5">
-                    Our team is here to help you with all your queries.
-                  </p>
-                </div>
               </div>
-
             </div>
-          </motion.div>
 
-        </div>
+          </div>
+        </motion.div>
       </section>
 
-      {/* 4. FAQ ACCORDION SECTION */}
-      <section className="bg-white py-10 md:py-14 border-t border-b border-slate-100">
-        <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+      {/* 4. FAQ ACCORDION SECTION (Matching Card Alignment Stacked Below Form) */}
+      <section className="relative z-10 w-full max-w-[1400px] lg:max-w-[90vw] mx-auto ">
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-20px" }}
+          transition={{ duration: 0.6 }}
+          className="w-full bg-white rounded-[24px] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.035)] p-6 sm:p-8 lg:p-10"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10 items-center">
             
-            {/* Title Block */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6 }}
-              className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 sm:gap-6"
-            >
-              <div className="w-20 h-20 shrink-0 rounded-full bg-[#EAF3E7] flex items-center justify-center">
-                <div className="relative w-10 h-10">
+            {/* Title Block (Vertically Centered) */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 sm:gap-6 my-auto">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-full bg-[#ECF1E6] flex items-center justify-center">
+                <div className="relative w-8 h-8 sm:w-10 sm:h-10">
                   <Image
                     src="/ContactUs/contact-us-icons/faq-icon.svg"
                     alt="FAQ"
@@ -553,34 +560,32 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="flex-1 min-w-0">
-                <h2 className="text-2xl md:text-3xl font-extrabold text-[#000000] font-manrope">
+                <h2 className="text-2xl md:text-3xl font-extrabold text-[#153520] font-manrope">
                   Frequently Asked Questions
                 </h2>
-                <div className="h-[3px] w-14 bg-[#7CB325] mt-2 mb-3 mx-auto sm:mx-0" />
+                <div className="h-[3px] w-14 bg-[#7CB325] mt-2 mb-3 mx-auto sm:mx-0 rounded-full" />
                 <p className="text-sm text-[#535353] font-medium leading-relaxed">
                   Find quick answers to common questions about working and partnering with MEATIN.
                 </p>
               </div>
-            </motion.div>
+            </div>
 
             {/* Accordion Block */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="lg:col-span-2 space-y-4"
-            >
+            <div className="lg:col-span-2 space-y-4">
               {faqs.map((faq, idx) => {
                 const isOpen = activeFaq === idx;
                 return (
                   <div
                     key={idx}
-                    className={`border rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? 'border-[#395B20] bg-[#EEF6E8]/10' : 'border-slate-200 bg-white hover:border-slate-350'}`}
+                    className={`border rounded-2xl overflow-hidden transition-all duration-300 ${
+                      isOpen 
+                        ? 'border-[#395B20] bg-[#EEF6E8]/30 shadow-sm ring-1 ring-[#395B20]/20' 
+                        : 'border-slate-200/90 bg-white hover:border-[#395B20]/40 hover:bg-[#F8FAF7]'
+                    }`}
                   >
                     <button
                       onClick={() => toggleFaq(idx)}
-                      className="w-full flex items-center justify-between text-left p-5 font-bold text-sm sm:text-base text-[#153520] outline-none"
+                      className="w-full flex items-center justify-between text-left p-4 sm:p-5 font-bold text-sm sm:text-base text-[#153520] outline-none"
                     >
                       <span>{faq.question}</span>
                       {isOpen ? (
@@ -598,7 +603,7 @@ export default function ContactPage() {
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.25 }}
                         >
-                          <div className="p-5 pt-0 border-t border-slate-100 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+                          <div className="p-4 sm:p-5 pt-0 border-t border-slate-100/80 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
                             {faq.answer}
                           </div>
                         </motion.div>
@@ -607,10 +612,10 @@ export default function ContactPage() {
                   </div>
                 );
               })}
-            </motion.div>
+            </div>
 
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 5. REUSABLE CAREERS BANNER */}

@@ -119,6 +119,7 @@ export const Footer: React.FC = () => {
       onViewportEnter={() => setIsFooterInView(true)}
       onViewportLeave={() => setIsFooterInView(false)}
       className="relative w-full bg-[#5A841A] text-white pt-6 sm:pt-10 pb-6 overflow-hidden font-inter"
+      suppressHydrationWarning
     >
       
       {/* Doodle Background Image */}

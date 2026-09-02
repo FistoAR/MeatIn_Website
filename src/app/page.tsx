@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion';
 import TrustedQualityBanner from '@/components/layout/TrustedQualityBanner';
 
 // Animation variants
@@ -44,37 +44,94 @@ export default function HomePage() {
     target: certSectionRef,
     offset: ["start end", "end start"]
   });
-  const truckY = useTransform(certScrollProgress, [0, 1], [-150, 1100]);
+  const truckY = useTransform(certScrollProgress, [0, 1], [-150, 1600]);
   const truckOpacity = useTransform(certScrollProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
 
   const [currentFrame, setCurrentFrame] = React.useState(1);
   const [pointerEvents, setPointerEvents] = React.useState<'auto' | 'none'>('auto');
+  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
 
   React.useEffect(() => {
     // Preload all frames to avoid flickering
     const totalFrames = 240;
+    (window as any).__HERO_FRAMES__ = (window as any).__HERO_FRAMES__ || {};
     for (let i = 1; i <= totalFrames; i++) {
-      const img = new window.Image();
       const frameStr = String(i).padStart(5, '0');
-      img.src = `/Home/Hero/video-frames/${frameStr}.webp`;
+      const url = `/Home/Hero/video-frames/${frameStr}.webp`;
+      if (!(window as any).__HERO_FRAMES__[url]) {
+        const img = new window.Image();
+        img.src = url;
+        (window as any).__HERO_FRAMES__[url] = img;
+      }
     }
+
+    // Trigger scroll bounds re-measurement once preloader reveals DOM
+    const t1 = setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+    const t2 = setTimeout(() => window.dispatchEvent(new Event('resize')), 600);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, []);
 
+  // GPU-accelerated canvas drawing loop for smooth 60FPS video sequence
   React.useEffect(() => {
-    return smoothProgress.onChange((latest) => {
-      const totalFrames = 240;
-      const frame = Math.min(
-        totalFrames,
-        Math.max(1, Math.floor(latest * totalFrames))
-      );
-      setCurrentFrame(frame);
-      if (latest > 0.4) {
-        setPointerEvents('none');
-      } else {
-        setPointerEvents('auto');
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const frameStr = String(currentFrame).padStart(5, '0');
+    const frameUrl = `/Home/Hero/video-frames/${frameStr}.webp`;
+    
+    let img = typeof window !== 'undefined' ? (window as any).__HERO_FRAMES__?.[frameUrl] : null;
+    if (!img) {
+      img = new window.Image();
+      img.src = frameUrl;
+    }
+
+    const draw = () => {
+      const containerWidth = canvas.clientWidth || window.innerWidth;
+      const containerHeight = canvas.clientHeight || window.innerHeight;
+
+      if (canvas.width !== containerWidth || canvas.height !== containerHeight) {
+        canvas.width = containerWidth;
+        canvas.height = containerHeight;
       }
-    });
-  }, [smoothProgress]);
+
+      const imgWidth = img.naturalWidth || img.width || 1920;
+      const imgHeight = img.naturalHeight || img.height || 1080;
+
+      const hRatio = canvas.width / imgWidth;
+      const vRatio = canvas.height / imgHeight;
+      const ratio = Math.max(hRatio, vRatio);
+      const shiftX = (canvas.width - imgWidth * ratio) / 2;
+      const shiftY = (canvas.height - imgHeight * ratio) / 2;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, imgWidth, imgHeight, shiftX, shiftY, imgWidth * ratio, imgHeight * ratio);
+    };
+
+    if (img.complete) {
+      draw();
+    } else {
+      img.onload = draw;
+    }
+  }, [currentFrame]);
+
+  useMotionValueEvent(smoothProgress, 'change', (latest) => {
+    const totalFrames = 240;
+    const frame = Math.min(
+      totalFrames,
+      Math.max(1, Math.floor(latest * totalFrames))
+    );
+    setCurrentFrame(frame);
+    if (latest > 0.4) {
+      setPointerEvents('none');
+    } else {
+      setPointerEvents('auto');
+    }
+  });
 
   const heroContentOpacity = useTransform(smoothProgress, [0, 0.35], [1, 0]);
   const heroContentY = useTransform(smoothProgress, [0, 0.35], [0, -40]);
@@ -157,11 +214,10 @@ export default function HomePage() {
       {/* 1. HERO BANNER WITH STICKY SCROLL SEQUENCE */}
       <section ref={heroRef} className="relative w-full h-[300vh] bg-black">
         <div className="sticky top-0 left-0 w-full h-screen flex items-center bg-black overflow-hidden">
-          {/* Background Frame Sequence */}
+          {/* Background Frame Sequence Canvas */}
           <div className="absolute inset-0 z-0 select-none pointer-events-none w-full h-full">
-            <img
-              src={`/Home/Hero/video-frames/${String(currentFrame).padStart(5, '0')}.webp`}
-              alt="MEATIN Integrated Processing Plant Video Frame"
+            <canvas
+              ref={canvasRef}
               className="w-full h-full object-cover object-center brightness-[0.75] lg:brightness-100"
             />
             {/* Gradients for readability */}
@@ -441,8 +497,8 @@ export default function HomePage() {
                     />
                   </div>
 
-                  {/* Action Buttons Row */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-1.5 w-full mt-auto">
+                  {/* Action Buttons Stack (One Below The Other) */}
+                  <div className="flex flex-col gap-2 w-full mt-auto">
                     <button
                       onClick={() => {
                         if (cert.pdf) {
@@ -451,13 +507,13 @@ export default function HomePage() {
                           alert(`${cert.name} certificate PDF is currently unavailable and will be updated soon.`);
                         }
                       }}
-                      className="bg-[#153520] hover:bg-[#1c452b] text-white text-[0.62rem] xl:text-[0.68rem] font-extrabold h-12 px-1 rounded-xl transition-all duration-300 ease-in-out hover:scale-[1.03] active:scale-95 flex items-center justify-center gap-1 uppercase tracking-wide shadow-sm w-full whitespace-nowrap"
+                      className="bg-[#153520] hover:bg-[#1c452b] text-white text-xs xl:text-[11px] 2xl:text-xs font-extrabold h-11 px-3 rounded-xl transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
                     >
-                      <svg className="w-3 h-3 text-[#D4A437] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <svg className="w-4 h-4 text-[#D4A437] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
-                      View Certificate
+                      <span>VIEW CERTIFICATE</span>
                     </button>
                     <button
                       onClick={() => {
@@ -472,12 +528,12 @@ export default function HomePage() {
                           alert(`${cert.name} certificate PDF is currently unavailable and will be updated soon.`);
                         }
                       }}
-                      className="bg-white hover:bg-slate-50 border border-[#153520] text-[#153520] text-[0.62rem] xl:text-[0.68rem] font-extrabold h-12 px-1 rounded-xl transition-all duration-300 ease-in-out hover:scale-[1.03] active:scale-95 hover:shadow-md flex items-center justify-center gap-1 uppercase tracking-wide shadow-sm w-full whitespace-nowrap"
+                      className="bg-white hover:bg-slate-50 border-2 border-[#153520] text-[#153520] text-xs xl:text-[11px] 2xl:text-xs font-extrabold h-11 px-3 rounded-xl transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 hover:shadow-md flex items-center justify-center gap-2 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
                     >
-                      <svg className="w-3 h-3 text-[#153520] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <svg className="w-4 h-4 text-[#153520] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
-                      Download PDF
+                      <span>DOWNLOAD PDF</span>
                     </button>
                   </div>
                 </motion.div>
@@ -485,10 +541,10 @@ export default function HomePage() {
             })}
           </motion.div>
         </div>
-      </section>
 
-      {/* 4. TRUST BANNER (At the very end of homepage) */}
-      <TrustedQualityBanner />
+        {/* 4. TRUST BANNER (Combined seamlessly inside same section) */}
+        <TrustedQualityBanner />
+      </section>
 
     </div>
   );
