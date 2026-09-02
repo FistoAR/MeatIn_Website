@@ -231,7 +231,7 @@ export default function AboutUsPage() {
               alt="MEATIN Integrated Farming"
               fill
               priority
-              className="object-cover object-[30%_center] sm:object-left"
+              className="object-cover object-center lg:object-left"
             />
             {/* Horizontal fade gradient on desktop to blend the image's left edge into the solid black background */}
             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 via-[12%] to-transparent hidden lg:block" />
@@ -498,7 +498,7 @@ export default function AboutUsPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[480px] lg:min-h-[780px] xl:min-h-[850px]"
+            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[375px] lg:min-h-[780px] xl:min-h-[850px]"
           >
             <Image
               src="/AboutUs/mission-bg.webp"
@@ -508,7 +508,7 @@ export default function AboutUsPage() {
               sizes="50vw"
             />
             {/* Full-height yellow-green overlay on mobile/tablet (1024px and below) for text contrast, and top-only (h-[65%]) overlay on desktop */}
-            <div className="absolute inset-0 lg:bottom-auto lg:h-[65%] bg-gradient-to-b from-[#E2F2B6]/95 via-[#E2F2B6]/85 lg:via-[#E2F2B6]/60 to-transparent z-0 pointer-events-none" />
+            <div className="absolute inset-0 lg:bottom-auto lg:h-[75%] bg-gradient-to-b from-[#E2F2B6]/95 via-[#E2F2B6]/85 lg:via-[#E2F2B6]/75 to-transparent z-0 pointer-events-none" />
             
             <motion.div 
               variants={staggerContainer}
@@ -542,7 +542,7 @@ export default function AboutUsPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[480px] lg:min-h-[780px] xl:min-h-[850px]"
+            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[375px] lg:min-h-[780px] xl:min-h-[850px]"
           >
             {/* Floating Center MEATIN Logo Badge (Mobile/Tablet only, anchored directly to top seam) */}
             <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-20 lg:hidden">
@@ -607,13 +607,13 @@ export default function AboutUsPage() {
         </div>
 
         {/* 5. FLOATING CORE VALUES CONTAINER CARD */}
-        <div className="relative lg:absolute lg:bottom-12 left-0 lg:left-1/2 lg:-translate-x-1/2 w-full max-w-[1100px] lg:max-w-[65vw] px-4 sm:px-6 lg:px-8 mx-auto lg:mx-0 -mt-20 lg:-mt-0 z-20">
+        <div className="bg-[#d8d8d6] lg:bg-transparent relative lg:absolute lg:bottom-12 left-0 lg:left-1/2 lg:-translate-x-1/2 w-full max-w-[1100px] lg:max-w-[65vw] pt-7 sm:pt-7 md:pt-12 lg:pt-0 px-4 sm:px-6 lg:px-8 mx-auto lg:mx-0 -mt-20 lg:-mt-0 z-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6 }}
-            className="bg-[#F6F5F0] rounded-[32px] border border-[#E5EAE1] shadow-[0_12px_36px_rgba(0,0,0,0.06)] p-4 sm:p-5 lg:py-5 lg:px-8 xl:px-12 text-center space-y-4"
+            className="bg-[#F6F5F0] rounded-[32px] border border-[#E5EAE1] shadow-[0_12px_36px_rgba(0,0,0,0.06)] p-4 sm:p-5 lg:py-5 md:px-3 lg:px-5 xl:px-6 text-center space-y-4"
           >
             <h3 className="text-2xl sm:text-3xl font-bold text-[#1F5A3C] tracking-tight uppercase flex items-center justify-center gap-3 sm:gap-4 font-barlow leading-none">
               <span className="w-8 sm:w-12 h-[2px] bg-[#D62828]" /> OUR VALUES <span className="w-8 sm:w-12 h-[2px] bg-[#D62828]" />
@@ -623,11 +623,17 @@ export default function AboutUsPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, margin: "-50px" }}
-              className="grid grid-cols-2 lg:grid-cols-[0.85fr_1fr_1fr_1.15fr] gap-y-6 lg:gap-y-0 divide-y divide-[#7CB325]/30 sm:divide-y-0 lg:divide-y-0 lg:divide-x lg:divide-[#7CB325] w-full items-start"
+              className="grid grid-cols-1 min-[400px]:grid-cols-2 md:grid-cols-4 lg:grid-cols-[0.85fr_1fr_1fr_1.15fr] gap-y-4 min-[400px]:gap-y-6 md:gap-y-0 divide-y divide-[#7CB325]/30 min-[400px]:divide-y-0 md:divide-x md:divide-[#7CB325] w-full items-start"
             >
               {coreValues.map((val, idx) => {
                 return (
-                  <motion.div key={idx} variants={springPop} className="flex flex-col items-center text-center px-2 sm:px-4 lg:px-6 pt-4 sm:pt-0 border-t border-[#7CB325]/30 sm:border-t-0 lg:border-t-0">
+                  <motion.div
+                    key={idx}
+                    variants={springPop}
+                    className={`flex flex-col items-center text-center px-2 sm:px-3 md:px-4 lg:px-6 pt-3 min-[400px]:pt-4 md:pt-0 ${
+                      idx >= 2 ? 'min-[400px]:border-t min-[400px]:border-[#7CB325]/30 md:border-t-0' : ''
+                    }`}
+                  >
                     {/* SVG Vector Icon (Direct render without circular bg) */}
                     <div className="relative w-9 h-9 sm:w-10 sm:h-10 lg:w-10 lg:h-10 xl:w-12 xl:h-12 mb-1.5">
                       <Image

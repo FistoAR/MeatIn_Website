@@ -292,18 +292,20 @@ export default function HomePage() {
                 <motion.div
                   key={idx}
                   variants={fadeInUp}
-                  className={`bg-white rounded-[20px] border border-white/80 shadow-lg hover:shadow-2xl hover:scale-[1.03] flex flex-col justify-between h-max overflow-hidden group transition-all duration-300 min-h-[480px] relative ${idx % 2 === 0 ? 'xl:-mt-10' : 'xl:mt-14'}`}
+                  whileHover={{ scale: 1.05, zIndex: 30 }}
+                  transition={{ duration: 0.3 }}
+                  className={`bg-white rounded-[20px] border border-white/80 shadow-lg hover:shadow-2xl flex flex-col justify-between h-max overflow-hidden group min-h-[360px] relative ${idx % 2 === 0 ? 'xl:-mt-10' : 'xl:mt-14'}`}
                 >
                   {/* Top Image Frame (with icon and title inside) */}
-                  <div className="relative w-full h-[380px] overflow-hidden flex flex-col justify-end pb-4 items-center">
+                  <div className="relative w-full h-[300px] overflow-hidden flex flex-col justify-end pb-4 items-center">
                     <Image
                       src={step.image}
                       alt={step.title}
                       fill
-                      className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover object-top"
                     />
                     {/* Bottom gradient fade to white */}
-                    <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/75 to-transparent z-10" />
+                    <div className="absolute -bottom-1 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
 
                     {/* Icon */}
                     <div className="relative z-20 w-[64px] h-[64px] drop-shadow-md mb-4">
@@ -322,7 +324,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Bottom Text Panel */}
-                  <div className="bg-white pb-8 px-4 flex-1 flex flex-col items-center justify-start text-center">
+                  <div className="bg-white pb-8 px-4 flex-1 flex flex-col items-center justify-start text-center relative z-20 -mt-px">
                     <p className="text-[#3A3A3A] text-[0.8rem] 2xl:text-[0.85rem] font-semibold leading-relaxed font-manrope max-w-[195px] mx-auto">
                       {step.desc}
                     </p>
