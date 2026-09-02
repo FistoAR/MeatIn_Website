@@ -1969,7 +1969,7 @@ export default function RecipesPage() {
       </section>
 
       {/* Main Interactive Content Area */}
-      <main className="relative z-20 flex-1 w-full px-[2vw] py-6 sm:py-10 overflow-hidden">
+      <main className="relative z-20 flex-1 w-full px-[2vw] pt-1 sm:pt-2 pb-6 sm:pb-10 overflow-hidden">
         <AnimatePresence mode="wait">
           {!selectedRecipe ? (
             /* ========================================================= */
@@ -1981,7 +1981,7 @@ export default function RecipesPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-8 sm:space-y-12 relative"
+              className="space-y-6 sm:space-y-8 relative"
             >
               {/* Background Doodle Pattern Overlay (View 1 Only) */}
               <div
@@ -1991,13 +1991,14 @@ export default function RecipesPage() {
                   backgroundSize: "800px",
                 }}
               />
-            {partsToDisplay.map((part) => {
+            {partsToDisplay.map((part, index) => {
               const recipes = recipesDatabase[part.id] || [];
+              const isFirstItem = index === 0;
               return (
                 <section
                   key={part.id}
                   id={`part-section-${part.id}`}
-                  className="space-y-4 sm:space-y-6 pt-4 scroll-mt-8 sm:scroll-mt-12"
+                  className={`space-y-3 sm:space-y-4 scroll-mt-12 sm:scroll-mt-16 ${isFirstItem ? "pt-0 -mt-3 sm:-mt-6" : "pt-2"}`}
                 >
                   {/* Section Label Header with Icon & Badge - AOS Scroll Animation */}
                   <motion.div
@@ -2052,7 +2053,7 @@ export default function RecipesPage() {
                             );
                           }
                         }}
-                        className="relative aspect-[3/4.2] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-5 select-none recipe-card-box cursor-pointer border border-slate-200/40"
+                        className="relative aspect-[3/2.8] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-4 select-none recipe-card-box cursor-pointer border border-slate-200/40"
                       >
                         {/* Top Left Red Category Tag */}
                         <span className="absolute top-4 left-4 z-20 bg-[#D62828] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
@@ -2073,7 +2074,7 @@ export default function RecipesPage() {
                         {/* Card Content */}
                         <div className="relative z-10 space-y-3 font-inter">
                           {/* Recipe Title */}
-                          <h3 className="text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight group-hover:text-[#E1C609] transition-colors">
+                          <h3 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight group-hover:text-[#E1C609] transition-colors truncate whitespace-nowrap" title={recipe.title}>
                             {recipe.title}
                           </h3>
 

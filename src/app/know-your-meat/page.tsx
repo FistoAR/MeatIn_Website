@@ -1433,7 +1433,7 @@ export default function KnowYourMeatPage() {
             gap: 16px !important;
           }
           .recipe-card-box {
-            aspect-ratio: 3 / 3.6 !important;
+            aspect-ratio: 3 / 2.8 !important;
             padding: 14px !important;
           }
           .recipe-card-badge {
@@ -5002,7 +5002,7 @@ export default function KnowYourMeatPage() {
                     y: -6,
                     boxShadow: "0 20px 35px -5px rgba(0, 0, 0, 0.3)",
                   }}
-                  className="relative aspect-[3/4.2] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-5 select-none recipe-card-box cursor-pointer"
+                  className="relative aspect-[3/2.8] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-4.5 select-none recipe-card-box cursor-pointer"
                 >
                   {/* Background Image */}
                   <Image
