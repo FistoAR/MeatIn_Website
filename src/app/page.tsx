@@ -83,7 +83,7 @@ export default function HomePage() {
 
     const frameStr = String(currentFrame).padStart(5, '0');
     const frameUrl = `/Home/Hero/video-frames/${frameStr}.webp`;
-    
+
     let img = typeof window !== 'undefined' ? (window as any).__HERO_FRAMES__?.[frameUrl] : null;
     if (!img) {
       img = new window.Image();
@@ -272,14 +272,14 @@ export default function HomePage() {
               </div>
 
             </div>
-            </div>
+          </div>
         </div>
       </section>
 
       {/* 2. SECOND SECTION (TRUCK LOGISTICS) */}
       <section className="relative w-full bg-[#EBF6E4] pt-8 pb-14 sm:pt-16 sm:pb-28 overflow-hidden flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/Home/truck-section/truck-section-bg.webp')" }}>
         {/* Single Full Image Container with scroll-driven slide-in */}
-        <motion.div 
+        <motion.div
           initial={{ x: "50%", opacity: 0.7 }}
           whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: false, margin: "-100px" }}
@@ -298,7 +298,7 @@ export default function HomePage() {
         {/* Wave SVG transition divider matching the Brand Story bg color */}
         <div className="absolute bottom-0 left-0 right-0 h-[35px] sm:h-[55px] md:h-[90px] w-full z-20 pointer-events-none overflow-hidden">
           <svg className="absolute bottom-0 w-full h-[35px] sm:h-[55px] md:h-[90px]" viewBox="0 0 1920 90" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-            <path d="M0 0C755.182 107.73 1158.5 130.5 1920 0V130.5H0V0Z" fill="#60870C"/>
+            <path d="M0 0C755.182 107.73 1158.5 130.5 1920 0V130.5H0V0Z" fill="#60870C" />
           </svg>
         </div>
       </section>
@@ -313,7 +313,7 @@ export default function HomePage() {
         <div className="w-full max-w-[1400px] lg:max-w-[92vw] mx-auto px-4 sm:px-6 lg:px-8 pt-4 relative z-10">
 
           {/* Header */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
@@ -393,7 +393,7 @@ export default function HomePage() {
       </section>
 
       {/* 3. CERTIFIED EXCELLENCE SECTION */}
-      <section ref={certSectionRef} className="relative w-full py-16 lg:py-11 overflow-hidden">
+      <section ref={certSectionRef} className="relative w-full pt-10 pb-4 lg:pt-12 lg:pb-6 overflow-hidden">
         {/* Section Background Image */}
         <div className="absolute inset-0 pointer-events-none z-0 bg-[#DCDBDB]">
           <Image
@@ -405,9 +405,9 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-5">
           {/* Creative vertical green truck graphics on left side gutter */}
-          <motion.div 
+          <motion.div
             style={{ y: truckY, opacity: truckOpacity }}
             className="absolute left-[-70px] top-[-100px] w-32 h-[650px] hidden lg:block pointer-events-none z-0"
           >
@@ -422,12 +422,12 @@ export default function HomePage() {
           </motion.div>
 
           {/* Header */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.8 }}
-            className="text-center flex flex-col items-center mb-20"
+            className="text-center flex flex-col items-center mb-14 lg:mb-16"
           >
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="h-[1.5px] w-8 sm:w-12 bg-[#D4A437]" />
@@ -462,10 +462,10 @@ export default function HomePage() {
                 <motion.div
                   key={idx}
                   variants={fadeInUp}
-                  className="bg-white rounded-[32px] border border-slate-200/80 shadow-[0_12px_36px_rgba(0,0,0,0.035)] px-3.5 py-5 pt-14 flex flex-col justify-between items-center text-center relative hover:scale-[1.04] hover:shadow-[0_20px_48px_rgba(0,0,0,0.08)] hover:border-[#1F5A3C]/20 transition-all duration-300 ease-out min-h-[480px] certificate-parent-card"
+                  className="bg-white rounded-[28px] border border-slate-200/80 shadow-[0_12px_36px_rgba(0,0,0,0.035)] px-3.5 py-4 pt-12 flex flex-col justify-between items-center text-center relative hover:scale-[1.03] hover:shadow-[0_20px_48px_rgba(0,0,0,0.08)] hover:border-[#1F5A3C]/20 transition-all duration-300 ease-out min-h-[380px] certificate-parent-card"
                 >
                   {/* Top Circle logo overlay badge */}
-                  <div className="w-24 h-24 bg-white border border-slate-100 rounded-full flex items-center justify-center p-3 shadow-lg shadow-slate-200/60 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                  <div className="w-20 h-20 bg-white border border-slate-100 rounded-full flex items-center justify-center p-2 shadow-lg shadow-slate-200/60 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                     <div className="relative w-full h-full">
                       <Image
                         src={cert.icon}
@@ -478,17 +478,17 @@ export default function HomePage() {
 
                   {/* Card Header Content */}
                   <div className="flex flex-col items-center w-full">
-                    <h4 className="text-2xl sm:text-3xl font-extrabold text-[#1F5A3C] font-barlow tracking-wide uppercase leading-none mb-1.5">{cert.name}</h4>
-                    <span className="inline-block bg-[#7CB325] text-white px-4 py-0.5 rounded text-[11px] font-black uppercase tracking-wider mb-3 leading-none">
+                    <h4 className="text-xl sm:text-2xl font-extrabold text-[#1F5A3C] font-barlow tracking-wide uppercase leading-none mb-1">{cert.name}</h4>
+                    <span className="inline-block bg-[#7CB325] text-white px-3 py-0.5 rounded text-[10px] font-black uppercase tracking-wider mb-2 leading-none">
                       {cert.sub}
                     </span>
-                    <p className="text-xs text-slate-500 font-bold max-w-[200px] sm:max-w-none md:max-w-[200px] h-12 mb-4 leading-normal flex items-center justify-center">
+                    <p className="text-[11px] text-slate-500 font-bold sm:max-w-none  mb-2 leading-normal flex items-center justify-center min-h-[32px]">
                       {cert.desc}
                     </p>
                   </div>
 
                   {/* Certificate Image Frame */}
-                  <div className="w-full aspect-[4/3] relative rounded-2xl overflow-hidden mb-3 min-h-[250px]">
+                  <div className="w-full aspect-[4/3] relative rounded-xl overflow-hidden mb-2.5 h-[160px]">
                     <Image
                       src={cert.certificateImage}
                       alt={`${cert.name} Certificate`}
@@ -498,7 +498,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Action Buttons Stack (One Below The Other) */}
-                  <div className="flex flex-col gap-2 w-full mt-auto">
+                  <div className="flex flex-col gap-1.5 w-full mt-1">
                     <button
                       onClick={() => {
                         if (cert.pdf) {
@@ -507,9 +507,9 @@ export default function HomePage() {
                           alert(`${cert.name} certificate PDF is currently unavailable and will be updated soon.`);
                         }
                       }}
-                      className="bg-[#153520] hover:bg-[#1c452b] text-white text-xs xl:text-[11px] 2xl:text-xs font-extrabold h-11 px-3 rounded-xl transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
+                      className="bg-[#153520] hover:bg-[#1c452b] text-white text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
                     >
-                      <svg className="w-4 h-4 text-[#D4A437] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <svg className="w-3.5 h-3.5 text-[#D4A437] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
@@ -528,9 +528,9 @@ export default function HomePage() {
                           alert(`${cert.name} certificate PDF is currently unavailable and will be updated soon.`);
                         }
                       }}
-                      className="bg-white hover:bg-slate-50 border-2 border-[#153520] text-[#153520] text-xs xl:text-[11px] 2xl:text-xs font-extrabold h-11 px-3 rounded-xl transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 hover:shadow-md flex items-center justify-center gap-2 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
+                      className="bg-white hover:bg-slate-50 border border-[#153520] text-[#153520] text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 hover:shadow-md flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
                     >
-                      <svg className="w-4 h-4 text-[#153520] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <svg className="w-3.5 h-3.5 text-[#153520] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
                       <span>DOWNLOAD PDF</span>
@@ -543,7 +543,7 @@ export default function HomePage() {
         </div>
 
         {/* 4. TRUST BANNER (Combined seamlessly inside same section) */}
-        <TrustedQualityBanner />
+        <TrustedQualityBanner className="pt-4 lg:pt-6 pb-2 lg:pb-4" />
       </section>
 
     </div>
