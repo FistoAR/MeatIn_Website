@@ -160,14 +160,14 @@ export default function KnowYourMeatPage() {
           setAnimatingPart((prev) =>
             prev
               ? {
-                  ...prev,
-                  targetRect: {
-                    top: cr.top - scrollDiff + cr.height / 2,
-                    left: cr.left + cr.width / 2,
-                    width: cr.width,
-                    height: cr.height,
-                  },
-                }
+                ...prev,
+                targetRect: {
+                  top: cr.top - scrollDiff + cr.height / 2,
+                  left: cr.left + cr.width / 2,
+                  width: cr.width,
+                  height: cr.height,
+                },
+              }
               : null,
           );
         }
@@ -1745,9 +1745,8 @@ export default function KnowYourMeatPage() {
       `}</style>
       <div
         ref={containerRef}
-        className={`relative w-full z-10 bg-[#638913] ${
-          activeMeatType === "chicken" ? "h-[200vh]" : "h-[100vh]"
-        }`}
+        className={`relative w-full z-10 bg-[#638913] ${activeMeatType === "chicken" ? "h-[200vh]" : "h-[100vh]"
+          }`}
       >
         {/* Section 1 Doodle Repeat Overlay */}
         <div
@@ -1767,11 +1766,10 @@ export default function KnowYourMeatPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
                 onClick={() => handleMeatTabChange("chicken")}
-                className={`px-6 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${
-                  activeMeatType === "chicken"
-                    ? "bg-[#D62828] text-white"
-                    : "text-slate-700 hover:bg-slate-50 border-r border-[#CCCCCC]"
-                }`}
+                className={`px-6 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${activeMeatType === "chicken"
+                  ? "bg-[#D62828] text-white"
+                  : "text-slate-700 hover:bg-slate-50 border-r border-[#CCCCCC]"
+                  }`}
               >
                 CHICKEN
                 {activeMeatType === "chicken" && (
@@ -1783,11 +1781,10 @@ export default function KnowYourMeatPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.22, ease: "easeOut" }}
                 onClick={() => handleMeatTabChange("beef")}
-                className={`px-8 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${
-                  activeMeatType === "beef"
-                    ? "bg-[#D62828] text-white"
-                    : "text-slate-700 hover:bg-slate-50 border-r border-[#CCCCCC]"
-                }`}
+                className={`px-8 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${activeMeatType === "beef"
+                  ? "bg-[#D62828] text-white"
+                  : "text-slate-700 hover:bg-slate-50 border-r border-[#CCCCCC]"
+                  }`}
               >
                 BEEF
                 {activeMeatType === "beef" && (
@@ -1799,11 +1796,10 @@ export default function KnowYourMeatPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.34, ease: "easeOut" }}
                 onClick={() => handleMeatTabChange("goat")}
-                className={`px-8 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${
-                  activeMeatType === "goat"
-                    ? "bg-[#D62828] text-white"
-                    : "text-slate-700 hover:bg-slate-50"
-                }`}
+                className={`px-8 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${activeMeatType === "goat"
+                  ? "bg-[#D62828] text-white"
+                  : "text-slate-700 hover:bg-slate-50"
+                  }`}
               >
                 GOAT
                 {activeMeatType === "goat" && (
@@ -1814,9 +1810,8 @@ export default function KnowYourMeatPage() {
 
             {/* Title Section (Centered above animal visualizer - 100% centered horizontally) */}
             <div
-              className={`absolute left-1/2 transform -translate-x-1/2 text-center z-30 flex flex-col items-center viz-title-block ${
-                activeMeatType === "chicken" ? "top-2" : "top-6"
-              }`}
+              className={`absolute left-1/2 transform -translate-x-1/2 text-center z-30 flex flex-col items-center viz-title-block ${activeMeatType === "chicken" ? "top-2" : "top-6"
+                }`}
             >
               {/* Row 1: Icon + sub-label */}
               <motion.div
@@ -1902,25 +1897,25 @@ export default function KnowYourMeatPage() {
                               x:
                                 activeStage === "inside"
                                   ? -Math.round(
-                                      Math.sin(
-                                        (Math.PI * idx) /
-                                          Math.max(
-                                            callouts[activeStage].left.length -
-                                              1,
-                                            1,
-                                          ),
-                                      ) * 60,
-                                    )
+                                    Math.sin(
+                                      (Math.PI * idx) /
+                                      Math.max(
+                                        callouts[activeStage].left.length -
+                                        1,
+                                        1,
+                                      ),
+                                    ) * 60,
+                                  )
                                   : -Math.round(
-                                      Math.sin(
-                                        (Math.PI * idx) /
-                                          Math.max(
-                                            callouts[activeStage].left.length -
-                                              1,
-                                            1,
-                                          ),
-                                      ) * 20,
-                                    ),
+                                    Math.sin(
+                                      (Math.PI * idx) /
+                                      Math.max(
+                                        callouts[activeStage].left.length -
+                                        1,
+                                        1,
+                                      ),
+                                    ) * 20,
+                                  ),
                             }}
                             exit={{
                               opacity: 0,
@@ -1931,24 +1926,21 @@ export default function KnowYourMeatPage() {
                               delay: idx * 0.12,
                               ease: [0.16, 1, 0.3, 1],
                             }}
-                            className={`flex items-center relative select-none cursor-pointer group ${
-                              selected ? "z-40 scale-105 selected-part" : "z-10"
-                            }`}
+                            className={`flex items-center relative select-none cursor-pointer group ${selected ? "z-40 scale-105 selected-part" : "z-10"
+                              }`}
                           >
                             {/* Circle Thumbnail */}
                             <div
-                              className={`relative w-[65px] h-[65px] lg:w-[75px] lg:h-[75px] xl:w-[85px] xl:h-[85px] rounded-full border-2 bg-white flex items-center justify-center p-1.5 lg:p-2 shadow-md z-10 shrink-0 transition-all duration-300 viz-card-circle ${
-                                selected
-                                  ? "border-[#F2CE07] ring-4 ring-[#F2CE07]/60 scale-110 shadow-2xl bg-amber-50"
-                                  : "border-[#D62828] group-hover:border-[#F2CE07] group-hover:scale-105 group-hover:shadow-xl"
-                              }`}
+                              className={`relative w-[65px] h-[65px] lg:w-[75px] lg:h-[75px] xl:w-[85px] xl:h-[85px] rounded-full border-2 bg-white flex items-center justify-center p-1.5 lg:p-2 shadow-md z-10 shrink-0 transition-all duration-300 viz-card-circle ${selected
+                                ? "border-[#F2CE07] ring-4 ring-[#F2CE07]/60 scale-110 shadow-2xl bg-amber-50"
+                                : "border-[#D62828] group-hover:border-[#F2CE07] group-hover:scale-105 group-hover:shadow-xl"
+                                }`}
                             >
                               <span
-                                className={`absolute -top-1 -left-1 w-[18px] h-[18px] lg:w-[20px] lg:h-[20px] xl:w-[22px] xl:h-[22px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter transition-colors duration-300 viz-card-badge ${
-                                  selected
-                                    ? "bg-[#F2CE07] text-black shadow"
-                                    : "bg-[#D62828] text-white group-hover:bg-[#F2CE07] group-hover:text-black"
-                                }`}
+                                className={`absolute -top-1 -left-1 w-[18px] h-[18px] lg:w-[20px] lg:h-[20px] xl:w-[22px] xl:h-[22px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter transition-colors duration-300 viz-card-badge ${selected
+                                  ? "bg-[#F2CE07] text-black shadow"
+                                  : "bg-[#D62828] text-white group-hover:bg-[#F2CE07] group-hover:text-black"
+                                  }`}
                               >
                                 {idx + 1}
                               </span>
@@ -1957,11 +1949,10 @@ export default function KnowYourMeatPage() {
                                   src={item.img}
                                   alt={item.name}
                                   fill
-                                  className={`object-contain transition-transform duration-300 ${
-                                    selected
-                                      ? "scale-115"
-                                      : "group-hover:scale-110"
-                                  }`}
+                                  className={`object-contain transition-transform duration-300 ${selected
+                                    ? "scale-115"
+                                    : "group-hover:scale-110"
+                                    }`}
                                 />
                               </div>
                             </div>
@@ -1970,18 +1961,16 @@ export default function KnowYourMeatPage() {
                             <div className="flex flex-col gap-0.5 lg:gap-1 h-[75px] lg:h-[85px] xl:h-[95px] overflow-hidden justify-center -ml-6 lg:-ml-8 viz-card-desc-wrap">
                               {/* Name Pill */}
                               <div
-                                className={`min-w-[130px] lg:min-w-[145px] xl:min-w-[155px] pl-10 lg:pl-12 xl:pl-13 pr-7 lg:pr-9 xl:pr-10 py-0.5 lg:py-1 rounded-full inline-flex items-center self-start transition-all duration-300 viz-card-pill ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""} ${
-                                  selected
-                                    ? "bg-[#F2CE07] text-black shadow-lg ring-2 ring-[#F2CE07]/40"
-                                    : "bg-[#D62828] group-hover:bg-[#b01c1c] group-hover:shadow-md"
-                                }`}
+                                className={`min-w-[130px] lg:min-w-[145px] xl:min-w-[155px] pl-10 lg:pl-12 xl:pl-13 pr-7 lg:pr-9 xl:pr-10 py-0.5 lg:py-1 rounded-full inline-flex items-center self-start transition-all duration-300 viz-card-pill ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""} ${selected
+                                  ? "bg-[#F2CE07] text-black shadow-lg ring-2 ring-[#F2CE07]/40"
+                                  : "bg-[#D62828] group-hover:bg-[#b01c1c] group-hover:shadow-md"
+                                  }`}
                               >
                                 <span
-                                  className={`text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-semibold viz-card-pill-text ${
-                                    selected
-                                      ? "text-black font-extrabold"
-                                      : "text-white"
-                                  }`}
+                                  className={`text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-semibold viz-card-pill-text ${selected
+                                    ? "text-black font-extrabold"
+                                    : "text-white"
+                                    }`}
                                 >
                                   {item.name}
                                 </span>
@@ -3585,24 +3574,21 @@ export default function KnowYourMeatPage() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
                             transition={{ duration: 0.3 }}
-                            className={`absolute bottom-[-45px] md:bottom-[-55px] left-[45%] transform -translate-x-[45%] flex items-center select-none cursor-pointer group viz-gizzard-pos ${
-                              selected ? "z-40 scale-105 selected-part" : "z-30"
-                            }`}
+                            className={`absolute bottom-[-45px] md:bottom-[-55px] left-[45%] transform -translate-x-[45%] flex items-center select-none cursor-pointer group viz-gizzard-pos ${selected ? "z-40 scale-105 selected-part" : "z-30"
+                              }`}
                           >
                             {/* Circle Thumbnail */}
                             <div
-                              className={`relative w-[65px] h-[65px] lg:w-[75px] lg:h-[75px] xl:w-[85px] xl:h-[85px] rounded-full border-2 bg-white flex items-center justify-center p-1.5 lg:p-2 shadow-md z-10 shrink-0 transition-all duration-300 viz-card-circle ${
-                                selected
-                                  ? "border-[#F2CE07] ring-4 ring-[#F2CE07]/60 scale-110 shadow-2xl bg-amber-50"
-                                  : "border-[#D62828] group-hover:border-[#F2CE07] group-hover:scale-105 group-hover:shadow-xl"
-                              }`}
+                              className={`relative w-[65px] h-[65px] lg:w-[75px] lg:h-[75px] xl:w-[85px] xl:h-[85px] rounded-full border-2 bg-white flex items-center justify-center p-1.5 lg:p-2 shadow-md z-10 shrink-0 transition-all duration-300 viz-card-circle ${selected
+                                ? "border-[#F2CE07] ring-4 ring-[#F2CE07]/60 scale-110 shadow-2xl bg-amber-50"
+                                : "border-[#D62828] group-hover:border-[#F2CE07] group-hover:scale-105 group-hover:shadow-xl"
+                                }`}
                             >
                               <span
-                                className={`absolute -top-1 -left-1 w-[18px] h-[18px] lg:w-[20px] lg:h-[20px] xl:w-[22px] xl:h-[22px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter transition-colors duration-300 viz-card-badge ${
-                                  selected
-                                    ? "bg-[#F2CE07] text-black shadow"
-                                    : "bg-[#D62828] text-white group-hover:bg-[#F2CE07] group-hover:text-black"
-                                }`}
+                                className={`absolute -top-1 -left-1 w-[18px] h-[18px] lg:w-[20px] lg:h-[20px] xl:w-[22px] xl:h-[22px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter transition-colors duration-300 viz-card-badge ${selected
+                                  ? "bg-[#F2CE07] text-black shadow"
+                                  : "bg-[#D62828] text-white group-hover:bg-[#F2CE07] group-hover:text-black"
+                                  }`}
                               >
                                 {callouts[activeStage].left.length +
                                   callouts[activeStage].right.length +
@@ -3613,11 +3599,10 @@ export default function KnowYourMeatPage() {
                                   src={item.img}
                                   alt={item.name}
                                   fill
-                                  className={`object-contain transition-transform duration-300 ${
-                                    selected
-                                      ? "scale-115"
-                                      : "group-hover:scale-110"
-                                  }`}
+                                  className={`object-contain transition-transform duration-300 ${selected
+                                    ? "scale-115"
+                                    : "group-hover:scale-110"
+                                    }`}
                                 />
                               </div>
                             </div>
@@ -3626,18 +3611,16 @@ export default function KnowYourMeatPage() {
                             <div className="flex flex-col gap-0.5 lg:gap-1 h-[75px] lg:h-[85px] xl:h-[95px] overflow-hidden justify-center -ml-6 lg:-ml-8 viz-card-desc-wrap">
                               {/* Name Pill */}
                               <div
-                                className={`min-w-[130px] lg:min-w-[145px] xl:min-w-[155px] pl-10 lg:pl-12 xl:pl-13 pr-7 lg:pr-9 xl:pr-10 py-0.5 lg:py-1 rounded-full inline-flex items-center self-start transition-all duration-300 viz-card-pill ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""} ${
-                                  selected
-                                    ? "bg-[#F2CE07] text-black shadow-lg ring-2 ring-[#F2CE07]/40"
-                                    : "bg-[#D62828] group-hover:bg-[#b01c1c] group-hover:shadow-md"
-                                }`}
+                                className={`min-w-[130px] lg:min-w-[145px] xl:min-w-[155px] pl-10 lg:pl-12 xl:pl-13 pr-7 lg:pr-9 xl:pr-10 py-0.5 lg:py-1 rounded-full inline-flex items-center self-start transition-all duration-300 viz-card-pill ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""} ${selected
+                                  ? "bg-[#F2CE07] text-black shadow-lg ring-2 ring-[#F2CE07]/40"
+                                  : "bg-[#D62828] group-hover:bg-[#b01c1c] group-hover:shadow-md"
+                                  }`}
                               >
                                 <span
-                                  className={`text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-semibold viz-card-pill-text ${
-                                    selected
-                                      ? "text-black font-extrabold"
-                                      : "text-white"
-                                  }`}
+                                  className={`text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-semibold viz-card-pill-text ${selected
+                                    ? "text-black font-extrabold"
+                                    : "text-white"
+                                    }`}
                                 >
                                   {item.name}
                                 </span>
@@ -3684,11 +3667,10 @@ export default function KnowYourMeatPage() {
                                 setSelectedPartIdx(chickenPartIdx);
                               }
                             }}
-                            className={`w-[48px] h-[48px] rounded-full border-2 bg-white flex items-center justify-center p-1.5 shadow-sm transition-all ${
-                              selected
-                                ? "border-[#F2CE07] ring-2 ring-[#F2CE07] scale-110"
-                                : "border-slate-200 hover:border-slate-300"
-                            }`}
+                            className={`w-[48px] h-[48px] rounded-full border-2 bg-white flex items-center justify-center p-1.5 shadow-sm transition-all ${selected
+                              ? "border-[#F2CE07] ring-2 ring-[#F2CE07] scale-110"
+                              : "border-slate-200 hover:border-slate-300"
+                              }`}
                           >
                             <img
                               src={item.img}
@@ -3780,25 +3762,25 @@ export default function KnowYourMeatPage() {
                               x:
                                 activeStage === "inside"
                                   ? Math.round(
-                                      Math.sin(
-                                        (Math.PI * idx) /
-                                          Math.max(
-                                            callouts[activeStage].right.length -
-                                              1,
-                                            1,
-                                          ),
-                                      ) * 60,
-                                    )
+                                    Math.sin(
+                                      (Math.PI * idx) /
+                                      Math.max(
+                                        callouts[activeStage].right.length -
+                                        1,
+                                        1,
+                                      ),
+                                    ) * 60,
+                                  )
                                   : Math.round(
-                                      Math.sin(
-                                        (Math.PI * idx) /
-                                          Math.max(
-                                            callouts[activeStage].right.length -
-                                              1,
-                                            1,
-                                          ),
-                                      ) * 20,
-                                    ),
+                                    Math.sin(
+                                      (Math.PI * idx) /
+                                      Math.max(
+                                        callouts[activeStage].right.length -
+                                        1,
+                                        1,
+                                      ),
+                                    ) * 20,
+                                  ),
                             }}
                             exit={{
                               opacity: 0,
@@ -3809,24 +3791,21 @@ export default function KnowYourMeatPage() {
                               delay: idx * 0.12,
                               ease: [0.16, 1, 0.3, 1],
                             }}
-                            className={`flex items-center relative select-none cursor-pointer group ${
-                              selected ? "z-40 scale-105 selected-part" : "z-10"
-                            }`}
+                            className={`flex items-center relative select-none cursor-pointer group ${selected ? "z-40 scale-105 selected-part" : "z-10"
+                              }`}
                           >
                             {/* Circle Thumbnail */}
                             <div
-                              className={`relative w-[65px] h-[65px] lg:w-[75px] lg:h-[75px] xl:w-[85px] xl:h-[85px] rounded-full border-2 bg-white flex items-center justify-center p-1.5 lg:p-2 shadow-md z-10 shrink-0 transition-all duration-300 viz-card-circle ${
-                                selected
-                                  ? "border-[#F2CE07] ring-4 ring-[#F2CE07]/60 scale-110 shadow-2xl bg-amber-50"
-                                  : "border-[#D62828] group-hover:border-[#F2CE07] group-hover:scale-105 group-hover:shadow-xl"
-                              }`}
+                              className={`relative w-[65px] h-[65px] lg:w-[75px] lg:h-[75px] xl:w-[85px] xl:h-[85px] rounded-full border-2 bg-white flex items-center justify-center p-1.5 lg:p-2 shadow-md z-10 shrink-0 transition-all duration-300 viz-card-circle ${selected
+                                ? "border-[#F2CE07] ring-4 ring-[#F2CE07]/60 scale-110 shadow-2xl bg-amber-50"
+                                : "border-[#D62828] group-hover:border-[#F2CE07] group-hover:scale-105 group-hover:shadow-xl"
+                                }`}
                             >
                               <span
-                                className={`absolute -top-1 -left-1 w-[18px] h-[18px] lg:w-[20px] lg:h-[20px] xl:w-[22px] xl:h-[22px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter transition-colors duration-300 viz-card-badge ${
-                                  selected
-                                    ? "bg-[#F2CE07] text-black shadow"
-                                    : "bg-[#D62828] text-white group-hover:bg-[#F2CE07] group-hover:text-black"
-                                }`}
+                                className={`absolute -top-1 -left-1 w-[18px] h-[18px] lg:w-[20px] lg:h-[20px] xl:w-[22px] xl:h-[22px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter transition-colors duration-300 viz-card-badge ${selected
+                                  ? "bg-[#F2CE07] text-black shadow"
+                                  : "bg-[#D62828] text-white group-hover:bg-[#F2CE07] group-hover:text-black"
+                                  }`}
                               >
                                 {callouts[activeStage].left.length + idx + 1}
                               </span>
@@ -3835,11 +3814,10 @@ export default function KnowYourMeatPage() {
                                   src={item.img}
                                   alt={item.name}
                                   fill
-                                  className={`object-contain transition-transform duration-300 ${
-                                    selected
-                                      ? "scale-115"
-                                      : "group-hover:scale-110"
-                                  }`}
+                                  className={`object-contain transition-transform duration-300 ${selected
+                                    ? "scale-115"
+                                    : "group-hover:scale-110"
+                                    }`}
                                 />
                               </div>
                             </div>
@@ -3848,18 +3826,16 @@ export default function KnowYourMeatPage() {
                             <div className="flex flex-col gap-0.5 lg:gap-1 h-[75px] lg:h-[85px] xl:h-[95px] overflow-hidden justify-center -ml-6 lg:-ml-8 viz-card-desc-wrap">
                               {/* Name Pill */}
                               <div
-                                className={`min-w-[130px] lg:min-w-[145px] xl:min-w-[155px] pl-10 lg:pl-12 xl:pl-13 pr-7 lg:pr-9 xl:pr-10 py-0.5 lg:py-1 rounded-full inline-flex items-center self-start transition-all duration-300 viz-card-pill ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""} ${
-                                  selected
-                                    ? "bg-[#F2CE07] text-black shadow-lg ring-2 ring-[#F2CE07]/40"
-                                    : "bg-[#D62828] group-hover:bg-[#b01c1c] group-hover:shadow-md"
-                                }`}
+                                className={`min-w-[130px] lg:min-w-[145px] xl:min-w-[155px] pl-10 lg:pl-12 xl:pl-13 pr-7 lg:pr-9 xl:pr-10 py-0.5 lg:py-1 rounded-full inline-flex items-center self-start transition-all duration-300 viz-card-pill ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""} ${selected
+                                  ? "bg-[#F2CE07] text-black shadow-lg ring-2 ring-[#F2CE07]/40"
+                                  : "bg-[#D62828] group-hover:bg-[#b01c1c] group-hover:shadow-md"
+                                  }`}
                               >
                                 <span
-                                  className={`text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-semibold viz-card-pill-text ${
-                                    selected
-                                      ? "text-black font-extrabold"
-                                      : "text-white"
-                                  }`}
+                                  className={`text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-semibold viz-card-pill-text ${selected
+                                    ? "text-black font-extrabold"
+                                    : "text-white"
+                                    }`}
                                 >
                                   {item.name}
                                 </span>
@@ -4049,7 +4025,7 @@ export default function KnowYourMeatPage() {
                     },
                   },
                 }}
-                className="text-[15px] font-normal text-slate-500 tracking-wider font-inter inline-flex flex-wrap justify-center select-none"
+                className="text-[15px] font-normal text-slate-800 tracking-wider font-inter inline-flex flex-wrap justify-center select-none"
               >
                 {"Premium quality meat, delivery fresh to your life."
                   .split("")
@@ -4128,11 +4104,10 @@ export default function KnowYourMeatPage() {
       {/* 3. Interactive Details Section - Only shown when activeMeatType === "chicken" */}
       <section
         ref={detailsSectionRef}
-        className={`relative z-30 w-full h-screen min-h-screen max-h-screen pt-[130px] md:pt-[135px] lg:pt-[140px] pb-4 flex items-center justify-center m-0 overflow-y-auto md:overflow-hidden transition-all duration-700 detail-section-wrap ${
-          hasSelectedAnyPart && activeMeatType === "chicken"
-            ? "block opacity-100 pointer-events-auto"
-            : "hidden opacity-0 pointer-events-none"
-        }`}
+        className={`relative z-30 w-full h-screen min-h-screen max-h-screen pt-[130px] md:pt-[135px] lg:pt-[140px] pb-4 flex items-center justify-center m-0 overflow-y-auto md:overflow-hidden transition-all duration-700 detail-section-wrap ${hasSelectedAnyPart && activeMeatType === "chicken"
+          ? "block opacity-100 pointer-events-auto"
+          : "hidden opacity-0 pointer-events-none"
+          }`}
       >
         {/* Pure Code Background: Darker Green (#46660E) + Doodle Pattern + Cream Paper Right Panel with Layered Ripped Edge */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -4314,7 +4289,7 @@ export default function KnowYourMeatPage() {
                       <model-viewer
                         src={
                           partGlbMap[
-                            chickenParts[manuallySelectedPartIdx].name
+                          chickenParts[manuallySelectedPartIdx].name
                           ] || "/Product/details/partsGLB/Drumstick.glb"
                         }
                         alt={`360 3D Model of ${chickenParts[manuallySelectedPartIdx].name}`}
@@ -4338,11 +4313,10 @@ export default function KnowYourMeatPage() {
                 ) : (
                   /* 2D Image View (Raw or Packed) */
                   <div
-                    className={`relative w-full h-full flex items-center justify-center transition-all duration-300 pointer-events-none ${
-                      isLandedInSection2
-                        ? "opacity-100 scale-100"
-                        : "opacity-0 scale-95"
-                    }`}
+                    className={`relative w-full h-full flex items-center justify-center transition-all duration-300 pointer-events-none ${isLandedInSection2
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-95"
+                      }`}
                   >
                     <img
                       src={
@@ -4351,11 +4325,10 @@ export default function KnowYourMeatPage() {
                           : "/Product/details/packedProduct.webp"
                       }
                       alt={chickenParts[manuallySelectedPartIdx].name}
-                      className={`w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-300 ${
-                        activeViewTab === "raw"
-                          ? "scale-[7] sm:scale-[2.8] md:scale-100"
-                          : "scale-[1.3] md:scale-100"
-                      }`}
+                      className={`w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-300 ${activeViewTab === "raw"
+                        ? "scale-[7] sm:scale-[2.8] md:scale-100"
+                        : "scale-[1.3] md:scale-100"
+                        }`}
                     />
                   </div>
                 )}
@@ -4396,10 +4369,12 @@ export default function KnowYourMeatPage() {
 
               {/* Thumbnail 1: Raw Cut Part Image */}
               <button
-                onClick={() =>
-                  setLightboxImage(chickenParts[manuallySelectedPartIdx].img)
-                }
-                className="relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden p-2 border-2 border-white/60 bg-white/20 hover:bg-white/40 hover:scale-105 transition-all duration-300 cursor-pointer detail-carousel-btn"
+                onClick={() => setActiveViewTab("raw")}
+                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden p-1.5 transition-all duration-300 cursor-pointer detail-carousel-btn ${activeViewTab === "raw"
+                  ? "border-4 border-[#F2CE07] bg-white/50 scale-105"
+                  : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
+                  }`}
+                title="Raw Cut View"
               >
                 <img
                   src={chickenParts[manuallySelectedPartIdx].img}
@@ -4410,10 +4385,12 @@ export default function KnowYourMeatPage() {
 
               {/* Thumbnail 2: Packed Product Image */}
               <button
-                onClick={() =>
-                  setLightboxImage("/Product/details/packedProduct.webp")
-                }
-                className="relative w-[125px] aspect-[679/738] rounded-2xl overflow-hidden border-2 border-white/60 bg-white/20 hover:bg-white/40 hover:scale-105 transition-all duration-300 cursor-pointer detail-carousel-btn"
+                onClick={() => setActiveViewTab("packed")}
+                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden border-2 transition-all duration-300 cursor-pointer detail-carousel-btn ${activeViewTab === "packed"
+                  ? "border-4 border-[#F2CE07] bg-white/50 scale-105"
+                  : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
+                  }`}
+                title="Packed Product View"
               >
                 <img
                   src="/Product/details/packedProduct.webp"
@@ -4425,11 +4402,10 @@ export default function KnowYourMeatPage() {
               {/* Thumbnail 3: 360 Image with 3D View Intimation Tag */}
               <button
                 onClick={() => setActiveViewTab("3d")}
-                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden p-1.5 transition-all duration-300 cursor-pointer detail-carousel-btn flex flex-col items-center justify-between bg-white/20 hover:bg-white/40 ${
-                  activeViewTab === "3d"
-                    ? "border-4 border-[#F2CE07] bg-white/50 scale-105"
-                    : "border-2 border-white/60"
-                }`}
+                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden p-1.5 transition-all duration-300 cursor-pointer detail-carousel-btn flex flex-col items-center justify-between ${activeViewTab === "3d"
+                  ? "border-4 border-[#F2CE07] bg-white/50 scale-105"
+                  : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
+                  }`}
                 title="Click to view 360° 3D Model"
               >
                 {/* 360 Image */}
@@ -4500,7 +4476,7 @@ export default function KnowYourMeatPage() {
                 },
               },
             }}
-            className="w-full md:w-1/2 h-auto md:h-full px-4 md:px-8 lg:px-10 xl:px-12 flex flex-col gap-2.5 md:gap-3 select-none detail-right-col overflow-hidden pb-4 justify-start"
+            className="w-full md:w-1/2 h-auto md:h-full px-4 md:px-8 lg:px-10 xl:px-12 flex flex-col justify-start detail-right-col overflow-hidden pb-3 sm:pb-4 selection:bg-[#8CC63F] selection:text-white"
           >
             {/* Breadcrumbs */}
             <motion.div
@@ -4517,11 +4493,11 @@ export default function KnowYourMeatPage() {
               whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[13px] xl:text-[14px] font-medium text-white/80 md:text-slate-600 tracking-wider flex items-center gap-2 font-Manrope"
+              className="text-[12px] sm:text-[13px] xl:text-[14px] font-medium text-slate-600 tracking-wider flex items-center gap-2 font-Manrope mb-2 sm:mb-2.5 lg:mb-3"
             >
               <Link
                 href="/"
-                className="relative inline-block hover:text-[#F2CE07] md:hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#F2CE07] md:after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
+                className="relative inline-block hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
               >
                 Home
               </Link>
@@ -4530,12 +4506,12 @@ export default function KnowYourMeatPage() {
                   src="/Product/details/right aroow.svg"
                   alt="arrow"
                   fill
-                  className="object-contain filter brightness-0 invert opacity-80 md:brightness-100 md:invert-0 md:opacity-60"
+                  className="object-contain opacity-60"
                 />
               </div>
               <Link
                 href="/know-your-meat"
-                className="relative inline-block hover:text-[#F2CE07] md:hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#F2CE07] md:after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
+                className="relative inline-block hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
               >
                 Know Your Meat
               </Link>
@@ -4544,7 +4520,7 @@ export default function KnowYourMeatPage() {
                   src="/Product/details/right aroow.svg"
                   alt="arrow"
                   fill
-                  className="object-contain filter brightness-0 invert opacity-80 md:brightness-100 md:invert-0 md:opacity-60"
+                  className="object-contain opacity-60"
                 />
               </div>
               <button
@@ -4553,7 +4529,7 @@ export default function KnowYourMeatPage() {
                   setIsLandedInSection2(false);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="relative inline-block hover:text-[#F2CE07] md:hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#F2CE07] md:after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
+                className="relative inline-block hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
               >
                 Chicken
               </button>
@@ -4562,15 +4538,15 @@ export default function KnowYourMeatPage() {
                   src="/Product/details/right aroow.svg"
                   alt="arrow"
                   fill
-                  className="object-contain filter brightness-0 invert opacity-80 md:brightness-100 md:invert-0 md:opacity-60"
+                  className="object-contain opacity-60"
                 />
               </div>
-              <span className="text-white md:text-slate-900 font-semibold">
+              <span className="text-slate-900 font-semibold">
                 {chickenParts[manuallySelectedPartIdx].name}
               </span>
             </motion.div>
 
-            <div className="flex flex-col gap-2.5 md:gap-3 detail-inner-gap">
+            <div className="flex flex-col detail-inner-gap">
               {/* Title Section */}
               <motion.div
                 variants={{
@@ -4586,14 +4562,14 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-0.5 lg:space-y-1"
+                className="space-y-0.5 mb-2 sm:mb-2.5 lg:mb-3"
               >
-                <span className="text-[17px] lg:text-[19px] font-semibold text-[#F2CE07] md:text-[#127431] tracking-wide uppercase font-manrope">
+                <span className="text-[13px] sm:text-[15px] lg:text-[17px] font-semibold text-[#127431] tracking-wide uppercase font-manrope block">
                   CHICKEN
                 </span>
-                <h2 className="text-4xl lg:text-5xl xl:text-[52px] font-bold text-white md:text-slate-900 leading-none tracking-wide font-barlow-condensed uppercase detail-title">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[56px] font-bold text-slate-900 leading-none tracking-tight font-barlow-condensed uppercase detail-title">
                   CHICKEN{" "}
-                  <span className="text-[#F2CE07] md:text-[#127431]">
+                  <span className="text-[#127431]">
                     {chickenParts[manuallySelectedPartIdx].name}
                   </span>
                 </h2>
@@ -4614,7 +4590,7 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[13px] lg:text-[14px] xl:text-[15px] font-medium text-white/90 md:text-slate-700 leading-relaxed font-manrope max-w-[550px] xl:max-w-[580px] detail-desc"
+                className="text-[12px] sm:text-[13px] lg:text-[14px] xl:text-[15px] font-normal text-slate-800 leading-relaxed font-manrope max-w-[600px] xl:max-w-[640px] detail-desc mb-2 sm:mb-2.5 lg:mb-3"
               >
                 {chickenParts[manuallySelectedPartIdx].desc}
               </motion.p>
@@ -4633,7 +4609,7 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, scaleX: 1 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.45 }}
-                className="w-20 h-[2px] bg-[#D62828] origin-left my-0.5 lg:my-1"
+                className="w-14 sm:w-18 h-[2px] sm:h-[2.5px] bg-[#D62828] origin-left mb-2.5 sm:mb-3 lg:mb-3.5"
               />
 
               {/* Package Weight specs */}
@@ -4651,27 +4627,27 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-3 py-1.5 lg:py-2.5 border-y border-white/25 md:border-slate-200/50"
+                className="flex items-center gap-3 sm:gap-4 lg:gap-5 py-1.5 sm:py-2 lg:py-2.5 border-y border-slate-200/80 mb-2.5 sm:mb-3 lg:mb-3.5"
               >
                 <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-[13px] md:text-[15px] font-medium text-white/90 md:text-slate-900 tracking-wider uppercase font-manrope whitespace-nowrap">
+                  <span className="text-[12px] sm:text-[13px] lg:text-[14px] font-medium text-slate-900 tracking-wider uppercase font-manrope whitespace-nowrap">
                     PACKAGE WEIGHT
                   </span>
-                  <span className="text-lg md:text-xl font-bold text-white md:text-slate-800 font-barlow-condensed whitespace-nowrap">
+                  <span className="text-base sm:text-lg lg:text-xl font-bold text-slate-900 font-barlow-condensed whitespace-nowrap ml-1">
                     {chickenParts[manuallySelectedPartIdx].weight}
                   </span>
                 </div>
-                <div className="w-[1px] h-6 bg-white/40 md:bg-slate-300 shrink-0" />
+                <div className="w-[1px] h-4 sm:h-5 bg-slate-300 shrink-0 mx-0.5" />
                 <div className="flex items-center gap-2 shrink-0">
-                  <div className="relative w-4 h-4 md:w-5 md:h-5 shrink-0">
+                  <div className="relative w-4 h-4 sm:w-5 sm:h-5 shrink-0">
                     <Image
                       src="/Product/details/pack.webp"
                       alt="Pack Icon"
                       fill
-                      className="object-contain filter brightness-0 invert md:brightness-100 md:invert-0"
+                      className="object-contain"
                     />
                   </div>
-                  <span className="text-[13px] md:text-[15px] font-medium text-white/90 md:text-slate-900 tracking-wider uppercase font-manrope whitespace-nowrap">
+                  <span className="text-[12px] sm:text-[13px] lg:text-[14px] font-medium text-slate-900 tracking-wider uppercase font-manrope whitespace-nowrap">
                     MEATIN PACK
                   </span>
                 </div>
@@ -4692,12 +4668,12 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-1.5 lg:space-y-2"
+                className="space-y-1.5 sm:space-y-2 mb-2.5 sm:mb-3 lg:mb-3.5"
               >
-                <h4 className="text-[14px] lg:text-[15px] font-medium text-white md:text-slate-900 tracking-wider uppercase font-manrope">
+                <h4 className="text-[12px] sm:text-[13px] lg:text-[14px] font-semibold text-slate-900 tracking-wider uppercase font-manrope">
                   NUTRITION INFORMATION (PER 100g)
                 </h4>
-                <div className="grid grid-cols-4 gap-3 lg:gap-4 detail-nutrition-grid">
+                <div className="grid grid-cols-4 gap-2 sm:gap-2.5 lg:gap-3 detail-nutrition-grid">
                   {[
                     {
                       label: "PROTEIN",
@@ -4725,9 +4701,9 @@ export default function KnowYourMeatPage() {
                   ].map((nut, idx) => (
                     <div
                       key={idx}
-                      className="bg-white border border-slate-200 rounded-xl p-2 text-center flex flex-col items-center justify-between min-h-[75px] lg:min-h-[80px] gap-1.5 shadow-sm detail-nutrition-card"
+                      className="bg-white/80 border border-slate-200/80 rounded-xl p-2 sm:p-2.5 lg:p-3 text-center flex flex-col items-center justify-between min-h-[72px] sm:min-h-[82px] lg:min-h-[90px] xl:min-h-[96px] gap-1 sm:gap-1.5 shadow-sm detail-nutrition-card"
                     >
-                      <div className="relative w-7 h-7 lg:w-8 lg:h-8">
+                      <div className="relative w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7">
                         <Image
                           src={nut.icon}
                           alt={nut.label}
@@ -4735,10 +4711,10 @@ export default function KnowYourMeatPage() {
                           className="object-contain"
                         />
                       </div>
-                      <span className="text-[12px] lg:text-[13px] font-medium text-slate-900 tracking-wider uppercase font-manrope">
+                      <span className="text-[10px] sm:text-[11px] lg:text-[12px] font-medium text-slate-700 tracking-wider uppercase font-manrope">
                         {nut.label}
                       </span>
-                      <span className="text-[14px] lg:text-[15px] font-bold text-slate-800 font-barlow-condensed">
+                      <span className="text-[13px] sm:text-[15px] lg:text-[17px] font-bold text-slate-900 font-barlow-condensed">
                         {nut.val}
                       </span>
                     </div>
@@ -4833,11 +4809,10 @@ export default function KnowYourMeatPage() {
 
       {/* 3. Recipes Section (Hidden by default, shown ONLY after part is selected in Section 1) */}
       <section
-        className={`relative z-30 w-full bg-[#E4E4E4] pt-16 pb-28 px-4 md:px-12 lg:px-20 recipe-section-wrap overflow-hidden select-none transition-all duration-700 ${
-          hasSelectedAnyPart
-            ? "block opacity-100"
-            : "hidden opacity-0 pointer-events-none"
-        }`}
+        className={`relative z-30 w-full bg-[#E4E4E4] pt-16 pb-28 px-4 md:px-12 lg:px-20 recipe-section-wrap overflow-hidden select-none transition-all duration-700 ${hasSelectedAnyPart
+          ? "block opacity-100"
+          : "hidden opacity-0 pointer-events-none"
+          }`}
       >
         {/* Background Doodle Pattern Overlay */}
         <div
@@ -5003,9 +4978,9 @@ export default function KnowYourMeatPage() {
           >
             {(
               partRecipesMap[
-                chickenParts[manuallySelectedPartIdx]?.name
-                  .toLowerCase()
-                  .trim() || "breast"
+              chickenParts[manuallySelectedPartIdx]?.name
+                .toLowerCase()
+                .trim() || "breast"
               ] || partRecipesMap["breast"]
             ).map((recipe, idx) => (
               <Link
@@ -5252,11 +5227,10 @@ export default function KnowYourMeatPage() {
               <img
                 src={lightboxImage}
                 alt="Product Fullscreen Preview"
-                className={`object-contain rounded-2xl select-none filter drop-shadow-2xl ${
-                  lightboxImage.includes("packedProduct")
-                    ? "max-w-full max-h-[85vh]"
-                    : "w-[80vw] max-w-[500px] sm:max-w-[650px] md:max-w-[750px] lg:max-w-[850px] max-h-[85vh]"
-                }`}
+                className={`object-contain rounded-2xl select-none filter drop-shadow-2xl ${lightboxImage.includes("packedProduct")
+                  ? "max-w-full max-h-[85vh]"
+                  : "w-[80vw] max-w-[500px] sm:max-w-[650px] md:max-w-[750px] lg:max-w-[850px] max-h-[85vh]"
+                  }`}
               />
             </motion.div>
           </motion.div>
