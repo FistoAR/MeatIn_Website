@@ -1165,14 +1165,12 @@ export default function KnowYourMeatPage() {
             }
             .detail-right-col {
               gap: 4px !important;
-              justify-content: flex-start !important;
+              justify-content: center !important;
               padding-top: 0px !important;
+              overflow-y: hidden !important;
             }
             .detail-inner-gap {
               gap: 4px !important;
-            }
-            .detail-title {
-              font-size: 26px !important;
             }
             .detail-desc {
               font-size: 12px !important;
@@ -1262,9 +1260,6 @@ export default function KnowYourMeatPage() {
             .detail-inner-gap {
               gap: 6px !important;
             }
-            .detail-title {
-              font-size: 28px !important;
-            }
             .detail-desc {
               font-size: 12.5px !important;
               line-height: 1.28 !important;
@@ -1326,15 +1321,13 @@ export default function KnowYourMeatPage() {
               max-height: 56vh !important;
             }
             .detail-right-col {
-              gap: 10px !important;
-              justify-content: flex-start !important;
+              gap: 8px !important;
+              justify-content: center !important;
               padding-top: 0px !important;
+              overflow-y: hidden !important;
             }
             .detail-inner-gap {
               gap: 10px !important;
-            }
-            .detail-title {
-              font-size: 30px !important;
             }
             .detail-desc {
               font-size: 13px !important;
@@ -1387,7 +1380,7 @@ export default function KnowYourMeatPage() {
 
           @media (min-height: 751px) and (min-width: 768px) {
             .detail-section-wrap {
-              padding-top: 118px !important;
+              padding-top: 96px !important;
               padding-bottom: 12px !important;
             }
             .detail-showcase-box {
@@ -4104,7 +4097,7 @@ export default function KnowYourMeatPage() {
       {/* 3. Interactive Details Section - Only shown when activeMeatType === "chicken" */}
       <section
         ref={detailsSectionRef}
-        className={`relative z-30 w-full h-screen min-h-screen max-h-screen pt-[130px] md:pt-[135px] lg:pt-[140px] pb-4 flex items-center justify-center m-0 overflow-y-auto md:overflow-hidden transition-all duration-700 detail-section-wrap ${hasSelectedAnyPart && activeMeatType === "chicken"
+        className={`relative z-30 w-full h-screen min-h-screen max-h-screen pt-[85px] md:pt-[95px] lg:pt-[105px] pb-4 flex items-center justify-center m-0 overflow-y-auto md:overflow-hidden transition-all duration-700 detail-section-wrap ${hasSelectedAnyPart && activeMeatType === "chicken"
           ? "block opacity-100 pointer-events-auto"
           : "hidden opacity-0 pointer-events-none"
           }`}
@@ -4476,7 +4469,7 @@ export default function KnowYourMeatPage() {
                 },
               },
             }}
-            className="w-full md:w-1/2 h-auto md:h-full px-4 md:px-8 lg:px-10 xl:px-12 flex flex-col justify-start detail-right-col overflow-hidden pb-3 sm:pb-4 selection:bg-[#8CC63F] selection:text-white"
+            className="w-full md:w-1/2 h-auto md:h-full px-4 md:px-8 lg:px-12 xl:px-14 flex flex-col justify-center detail-right-col overflow-hidden py-2 selection:bg-[#8CC63F] selection:text-white"
           >
             {/* Breadcrumbs */}
             <motion.div
@@ -4567,7 +4560,7 @@ export default function KnowYourMeatPage() {
                 <span className="text-[13px] sm:text-[15px] lg:text-[17px] font-semibold text-[#127431] tracking-wide uppercase font-manrope block">
                   CHICKEN
                 </span>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[56px] font-bold text-slate-900 leading-none tracking-tight font-barlow-condensed uppercase detail-title">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-[68px] [@media(min-width:1024px)]:text-[3.6vw] font-bold text-slate-900 leading-[0.95] tracking-wide font-barlow-condensed uppercase detail-title">
                   CHICKEN{" "}
                   <span className="text-[#127431]">
                     {chickenParts[manuallySelectedPartIdx].name}

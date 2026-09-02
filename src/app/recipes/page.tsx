@@ -1858,7 +1858,7 @@ export default function RecipesPage() {
                   initial={{ opacity: 0, x: 40, y: 10 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ duration: 0.75, ease: "easeOut", delay: 0.4 }}
-                  className="text-[#D62828] inline-block"
+                  className="text-[#D4A437] inline-block"
                 >
                   {selectedRecipe
                     ? selectedRecipe.part.toUpperCase()
@@ -1872,7 +1872,7 @@ export default function RecipesPage() {
 
           {/* 10 Chicken Parts Selector Bar - Clean Rounded White Circles with Part Name Below */}
           <div className="pt-4">
-            <div className="flex flex-wrap lg:flex-nowrap items-center justify-center px-2 sm:px-4 lg:px-4 xl:px-6 2xl:px-10 gap-2.5 sm:gap-3.5 lg:gap-4 xl:gap-6 2xl:gap-8 pb-6 pt-2 select-none max-w-[1850px] mx-auto">
+            <div className="flex flex-wrap lg:flex-nowrap items-center justify-start px-2 sm:px-4 lg:px-4 xl:px-6 2xl:px-10 gap-2.5 sm:gap-3.5 lg:gap-4 xl:gap-6 2xl:gap-8 pb-6 pt-2 select-none max-w-[1850px] mx-auto">
               {/* ALL Filter Button (Staggered Pop Animation) */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.5, y: 20 }}
@@ -1981,7 +1981,7 @@ export default function RecipesPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-12 sm:space-y-16 relative"
+              className="space-y-8 sm:space-y-12 relative"
             >
               {/* Background Doodle Pattern Overlay (View 1 Only) */}
               <div
@@ -1997,7 +1997,7 @@ export default function RecipesPage() {
                 <section
                   key={part.id}
                   id={`part-section-${part.id}`}
-                  className="space-y-4 sm:space-y-6 pt-4 scroll-mt-28 sm:scroll-mt-36"
+                  className="space-y-4 sm:space-y-6 pt-4 scroll-mt-8 sm:scroll-mt-12"
                 >
                   {/* Section Label Header with Icon & Badge - AOS Scroll Animation */}
                   <motion.div
@@ -2077,10 +2077,7 @@ export default function RecipesPage() {
                             {recipe.title}
                           </h3>
 
-                          {/* Description */}
-                          <p className="text-[12px] sm:text-[13px] lg:text-[13px] xl:text-[14px] font-medium text-slate-200 leading-snug line-clamp-2 font-manrope">
-                            {recipe.desc}
-                          </p>
+                          
 
                           {/* Spec Row (Easy, Time, Servings) */}
                           <div className="flex items-center gap-3 text-[12px] font-bold text-slate-300 font-manrope recipe-card-spec">
