@@ -32,6 +32,14 @@ export default function KnowYourMeatPage() {
   const [hoveredPart, setHoveredPart] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [highlightedCategoryIdx, setHighlightedCategoryIdx] = useState(0);
+
+  useEffect(() => {
+    const categoryTimer = setInterval(() => {
+      setHighlightedCategoryIdx((prev) => (prev + 1) % 6);
+    }, 1600);
+    return () => clearInterval(categoryTimer);
+  }, []);
 
   // GLB Model paths for 360 viewer
   const partGlbMap: Record<string, string> = {
@@ -87,7 +95,10 @@ export default function KnowYourMeatPage() {
     setManuallySelectedPartIdx(0);
     setActiveStage("skin");
     if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "instant" });
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+      if (containerRef.current) {
+        containerRef.current.scrollIntoView({ behavior: "instant" as ScrollBehavior });
+      }
     }
   };
 
@@ -909,11 +920,19 @@ export default function KnowYourMeatPage() {
     (p) => `polygon(0 0, ${p}% 0, ${p - 25}% 100%, 0 100%)`,
   );
 
-  // Update active stage and titles based on scroll progress
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest < 0.35) {
+  // Ensure activeStage is reset to "skin" and scroll is at top whenever returning to chicken tab
+  useEffect(() => {
+    if (activeMeatType === "chicken") {
       setActiveStage("skin");
-    } else if (latest >= 0.35 && latest < 0.58) {
+    }
+  }, [activeMeatType]);
+
+  // Update active stage and titles based on scroll progress (only for chicken)
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (activeMeatType !== "chicken") return;
+    if (latest <= 0.35) {
+      setActiveStage("skin");
+    } else if (latest > 0.35 && latest < 0.58) {
       setActiveStage("skinless");
     } else {
       setActiveStage("inside");
@@ -1840,7 +1859,25 @@ export default function KnowYourMeatPage() {
                 transition={{ duration: 0.45, delay: 0.22, ease: "easeOut" }}
                 className="text-4xl md:text-5xl font-bold font-barlow-condensed tracking-wide uppercase leading-none text-white viz-title-main"
               >
-                WITH <span className="text-[#153520]">SKIN</span>
+                {activeMeatType === "chicken" ? (
+                  activeStage === "skin" ? (
+                    <>
+                      WITH <span className="text-[#153520]">SKIN</span>
+                    </>
+                  ) : activeStage === "skinless" ? (
+                    <>
+                      WITHOUT <span className="text-[#153520]">SKIN</span>
+                    </>
+                  ) : (
+                    <>
+                      WHOLE <span className="text-[#153520]">CHICKEN</span>
+                    </>
+                  )
+                ) : (
+                  <>
+                    WITH <span className="text-[#153520]">SKIN</span>
+                  </>
+                )}
               </motion.h2>
 
               {/* Yellow underline */}
@@ -4051,44 +4088,60 @@ export default function KnowYourMeatPage() {
               }}
               className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:items-center sm:justify-around items-center justify-items-center gap-y-6 gap-x-4 sm:gap-0 px-4 sm:px-8 w-full"
             >
-              {categories.map((cat, idx) => (
-                <React.Fragment key={idx}>
-                  <motion.div
-                    variants={{
-                      hidden: { opacity: 0, scale: 0.7, y: 25 },
-                      visible: {
-                        opacity: 1,
-                        scale: 1,
-                        y: 0,
-                        transition: { duration: 0.5, ease: "easeOut" },
-                      },
-                    }}
-                  >
-                    <div className="flex flex-col items-center gap-3">
-                      <div className="w-20 h-20 rounded-full border-[5px] border-[#CCCCCC] bg-white flex items-center justify-center shadow-md shadow-slate-200/50 transition-all duration-300 hover:scale-105 hover:border-[#82B224]">
-                        <div className="w-[68px] h-[68px] rounded-full bg-[#82B224] border-2 border-white flex items-center justify-center">
-                          <div className="relative w-12 h-12">
-                            <Image
-                              src={cat.icon}
-                              alt={cat.name}
-                              fill
-                              sizes="36px"
-                              className="object-contain filter brightness-0 invert"
-                            />
+              {categories.map((cat, idx) => {
+                const isHighlighted = idx === highlightedCategoryIdx;
+                return (
+                  <React.Fragment key={idx}>
+                    <motion.div
+                      variants={{
+                        hidden: { opacity: 0, scale: 0.7, y: 25 },
+                        visible: {
+                          opacity: 1,
+                          scale: 1,
+                          y: 0,
+                          transition: { duration: 0.5, ease: "easeOut" },
+                        },
+                      }}
+                      animate={isHighlighted ? { scale: [1, 1.14, 1.08] } : { scale: 1 }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                    >
+                      <div className="flex flex-col items-center gap-3 cursor-pointer group">
+                        <div
+                          className={`w-20 h-20 rounded-full border-[5px] bg-white flex items-center justify-center transition-all duration-500 ${isHighlighted
+                            ? "border-[#F2CE07] ring-4 ring-[#F2CE07]/40 shadow-xl shadow-[#F2CE07]/30 scale-108"
+                            : "border-[#CCCCCC] shadow-md shadow-slate-200/50 group-hover:scale-105 group-hover:border-[#82B224]"
+                            }`}
+                        >
+                          <div
+                            className={`w-[68px] h-[68px] rounded-full border-2 border-white flex items-center justify-center transition-all duration-500 bg-[#82B224] ${isHighlighted ? "scale-105 shadow-inner" : ""
+                              }`}
+                          >
+                            <div className="relative w-12 h-12">
+                              <Image
+                                src={cat.icon}
+                                alt={cat.name}
+                                fill
+                                sizes="36px"
+                                className="object-contain filter brightness-0 invert"
+                              />
+                            </div>
                           </div>
                         </div>
+                        <span
+                          className={`text-[14px] font-black tracking-wider uppercase transition-all duration-300 ${isHighlighted ? "text-[#127431] scale-110" : "text-slate-800 group-hover:text-[#127431]"
+                            }`}
+                        >
+                          {cat.name}
+                        </span>
                       </div>
-                      <span className="text-[14px] font-black text-slate-800 tracking-wider uppercase transition-colors">
-                        {cat.name}
-                      </span>
-                    </div>
-                  </motion.div>
+                    </motion.div>
 
-                  {idx < categories.length - 1 && (
-                    <div className="hidden sm:block w-[1px] h-10 bg-slate-300/60 self-start mt-5 shrink-0" />
-                  )}
-                </React.Fragment>
-              ))}
+                    {idx < categories.length - 1 && (
+                      <div className="hidden sm:block w-[1px] h-10 bg-slate-300/60 self-start mt-5 shrink-0" />
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </motion.div>
           </div>
         </div>
@@ -5002,7 +5055,7 @@ export default function KnowYourMeatPage() {
                     y: -6,
                     boxShadow: "0 20px 35px -5px rgba(0, 0, 0, 0.3)",
                   }}
-                  className="relative aspect-[3/2.8] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-4.5 select-none recipe-card-box cursor-pointer"
+                  className="relative aspect-[3/2.8] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-4 select-none recipe-card-box cursor-pointer border border-slate-200/40"
                 >
                   {/* Background Image */}
                   <Image
@@ -5012,26 +5065,20 @@ export default function KnowYourMeatPage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                   />
 
-                  {/* Dark Black Gradient Overlay behind bottom text (55% height) */}
+                  {/* Dark Black Gradient Overlay */}
                   <div className="absolute bottom-0 left-0 right-0 h-[80%] z-10 bg-gradient-to-t from-black/95 via-black/80 to-transparent pointer-events-none" />
 
                   {/* Top-Left Red Badge Pill */}
-                  <div className="absolute top-4 left-4 z-20">
-                    <span className="bg-[#D62828] text-white text-[12px] font-semibold px-3 py-1.5 rounded-md uppercase tracking-wider shadow-md font-inter recipe-card-badge">
-                      {recipe.label}
-                    </span>
-                  </div>
+                  <span className="absolute top-4 left-4 z-20 bg-[#D62828] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
+                    {recipe.label}
+                  </span>
 
-                  {/* Overlay Content (Bottom) */}
-                  <div className="relative z-20 flex flex-col gap-3">
-                    <div className="space-y-1">
-                      <h4 className="text-2xl font-semibold text-white font-barlow-condensed tracking-wide uppercase leading-tight recipe-card-title">
-                        {recipe.title}
-                      </h4>
-                      <p className="text-[13px] font-medium text-slate-300 leading-snug font-inter line-clamp-2 recipe-card-desc">
-                        {recipe.desc}
-                      </p>
-                    </div>
+                  {/* Card Content */}
+                  <div className="relative z-10 space-y-3 font-inter">
+                    {/* Recipe Title */}
+                    <h3 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight group-hover:text-[#E1C609] transition-colors truncate whitespace-nowrap" title={recipe.title}>
+                      {recipe.title}
+                    </h3>
 
                     {/* Spec Row (Easy, Time, Servings) */}
                     <div className="flex items-center gap-3 text-[12px] font-bold text-slate-300 font-manrope recipe-card-spec">
@@ -5040,7 +5087,7 @@ export default function KnowYourMeatPage() {
                           <img
                             src="/Product/recipies/easy.svg"
                             alt="Difficulty"
-                            className="w-full h-full object-contain "
+                            className="w-full h-full object-contain"
                           />
                         </div>
                         <span>{recipe.diff}</span>
@@ -5051,7 +5098,7 @@ export default function KnowYourMeatPage() {
                           <img
                             src="/Product/recipies/time.svg"
                             alt="Time"
-                            className="w-full h-full object-contain "
+                            className="w-full h-full object-contain"
                           />
                         </div>
                         <span>{recipe.time}</span>
@@ -5063,23 +5110,16 @@ export default function KnowYourMeatPage() {
                             src="/Product/recipies/servings.png"
                             alt="Servings"
                             fill
-                            className="object-contain "
+                            className="object-contain"
                           />
                         </div>
                         <span>{recipe.servings}</span>
                       </div>
                     </div>
 
-                    {/* View Recipe Lime-Green Button */}
+                    {/* Action Button */}
                     <button className="w-full bg-[#82B224] hover:bg-[#6C971B] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
-                      <span>View Recipe</span>
-                      <div className="relative w-3.5 h-3.5 shrink-0">
-                        <img
-                          src="/Product/recipies/rightArrow.svg"
-                          alt="Arrow"
-                          className="w-full h-full object-contain filter brightness-0 invert"
-                        />
-                      </div>
+                      <span>VIEW RECIPE & STEPS →</span>
                     </button>
                   </div>
                 </motion.div>

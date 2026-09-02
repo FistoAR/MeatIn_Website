@@ -121,58 +121,53 @@ export default function TeamPage() {
     <div className="w-full bg-[#FCFAF7] text-[#1E293B] overflow-x-hidden font-manrope">
 
       {/* Hero Section */}
-      <section className="relative w-full bg-white border-b border-slate-100 pt-[85px] sm:pt-[95px] lg:pt-[95px] overflow-hidden flex flex-col justify-center">
-        <div className="w-full max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-12 items-stretch">
+      <section className="relative w-full pt-[85px] sm:pt-[95px] lg:pt-[95px] bg-white flex items-center overflow-hidden">
+        {/* Full Edge-to-Edge Hero Image Container */}
+        <div className="relative w-full h-[280px] sm:h-[340px] lg:h-[390px] flex items-center overflow-hidden">
+          {/* Edge to Edge Image */}
+          <div className="absolute inset-0 w-full h-full z-0">
+            <Image
+              src="/MeetOurTeam/hero/meet-our-team-hero-image.webp"
+              alt="MEATIN Boardroom"
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="100vw"
+            />
+          </div>
 
-          {/* Hero Left Content */}
-          <div className="lg:col-span-5 px-6 sm:px-12 lg:px-[4vw] py-6 lg:py-14 flex flex-col justify-center items-center text-center lg:items-start lg:text-left z-10">
+          {/* Hero Content Overlay with Glassy Frosted Card */}
+          <div className="relative z-10 w-full max-w-[1400px] lg:max-w-[88vw] mx-auto px-4 sm:px-8 lg:px-12">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="w-full flex flex-col items-center lg:items-start"
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="max-w-[340px] sm:max-w-[460px] lg:max-w-[500px] bg-white/80 backdrop-blur-md border border-white/70 rounded-3xl p-5 sm:p-8 shadow-xl"
             >
-              <h2 className="text-[#153520] font-black font-manrope tracking-widest text-xs sm:text-sm uppercase mb-2">
+              <h2 className="text-[#1E3B2B] font-extrabold font-manrope tracking-widest text-[10px] sm:text-xs uppercase mb-1.5">
                 OUR PEOPLE. OUR STRENGTH.
               </h2>
 
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5vw] xl:text-[4.8vw] font-extrabold font-barlow tracking-relaxed leading-none uppercase mb-4 lg:whitespace-nowrap text-center lg:text-left">
-                <span className="text-[#1F5A3C] mr-3">MEET</span>
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-barlow tracking-tight leading-none uppercase mb-3 text-left">
+                <span className="text-[#127431] mr-2">MEET</span>
                 <span className="text-[#D62828]">THE TEAM</span>
               </h1>
 
-              <p className="text-black font-medium text-sm sm:text-base lg:text-[1vw] xl:text-lg leading-relaxed max-w-lg mb-4">
+              <p className="text-slate-800 font-medium text-xs sm:text-sm lg:text-base leading-relaxed mb-4 max-w-md">
                 The leadership team driving MEATIN's vision of delivering farm-fresh, hygienically processed meat with uncompromising quality and trust.
               </p>
 
-              {/* Custom Leaf Underline Asset */}
-              <div className="relative w-full max-w-[350px] sm:max-w-[450px] h-6 flex justify-center lg:justify-start">
-                <div className="relative w-full h-full">
-                  <Image
-                    src="/MeetOurTeam/hero/hero-leaf-underline.svg"
-                    alt="Underline"
-                    fill
-                    className="object-contain object-center lg:object-left"
-                  />
-                </div>
+              {/* Original Hero Leaf Underline SVG Asset */}
+              <div className="relative w-full max-w-[280px] sm:max-w-[360px] h-6 mt-1">
+                <Image
+                  src="/MeetOurTeam/hero/hero-leaf-underline.svg"
+                  alt="Leaf Underline"
+                  fill
+                  className="object-contain object-left"
+                />
               </div>
             </motion.div>
           </div>
-
-          {/* Hero Right Image with Fade Effect */}
-          <div className="lg:col-span-7 relative w-full h-[250px] sm:h-[350px] lg:h-auto lg:min-h-[38vh] overflow-hidden">
-            <Image
-              src="/MeetOurTeam/hero/meet-our-team-header-image.webp"
-              alt="Boardroom"
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 60vw"
-            />
-            {/* Gradient Mask on the Left (for desktop overlay blend) */}
-            <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-white via-white/80 to-transparent hidden lg:block" />
-          </div>
-
         </div>
       </section>
 
