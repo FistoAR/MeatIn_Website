@@ -118,7 +118,10 @@ export const Footer: React.FC = () => {
     <motion.footer
       onViewportEnter={() => setIsFooterInView(true)}
       onViewportLeave={() => setIsFooterInView(false)}
-      className="relative w-full bg-[#5A841A] text-white pt-5 sm:pt-6 pb-4 overflow-hidden font-inter"
+      className="relative w-full text-white pt-5 sm:pt-6 pb-4 overflow-hidden font-inter"
+      style={{
+        background: "radial-gradient(circle at center, #458A3F 0%, #064823 100%)",
+      }}
       suppressHydrationWarning
     >
 

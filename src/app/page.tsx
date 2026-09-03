@@ -50,7 +50,13 @@ export default function HomePage() {
     target: certSectionRef,
     offset: ["start end", "end start"],
   });
-  const truckY = useTransform(certScrollProgress, [0, 1], [-150, 1600]);
+  const rawTruckY = useTransform(certScrollProgress, [0, 1], [-150, 1600]);
+  const truckY = useSpring(rawTruckY, {
+    stiffness: 250,
+    damping: 30,
+    mass: 0.2,
+    restDelta: 0.0001,
+  });
   const certTruckOpacity = useTransform(
     certScrollProgress,
     [0, 0.15, 0.85, 1],
@@ -65,23 +71,24 @@ export default function HomePage() {
 
   const truckScrollX = useTransform(
     section2ScrollProgress,
-    [0, 0.35, 1],
-    ["65vw", "0vw", "0vw"],
+    [0, 1],
+    ["75vw", "-10vw"],
   );
   const truckScrollOpacity = useTransform(
     section2ScrollProgress,
-    [0, 0.1],
-    [0, 1],
+    [0, 0.15, 0.85, 1],
+    [0.2, 1, 1, 0.5],
   );
   const smoothTruckX = useSpring(truckScrollX, {
-    stiffness: 50,
-    damping: 16,
-    restDelta: 0.001,
+    stiffness: 250,
+    damping: 30,
+    mass: 0.2,
+    restDelta: 0.0001,
   });
   const smoothTruckOpacity = useSpring(truckScrollOpacity, {
-    stiffness: 50,
-    damping: 16,
-    restDelta: 0.001,
+    stiffness: 250,
+    damping: 30,
+    restDelta: 0.0001,
   });
 
   const roadScrollX = useTransform(
@@ -352,7 +359,7 @@ export default function HomePage() {
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
-                  className="relative w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]"
+                  className="relative w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden sm:block lg:hidden"
                 >
                   <Image
                     src="/AboutUs/keralas-original.webp"
@@ -364,156 +371,40 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          {/* Fixed bottom-right badge attached to the sticky hero container */}
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
+            className="absolute bottom-6 right-6 lg:bottom-8 lg:right-10 w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden lg:block z-20"
+          >
+            <Image
+              src="/AboutUs/keralas-original.webp"
+              alt="Kerala's Original Meat Badge"
+              fill
+              className="object-contain"
+            />
+          </motion.div>
         </div>
       </section>
 
-      {/* 2. SECOND SECTION (TRUCK LOGISTICS WITH HIGHWAY ROAD SCENERY) */}
+      {/* 2. SECOND SECTION (MEATIN COLD CHAIN LOGISTICS TRUCK) */}
       <section
         ref={section2Ref}
-        className="relative w-full bg-[#EBF6E4] pt-6 pb-16 sm:pt-8 sm:pb-20 md:pt-10 md:pb-24 overflow-hidden flex flex-col items-center justify-end bg-cover bg-center bg-no-repeat min-h-[340px] sm:min-h-[400px] md:min-h-[440px] lg:min-h-[480px] xl:min-h-[540px]"
+        className="relative w-full bg-[#EBF6E4] pt-12 pb-24 sm:pt-16 sm:pb-28 md:pt-20 md:pb-32 overflow-hidden flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat min-h-[300px] sm:min-h-[360px] md:min-h-[400px] lg:min-h-[440px]"
         style={{
           backgroundImage: "url('/Home/truck-section/truck-section-bg.webp')",
         }}
       >
-        {/* Full 100vw Width Asphalt Road Bed (Always Covers Viewport 100% Without Gaps) */}
-        <div className="absolute bottom-0 left-0 right-0 w-full h-[75px] sm:h-[95px] md:h-[130px] lg:h-[150px] xl:h-[180px] 2xl:h-[210px] bg-[#1a1c20] flex flex-col justify-between shadow-2xl border-t-2 border-t-black/90 pointer-events-none z-0">
-          {/* Top Brick/Curb Tile Border */}
-          <div className="w-full h-[12px] sm:h-[15px] bg-[#111215] border-b border-black/80 flex overflow-hidden">
-            <motion.div
-              animate={{ backgroundPositionX: ["-32px", "0px"] }}
-              transition={{ repeat: Infinity, duration: 0.6, ease: "linear" }}
-              className="w-full h-full bg-[linear-gradient(90deg,#000_2px,transparent_2px)] bg-[size:32px_100%] opacity-60"
-            />
-          </div>
-
-          {/* Road Surface & Fast Left-to-Right Animated Dashed White Center Lane Stripe */}
-          <div className="w-full relative flex items-center my-auto overflow-hidden">
-            <motion.div
-              animate={{ backgroundPositionX: ["-168px", "0px"] }}
-              transition={{ repeat: Infinity, duration: 0.6, ease: "linear" }}
-              className="w-full h-[6px] sm:h-[10px] bg-[repeating-linear-gradient(90deg,#ffffff_0_84px,transparent_84px_168px)] bg-[size:168px_100%] opacity-95"
-            />
-          </div>
-
-          {/* Bottom Brick/Curb Tile Border */}
-          <div className="w-full h-[12px] sm:h-[15px] bg-[#111215] border-t border-black/80 flex overflow-hidden">
-            <motion.div
-              animate={{ backgroundPositionX: ["-32px", "0px"] }}
-              transition={{ repeat: Infinity, duration: 0.6, ease: "linear" }}
-              className="w-full h-full bg-[linear-gradient(90deg,#000_2px,transparent_2px)] bg-[size:32px_100%] opacity-60"
-            />
-          </div>
-        </div>
-
-        {/* Roadside Milestone Signboards & Logo Billboards Passing By Left-to-Right */}
-        <div className="absolute bottom-[75px] sm:bottom-[95px] md:bottom-[130px] lg:bottom-[150px] xl:bottom-[180px] 2xl:bottom-[210px] left-0 right-0 w-full h-[100px] sm:h-[120px] pointer-events-none z-0 overflow-hidden">
-          {/* Sign 1: Meatin Logo Billboard */}
-          <motion.div
-            animate={{ x: ["-300px", "100vw"] }}
-            transition={{
-              repeat: Infinity,
-              duration: 12,
-              ease: "linear",
-              delay: 0,
-            }}
-            className="absolute bottom-0 flex flex-col items-center"
-          >
-            <div className="bg-gradient-to-b from-white to-gray-100 border-3 border-[#1C5D2C] px-2 py-1 rounded-md shadow-xl flex items-center justify-center filter drop-shadow-lg">
-              <div className="relative w-28 h-9 sm:w-28 sm:h-12">
-                <Image
-                  src="/logo.webp"
-                  alt="Meatin Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </div>
-            {/* Taller Heavy Steel Pillar Poles */}
-            <div className="flex justify-between w-full">
-              <div className="w-1.5 h-12 sm:h-16 bg-gradient-to-b from-gray-600 to-gray-900 shadow-inner" />
-              <div className="w-1.5 h-12 sm:h-16 bg-gradient-to-b from-gray-600 to-gray-900 shadow-inner" />
-            </div>
-          </motion.div>
-
-          {/* Sign 2: Kerala Milestone Signboard (Rectangle Shape) */}
-          <motion.div
-            animate={{ x: ["-300px", "100vw"] }}
-            transition={{
-              repeat: Infinity,
-              duration: 12,
-              ease: "linear",
-              delay: -6.0,
-            }}
-            className="absolute bottom-0 flex flex-col items-center"
-          >
-            <div className="bg-[#1C5D2C] border-3 border-white text-white font-manrope font-extrabold text-[10px] sm:text-xs px-4 py-2 rounded-md shadow-xl text-center leading-tight filter drop-shadow-lg">
-              <span className="block text-[#F4C430] text-xs sm:text-sm font-black tracking-wider">
-                KERALA
-              </span>
-              <span className="block mt-0.5 text-white">2 KM AHEAD</span>
-            </div>
-            {/* Taller Steel Pole */}
-            <div className="w-2.5 h-12 sm:h-16 bg-gradient-to-b from-stone-600 via-stone-800 to-stone-950 shadow-md border-x border-stone-500" />
-          </motion.div>
-
-          {/* Sign 3: Cold Chain Highway Directional Arrow Signboard */}
-          <motion.div
-            animate={{ x: ["-300px", "100vw"] }}
-            transition={{
-              repeat: Infinity,
-              duration: 12,
-              ease: "linear",
-              delay: -3.0,
-            }}
-            className="absolute bottom-0 flex flex-col items-center"
-          >
-            <div
-              className="bg-[#C62828] text-white font-manrope font-extrabold text-[10px] sm:text-xs pr-6 pl-3 py-2 rounded-l-md shadow-xl text-center leading-tight filter drop-shadow-lg border-2 border-white"
-              style={{
-                clipPath: "polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%)",
-              }}
-            >
-              <span className="block text-white tracking-wide">COLD CHAIN</span>
-              <span className="block mt-0.5 text-[#FFD54F]">
-                100% FRESH MEAT
-              </span>
-            </div>
-            {/* Taller Steel Pole */}
-            <div className="w-2.5 h-12 sm:h-16 bg-gradient-to-b from-stone-600 via-stone-800 to-stone-950 shadow-md border-x border-stone-500" />
-          </motion.div>
-
-          {/* Sign 4: Meatin Store Signboard (Yellow Background with White Text) */}
-          <motion.div
-            animate={{ x: ["-300px", "100vw"] }}
-            transition={{
-              repeat: Infinity,
-              duration: 12,
-              ease: "linear",
-              delay: -9.0,
-            }}
-            className="absolute bottom-0 flex flex-col items-center"
-          >
-            <div className="bg-[#F4C430] border-3 border-white text-white font-manrope font-extrabold text-[10px] sm:text-xs px-4 py-2 rounded-md shadow-xl text-center leading-tight filter drop-shadow-lg">
-              <span className="block text-white text-xs sm:text-sm font-black tracking-wider drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
-                MEATIN STORE
-              </span>
-              <span className="block mt-0.5 text-white font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
-                5 KM AHEAD
-              </span>
-            </div>
-            {/* Taller Steel Pole */}
-            <div className="w-2.5 h-12 sm:h-16 bg-gradient-to-b from-stone-600 via-stone-800 to-stone-950 shadow-md border-x border-stone-500" />
-          </motion.div>
-        </div>
-
-        {/* Animated Truck Assembly Riding Directly On Top Of The White Dotted Line */}
-        <div className="w-full max-w-[90%] px-4 sm:px-8 absolute z-10 flex justify-start items-center bottom-[38px] sm:bottom-[50px] md:bottom-[65px] lg:bottom-[75px] xl:bottom-[90px] 2xl:bottom-[104px]">
+        {/* Animated Truck Assembly Moving Right-To-Left as User Scrolls Down */}
+        <div className="w-full max-w-[95%] px-4 sm:px-8 relative z-10 flex justify-start items-center my-auto">
           <motion.div
             style={{ x: smoothTruckX, opacity: smoothTruckOpacity }}
-            className="relative w-full aspect-[4096/1339] max-w-[320px] sm:max-w-[400px] md:max-w-[460px] lg:max-w-[500px] xl:max-w-[640px] 2xl:max-w-[760px]"
+            className="relative w-full aspect-[4096/1339] max-w-[320px] sm:max-w-[420px] md:max-w-[520px] lg:max-w-[620px] xl:max-w-[740px] 2xl:max-w-[850px]"
           >
-            {/* Ground / Road Shadow */}
-            <div className="absolute bottom-[2%] left-[4%] right-[4%] h-[8%] bg-black/30 blur-md rounded-full z-0" />
+            {/* Ground Soft Shadow */}
+            <div className="absolute -bottom-[4%] left-[4%] right-[4%] h-[12%] bg-black/20 blur-lg rounded-full z-0" />
 
             {/* Vector Truck SVG with animated rotating tires */}
             <motion.div
@@ -582,7 +473,7 @@ export default function HomePage() {
           </motion.div>
         </div>
 
-        {/* Wave SVG transition divider matching the Brand Story bg color */}
+        {/* Wave SVG transition divider matching the Brand Story top color */}
         <div className="absolute bottom-0 left-0 right-0 h-[35px] sm:h-[55px] md:h-[90px] w-full z-20 pointer-events-none overflow-hidden">
           <svg
             className="absolute bottom-0 w-full h-[35px] sm:h-[55px] md:h-[90px]"
@@ -593,7 +484,7 @@ export default function HomePage() {
           >
             <path
               d="M0 0C755.182 107.73 1158.5 130.5 1920 0V130.5H0V0Z"
-              fill="#60870C"
+              fill="#064823"
             />
           </svg>
         </div>
@@ -601,9 +492,20 @@ export default function HomePage() {
 
       {/* 3. BRAND STORY / TIMELINE SECTION */}
       <section
-        className="relative w-full pt-10 pb-10 bg-[#61870d] text-white overflow-hidden bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/Home/section-bg.webp')" }}
+        className="relative w-full pt-10 pb-10 text-white overflow-hidden"
+        style={{
+          background: "radial-gradient(circle at center, #458A3F 0%, #064823 100%)",
+        }}
       >
+        {/* Absolute Background Image Layer */}
+        <div className="absolute inset-0 pointer-events-none z-0 opacity-80">
+          <Image
+            src="/Home/section-bg.webp"
+            alt="Background pattern"
+            fill
+            className="object-cover object-center"
+          />
+        </div>
         <div className="w-full max-w-[1400px] lg:max-w-[92vw] mx-auto px-4 sm:px-6 lg:px-8 pt-4 relative z-10">
           {/* Header */}
           <motion.div
@@ -704,7 +606,7 @@ export default function HomePage() {
           {/* Creative vertical green truck graphics on left side gutter */}
           <motion.div
             style={{ y: truckY, opacity: truckOpacity }}
-            className="absolute left-[-70px] top-[-100px] w-32 h-[650px] hidden lg:block pointer-events-none z-0"
+            className="absolute left-[-85px] xl:left-[-100px] top-[-100px] w-40 xl:w-44 h-[700px] hidden lg:block pointer-events-none z-0"
           >
             <div className="relative w-full h-full">
               <Image

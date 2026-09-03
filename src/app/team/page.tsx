@@ -31,6 +31,9 @@ const ledByMembers: TeamMember[] = [
     role: "Managing Director",
     image: "/MeetOurTeam/led-by-persons/Mr. ALI VARIKUNNATH.webp",
   },
+];
+
+const directors: TeamMember[] = [
   {
     name: "Anfas K Mohamed",
     role: "Director & CMO",
@@ -45,10 +48,7 @@ const ledByMembers: TeamMember[] = [
     name: "Mohanan Pilankuvittil",
     role: "Project Consultant",
     image: "/MeetOurTeam/led-by-persons/Mohanan Pilankuvittil.webp",
-  }
-];
-
-const directors: TeamMember[] = [
+  },
   // Row 1 (5 cards)
   {
     name: "Mohamed Asharaf K",

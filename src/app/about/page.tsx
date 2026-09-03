@@ -224,23 +224,22 @@ export default function AboutUsPage() {
       <section className="relative w-full bg-black pt-[6rem] sm:pt-[6.5rem] lg:pt-[7rem] xl:pt-[7.5rem] pb-10 md:pb-16 lg:pb-8 xl:pb-10 2xl:pb-12 overflow-hidden flex flex-col justify-between">
         {/* Background Image Overlay with full opacity from public folder */}
         <div className="absolute inset-0 pointer-events-none z-0 bg-black">
-          {/* On desktop: image is positioned on the right half (width 55%, starting at 45% left) */}
-          <div className="absolute top-0 bottom-0 right-0 left-0 lg:left-[45%] w-full lg:w-[55%]">
+          {/* On desktop: image covers right half with full vertical framing */}
+          <div className="absolute top-0 bottom-0 right-0 left-0 lg:left-[40%] w-full lg:w-[60%] overflow-hidden">
             <Image
               src="/AboutUs/about-us-hero-image.webp"
               alt="MEATIN Integrated Farming"
               fill
               priority
-              className="object-cover object-center lg:object-left"
+              className="object-cover object-top lg:object-[center_15%]"
             />
-            {/* Horizontal fade gradient on desktop to blend the image's left edge into the solid black background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 via-[12%] to-transparent hidden lg:block" />
+            {/* Soft left-to-right gradient overlay with reduced intensity */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 via-[10%] to-transparent hidden lg:block" />
           </div>
 
-          {/* Vignette and dark overlays for mobile / bottom fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-t from-black via-black/85 via-40% to-transparent hidden lg:block" />
-          <div className="absolute inset-0 bg-black/55 lg:hidden" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/95 lg:hidden" />
+          {/* Bottom shadow gradient for bottom text readability */}
+          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black via-black/75 to-transparent hidden lg:block pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent lg:hidden" />
         </div>
 
         {/* Top/Middle Heading Content */}
@@ -277,15 +276,15 @@ export default function AboutUsPage() {
             <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8 lg:gap-y-0 lg:divide-x lg:divide-white/20 items-start">
               {stats.map((stat, idx) => {
                 return (
-                  <motion.div key={idx} variants={springScale} className="flex flex-col items-start text-left px-2 sm:px-4 lg:px-6 lg:first:pl-0 lg:last:pr-0 col-span-1 last:col-span-2 lg:last:col-span-1">
+                  <motion.div key={idx} variants={springScale} className="flex flex-col items-start lg:items-center text-left lg:text-center px-2 sm:px-4 lg:px-4 col-span-1 last:col-span-2 lg:last:col-span-1">
                     {/* Big Value Number */}
-                    <div className="text-3xl sm:text-4xl lg:text-[2.2vw] xl:text-[2.4rem] font-medium text-[#8CC63F] font-chau tracking-tight leading-none">
+                    <div className="text-3xl sm:text-4xl lg:text-[2.2vw] xl:text-[2.4rem] font-medium text-[#8CC63F] font-chau tracking-tight leading-none text-left lg:text-center">
                       <Counter value={stat.value} />
                     </div>
                     {/* Red underline bar under the number */}
                     <div className="w-10 sm:w-12 lg:w-10 h-[2px] bg-[#D62828] mt-1.5 mb-3" />
                     {/* Icon + Stacked Labels */}
-                    <div className="flex items-center gap-2 sm:gap-2.5">
+                    <div className="flex items-center lg:justify-center gap-2 sm:gap-2.5 w-full">
                       <div className="w-8 h-8 sm:w-9 sm:h-9 lg:w-8 lg:h-8 shrink-0 relative">
                         <Image
                           src={stat.icon}
