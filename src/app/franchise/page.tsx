@@ -1364,6 +1364,28 @@ export default function FranchisePage() {
           </div>
         </div>
 
+        {/* 3D Green Delivery Truck (Standing in bottom left corner over bottom slope - Animated on Scroll) */}
+        <motion.div
+          initial={{ opacity: 0, x: -60, scale: 0.9 }}
+          whileInView={{ opacity: 1, x: 0, scale: 1 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{
+            duration: 0.75,
+            delay: 0.3,
+            ease: "easeOut",
+          }}
+          className="absolute -bottom-3 sm:-bottom-5 lg:-bottom-7 xl:-bottom-9 2xl:-bottom-10 left-1 sm:left-4 lg:left-6 xl:left-10 z-10 pointer-events-none w-[160px] sm:w-[230px] md:w-[280px] lg:w-[335px] xl:w-[400px] 2xl:w-[450px]"
+        >
+          <Image
+            src="/Franchies/truck-image.webp"
+            alt="MEATIN Delivery Truck"
+            width={500}
+            height={350}
+            priority
+            className="w-full h-auto object-contain object-bottom drop-shadow-2xl"
+          />
+        </motion.div>
+
         {/* 3D Mascot Character (Chicken standing in bottom right corner over bottom slope - Animated on Scroll) */}
         <motion.div
           initial={{ opacity: 0, y: 60, scale: 0.85 }}

@@ -35,6 +35,11 @@ const ledByMembers: TeamMember[] = [
 
 const directors: TeamMember[] = [
   {
+    name: "Mohanan Pilankuvittil",
+    role: "Project Consultant",
+    image: "/MeetOurTeam/led-by-persons/Mohanan Pilankuvittil.webp",
+  },
+  {
     name: "Anfas K Mohamed",
     role: "Director & CMO",
     image: "/MeetOurTeam/led-by-persons/Anfas K Mohamed.webp",
@@ -43,11 +48,6 @@ const directors: TeamMember[] = [
     name: "Anas Kamaru",
     role: "Director & Plant Manager",
     image: "/MeetOurTeam/led-by-persons/Anas Kamaru.webp",
-  },
-  {
-    name: "Mohanan Pilankuvittil",
-    role: "Project Consultant",
-    image: "/MeetOurTeam/led-by-persons/Mohanan Pilankuvittil.webp",
   },
   // Row 1 (5 cards)
   {
@@ -142,13 +142,13 @@ export default function TeamPage() {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="max-w-[340px] sm:max-w-[460px] lg:max-w-[500px] bg-white/80 backdrop-blur-md border border-white/70 rounded-3xl p-5 sm:p-8 shadow-xl"
+              className="max-w-[340px] sm:max-w-[460px] lg:max-w-[500px] bg-white/70 backdrop-blur-md border border-white/70 rounded-3xl p-5 sm:p-8 shadow-xl"
             >
               <h2 className="text-[#1E3B2B] font-extrabold font-manrope tracking-widest text-[10px] sm:text-xs uppercase mb-1.5">
                 OUR PEOPLE. OUR STRENGTH.
               </h2>
 
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-barlow tracking-tight leading-none uppercase mb-3 text-left">
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-barlow tracking-normal leading-none uppercase mb-3 text-left">
                 <span className="text-[#127431] mr-2">MEET</span>
                 <span className="text-[#D62828]">THE TEAM</span>
               </h1>
@@ -364,8 +364,7 @@ export default function TeamPage() {
         </div>
       </section>
 
-      {/* Reusable Careers Banner */}
-      <CareersBanner />
+      
 
     </div>
   );

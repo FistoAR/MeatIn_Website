@@ -1,5 +1,6 @@
 "use client";
 
+// Re-eval HMR compilation
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -1070,10 +1071,10 @@ export default function KnowYourMeatPage() {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#638913] relative font-manrope selection:bg-white/20 selection:text-white">
+    <div className="w-full min-h-screen bg-[#FDFCF7] relative font-manrope selection:bg-black/10 selection:text-slate-900">
       {/* Background Doodle Repeat Overlay */}
       <div
-        className="fixed inset-0 z-0 pointer-events-none opacity-[0.7] bg-repeat"
+        className="fixed inset-0 z-0 pointer-events-none opacity-[0.25] bg-repeat"
         style={{
           backgroundImage: 'url("/Product/Chicken/doodle.webp")',
           backgroundSize: "800px",
@@ -1757,12 +1758,12 @@ export default function KnowYourMeatPage() {
       `}</style>
       <div
         ref={containerRef}
-        className={`relative w-full z-10 bg-[#638913] ${activeMeatType === "chicken" ? "h-[200vh]" : "h-[100vh]"
+        className={`relative w-full z-10 bg-[#FDFCF7] ${activeMeatType === "chicken" ? "h-[200vh]" : "h-[100vh]"
           }`}
       >
         {/* Section 1 Doodle Repeat Overlay */}
         <div
-          className="absolute inset-0 z-0 pointer-events-none opacity-[0.45] bg-repeat"
+          className="absolute inset-0 z-0 pointer-events-none opacity-[0.25] bg-repeat"
           style={{
             backgroundImage: 'url("/Product/Chicken/doodle.webp")',
             backgroundSize: "800px",
@@ -1844,7 +1845,7 @@ export default function KnowYourMeatPage() {
                   alt={activeMeatType}
                   className="w-7 h-7 md:w-9 md:h-9 object-contain"
                 />
-                <span className="text-lg md:text-xl font-bold text-[#F2CE07] tracking-[2px] uppercase font-barlow-condensed leading-none">
+                <span className="text-lg md:text-xl font-bold text-[#D98A00] tracking-[2px] uppercase font-barlow-condensed leading-none">
                   {activeMeatType === "chicken"
                     ? headerTitle[activeStage].sub
                     : activeMeatType.toUpperCase()}
@@ -1857,37 +1858,28 @@ export default function KnowYourMeatPage() {
                 initial={{ opacity: 0, y: -15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, delay: 0.22, ease: "easeOut" }}
-                className="text-4xl md:text-5xl font-bold font-barlow-condensed tracking-wide uppercase leading-none text-white viz-title-main"
+                className="text-4xl md:text-5xl font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#222222] viz-title-main"
               >
                 {activeMeatType === "chicken" ? (
                   activeStage === "skin" ? (
                     <>
-                      WITH <span className="text-[#153520]">SKIN</span>
+                      WITH <span className="text-[#608D12]">SKIN</span>
                     </>
                   ) : activeStage === "skinless" ? (
                     <>
-                      WITHOUT <span className="text-[#153520]">SKIN</span>
+                      WITHOUT <span className="text-[#608D12]">SKIN</span>
                     </>
                   ) : (
                     <>
-                      WHOLE <span className="text-[#153520]">CHICKEN</span>
+                      WHOLE <span className="text-[#608D12]">CHICKEN</span>
                     </>
                   )
                 ) : (
                   <>
-                    WITH <span className="text-[#153520]">SKIN</span>
+                    WITH <span className="text-[#608D12]">SKIN</span>
                   </>
                 )}
               </motion.h2>
-
-              {/* Yellow underline */}
-              <motion.div
-                key={`title-line-${activeMeatType}-${activeStage}`}
-                initial={{ opacity: 0, scaleX: 0 }}
-                animate={{ opacity: 1, scaleX: 1 }}
-                transition={{ duration: 0.4, delay: 0.32, ease: "easeOut" }}
-                className="w-[50%] h-[2px] bg-[#F2CE07] rounded-full my-0.5"
-              />
 
               {/* Row 3: Tagline */}
               <motion.p
@@ -1895,9 +1887,9 @@ export default function KnowYourMeatPage() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, delay: 0.42, ease: "easeOut" }}
-                className="text-[14px] md:text-[16px] font-semibold text-white/90 tracking-wide font-inter viz-title-tagline"
+                className="text-[14px] md:text-[16px] font-medium text-slate-600 tracking-wide font-inter viz-title-tagline mt-1"
               >
-                Know the cuts &nbsp;Choose the best.
+                Know the cuts Choose the best.
               </motion.p>
             </div>
 
@@ -1962,15 +1954,12 @@ export default function KnowYourMeatPage() {
                             {/* Circle Thumbnail */}
                             <div
                               className={`relative w-[65px] h-[65px] lg:w-[75px] lg:h-[75px] xl:w-[85px] xl:h-[85px] rounded-full border-2 bg-white flex items-center justify-center p-1.5 lg:p-2 shadow-md z-10 shrink-0 transition-all duration-300 viz-card-circle ${selected
-                                ? "border-[#F2CE07] ring-4 ring-[#F2CE07]/60 scale-110 shadow-2xl bg-amber-50"
-                                : "border-[#D62828] group-hover:border-[#F2CE07] group-hover:scale-105 group-hover:shadow-xl"
+                                ? "border-[#608D12] ring-4 ring-[#608D12]/40 scale-110 shadow-2xl bg-emerald-50"
+                                : "border-[#608D12] group-hover:border-[#608D12] group-hover:scale-105 group-hover:shadow-xl"
                                 }`}
                             >
                               <span
-                                className={`absolute -top-1 -left-1 w-[18px] h-[18px] lg:w-[20px] lg:h-[20px] xl:w-[22px] xl:h-[22px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter transition-colors duration-300 viz-card-badge ${selected
-                                  ? "bg-[#F2CE07] text-black shadow"
-                                  : "bg-[#D62828] text-white group-hover:bg-[#F2CE07] group-hover:text-black"
-                                  }`}
+                                className="absolute -top-1 -left-1 w-[20px] h-[20px] lg:w-[22px] lg:h-[22px] xl:w-[24px] xl:h-[24px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter bg-[#D62828] text-white shadow viz-card-badge"
                               >
                                 {idx + 1}
                               </span>
@@ -1992,22 +1981,19 @@ export default function KnowYourMeatPage() {
                               {/* Name Pill */}
                               <div
                                 className={`min-w-[130px] lg:min-w-[145px] xl:min-w-[155px] pl-10 lg:pl-12 xl:pl-13 pr-7 lg:pr-9 xl:pr-10 py-0.5 lg:py-1 rounded-full inline-flex items-center self-start transition-all duration-300 viz-card-pill ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""} ${selected
-                                  ? "bg-[#F2CE07] text-black shadow-lg ring-2 ring-[#F2CE07]/40"
-                                  : "bg-[#D62828] group-hover:bg-[#b01c1c] group-hover:shadow-md"
+                                  ? "bg-[#608D12] text-white shadow-lg ring-2 ring-[#608D12]/40"
+                                  : "bg-[#608D12] group-hover:bg-[#4d730d] group-hover:shadow-md"
                                   }`}
                               >
                                 <span
-                                  className={`text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-semibold viz-card-pill-text ${selected
-                                    ? "text-black font-extrabold"
-                                    : "text-white"
-                                    }`}
+                                  className="text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-extrabold viz-card-pill-text text-white"
                                 >
                                   {item.name}
                                 </span>
                               </div>
                               {/* Description */}
                               <p
-                                className={`text-[11px] lg:text-[12px] xl:text-[13px] font-medium text-white leading-tight whitespace-pre-line font-manrope max-w-[160px] lg:max-w-[180px] xl:max-w-[200px] line-clamp-3 transition-all duration-300 viz-card-desc-text pl-10 lg:pl-12 xl:pl-13 ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""}`}
+                                className={`text-[11px] lg:text-[12px] xl:text-[13px] font-semibold text-slate-700 leading-tight whitespace-pre-line font-manrope max-w-[160px] lg:max-w-[180px] xl:max-w-[200px] line-clamp-3 transition-all duration-300 viz-card-desc-text pl-10 lg:pl-12 xl:pl-13 ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""}`}
                               >
                                 {item.desc}
                               </p>
@@ -2062,7 +2048,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("WING");
                           const isHovered = isPartHovered("WING");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = 440;
                           const d = `M ${sx} 100 L 520 100 L 635 185`;
@@ -2070,9 +2056,10 @@ export default function KnowYourMeatPage() {
                             <g key="line-wing">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -2155,7 +2142,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("DRUMETTE");
                           const isHovered = isPartHovered("DRUMETTE");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = 440;
                           const d = `M ${sx} 240 L 520 200 L 625 305`;
@@ -2163,9 +2150,10 @@ export default function KnowYourMeatPage() {
                             <g key="line-drumette">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -2248,7 +2236,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("THIGH");
                           const isHovered = isPartHovered("THIGH");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = 440;
                           const d = `M ${sx} 380 L 520 330 L 635 345`;
@@ -2256,9 +2244,10 @@ export default function KnowYourMeatPage() {
                             <g key="line-thigh">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -2341,7 +2330,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("NECK");
                           const isHovered = isPartHovered("NECK");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = 1015;
                           const d = `M ${sx} 90 L 960 70 L 745 125`;
@@ -2349,9 +2338,10 @@ export default function KnowYourMeatPage() {
                             <g key="line-neck">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -2434,7 +2424,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("BREST");
                           const isHovered = isPartHovered("BREST");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = 1015;
                           const d = `M ${sx} 240 L 960 200 L 790 200`;
@@ -2442,9 +2432,10 @@ export default function KnowYourMeatPage() {
                             <g key="line-brest">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -2527,7 +2518,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("DRUMSTICK");
                           const isHovered = isPartHovered("DRUMSTICK");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = 1015;
                           const d = `M ${sx} 390 L 960 330 L 860 345`;
@@ -2535,9 +2526,10 @@ export default function KnowYourMeatPage() {
                             <g key="line-drumstick">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -2623,7 +2615,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("WING");
                           const isHovered = isPartHovered("WING");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 465 : 420;
                           const d = `M ${sx} 75 L 530 75 L 620 170`;
@@ -2631,9 +2623,10 @@ export default function KnowYourMeatPage() {
                             <g key="inside-wing">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -2716,7 +2709,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("HEART");
                           const isHovered = isPartHovered("HEART");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 455 : 410;
                           const d = `M ${sx} 180 L 540 170 L 745 195`;
@@ -2724,9 +2717,10 @@ export default function KnowYourMeatPage() {
                             <g key="inside-heart">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -2809,7 +2803,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("DRUMETTE");
                           const isHovered = isPartHovered("DRUMETTE");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 455 : 410;
                           const d = `M ${sx} 300 L 520 250 L 625 305`;
@@ -2817,9 +2811,10 @@ export default function KnowYourMeatPage() {
                             <g key="inside-drumette">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -2902,7 +2897,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("THIGH");
                           const isHovered = isPartHovered("THIGH");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 465 : 420;
                           const d = `M ${sx} 410 L 520 355 L 645 325`;
@@ -2910,9 +2905,10 @@ export default function KnowYourMeatPage() {
                             <g key="inside-thigh">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -2995,7 +2991,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("NECK");
                           const isHovered = isPartHovered("NECK");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 985 : 1040;
                           const d = `M ${sx} 50 L 950 55 L 755 110`;
@@ -3003,9 +2999,10 @@ export default function KnowYourMeatPage() {
                             <g key="inside-neck">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -3088,7 +3085,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("BREST");
                           const isHovered = isPartHovered("BREST");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 995 : 1050;
                           const d = `M ${sx} 155 L 940 150 L 820 170`;
@@ -3096,9 +3093,10 @@ export default function KnowYourMeatPage() {
                             <g key="inside-brest">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -3181,7 +3179,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("BACT");
                           const isHovered = isPartHovered("BACT");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 1025 : 1080;
                           const d = `M ${sx} 245 L 950 190 L 750 165`;
@@ -3189,9 +3187,10 @@ export default function KnowYourMeatPage() {
                             <g key="inside-bact">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -3274,7 +3273,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("LIVER");
                           const isHovered = isPartHovered("LIVER");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 1015 : 1070;
                           const d = `M ${sx} 345 L 950 270 L 760 240`;
@@ -3282,9 +3281,10 @@ export default function KnowYourMeatPage() {
                             <g key="inside-liver">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -3367,7 +3367,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("DRUMSTICK");
                           const isHovered = isPartHovered("DRUMSTICK");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 975 : 1030;
                           const d = `M ${sx} 425 L 950 340 L 865 340`;
@@ -3375,9 +3375,10 @@ export default function KnowYourMeatPage() {
                             <g key="inside-drumstick">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -3460,7 +3461,7 @@ export default function KnowYourMeatPage() {
                         {(() => {
                           const active = isPartActive("GIZZARD");
                           const isHovered = isPartHovered("GIZZARD");
-                          const color = active ? "#F2CE07" : "white";
+                          const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sy = isHovered ? 395 : 430;
                           const d = `M 750 ${sy} L 760 310`;
@@ -3468,9 +3469,10 @@ export default function KnowYourMeatPage() {
                             <g key="inside-gizzard">
                               <path
                                 d={d}
-                                stroke="white"
-                                strokeWidth={1.5}
-                                opacity={active ? 0.3 : 1}
+                                stroke="#222222"
+                                strokeWidth={1.8}
+                                strokeDasharray="4 4"
+                                opacity={active ? 0.35 : 0.85}
                                 className="transition-opacity duration-300"
                               />
                               {active && (
@@ -3827,15 +3829,12 @@ export default function KnowYourMeatPage() {
                             {/* Circle Thumbnail */}
                             <div
                               className={`relative w-[65px] h-[65px] lg:w-[75px] lg:h-[75px] xl:w-[85px] xl:h-[85px] rounded-full border-2 bg-white flex items-center justify-center p-1.5 lg:p-2 shadow-md z-10 shrink-0 transition-all duration-300 viz-card-circle ${selected
-                                ? "border-[#F2CE07] ring-4 ring-[#F2CE07]/60 scale-110 shadow-2xl bg-amber-50"
-                                : "border-[#D62828] group-hover:border-[#F2CE07] group-hover:scale-105 group-hover:shadow-xl"
+                                ? "border-[#608D12] ring-4 ring-[#608D12]/40 scale-110 shadow-2xl bg-emerald-50"
+                                : "border-[#608D12] group-hover:border-[#608D12] group-hover:scale-105 group-hover:shadow-xl"
                                 }`}
                             >
                               <span
-                                className={`absolute -top-1 -left-1 w-[18px] h-[18px] lg:w-[20px] lg:h-[20px] xl:w-[22px] xl:h-[22px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter transition-colors duration-300 viz-card-badge ${selected
-                                  ? "bg-[#F2CE07] text-black shadow"
-                                  : "bg-[#D62828] text-white group-hover:bg-[#F2CE07] group-hover:text-black"
-                                  }`}
+                                className="absolute -top-1 -left-1 w-[20px] h-[20px] lg:w-[22px] lg:h-[22px] xl:w-[24px] xl:h-[24px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter bg-[#D62828] text-white shadow viz-card-badge"
                               >
                                 {callouts[activeStage].left.length + idx + 1}
                               </span>
@@ -3857,22 +3856,19 @@ export default function KnowYourMeatPage() {
                               {/* Name Pill */}
                               <div
                                 className={`min-w-[130px] lg:min-w-[145px] xl:min-w-[155px] pl-10 lg:pl-12 xl:pl-13 pr-7 lg:pr-9 xl:pr-10 py-0.5 lg:py-1 rounded-full inline-flex items-center self-start transition-all duration-300 viz-card-pill ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""} ${selected
-                                  ? "bg-[#F2CE07] text-black shadow-lg ring-2 ring-[#F2CE07]/40"
-                                  : "bg-[#D62828] group-hover:bg-[#b01c1c] group-hover:shadow-md"
+                                  ? "bg-[#608D12] text-white shadow-lg ring-2 ring-[#608D12]/40"
+                                  : "bg-[#608D12] group-hover:bg-[#4d730d] group-hover:shadow-md"
                                   }`}
                               >
                                 <span
-                                  className={`text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-semibold viz-card-pill-text ${selected
-                                    ? "text-black font-extrabold"
-                                    : "text-white"
-                                    }`}
+                                  className="text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-extrabold viz-card-pill-text text-white"
                                 >
                                   {item.name}
                                 </span>
                               </div>
                               {/* Description */}
                               <p
-                                className={`text-[11px] lg:text-[12px] xl:text-[13px] font-medium text-white leading-tight whitespace-pre-line font-manrope max-w-[160px] lg:max-w-[180px] xl:max-w-[200px] line-clamp-3 transition-all duration-300 viz-card-desc-text pl-10 lg:pl-12 xl:pl-13 ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""}`}
+                                className={`text-[11px] lg:text-[12px] xl:text-[13px] font-semibold text-slate-700 leading-tight whitespace-pre-line font-manrope max-w-[160px] lg:max-w-[180px] xl:max-w-[200px] line-clamp-3 transition-all duration-300 viz-card-desc-text pl-10 lg:pl-12 xl:pl-13 ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""}`}
                               >
                                 {item.desc}
                               </p>
@@ -4157,12 +4153,12 @@ export default function KnowYourMeatPage() {
       >
         {/* Pure Code Background: Darker Green (#46660E) + Doodle Pattern + Cream Paper Right Panel with Layered Ripped Edge */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          {/* Base Section 2 Slightly Darker Green Color */}
-          <div className="absolute inset-0 bg-[#46660E]" />
+          {/* Base Section 2 Off-White Cream Background (Left side behind product image) */}
+          <div className="absolute inset-0 bg-[#FAF7F2]" />
 
-          {/* Doodle Pattern Overlay across Green Background */}
+          {/* Doodle Pattern Overlay across Left Cream Background */}
           <div
-            className="absolute inset-0 opacity-[0.45] bg-repeat pointer-events-none"
+            className="absolute inset-0 opacity-[0.25] bg-repeat pointer-events-none"
             style={{
               backgroundImage: 'url("/Product/Chicken/doodle.webp")',
               backgroundSize: "800px",
@@ -4235,8 +4231,8 @@ export default function KnowYourMeatPage() {
             </defs>
           </svg>
 
-          {/* Desktop Right Side Cream Paper Panel */}
-          <div className="hidden md:block absolute top-0 bottom-0 right-0 left-[46%] lg:left-[48%] xl:left-[50%] z-0 bg-[#FAF6EE]">
+          {/* Desktop Right Side Bright Green Panel */}
+          <div className="hidden md:block absolute top-0 bottom-0 right-0 left-[46%] lg:left-[48%] xl:left-[50%] z-0 bg-[#7CB324]">
             {/* Real Procedural Hand-Torn Paper SVG Edge Divider */}
             <svg
               className="absolute top-0 bottom-0 -left-[45px] h-full w-[50px] overflow-visible"
@@ -4244,46 +4240,46 @@ export default function KnowYourMeatPage() {
               preserveAspectRatio="none"
               style={{ filter: "url(#real-paper-tear)" }}
             >
-              {/* Dotted Dark Olive Green Torn Fiber Shadow 1 (Dip near y=212px) */}
+              {/* Dotted Dark Olive Green Torn Fiber Shadow 1 */}
               <path
                 d="M 35.0 175.0 L 34.7 181.2 L 33.9 187.5 L 31.9 193.8 L 30.7 200.0 L 30.3 206.2 L 28.0 212.5 L 27.6 218.8 L 29.3 225.0 L 28.7 231.2 L 29.4 237.5 L 29.7 243.8 L 31.5 250.0 L 32.2 256.2 L 32.2 262.5 L 33.6 268.8"
                 fill="none"
-                stroke="#1f3204"
+                stroke="#5B8817"
                 strokeWidth="3"
                 strokeDasharray="2 3"
                 strokeLinecap="round"
-                className="opacity-30"
+                className="opacity-40"
                 transform="translate(-2, 0)"
               />
 
-              {/* Dotted Dark Olive Green Torn Fiber Shadow 2 (Dip near y=550px) */}
+              {/* Dotted Dark Olive Green Torn Fiber Shadow 2 */}
               <path
                 d="M 31.2 512.5 L 30.1 518.8 L 29.7 525.0 L 26.8 531.2 L 25.7 537.5 L 24.5 543.8 L 24.2 550.0 L 23.5 556.2 L 24.0 562.5 L 24.5 568.8 L 23.1 575.0 L 24.5 581.2 L 24.4 587.5 L 25.4 593.8 L 27.9 600.0 L 27.1 606.2"
                 fill="none"
-                stroke="#1f3204"
+                stroke="#5B8817"
                 strokeWidth="3"
                 strokeDasharray="2 3"
                 strokeLinecap="round"
-                className="opacity-30"
+                className="opacity-40"
                 transform="translate(-2, 0)"
               />
 
-              {/* Dotted Dark Olive Green Torn Fiber Shadow 3 (Dip near y=815px) */}
+              {/* Dotted Dark Olive Green Torn Fiber Shadow 3 */}
               <path
                 d="M 29.0 775.0 L 29.6 781.2 L 27.6 787.5 L 27.9 793.8 L 27.8 800.0 L 26.9 806.2 L 25.7 812.5 L 25.4 818.8 L 26.5 825.0 L 27.6 831.2 L 28.7 837.5 L 28.5 843.8 L 31.2 850.0 L 32.1 856.2 L 32.8 862.5 L 33.0 868.8"
                 fill="none"
-                stroke="#1f3204"
+                stroke="#5B8817"
                 strokeWidth="3"
                 strokeDasharray="2 3"
                 strokeLinecap="round"
-                className="opacity-30"
+                className="opacity-40"
                 transform="translate(-2, 0)"
               />
 
-              {/* Main Cream Paper Sheet Path */}
+              {/* Main Green Paper Sheet Path */}
               <path
                 d="M 50 0 L 31.8 0.0 L 31.3 6.2 L 32.2 12.5 L 30.9 18.8 L 33.2 25.0 L 32.5 31.2 L 33.3 37.5 L 32.4 43.8 L 32.7 50.0 L 32.7 56.2 L 34.6 62.5 L 35.0 68.8 L 33.5 75.0 L 35.1 81.2 L 35.2 87.5 L 35.0 93.8 L 34.7 100.0 L 34.3 106.2 L 35.3 112.5 L 36.3 118.8 L 35.0 125.0 L 34.8 131.2 L 36.2 137.5 L 34.8 143.8 L 35.2 150.0 L 34.3 156.2 L 36.1 162.5 L 34.0 168.8 L 35.0 175.0 L 34.7 181.2 L 33.9 187.5 L 31.9 193.8 L 30.7 200.0 L 30.3 206.2 L 28.0 212.5 L 27.6 218.8 L 29.3 225.0 L 28.7 231.2 L 29.4 237.5 L 29.7 243.8 L 31.5 250.0 L 32.2 256.2 L 32.2 262.5 L 33.6 268.8 L 32.6 275.0 L 32.4 281.2 L 31.3 287.5 L 31.1 293.8 L 32.8 300.0 L 31.0 306.2 L 32.4 312.5 L 31.2 318.8 L 30.7 325.0 L 32.6 331.2 L 32.5 337.5 L 32.6 343.8 L 31.0 350.0 L 31.0 356.2 L 30.4 362.5 L 31.4 368.8 L 31.9 375.0 L 30.9 381.2 L 32.8 387.5 L 32.1 393.8 L 30.5 400.0 L 32.5 406.2 L 32.3 412.5 L 31.3 418.8 L 32.1 425.0 L 32.2 431.2 L 30.6 437.5 L 31.0 443.8 L 30.9 450.0 L 32.1 456.2 L 32.6 462.5 L 30.3 468.8 L 32.2 475.0 L 31.5 481.2 L 31.8 487.5 L 30.5 493.8 L 31.3 500.0 L 30.3 506.2 L 31.2 512.5 L 30.1 518.8 L 29.7 525.0 L 26.8 531.2 L 25.7 537.5 L 24.5 543.8 L 24.2 550.0 L 23.5 556.2 L 24.0 562.5 L 24.5 568.8 L 23.1 575.0 L 24.5 581.2 L 24.4 587.5 L 25.4 593.8 L 27.9 600.0 L 27.1 606.2 L 26.3 612.5 L 27.3 618.8 L 25.4 625.0 L 26.0 631.2 L 26.9 637.5 L 26.5 643.8 L 25.3 650.0 L 26.0 656.2 L 26.8 662.5 L 26.3 668.8 L 24.9 675.0 L 25.5 681.2 L 26.4 687.5 L 27.3 693.8 L 26.2 700.0 L 26.8 706.2 L 27.4 712.5 L 27.4 718.8 L 27.5 725.0 L 27.2 731.2 L 26.4 737.5 L 27.5 743.8 L 27.5 750.0 L 27.3 756.2 L 28.4 762.5 L 29.7 768.8 L 29.0 775.0 L 29.6 781.2 L 27.6 787.5 L 27.9 793.8 L 27.8 800.0 L 26.9 806.2 L 25.7 812.5 L 25.4 818.8 L 26.5 825.0 L 27.6 831.2 L 28.7 837.5 L 28.5 843.8 L 31.2 850.0 L 32.1 856.2 L 32.8 862.5 L 33.0 868.8 L 33.5 875.0 L 33.8 881.2 L 33.3 887.5 L 35.1 893.8 L 35.6 900.0 L 35.1 906.2 L 35.0 912.5 L 35.1 918.8 L 33.5 925.0 L 33.7 931.2 L 34.1 937.5 L 34.3 943.8 L 35.2 950.0 L 33.8 956.2 L 34.9 962.5 L 34.8 968.8 L 35.0 975.0 L 33.5 981.2 L 34.4 987.5 L 33.8 993.8 L 32.9 1000.0 L 50 1000 Z"
-                className="fill-[#FAF6EE]"
+                className="fill-[#7CB324]"
               />
             </svg>
           </div>
@@ -4416,9 +4412,9 @@ export default function KnowYourMeatPage() {
               {/* Thumbnail 1: Raw Cut Part Image */}
               <button
                 onClick={() => setActiveViewTab("raw")}
-                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden p-1.5 transition-all duration-300 cursor-pointer detail-carousel-btn ${activeViewTab === "raw"
-                  ? "border-4 border-[#F2CE07] bg-white/50 scale-105"
-                  : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
+                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden p-2 transition-all duration-300 cursor-pointer detail-carousel-btn bg-[#FEF6DB] ${activeViewTab === "raw"
+                  ? "border-4 border-[#D62828] scale-105 shadow-lg"
+                  : "border border-[#F5E5B8] hover:scale-105"
                   }`}
                 title="Raw Cut View"
               >
@@ -4432,9 +4428,9 @@ export default function KnowYourMeatPage() {
               {/* Thumbnail 2: Packed Product Image */}
               <button
                 onClick={() => setActiveViewTab("packed")}
-                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden border-2 transition-all duration-300 cursor-pointer detail-carousel-btn ${activeViewTab === "packed"
-                  ? "border-4 border-[#F2CE07] bg-white/50 scale-105"
-                  : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
+                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer detail-carousel-btn ${activeViewTab === "packed"
+                  ? "border-4 border-[#D62828] scale-105 shadow-lg"
+                  : "border-2 border-[#D62828] hover:scale-105"
                   }`}
                 title="Packed Product View"
               >
@@ -4539,55 +4535,34 @@ export default function KnowYourMeatPage() {
               whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[12px] sm:text-[13px] xl:text-[14px] font-medium text-slate-600 tracking-wider flex items-center gap-2 font-Manrope mb-2 sm:mb-2.5 lg:mb-3"
+              className="text-[12px] sm:text-[13px] xl:text-[14px] font-semibold text-[#2E5E14] tracking-wider flex items-center gap-1.5 font-manrope mb-2 sm:mb-2.5 lg:mb-3"
             >
               <Link
                 href="/"
-                className="relative inline-block hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
+                className="relative inline-block hover:text-[#14421A] transition-all duration-200 cursor-pointer hover:underline"
               >
                 Home
               </Link>
-              <div className="relative w-2 h-3 flex items-center justify-center shrink-0">
-                <Image
-                  src="/Product/details/right aroow.svg"
-                  alt="arrow"
-                  fill
-                  className="object-contain opacity-60"
-                />
-              </div>
+              <span className="text-[#2E5E14]/70 text-[11px]">&gt;</span>
               <Link
                 href="/know-your-meat"
-                className="relative inline-block hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
+                className="relative inline-block hover:text-[#14421A] transition-all duration-200 cursor-pointer hover:underline"
               >
-                Know Your Meat
+                Products
               </Link>
-              <div className="relative w-2 h-3 flex items-center justify-center shrink-0">
-                <Image
-                  src="/Product/details/right aroow.svg"
-                  alt="arrow"
-                  fill
-                  className="object-contain opacity-60"
-                />
-              </div>
+              <span className="text-[#2E5E14]/70 text-[11px]">&gt;</span>
               <button
                 onClick={() => {
                   setHasSelectedAnyPart(false);
                   setIsLandedInSection2(false);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="relative inline-block hover:text-[#127431] transition-all duration-200 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#127431] hover:after:w-full after:transition-all after:duration-300 hover:-translate-y-[1px]"
+                className="relative inline-block hover:text-[#14421A] transition-all duration-200 cursor-pointer hover:underline"
               >
                 Chicken
               </button>
-              <div className="relative w-2 h-3 flex items-center justify-center shrink-0">
-                <Image
-                  src="/Product/details/right aroow.svg"
-                  alt="arrow"
-                  fill
-                  className="object-contain opacity-60"
-                />
-              </div>
-              <span className="text-slate-900 font-semibold">
+              <span className="text-[#2E5E14]/70 text-[11px]">&gt;</span>
+              <span className="text-[#2E5E14] font-bold">
                 {chickenParts[manuallySelectedPartIdx].name}
               </span>
             </motion.div>
@@ -4610,12 +4585,12 @@ export default function KnowYourMeatPage() {
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-0.5 mb-2 sm:mb-2.5 lg:mb-3"
               >
-                <span className="text-[13px] sm:text-[15px] lg:text-[17px] font-semibold text-[#127431] tracking-wide uppercase font-manrope block">
+                <span className="text-[14px] sm:text-[16px] lg:text-[18px] font-bold text-[#D62828] tracking-wider uppercase font-manrope block">
                   CHICKEN
                 </span>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-[68px] [@media(min-width:1024px)]:text-[3.6vw] font-bold text-slate-900 leading-[0.95] tracking-wide font-barlow-condensed uppercase detail-title">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-[68px] [@media(min-width:1024px)]:text-[3.6vw] font-bold text-[#14421A] leading-[0.95] tracking-wide font-barlow-condensed uppercase detail-title">
                   CHICKEN{" "}
-                  <span className="text-[#127431]">
+                  <span className="text-white">
                     {chickenParts[manuallySelectedPartIdx].name}
                   </span>
                 </h2>
@@ -4636,12 +4611,12 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[12px] sm:text-[13px] lg:text-[14px] xl:text-[15px] font-normal text-slate-800 leading-relaxed font-manrope max-w-[600px] xl:max-w-[640px] detail-desc mb-2 sm:mb-2.5 lg:mb-3"
+                className="text-[12px] sm:text-[13px] lg:text-[14px] xl:text-[15px] font-medium text-[#1C3A18] leading-relaxed font-manrope max-w-[600px] xl:max-w-[640px] detail-desc mb-2 sm:mb-2.5 lg:mb-3"
               >
                 {chickenParts[manuallySelectedPartIdx].desc}
               </motion.p>
 
-              {/* Red Line Separator */}
+              {/* Green Line Separator */}
               <motion.div
                 variants={{
                   hidden: { opacity: 0, scaleX: 0 },
@@ -4655,7 +4630,7 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, scaleX: 1 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.45 }}
-                className="w-14 sm:w-18 h-[2px] sm:h-[2.5px] bg-[#D62828] origin-left mb-2.5 sm:mb-3 lg:mb-3.5"
+                className="w-14 sm:w-18 h-[2.5px] bg-[#5B8920] origin-left mb-2.5 sm:mb-3 lg:mb-3.5"
               />
 
               {/* Package Weight specs */}
@@ -4673,17 +4648,17 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-3 sm:gap-4 lg:gap-5 py-1.5 sm:py-2 lg:py-2.5 border-y border-slate-200/80 mb-2.5 sm:mb-3 lg:mb-3.5"
+                className="flex items-center gap-3 sm:gap-4 lg:gap-5 py-2 sm:py-2.5 lg:py-3 border-t border-b border-[#87BB3A]/40 mb-2.5 sm:mb-3 lg:mb-3.5"
               >
                 <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-[12px] sm:text-[13px] lg:text-[14px] font-medium text-slate-900 tracking-wider uppercase font-manrope whitespace-nowrap">
+                  <span className="text-[12px] sm:text-[13px] lg:text-[14px] font-extrabold text-[#14421A] tracking-wider uppercase font-manrope whitespace-nowrap">
                     PACKAGE WEIGHT
                   </span>
-                  <span className="text-base sm:text-lg lg:text-xl font-bold text-slate-900 font-barlow-condensed whitespace-nowrap ml-1">
+                  <span className="text-lg sm:text-xl lg:text-2xl font-black text-[#14421A] font-barlow-condensed whitespace-nowrap ml-1">
                     {chickenParts[manuallySelectedPartIdx].weight}
                   </span>
                 </div>
-                <div className="w-[1px] h-4 sm:h-5 bg-slate-300 shrink-0 mx-0.5" />
+                <div className="w-[1.5px] h-5 bg-[#14421A]/40 shrink-0 mx-1" />
                 <div className="flex items-center gap-2 shrink-0">
                   <div className="relative w-4 h-4 sm:w-5 sm:h-5 shrink-0">
                     <Image
@@ -4693,7 +4668,7 @@ export default function KnowYourMeatPage() {
                       className="object-contain"
                     />
                   </div>
-                  <span className="text-[12px] sm:text-[13px] lg:text-[14px] font-medium text-slate-900 tracking-wider uppercase font-manrope whitespace-nowrap">
+                  <span className="text-[12px] sm:text-[13px] lg:text-[14px] font-extrabold text-[#14421A] tracking-wider uppercase font-manrope whitespace-nowrap">
                     MEATIN PACK
                   </span>
                 </div>
@@ -4714,9 +4689,9 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-1.5 sm:space-y-2 mb-2.5 sm:mb-3 lg:mb-3.5"
+                className="space-y-2 mb-2.5 sm:mb-3 lg:mb-3.5"
               >
-                <h4 className="text-[12px] sm:text-[13px] lg:text-[14px] font-semibold text-slate-900 tracking-wider uppercase font-manrope">
+                <h4 className="text-[12px] sm:text-[13px] lg:text-[14px] font-extrabold text-[#14421A] tracking-wider uppercase font-manrope">
                   NUTRITION INFORMATION (PER 100g)
                 </h4>
                 <div className="grid grid-cols-4 gap-2 sm:gap-2.5 lg:gap-3 detail-nutrition-grid">
@@ -4747,7 +4722,7 @@ export default function KnowYourMeatPage() {
                   ].map((nut, idx) => (
                     <div
                       key={idx}
-                      className="bg-white/80 border border-slate-200/80 rounded-xl p-2 sm:p-2.5 lg:p-3 text-center flex flex-col items-center justify-between min-h-[72px] sm:min-h-[82px] lg:min-h-[90px] xl:min-h-[96px] gap-1 sm:gap-1.5 shadow-sm detail-nutrition-card"
+                      className="bg-white rounded-2xl p-2.5 sm:p-3 text-center flex flex-col items-center justify-between min-h-[76px] sm:min-h-[86px] lg:min-h-[94px] xl:min-h-[100px] gap-1 shadow-sm border border-white detail-nutrition-card"
                     >
                       <div className="relative w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7">
                         <Image
@@ -4757,10 +4732,10 @@ export default function KnowYourMeatPage() {
                           className="object-contain"
                         />
                       </div>
-                      <span className="text-[10px] sm:text-[11px] lg:text-[12px] font-medium text-slate-700 tracking-wider uppercase font-manrope">
+                      <span className="text-[10px] sm:text-[11px] lg:text-[12px] font-bold text-[#111111] tracking-wider uppercase font-manrope">
                         {nut.label}
                       </span>
-                      <span className="text-[13px] sm:text-[15px] lg:text-[17px] font-bold text-slate-900 font-barlow-condensed">
+                      <span className="text-[14px] sm:text-[16px] lg:text-[18px] font-extrabold text-black font-barlow-condensed">
                         {nut.val}
                       </span>
                     </div>
@@ -4789,10 +4764,9 @@ export default function KnowYourMeatPage() {
                   whileHover={{
                     y: -3,
                     boxShadow: "0 14px 30px -5px rgba(214, 40, 40, 0.18)",
-                    borderColor: "#D62828",
                   }}
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                  className="group border border-slate-200/80 bg-[#FAF0F0] rounded-2xl overflow-hidden shadow-sm relative flex gap-0 items-stretch detail-cooking-card cursor-pointer mt-3"
+                  className="group border border-[#E4D5D3] bg-[#EFE4E2] rounded-2xl overflow-hidden shadow-sm relative flex gap-0 items-stretch detail-cooking-card cursor-pointer mt-2"
                 >
                   {/* Left - Square image */}
                   <div className="relative w-[130px] lg:w-[150px] shrink-0 detail-cooking-img overflow-hidden">
@@ -4805,10 +4779,10 @@ export default function KnowYourMeatPage() {
                   </div>
 
                   {/* Right - Content */}
-                  <div className="flex-1 p-4 lg:p-5 flex flex-col justify-between gap-2 detail-cooking-content">
+                  <div className="flex-1 p-4 lg:p-5 flex flex-col justify-between gap-1.5 detail-cooking-content">
                     {/* Header row */}
                     <div className="flex items-center justify-between">
-                      <span className="text-[18px] lg:text-[20px] font-semibold text-[#D62828] tracking-widest uppercase font-barlow-condensed">
+                      <span className="text-[17px] lg:text-[19px] font-bold text-[#D62828] tracking-widest uppercase font-barlow-condensed">
                         WHAT'S COOKING?
                       </span>
                       <span className="bg-[#D62828] text-white text-[9px] lg:text-[10px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider font-manrope shadow-sm">
@@ -4817,13 +4791,13 @@ export default function KnowYourMeatPage() {
                     </div>
 
                     {/* Title */}
-                    <h5 className="text-[15px] lg:text-[16px] font-bold text-slate-900 leading-tight font-manrope group-hover:text-[#D62828] transition-colors">
+                    <h5 className="text-[14px] lg:text-[15.5px] font-extrabold text-[#111111] leading-tight font-manrope group-hover:text-[#D62828] transition-colors">
                       Spicy Chicken {chickenParts[manuallySelectedPartIdx].name}{" "}
                       Fry
                     </h5>
 
                     {/* Description */}
-                    <p className="text-[12px] lg:text-[13px] text-slate-600 leading-relaxed font-inter">
+                    <p className="text-[11.5px] lg:text-[12.5px] text-[#444444] leading-relaxed font-manrope">
                       A Spicy and flavourful recipe that brings out the best in
                       every{" "}
                       {chickenParts[manuallySelectedPartIdx].name.toLowerCase()}
@@ -4838,11 +4812,11 @@ export default function KnowYourMeatPage() {
                         boxShadow: "0 6px 16px rgba(214, 40, 40, 0.35)",
                       }}
                       whileTap={{ scale: 0.97 }}
-                      className="w-auto inline-flex items-center justify-center self-start bg-[#D62828] text-white text-[10.5px] lg:text-[11.5px] font-bold py-1.5 px-3.5 rounded-xl whitespace-nowrap gap-1.5 uppercase tracking-wider font-manrope cursor-pointer transition-colors shadow-sm mt-1"
+                      className="w-auto inline-flex items-center justify-center self-start bg-[#D62828] text-white text-[10.5px] lg:text-[11.5px] font-extrabold py-1.5 px-4 rounded-xl whitespace-nowrap gap-1.5 uppercase tracking-wider font-manrope cursor-pointer transition-colors shadow-sm mt-1"
                     >
                       <span>EXPLORE RECIPE</span>
                       <span className="text-sm group-hover:translate-x-1 transition-transform">
-                        →
+                        &rarr;
                       </span>
                     </motion.button>
                   </div>
