@@ -37,24 +37,22 @@ const directors: TeamMember[] = [
   {
     name: "Mohanan Pilankuvittil",
     role: "Project Consultant",
-    image: "/MeetOurTeam/led-by-persons/Mohanan Pilankuvittil.webp",
+    image: "/MeetOurTeam/directors-persons/Mohanan Pilankuvittil.webp",
   },
   {
     name: "Anfas K Mohamed",
     role: "Director & CMO",
-    image: "/MeetOurTeam/led-by-persons/Anfas K Mohamed.webp",
+    image: "/MeetOurTeam/directors-persons/Anfas K Mohamed.webp",
   },
   {
     name: "Anas Kamaru",
     role: "Director & Plant Manager",
-    image: "/MeetOurTeam/led-by-persons/Anas Kamaru.webp",
+    image: "/MeetOurTeam/directors-persons/Anas Kamaru.webp",
   },
-  // Row 1 (5 cards)
   {
     name: "Mohamed Asharaf K",
     role: "Director",
     image: "/MeetOurTeam/directors-persons/Mohamed Asharaf K.webp",
-    shiftImage: true,
   },
   {
     name: "Nazeer VM",
@@ -76,12 +74,10 @@ const directors: TeamMember[] = [
     role: "Director",
     image: "/MeetOurTeam/directors-persons/Rooshid Mohiyudheen C A.webp",
   },
-  // Row 2 (4 cards)
   {
     name: "Nasir Neriyar",
     role: "Director",
     image: "/MeetOurTeam/directors-persons/Nasir Neriyar.webp",
-    shiftImage: true,
   },
   {
     name: "Moosakutty MM",
@@ -98,7 +94,6 @@ const directors: TeamMember[] = [
     role: "Director",
     image: "/MeetOurTeam/directors-persons/Abbas Chemban.webp",
   },
-  // Row 3 (3 cards)
   {
     name: "Hydros Villan",
     role: "Director",
@@ -223,20 +218,14 @@ export default function TeamPage() {
                 className="group relative flex flex-col items-center w-[270px] sm:w-[260px] md:w-[260px] lg:w-[260px] xl:w-[275px] 2xl:w-[285px] transition-transform duration-500 hover:scale-[1.03]"
               >
                 {/* Photo container */}
-                <div className="flex items-end relative w-full h-[220px] sm:h-[240px] md:h-[240px] lg:h-[210px] xl:h-[240px] 2xl:h-[250px] overflow-hidden">
-                  {/* Left partition (approx 6%): Right-angled red triangle */}
-                  <div className="left-0 bottom-0 w-0 h-0 border-b-[12px] border-b-[#D62828] border-l-[15px] border-l-transparent z-10" />
-
-                  {/* Right partition: Portrait Image */}
-                  <div className={`relative flex-1 right-0 bottom-0 h-full ${member.shiftImage ? "w-[calc(100%)]" : "w-full"}`}>
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover object-top"
-                      sizes="260px"
-                    />
-                  </div>
+                <div className="relative w-full aspect-[622/564] overflow-hidden flex items-end justify-center">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    className="object-contain object-bottom"
+                    sizes="(max-width: 768px) 270px, 285px"
+                  />
                 </div>
 
                 {/* Bright green box */}
@@ -245,7 +234,7 @@ export default function TeamPage() {
                     {member.name}
                   </h3>
                   <p className="text-sm sm:text-md font-semibold text-white/95 tracking-wider mt-1 flex items-center gap-1.5 font-manrope">
-                    <span className="text-white/80">★</span> {member.role}
+                    <span className="text-white/80 group-hover:text-[#D4A437] transition-colors duration-300">★</span> {member.role}
                   </p>
                   
                   {/* Floating blue LinkedIn icon */}
@@ -322,19 +311,14 @@ export default function TeamPage() {
                 className="group relative flex flex-col items-center w-[220px] sm:w-[220px] md:w-[220px] lg:w-[210px] xl:w-[220px] 2xl:w-[230px] transition-transform duration-500 hover:scale-[1.03]"
               >
                 {/* Photo container */}
-                <div className="flex items-end relative w-full h-[200px] sm:h-[210px] lg:h-[200px] xl:h-[210px] overflow-hidden">
-                  {/* Left partition: Right-angled red triangle */}
-                  <div className="left-0 bottom-0 w-0 h-0 border-b-[12px] border-b-[#D62828] border-l-[15px] border-l-transparent z-10" />
-                  {/* Right partition: Portrait */}
-                  <div className={`relative flex-1 right-0 bottom-0 h-full ${member.shiftImage ? "w-[calc(100%)]" : "w-full"}`}>
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-contain object-bottom"
-                      sizes="230px"
-                    />
-                  </div>
+                <div className="relative w-full aspect-[624/543] overflow-hidden flex items-end justify-center">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    className="object-contain object-bottom"
+                    sizes="(max-width: 768px) 220px, 230px"
+                  />
                 </div>
 
                 {/* Green name block */}
@@ -343,7 +327,7 @@ export default function TeamPage() {
                     {member.name}
                   </h3>
                   <p className="text-xs sm:text-sm font-semibold text-white/95 tracking-wider mt-1 flex items-center gap-1.5 font-manrope">
-                    <span className="text-white/80">★</span> {member.role}
+                    <span className="text-white/80 group-hover:text-[#D4A437] transition-colors duration-300">★</span> {member.role}
                   </p>
                   
                   {/* LinkedIn icon */}
@@ -393,135 +377,13 @@ export default function TeamPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="w-full bg-[#FAFDF7] rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-slate-200/80 overflow-hidden relative min-h-[340px] sm:min-h-[380px] md:min-h-[410px] lg:min-h-[430px] flex flex-col md:flex-row items-stretch"
+            className="w-full relative select-none"
           >
-            {/* Background Texture & Soft Gradient Overlay */}
-            <div className="absolute inset-0 z-0 bg-[#FAFDF7]">
-              <Image
-                src="/Home/section-bg.webp"
-                alt="Background Pattern"
-                fill
-                className="object-cover object-center opacity-15"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FAFDF7] via-[#FAFDF7]/90 to-transparent z-0 pointer-events-none" />
-            </div>
-
-            {/* Right Side Green Curved Graphic (right-side-bg.svg) */}
-            <div className="absolute top-0 right-0 w-[60%] sm:w-[55%] md:w-[50%] lg:w-[48%] h-full z-0 pointer-events-none">
-              <Image
-                src="/MeetOurTeam/banner/right-side-bg.svg"
-                alt="Green Background Graphic"
-                fill
-                className="object-cover object-right"
-              />
-            </div>
-
-            {/* Left Side Column: Title, Stamps, Subtext & Dashed Arrow */}
-            <div className="relative z-20 px-6 py-6 sm:px-8 md:px-10 lg:pl-12 lg:py-8 flex flex-col justify-between w-full md:w-[54%] lg:w-[52%] xl:w-[50%]">
-              
-              <div className="space-y-4">
-                {/* Upper Row: Title Block on Left + Stamp & Food Sketches on Right */}
-                <div className="flex flex-col min-[520px]:flex-row items-start justify-between gap-4 relative">
-                  
-                  {/* Left: MEET OUR TEAM title with Dashed Border Corner/Side Frame */}
-                  <div className="relative pt-2 pl-3 sm:pl-4 border-l-2 border-dashed border-[#8DC541]">
-                    {/* Top Dashed Line extending over title */}
-                    <div className="absolute top-0 left-0 w-12 sm:w-16 h-0 border-t-2 border-dashed border-[#8DC541]" />
-                    
-                    <h2 className="text-[34px] min-[400px]:text-[42px] sm:text-[50px] lg:text-[56px] xl:text-[62px] font-black font-barlow-condensed leading-[0.92] tracking-tight uppercase">
-                      <span className="text-[#8DC541] block">MEET</span>
-                      <span className="text-[#153520] block">OUR TEAM</span>
-                    </h2>
-                  </div>
-
-                  {/* Right: Food Meat Sketches + Good Food Happens Stamp Overlay */}
-                  <div className="flex items-center gap-2 sm:gap-3 shrink-0 pt-1">
-                    {/* Food Meat Sketches Doodle */}
-                    <div className="relative w-16 sm:w-20 lg:w-24 aspect-square">
-                      <Image
-                        src="/MeetOurTeam/banner/food-image.webp"
-                        alt="Food Meat Sketches"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-
-                    {/* Good Food Happens Stamp */}
-                    <div className="relative w-28 sm:w-36 lg:w-40 xl:w-44 aspect-[180/70]">
-                      <Image
-                        src="/MeetOurTeam/banner/good-food-happens-text.webp"
-                        alt="Good Food Happens"
-                        fill
-                        className="object-contain object-left"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Subheading & Paragraph Description */}
-                <div className="space-y-1 pt-1 max-w-[420px]">
-                  <h3 className="text-base sm:text-lg md:text-xl font-bold font-manrope text-[#153520] tracking-tight">
-                    The People Behind Freshness
-                  </h3>
-                  <p className="text-xs sm:text-sm md:text-sm lg:text-base text-slate-600 font-medium font-manrope leading-relaxed">
-                    Passionate professionals working together to bring quality and care to your table.
-                  </p>
-                </div>
-              </div>
-
-              {/* Vector Loop Arrow (Dashed Arrow below text pointing toward team) */}
-              <div className="relative pt-3 sm:pt-4 pl-16 sm:pl-24 md:pl-28">
-                <div className="relative w-24 sm:w-28 lg:w-32 aspect-[172/90]">
-                  <Image
-                    src="/MeetOurTeam/banner/leflt-side-vector-design.svg"
-                    alt="Dashed Arrow Vector"
-                    fill
-                    className="object-contain object-left"
-                  />
-                </div>
-              </div>
-
-            </div>
-
-            {/* Right Side Column: Team Members Image & Floating Green Badge Overlay */}
-            <div className="relative z-20 w-full md:w-[50%] lg:w-[52%] xl:w-[54%] flex items-end justify-end min-h-[280px] sm:min-h-[320px] md:min-h-full pr-2 sm:pr-4 md:pr-6 lg:pr-8 pb-0">
-              
-              {/* Team Members Image */}
-              <div className="relative w-full max-w-[700px] h-[270px] sm:h-[320px] md:h-[360px] lg:h-[390px] xl:h-[425px]">
-                <Image
-                  src="/MeetOurTeam/banner/persons-image.webp"
-                  alt="MEATIN Team Members"
-                  fill
-                  className="object-contain object-bottom filter drop-shadow-xl"
-                  priority
-                />
-              </div>
-
-              {/* Floating Green Badge Overlay on Bottom Right Curve (Matching SVG badge positioning) */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: false }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="absolute bottom-4 right-4 sm:bottom-6 sm:right-8 z-30 bg-[#8DC541] text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl shadow-xl border border-white/40 flex items-center gap-2.5 sm:gap-3"
-              >
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/60 flex items-center justify-center shrink-0 text-white bg-white/10">
-                  <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
-                    <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" />
-                    <path d="M12 8l1.5 3 3.5.5-2.5 2.5.5 3.5-3-1.5-3 1.5.5-3.5-2.5-2.5 3.5-.5z" fill="currentColor" stroke="none" />
-                  </svg>
-                </div>
-                <div className="font-manrope">
-                  <h4 className="text-[11px] sm:text-xs font-bold text-white leading-tight tracking-wide">
-                    One Team. One Purpose.
-                  </h4>
-                  <p className="text-[9px] sm:text-[11px] text-white/90 font-medium leading-tight">
-                    Better Chicken. Better Lives.
-                  </p>
-                </div>
-              </motion.div>
-
-            </div>
+            <img
+              src="/MeetOurTeam/banner/banner.svg"
+              alt="Meet Our Team Banner"
+              className="w-full h-auto block "
+            />
           </motion.div>
         </div>
 
