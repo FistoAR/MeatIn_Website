@@ -1074,9 +1074,9 @@ export default function KnowYourMeatPage() {
     <div className="w-full min-h-screen bg-[#FDFCF7] relative font-manrope selection:bg-black/10 selection:text-slate-900">
       {/* Background Doodle Repeat Overlay */}
       <div
-        className="fixed inset-0 z-0 pointer-events-none opacity-[0.25] bg-repeat"
+        className="fixed inset-0 z-0 pointer-events-none opacity-[0.6] bg-repeat"
         style={{
-          backgroundImage: 'url("/Product/Chicken/doodle.webp")',
+          backgroundImage: 'url("/Product/know-your-meat-bg.webp")',
           backgroundSize: "800px",
         }}
       />
@@ -1614,7 +1614,7 @@ export default function KnowYourMeatPage() {
 
           /* Section 2 detail mobile overrides - only apply layout when visible */
           .detail-section-wrap.block {
-            background-image: url("/Product/Chicken/doodle.webp") !important;
+            background-image: url("/Product/know-your-meat-bg.webp") !important;
             background-size: 500px !important;
             background-repeat: repeat !important;
             background-color: #FAF6F0 !important;
@@ -1763,9 +1763,9 @@ export default function KnowYourMeatPage() {
       >
         {/* Section 1 Doodle Repeat Overlay */}
         <div
-          className="absolute inset-0 z-0 pointer-events-none opacity-[0.25] bg-repeat"
+          className="absolute inset-0 z-0 pointer-events-none opacity-[0.6] bg-repeat"
           style={{
-            backgroundImage: 'url("/Product/Chicken/doodle.webp")',
+            backgroundImage: 'url("/Product/know-your-meat-bg.webp")',
             backgroundSize: "800px",
           }}
         />
@@ -3556,8 +3556,17 @@ export default function KnowYourMeatPage() {
 
                   {/* Exact Stacked chicken viewport */}
                   <div className="relative w-[300px] h-[300px] sm:w-[340px] sm:h-[340px] lg:w-[400px] lg:h-[400px] xl:w-[450px] xl:h-[450px] aspect-square flex items-center justify-center viz-chicken-box">
+                    {/* Background Golden Outline Circle SVG behind chicken */}
+                    <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none select-none z-0 p-1 sm:p-2 lg:p-3">
+                      <img
+                        src="/Product/Chicken/bg-circle.svg"
+                        alt="Background Circle"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+
                     {/* Layer 1: Cavity (Bottom Layer) */}
-                    <div className="absolute inset-0 w-full h-full">
+                    <div className="absolute inset-0 w-full h-full z-0">
                       <img
                         src="/Product/Chicken/FullChicken/transparent.webp"
                         alt="Chicken Inside Cavity"
@@ -4158,9 +4167,9 @@ export default function KnowYourMeatPage() {
 
           {/* Doodle Pattern Overlay across Left Cream Background */}
           <div
-            className="absolute inset-0 opacity-[0.25] bg-repeat pointer-events-none"
+            className="absolute inset-0 opacity-[0.6] bg-repeat pointer-events-none"
             style={{
-              backgroundImage: 'url("/Product/Chicken/doodle.webp")',
+              backgroundImage: 'url("/Product/know-your-meat-bg.webp")',
               backgroundSize: "800px",
             }}
           />
@@ -4232,7 +4241,15 @@ export default function KnowYourMeatPage() {
           </svg>
 
           {/* Desktop Right Side Bright Green Panel */}
-          <div className="hidden md:block absolute top-0 bottom-0 right-0 left-[46%] lg:left-[48%] xl:left-[50%] z-0 bg-[#7CB324]">
+          <div className="hidden md:block absolute top-0 bottom-0 right-0 left-[46%] lg:left-[48%] xl:left-[50%] z-0 bg-[#7CB324] overflow-hidden">
+            {/* Doodle Pattern Overlay on Green Right Background */}
+            <div
+              className="absolute inset-0 opacity-[0.22] bg-repeat pointer-events-none mix-blend-overlay"
+              style={{
+                backgroundImage: 'url("/Product/know-your-meat-bg.webp")',
+                backgroundSize: "800px",
+              }}
+            />
             {/* Real Procedural Hand-Torn Paper SVG Edge Divider */}
             <svg
               className="absolute top-0 bottom-0 -left-[45px] h-full w-[50px] overflow-visible"
@@ -4836,9 +4853,9 @@ export default function KnowYourMeatPage() {
       >
         {/* Background Doodle Pattern Overlay */}
         <div
-          className="absolute inset-0 pointer-events-none bg-repeat z-0 opacity-50 filter brightness-0"
+          className="absolute inset-0 pointer-events-none bg-repeat z-0 opacity-[0.6] filter brightness-0"
           style={{
-            backgroundImage: 'url("/Product/Chicken/doodle.webp")',
+            backgroundImage: 'url("/Product/know-your-meat-bg.webp")',
             backgroundSize: "800px",
           }}
         />
