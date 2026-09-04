@@ -227,7 +227,7 @@ export default function AboutUsPage() {
           {/* On desktop: image covers right half with full vertical framing */}
           <div className="absolute top-0 bottom-0 right-0 left-0 lg:left-[40%] w-full lg:w-[60%] overflow-hidden">
             <Image
-              src="/AboutUs/about-us-hero-image.webp"
+              src="/AboutUs/about-hero-img.webp"
               alt="MEATIN Integrated Farming"
               fill
               priority

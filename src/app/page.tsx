@@ -442,24 +442,6 @@ export default function HomePage() {
           backgroundImage: "url('/Home/truck-section/truck-section-bg.webp')",
         }}
       >
-        {/* 3D Modern Factory & Logistics Processing Hub on the Right */}
-        <div 
-          className="absolute right-0 bottom-0 top-0 z-0 w-[400px] sm:w-[540px] md:w-[700px] lg:w-[880px] xl:w-[1050px] 2xl:w-[1200px] pointer-events-none select-none flex items-end justify-end overflow-hidden"
-          style={{
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.95) 20%, black 100%)',
-            maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.95) 20%, black 100%)',
-          }}
-        >
-          <Image
-            src="/Home/truck-section/factory-plant-v2.png"
-            alt="MEATIN Hygienic Processing Plant & Logistics Hub"
-            width={1200}
-            height={800}
-            priority
-            className="w-full h-full object-contain object-right-bottom mix-blend-multiply opacity-90"
-          />
-        </div>
-
         {/* Animated Truck Assembly Moving Right-To-Left as User Scrolls Down */}
         <div className="w-full max-w-[95%] px-4 sm:px-8 relative z-10 flex justify-start items-center my-auto">
           <motion.div

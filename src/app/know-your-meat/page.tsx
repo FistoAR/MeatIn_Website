@@ -127,31 +127,6 @@ export default function KnowYourMeatPage() {
     setHasSelectedAnyPart(true);
   };
 
-  // Background preloader: Immediately fetch 3D GLB models whenever a part is chosen or page mounts
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    // 1. Immediately pre-fetch active selected part's GLB model via fetch and dynamic <link rel="preload">
-    const activePartName = chickenParts[manuallySelectedPartIdx]?.name;
-    if (activePartName) {
-      const activeGlbUrl = partGlbMap[activePartName] || "/Product/details/glb/drumsticks.glb";
-      fetch(activeGlbUrl, { mode: "cors", cache: "force-cache" }).catch(() => {});
-
-      if (!document.querySelector(`link[href="${activeGlbUrl}"]`)) {
-        const link = document.createElement("link");
-        link.rel = "preload";
-        link.as = "fetch";
-        link.crossOrigin = "anonymous";
-        link.href = activeGlbUrl;
-        document.head.appendChild(link);
-      }
-    }
-
-    // 2. Prefetch all other GLB models in background for zero-latency 3D view switching
-    Object.values(partGlbMap).forEach((glbUrl) => {
-      fetch(glbUrl, { mode: "cors", cache: "force-cache" }).catch(() => {});
-    });
-  }, [manuallySelectedPartIdx]);
 
   useEffect(() => {
     if (activeStage !== "inside") {
@@ -1108,7 +1083,7 @@ export default function KnowYourMeatPage() {
     {
       name: "BURGER PATTY",
       href: "/know-your-meat",
-      icon: "/Product/Chicken/Banner/image 298.webp",
+      icon: "/Product/Chicken/Banner/burger-patty.webp",
     },
   ];
 
@@ -1879,7 +1854,7 @@ export default function KnowYourMeatPage() {
                 <img
                   src={
                     activeMeatType === "chicken"
-                      ? "/Product/Chicken/chick.svg"
+                      ? "/Product/Chicken/green-hen.svg"
                       : activeMeatType === "beef"
                         ? "/Product/GoatBeef/beef.svg"
                         : "/Product/GoatBeef/goat.svg"
@@ -3599,11 +3574,11 @@ export default function KnowYourMeatPage() {
                   {/* Exact Stacked chicken viewport */}
                   <div className="relative w-[300px] h-[300px] sm:w-[340px] sm:h-[340px] lg:w-[400px] lg:h-[400px] xl:w-[450px] xl:h-[450px] aspect-square flex items-center justify-center viz-chicken-box">
                     {/* Background Golden Outline Circle SVG behind chicken */}
-                    <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none select-none z-0 p-1 sm:p-2 lg:p-3">
+                    <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none select-none z-0">
                       <img
                         src="/Product/Chicken/bg-circle.svg"
                         alt="Background Circle"
-                        className="w-full h-full object-contain"
+                        className="w-[73%] h-[73%] object-contain"
                       />
                     </div>
 
@@ -3663,15 +3638,12 @@ export default function KnowYourMeatPage() {
                             {/* Circle Thumbnail */}
                             <div
                               className={`relative w-[65px] h-[65px] lg:w-[75px] lg:h-[75px] xl:w-[85px] xl:h-[85px] rounded-full border-2 bg-white flex items-center justify-center p-1.5 lg:p-2 shadow-md z-10 shrink-0 transition-all duration-300 viz-card-circle ${selected
-                                ? "border-[#F2CE07] ring-4 ring-[#F2CE07]/60 scale-110 shadow-2xl bg-amber-50"
-                                : "border-[#D62828] group-hover:border-[#F2CE07] group-hover:scale-105 group-hover:shadow-xl"
+                                ? "border-[#608D12] ring-4 ring-[#608D12]/40 scale-110 shadow-2xl bg-emerald-50"
+                                : "border-[#608D12] group-hover:border-[#608D12] group-hover:scale-105 group-hover:shadow-xl"
                                 }`}
                             >
                               <span
-                                className={`absolute -top-1 -left-1 w-[18px] h-[18px] lg:w-[20px] lg:h-[20px] xl:w-[22px] xl:h-[22px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter transition-colors duration-300 viz-card-badge ${selected
-                                  ? "bg-[#F2CE07] text-black shadow"
-                                  : "bg-[#D62828] text-white group-hover:bg-[#F2CE07] group-hover:text-black"
-                                  }`}
+                                className="absolute -top-1 -left-1 w-[20px] h-[20px] lg:w-[22px] lg:h-[22px] xl:w-[24px] xl:h-[24px] rounded-full flex items-center justify-center text-[11px] lg:text-[12px] xl:text-[13px] font-black z-20 font-inter bg-[#D62828] text-white shadow viz-card-badge"
                               >
                                 {callouts[activeStage].left.length +
                                   callouts[activeStage].right.length +
@@ -3695,22 +3667,19 @@ export default function KnowYourMeatPage() {
                               {/* Name Pill */}
                               <div
                                 className={`min-w-[130px] lg:min-w-[145px] xl:min-w-[155px] pl-10 lg:pl-12 xl:pl-13 pr-7 lg:pr-9 xl:pr-10 py-0.5 lg:py-1 rounded-full inline-flex items-center self-start transition-all duration-300 viz-card-pill ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""} ${selected
-                                  ? "bg-[#F2CE07] text-black shadow-lg ring-2 ring-[#F2CE07]/40"
-                                  : "bg-[#D62828] group-hover:bg-[#b01c1c] group-hover:shadow-md"
+                                  ? "bg-[#608D12] text-white shadow-lg ring-2 ring-[#608D12]/40"
+                                  : "bg-[#608D12] group-hover:bg-[#4d730d] group-hover:shadow-md"
                                   }`}
                               >
                                 <span
-                                  className={`text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-semibold viz-card-pill-text ${selected
-                                    ? "text-black font-extrabold"
-                                    : "text-white"
-                                    }`}
+                                  className="text-[14px] lg:text-[15px] xl:text-[17px] tracking-widest uppercase font-barlow-condensed leading-none font-extrabold viz-card-pill-text text-white"
                                 >
                                   {item.name}
                                 </span>
                               </div>
                               {/* Description */}
                               <p
-                                className={`text-[11px] lg:text-[12px] xl:text-[13px] font-medium text-white leading-tight whitespace-pre-line font-manrope max-w-[160px] lg:max-w-[180px] xl:max-w-[200px] line-clamp-3 transition-all duration-300 viz-card-desc-text pl-10 lg:pl-12 xl:pl-13 ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""}`}
+                                className={`text-[11px] lg:text-[12px] xl:text-[13px] font-semibold text-slate-700 leading-tight whitespace-pre-line font-manrope max-w-[160px] lg:max-w-[180px] xl:max-w-[200px] line-clamp-3 transition-all duration-300 viz-card-desc-text pl-10 lg:pl-12 xl:pl-13 ${selected ? "pl-14 lg:pl-16 xl:pl-17" : ""}`}
                               >
                                 {item.desc}
                               </p>
@@ -4381,47 +4350,48 @@ export default function KnowYourMeatPage() {
                 ref={centerCircleRef}
                 className="relative w-full h-full flex items-center justify-center z-30 overflow-visible"
               >
-                {/* CLEAN INTERACTIVE 360° 3D GLB MODEL VIEWER (Always mounted for instant display) */}
-                <div
-                  className={`absolute inset-0 w-full h-full flex items-center justify-center pointer-events-auto z-40 overflow-visible transition-opacity duration-200 ${
-                    activeViewTab === "3d"
-                      ? "opacity-100 pointer-events-auto"
-                      : "opacity-0 pointer-events-none"
-                  }`}
-                >
-                  {/* Google <model-viewer> Web Component (Full resolution unclipped 3D canvas) */}
-                  <div className="w-full h-full relative flex items-center justify-center overflow-visible">
-                    {/* @ts-ignore */}
-                    <model-viewer
-                      src={
-                        partGlbMap[
-                          chickenParts[manuallySelectedPartIdx].name
-                        ] || "/Product/details/glb/drumsticks.glb"
-                      }
-                      alt={`360 3D Model of ${chickenParts[manuallySelectedPartIdx].name}`}
-                      auto-rotate
-                      camera-controls
-                      bounds="tight"
-                      min-field-of-view="10deg"
-                      max-field-of-view="90deg"
-                      shadow-intensity="1.5"
-                      shadow-softness="0.8"
-                      exposure="1.25"
-                      camera-orbit="0deg 75deg 55%"
-                      rotation-per-second="30deg"
-                      interaction-prompt="none"
-                      loading="eager"
-                      reveal="auto"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        backgroundColor: "transparent",
-                        filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.35))",
-                        overflow: "visible",
-                      }}
-                    />
+                {/* CLEAN INTERACTIVE 360° 3D GLB MODEL VIEWER (Rendered only when 3D tab is active) */}
+                {activeViewTab === "3d" && (
+                  <div
+                    onWheel={(e) => {
+                      e.stopPropagation();
+                    }}
+                    className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-auto z-40 overflow-visible"
+                  >
+                    <div className="w-full h-full relative flex items-center justify-center overflow-visible">
+                      {/* @ts-ignore */}
+                      <model-viewer
+                        src={
+                          partGlbMap[
+                            chickenParts[manuallySelectedPartIdx].name
+                          ] || "/Product/details/glb/drumsticks.glb"
+                        }
+                        alt={`360 3D Model of ${chickenParts[manuallySelectedPartIdx].name}`}
+                        auto-rotate
+                        camera-controls
+                        bounds="tight"
+                        field-of-view="35deg"
+                        min-field-of-view="10deg"
+                        max-field-of-view="75deg"
+                        shadow-intensity="1.5"
+                        shadow-softness="0.8"
+                        exposure="1.25"
+                        camera-orbit="0deg 75deg 105%"
+                        rotation-per-second="30deg"
+                        interaction-prompt="none"
+                        loading="eager"
+                        reveal="auto"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          backgroundColor: "transparent",
+                          filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.35))",
+                          overflow: "visible",
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* 2D Image View (Raw or Packed) */}
                 {activeViewTab !== "3d" && (
@@ -4439,8 +4409,8 @@ export default function KnowYourMeatPage() {
                       }
                       alt={chickenParts[manuallySelectedPartIdx].name}
                       className={`w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-300 ${activeViewTab === "raw"
-                        ? "scale-[7] sm:scale-[2.8] md:scale-100"
-                        : "scale-[1.3] md:scale-100"
+                        ? "scale-100"
+                        : "scale-100"
                         }`}
                     />
                   </div>
