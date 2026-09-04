@@ -118,7 +118,7 @@ const directors: TeamMember[] = [
 
 export default function TeamPage() {
   return (
-    <div className="w-full bg-[#FCFAF7] text-[#1E293B] overflow-x-hidden font-manrope">
+    <div className="w-full bg-[#FCFAF7] text-[#1E293B] overflow-x-clip font-manrope">
 
       {/* Hero Section */}
       <section className="relative w-full pt-[85px] sm:pt-[95px] lg:pt-[95px] bg-white flex items-center overflow-hidden">
@@ -365,7 +365,7 @@ export default function TeamPage() {
       </section>
 
       {/* MEET OUR TEAM BANNER SECTION */}
-      <section className="relative z-10 py-12 sm:py-16 bg-[#FCFAF7] overflow-hidden">
+      <section className="relative z-10 pt-12 pb-24 sm:pt-16 sm:pb-32 lg:pb-36 bg-[#FCFAF7] overflow-hidden">
         {/* Background Side Doodles around the banner as seen in Reference Image 3 */}
         {/* Left Side Handshake Doodle */}
         <div className="absolute top-[8%] left-[0.5%] lg:left-[2%] xl:left-[3%] w-[120px] sm:w-[170px] lg:w-[220px] xl:w-[260px] aspect-square pointer-events-none select-none z-0 opacity-80">
@@ -393,93 +393,101 @@ export default function TeamPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="w-full bg-[#FAFDF7] rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] shadow-[0_15px_40px_rgba(0,0,0,0.08)] border border-gray-200/90 overflow-hidden relative min-h-[300px] sm:min-h-[340px] md:min-h-[380px] lg:min-h-[400px] xl:min-h-[430px] flex flex-col md:flex-row items-stretch"
+            className="w-full bg-[#FAFDF7] rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-slate-200/80 overflow-hidden relative min-h-[340px] sm:min-h-[380px] md:min-h-[410px] lg:min-h-[430px] flex flex-col md:flex-row items-stretch"
           >
-            {/* Soft Subtle Texture Background */}
-            <div className="absolute inset-0 z-0 bg-[#F6FAF3]">
+            {/* Background Texture & Soft Gradient Overlay */}
+            <div className="absolute inset-0 z-0 bg-[#FAFDF7]">
               <Image
                 src="/Home/section-bg.webp"
                 alt="Background Pattern"
                 fill
-                className="object-cover object-center opacity-20"
+                className="object-cover object-center opacity-15"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#F8FAF5] via-[#F4F9F1]/80 to-transparent z-0 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#FAFDF7] via-[#FAFDF7]/90 to-transparent z-0 pointer-events-none" />
             </div>
 
-            {/* Green Bottom Right Curved Background */}
-            <div className="absolute bottom-0 right-0 w-[70%] sm:w-[62%] md:w-[56%] lg:w-[54%] h-[70%] sm:h-[75%] md:h-[85%] lg:h-[90%] z-0 pointer-events-none">
+            {/* Right Side Green Curved Graphic (right-side-bg.svg) */}
+            <div className="absolute top-0 right-0 w-[60%] sm:w-[55%] md:w-[50%] lg:w-[48%] h-full z-0 pointer-events-none">
               <Image
                 src="/MeetOurTeam/banner/right-side-bg.svg"
-                alt="Green Curve Background"
+                alt="Green Background Graphic"
                 fill
-                className="object-cover object-right-bottom"
+                className="object-cover object-right"
               />
             </div>
 
-            {/* Left Side Content Column */}
-            <div className="relative z-20 px-6 pt-6 pb-6 sm:px-8 md:px-10 lg:pl-12 xl:pl-14 lg:py-8 flex flex-col justify-center w-full md:w-[48%] lg:w-[46%] xl:w-[44%] space-y-3 sm:space-y-4">
+            {/* Left Side Column: Title, Stamps, Subtext & Dashed Arrow */}
+            <div className="relative z-20 px-6 py-6 sm:px-8 md:px-10 lg:pl-12 lg:py-8 flex flex-col justify-between w-full md:w-[54%] lg:w-[52%] xl:w-[50%]">
               
-              {/* Title & Food Doodle Section */}
-              <div className="relative pl-3 sm:pl-4 border-l-2 border-dashed border-[#8CC63F]">
-                <div className="flex items-start justify-between relative">
-                  <div>
-                    <h2 className="text-[34px] min-[400px]:text-[40px] sm:text-[50px] lg:text-[54px] xl:text-[62px] font-black font-barlow-condensed leading-[0.95] tracking-tight uppercase">
-                      <span className="text-[#8CC63F] block">MEET</span>
+              <div className="space-y-4">
+                {/* Upper Row: Title Block on Left + Stamp & Food Sketches on Right */}
+                <div className="flex flex-col min-[520px]:flex-row items-start justify-between gap-4 relative">
+                  
+                  {/* Left: MEET OUR TEAM title with Dashed Border Corner/Side Frame */}
+                  <div className="relative pt-2 pl-3 sm:pl-4 border-l-2 border-dashed border-[#8DC541]">
+                    {/* Top Dashed Line extending over title */}
+                    <div className="absolute top-0 left-0 w-12 sm:w-16 h-0 border-t-2 border-dashed border-[#8DC541]" />
+                    
+                    <h2 className="text-[34px] min-[400px]:text-[42px] sm:text-[50px] lg:text-[56px] xl:text-[62px] font-black font-barlow-condensed leading-[0.92] tracking-tight uppercase">
+                      <span className="text-[#8DC541] block">MEET</span>
                       <span className="text-[#153520] block">OUR TEAM</span>
                     </h2>
                   </div>
 
-                  {/* Food Meat Sketches Doodle - Top Right of Title */}
-                  <div className="relative w-16 sm:w-20 lg:w-24 xl:w-28 aspect-square ml-2 shrink-0 -mt-1 sm:-mt-2">
-                    <Image
-                      src="/MeetOurTeam/banner/food-image.webp"
-                      alt="Food Meat Sketches"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
+                  {/* Right: Food Meat Sketches + Good Food Happens Stamp Overlay */}
+                  <div className="flex items-center gap-2 sm:gap-3 shrink-0 pt-1">
+                    {/* Food Meat Sketches Doodle */}
+                    <div className="relative w-16 sm:w-20 lg:w-24 aspect-square">
+                      <Image
+                        src="/MeetOurTeam/banner/food-image.webp"
+                        alt="Food Meat Sketches"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
 
-                  {/* Good Food Happens Stamp placed next to title block as in Reference Image 2 & 3 */}
-                  <div className="hidden min-[480px]:block absolute left-[45%] sm:left-[48%] lg:left-[50%] top-[-10px] w-28 sm:w-36 lg:w-40 xl:w-44 aspect-[180/70]">
-                    <Image
-                      src="/MeetOurTeam/banner/good-food-happens-text.webp"
-                      alt="Good Food Happens"
-                      fill
-                      className="object-contain"
-                    />
+                    {/* Good Food Happens Stamp */}
+                    <div className="relative w-28 sm:w-36 lg:w-40 xl:w-44 aspect-[180/70]">
+                      <Image
+                        src="/MeetOurTeam/banner/good-food-happens-text.webp"
+                        alt="Good Food Happens"
+                        fill
+                        className="object-contain object-left"
+                      />
+                    </div>
                   </div>
+                </div>
+
+                {/* Subheading & Paragraph Description */}
+                <div className="space-y-1 pt-1 max-w-[420px]">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold font-manrope text-[#153520] tracking-tight">
+                    The People Behind Freshness
+                  </h3>
+                  <p className="text-xs sm:text-sm md:text-sm lg:text-base text-slate-600 font-medium font-manrope leading-relaxed">
+                    Passionate professionals working together to bring quality and care to your table.
+                  </p>
                 </div>
               </div>
 
-              {/* Subheading & Paragraph Description */}
-              <div className="space-y-1 sm:space-y-1.5 pt-1">
-                <h3 className="text-base sm:text-lg md:text-xl font-bold font-manrope text-[#153520] tracking-tight">
-                  The People Behind Freshness
-                </h3>
-                <p className="text-xs sm:text-sm md:text-sm lg:text-base text-slate-600 font-medium font-manrope leading-relaxed max-w-[420px]">
-                  Passionate professional working together to bring quality and care to your table.
-                </p>
-              </div>
-
-              {/* Vector Loop Arrow (Dashed Arrow) */}
-              <div className="relative pt-1 sm:pt-2 pl-12 sm:pl-16 md:pl-20">
-                <div className="relative w-16 sm:w-20 lg:w-24 aspect-[90/50]">
+              {/* Vector Loop Arrow (Dashed Arrow below text pointing toward team) */}
+              <div className="relative pt-3 sm:pt-4 pl-16 sm:pl-24 md:pl-28">
+                <div className="relative w-24 sm:w-28 lg:w-32 aspect-[172/90]">
                   <Image
                     src="/MeetOurTeam/banner/leflt-side-vector-design.svg"
-                    alt="Dashed Arrow"
+                    alt="Dashed Arrow Vector"
                     fill
-                    className="object-contain"
+                    className="object-contain object-left"
                   />
                 </div>
               </div>
 
             </div>
 
-            {/* Right Side: Team Members & Badge Overlay */}
-            <div className="relative z-20 w-full md:w-[52%] lg:w-[54%] xl:w-[56%] flex items-end justify-end min-h-[260px] sm:min-h-[300px] md:min-h-full pr-2 sm:pr-6 md:pr-8 lg:pr-10 pb-0">
+            {/* Right Side Column: Team Members Image & Floating Green Badge Overlay */}
+            <div className="relative z-20 w-full md:w-[50%] lg:w-[52%] xl:w-[54%] flex items-end justify-end min-h-[280px] sm:min-h-[320px] md:min-h-full pr-2 sm:pr-4 md:pr-6 lg:pr-8 pb-0">
               
               {/* Team Members Image */}
-              <div className="relative w-full max-w-[720px] h-[260px] sm:h-[310px] md:h-[340px] lg:h-[375px] xl:h-[415px]">
+              <div className="relative w-full max-w-[700px] h-[270px] sm:h-[320px] md:h-[360px] lg:h-[390px] xl:h-[425px]">
                 <Image
                   src="/MeetOurTeam/banner/persons-image.webp"
                   alt="MEATIN Team Members"
@@ -489,15 +497,15 @@ export default function TeamPage() {
                 />
               </div>
 
-              {/* Bottom Right Floating Badge (Matching 2nd and 3rd reference images) */}
+              {/* Floating Green Badge Overlay on Bottom Right Curve (Matching SVG badge positioning) */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="absolute bottom-3 right-3 sm:bottom-5 sm:right-6 z-30 bg-[#8CC63F] text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl shadow-lg border border-white/30 flex items-center gap-2.5 sm:gap-3"
+                className="absolute bottom-4 right-4 sm:bottom-6 sm:right-8 z-30 bg-[#8DC541] text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl shadow-xl border border-white/40 flex items-center gap-2.5 sm:gap-3"
               >
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-1.5 border-white/60 flex items-center justify-center shrink-0 text-white">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/60 flex items-center justify-center shrink-0 text-white bg-white/10">
                   <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
                     <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" />
                     <path d="M12 8l1.5 3 3.5.5-2.5 2.5.5 3.5-3-1.5-3 1.5.5-3.5-2.5-2.5 3.5-.5z" fill="currentColor" stroke="none" />
@@ -516,17 +524,14 @@ export default function TeamPage() {
             </div>
           </motion.div>
         </div>
-      </section>
 
-      {/* BOTTOM GREEN BAR WITH CENTERED OVERLAY DOODLE (Reference Image #3 & #1) */}
-      <section className="relative w-full bg-[#60860E] h-[48px] sm:h-[56px] lg:h-[64px]">
-        {/* Centered Doodle popping up over the green bar (only top half showing) */}
-        <div className="absolute left-1/2 -translate-x-1/2 -top-[65px] sm:-top-[95px] md:-top-[115px] lg:-top-[135px] w-[260px] sm:w-[420px] md:w-[500px] lg:w-[620px] h-[130px] sm:h-[190px] md:h-[230px] lg:h-[270px] pointer-events-none select-none z-10 overflow-hidden">
+        {/* Position Absolute Centered Bottom Doodle (without green background) */}
+        <div className="absolute left-1/2 -translate-x-1/2 -bottom-[11%] w-[280px] sm:w-[440px] md:w-[540px] lg:w-[660px] h-[100px] sm:h-[150px] md:h-[180px] lg:h-[220px] pointer-events-none select-none z-20">
           <Image
             src="/MeetOurTeam/doodles-bg/bottom-doodle.webp"
             alt="Bottom Doodle"
             fill
-            className="object-contain object-top opacity-70"
+            className="object-contain object-bottom opacity-75"
           />
         </div>
       </section>
