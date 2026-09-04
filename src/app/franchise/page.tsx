@@ -329,13 +329,13 @@ export default function FranchisePage() {
           </div>
 
           {/* Hero Store Interactive Canvas (Prominent & larger on mobile, proportional scaling on desktop) */}
-          <div className="relative w-full max-w-[1360px] h-auto lg:h-[520px] mx-auto flex items-center justify-center my-2 lg:my-auto origin-center lg:-mt-1 [@media(max-height:750px)]:lg:-mt-2 [@media(max-height:620px)]:lg:-mt-10 [@media(max-height:600px)]:lg:-mt-24 [@media(max-height:600px)]:lg:-translate-y-9 [@media(min-height:800px)]:lg:mt-4 [@media(min-height:890px)]:lg:mt-6 scale-100 lg:scale-[0.58] [@media(max-height:600px)]:lg:scale-[0.54] [@media(min-height:620px)]:lg:scale-[0.67] [@media(min-height:710px)]:lg:scale-[0.75] [@media(min-height:800px)]:lg:scale-[0.85] [@media(min-height:890px)]:lg:scale-100 transition-transform duration-300 shrink-0">
-            {/* Center 3D Store Graphic (Prominent w-[88%] on mobile screens) */}
+          <div className="relative w-full max-w-[1360px] h-auto lg:h-[520px] mx-auto flex items-center justify-center my-2 lg:my-auto origin-center lg:-mt-1 [@media(max-height:750px)]:lg:-mt-2 [@media(max-height:620px)]:lg:-mt-10 [@media(max-height:600px)]:lg:-mt-24 [@media(max-height:600px)]:lg:-translate-y-9 [@media(min-height:800px)]:lg:mt-4 [@media(min-height:890px)]:lg:mt-6 scale-100 lg:scale-[0.62] [@media(max-height:600px)]:lg:scale-[0.56] [@media(min-height:620px)]:lg:scale-[0.70] [@media(min-height:710px)]:lg:scale-[0.78] [@media(min-height:800px)]:lg:scale-[0.88] [@media(min-height:890px)]:lg:scale-[1.02] transition-transform duration-300 shrink-0">
+            {/* Center 3D Store Graphic */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative w-[88%] sm:w-[78%] md:w-[65%] lg:w-[720px] xl:w-[780px] max-w-[460px] lg:max-w-none h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500 my-1 lg:my-0"
+              className="relative w-[88%] sm:w-[80%] md:w-[68%] lg:w-[750px] xl:w-[820px] max-w-[480px] lg:max-w-none h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500 my-1 lg:my-0"
             >
               <Image
                 src="/Franchies/imagesec1.webp"
@@ -377,7 +377,7 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <path
-                  d="M 155 25 L 155 25 Q 180 25 180 40 L 180 180 Q 180 190 210 190 L 250 190"
+                  d="M 155 55 L 155 55 Q 180 55 180 70 L 180 180 Q 180 190 210 190 L 250 190"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
@@ -569,7 +569,7 @@ export default function FranchisePage() {
             </svg>
 
             {/* LEFT 3 FEATURE BADGES (01, 02, 03) */}
-            <div className="absolute left-[-120px] xl:left-[-100px] 2xl:left-[-70px] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[320px]">
+            <div className="absolute left-[-160px] xl:left-[-130px] 2xl:left-[-90px] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[320px]">
               {/* Feature 01: HYGIENIC PROCESSING */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -662,8 +662,8 @@ export default function FranchisePage() {
               </motion.div>
             </div>
 
-            {/* RIGHT 3 FEATURE BADGES (04, 05, 06) — Shifted 5vw to the right so dotted lines connect cleanly to icon circle without touching text */}
-            <div className="absolute right-[-135px] xl:right-[-110px] 2xl:right-[-75px] translate-x-[5vw] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[320px]">
+            {/* RIGHT 3 FEATURE BADGES (04, 05, 06) */}
+            <div className="absolute right-[-215px] xl:right-[-185px] 2xl:right-[-145px] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[320px]">
               {/* Feature 04: NO ARTIFICIAL ADDITIVES */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
@@ -1374,7 +1374,7 @@ export default function FranchisePage() {
             delay: 0.3,
             ease: "easeOut",
           }}
-          className="absolute -bottom-3 sm:-bottom-5 lg:-bottom-7 xl:-bottom-9 2xl:-bottom-10 left-1 sm:left-4 lg:left-6 xl:left-10 z-10 pointer-events-none w-[160px] sm:w-[230px] md:w-[280px] lg:w-[335px] xl:w-[400px] 2xl:w-[450px]"
+          className="absolute bottom-1 sm:bottom-2 md:bottom-3 lg:bottom-4 xl:bottom-5 2xl:bottom-6 left-1 sm:left-4 lg:left-6 xl:left-10 z-20 pointer-events-none w-[160px] sm:w-[230px] md:w-[280px] lg:w-[335px] xl:w-[400px] 2xl:w-[450px]"
         >
           <Image
             src="/Franchies/truck-image.webp"
@@ -1396,7 +1396,7 @@ export default function FranchisePage() {
             delay: 0.35,
             ease: [0.34, 1.56, 0.64, 1],
           }}
-          className="absolute bottom-0 right-1 sm:right-2 lg:right-4 xl:right-8 z-10 pointer-events-none w-[100px] sm:w-[130px] md:w-[155px] lg:w-[175px] xl:w-[220px]"
+          className="absolute bottom-1 sm:bottom-2 md:bottom-3 lg:bottom-4 xl:bottom-5 right-1 sm:right-2 lg:right-4 xl:right-8 z-20 pointer-events-none w-[100px] sm:w-[130px] md:w-[155px] lg:w-[175px] xl:w-[220px]"
         >
           <Image
             src="/Franchies/chicken.webp"
