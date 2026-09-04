@@ -42,28 +42,44 @@ export default function KnowYourMeatPage() {
     return () => clearInterval(categoryTimer);
   }, []);
 
-  // GLB Model paths for 360 viewer
+  // GLB Model paths for 360 viewer (using updated GLB models from /Product/details/glb/)
   const partGlbMap: Record<string, string> = {
-    Wing: "/Product/details/partsGLB/wings.glb",
-    wing: "/Product/details/partsGLB/wings.glb",
-    Heart: "/Product/details/partsGLB/heart.glb",
-    heart: "/Product/details/partsGLB/heart.glb",
-    Drumette: "/Product/details/partsGLB/drumtee.glb",
-    drumette: "/Product/details/partsGLB/drumtee.glb",
-    Thigh: "/Product/details/partsGLB/thigh.glb",
-    thigh: "/Product/details/partsGLB/thigh.glb",
-    Neck: "/Product/details/partsGLB/neck.glb",
-    neck: "/Product/details/partsGLB/neck.glb",
-    Breast: "/Product/details/partsGLB/Breast.glb",
-    breast: "/Product/details/partsGLB/Breast.glb",
-    Back: "/Product/details/partsGLB/back.glb",
-    back: "/Product/details/partsGLB/back.glb",
-    Liver: "/Product/details/partsGLB/liver.glb",
-    liver: "/Product/details/partsGLB/liver.glb",
-    Drumstick: "/Product/details/partsGLB/Drumstick.glb",
-    drumstick: "/Product/details/partsGLB/Drumstick.glb",
-    Gizzard: "/Product/details/partsGLB/gizzard.glb",
-    gizzard: "/Product/details/partsGLB/gizzard.glb",
+    Wing: "/Product/details/glb/wing.glb",
+    wing: "/Product/details/glb/wing.glb",
+    Wings: "/Product/details/glb/wing.glb",
+    wings: "/Product/details/glb/wing.glb",
+    Heart: "/Product/details/glb/heart.glb",
+    heart: "/Product/details/glb/heart.glb",
+    Drumette: "/Product/details/glb/drumsticks.glb",
+    drumette: "/Product/details/glb/drumsticks.glb",
+    Thigh: "/Product/details/glb/thighs.glb",
+    thigh: "/Product/details/glb/thighs.glb",
+    Thighs: "/Product/details/glb/thighs.glb",
+    thighs: "/Product/details/glb/thighs.glb",
+    Neck: "/Product/details/glb/neck.glb",
+    neck: "/Product/details/glb/neck.glb",
+    Breast: "/Product/details/glb/breast.glb",
+    breast: "/Product/details/glb/breast.glb",
+    Back: "/Product/details/glb/chest.glb",
+    back: "/Product/details/glb/chest.glb",
+    Chest: "/Product/details/glb/chest.glb",
+    chest: "/Product/details/glb/chest.glb",
+    Liver: "/Product/details/glb/liver.glb",
+    liver: "/Product/details/glb/liver.glb",
+    Drumstick: "/Product/details/glb/drumsticks.glb",
+    drumstick: "/Product/details/glb/drumsticks.glb",
+    Drumsticks: "/Product/details/glb/drumsticks.glb",
+    drumsticks: "/Product/details/glb/drumsticks.glb",
+    Gizzard: "/Product/details/glb/gizzard.glb",
+    gizzard: "/Product/details/glb/gizzard.glb",
+    Feet: "/Product/details/glb/feet.glb",
+    feet: "/Product/details/glb/feet.glb",
+    Head: "/Product/details/glb/head.glb",
+    head: "/Product/details/glb/head.glb",
+    Tenderloin: "/Product/details/glb/tenderloins.glb",
+    tenderloin: "/Product/details/glb/tenderloins.glb",
+    Tenderloins: "/Product/details/glb/tenderloins.glb",
+    tenderloins: "/Product/details/glb/tenderloins.glb",
   };
 
   useEffect(() => {
@@ -110,6 +126,32 @@ export default function KnowYourMeatPage() {
     setIsLandedInSection2(true);
     setHasSelectedAnyPart(true);
   };
+
+  // Background preloader: Immediately fetch 3D GLB models whenever a part is chosen or page mounts
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // 1. Immediately pre-fetch active selected part's GLB model via fetch and dynamic <link rel="preload">
+    const activePartName = chickenParts[manuallySelectedPartIdx]?.name;
+    if (activePartName) {
+      const activeGlbUrl = partGlbMap[activePartName] || "/Product/details/glb/drumsticks.glb";
+      fetch(activeGlbUrl, { mode: "cors", cache: "force-cache" }).catch(() => {});
+
+      if (!document.querySelector(`link[href="${activeGlbUrl}"]`)) {
+        const link = document.createElement("link");
+        link.rel = "preload";
+        link.as = "fetch";
+        link.crossOrigin = "anonymous";
+        link.href = activeGlbUrl;
+        document.head.appendChild(link);
+      }
+    }
+
+    // 2. Prefetch all other GLB models in background for zero-latency 3D view switching
+    Object.values(partGlbMap).forEach((glbUrl) => {
+      fetch(glbUrl, { mode: "cors", cache: "force-cache" }).catch(() => {});
+    });
+  }, [manuallySelectedPartIdx]);
 
   useEffect(() => {
     if (activeStage !== "inside") {
@@ -4333,44 +4375,56 @@ export default function KnowYourMeatPage() {
             className="w-full md:w-1/2 relative h-auto md:h-full flex flex-col items-center justify-around py-4 md:py-8 px-6 select-none"
           >
             {/* Center Showcase Box */}
-            <div className="relative w-[430px] h-[430px] sm:w-[480px] sm:h-[480px] md:w-[420px] md:h-[420px] max-h-[65vh] flex items-center justify-center md:-ml-20 detail-showcase-box">
+            <div className="relative w-[440px] h-[440px] sm:w-[520px] sm:h-[520px] md:w-[500px] md:h-[500px] max-h-[75vh] flex items-center justify-center md:-ml-12 overflow-visible">
               {/* Showcase Box Content: Interactive 3D Model Viewer OR 2D Product Image */}
               <div
                 ref={centerCircleRef}
-                className="relative w-full h-full flex items-center justify-center z-30"
+                className="relative w-full h-full flex items-center justify-center z-30 overflow-visible"
               >
-                {activeViewTab === "3d" ? (
-                  /* CLEAN INTERACTIVE 360° 3D GLB MODEL VIEWER */
-                  <div className="relative w-full h-full flex items-center justify-center pointer-events-auto z-40">
-                    {/* Google <model-viewer> Web Component (Scaled up on mobile to match image size) */}
-                    <div className="w-full h-full relative flex items-center justify-center scale-[2.4] sm:scale-[1.8] md:scale-100 transition-transform duration-300">
-                      {/* @ts-ignore */}
-                      <model-viewer
-                        src={
-                          partGlbMap[
+                {/* CLEAN INTERACTIVE 360° 3D GLB MODEL VIEWER (Always mounted for instant display) */}
+                <div
+                  className={`absolute inset-0 w-full h-full flex items-center justify-center pointer-events-auto z-40 overflow-visible transition-opacity duration-200 ${
+                    activeViewTab === "3d"
+                      ? "opacity-100 pointer-events-auto"
+                      : "opacity-0 pointer-events-none"
+                  }`}
+                >
+                  {/* Google <model-viewer> Web Component (Full resolution unclipped 3D canvas) */}
+                  <div className="w-full h-full relative flex items-center justify-center overflow-visible">
+                    {/* @ts-ignore */}
+                    <model-viewer
+                      src={
+                        partGlbMap[
                           chickenParts[manuallySelectedPartIdx].name
-                          ] || "/Product/details/partsGLB/Drumstick.glb"
-                        }
-                        alt={`360 3D Model of ${chickenParts[manuallySelectedPartIdx].name}`}
-                        auto-rotate
-                        camera-controls
-                        shadow-intensity="1.5"
-                        shadow-softness="0.8"
-                        exposure="1.15"
-                        camera-orbit="0deg 75deg 80%"
-                        rotation-per-second="30deg"
-                        interaction-prompt="none"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          backgroundColor: "transparent",
-                          filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.35))",
-                        }}
-                      />
-                    </div>
+                        ] || "/Product/details/glb/drumsticks.glb"
+                      }
+                      alt={`360 3D Model of ${chickenParts[manuallySelectedPartIdx].name}`}
+                      auto-rotate
+                      camera-controls
+                      bounds="tight"
+                      min-field-of-view="10deg"
+                      max-field-of-view="90deg"
+                      shadow-intensity="1.5"
+                      shadow-softness="0.8"
+                      exposure="1.25"
+                      camera-orbit="0deg 75deg 55%"
+                      rotation-per-second="30deg"
+                      interaction-prompt="none"
+                      loading="eager"
+                      reveal="auto"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "transparent",
+                        filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.35))",
+                        overflow: "visible",
+                      }}
+                    />
                   </div>
-                ) : (
-                  /* 2D Image View (Raw or Packed) */
+                </div>
+
+                {/* 2D Image View (Raw or Packed) */}
+                {activeViewTab !== "3d" && (
                   <div
                     className={`relative w-full h-full flex items-center justify-center transition-all duration-300 pointer-events-none ${isLandedInSection2
                       ? "opacity-100 scale-100"
