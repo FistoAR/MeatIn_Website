@@ -31,6 +31,14 @@ const ledByMembers: TeamMember[] = [
     role: "Managing Director",
     image: "/MeetOurTeam/led-by-persons/Mr. ALI VARIKUNNATH.webp",
   },
+];
+
+const directors: TeamMember[] = [
+  {
+    name: "Mohanan Pilankuvittil",
+    role: "Project Consultant",
+    image: "/MeetOurTeam/led-by-persons/Mohanan Pilankuvittil.webp",
+  },
   {
     name: "Anfas K Mohamed",
     role: "Director & CMO",
@@ -41,14 +49,6 @@ const ledByMembers: TeamMember[] = [
     role: "Director & Plant Manager",
     image: "/MeetOurTeam/led-by-persons/Anas Kamaru.webp",
   },
-  {
-    name: "Mohanan Pilankuvittil",
-    role: "Project Consultant",
-    image: "/MeetOurTeam/led-by-persons/Mohanan Pilankuvittil.webp",
-  }
-];
-
-const directors: TeamMember[] = [
   // Row 1 (5 cards)
   {
     name: "Mohamed Asharaf K",
@@ -118,61 +118,56 @@ const directors: TeamMember[] = [
 
 export default function TeamPage() {
   return (
-    <div className="w-full bg-[#FCFAF7] text-[#1E293B] overflow-x-hidden font-manrope">
+    <div className="w-full bg-[#FCFAF7] text-[#1E293B] overflow-x-clip font-manrope">
 
       {/* Hero Section */}
-      <section className="relative w-full bg-white border-b border-slate-100 pt-[85px] sm:pt-[95px] lg:pt-[95px] overflow-hidden flex flex-col justify-center">
-        <div className="w-full max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-12 items-stretch">
+      <section className="relative w-full pt-[85px] sm:pt-[95px] lg:pt-[95px] bg-white flex items-center overflow-hidden">
+        {/* Full Edge-to-Edge Hero Image Container */}
+        <div className="relative w-full h-[280px] sm:h-[340px] lg:h-[390px] flex items-center overflow-hidden">
+          {/* Edge to Edge Image */}
+          <div className="absolute inset-0 w-full h-full z-0">
+            <Image
+              src="/MeetOurTeam/hero/meet-our-team-hero-image.webp"
+              alt="MEATIN Boardroom"
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="100vw"
+            />
+          </div>
 
-          {/* Hero Left Content */}
-          <div className="lg:col-span-5 px-6 sm:px-12 lg:px-[4vw] py-6 lg:py-14 flex flex-col justify-center items-center text-center lg:items-start lg:text-left z-10">
+          {/* Hero Content Overlay with Glassy Frosted Card */}
+          <div className="relative z-10 w-full max-w-[1400px] lg:max-w-[88vw] mx-auto px-4 sm:px-8 lg:px-12">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="w-full flex flex-col items-center lg:items-start"
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="max-w-[340px] sm:max-w-[460px] lg:max-w-[500px] bg-white/70 backdrop-blur-md border border-white/70 rounded-3xl p-5 sm:p-8 shadow-xl"
             >
-              <h2 className="text-[#153520] font-black font-manrope tracking-widest text-xs sm:text-sm uppercase mb-2">
+              <h2 className="text-[#1E3B2B] font-extrabold font-manrope tracking-widest text-[10px] sm:text-xs uppercase mb-1.5">
                 OUR PEOPLE. OUR STRENGTH.
               </h2>
 
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5vw] xl:text-[4.8vw] font-extrabold font-barlow tracking-relaxed leading-none uppercase mb-4 lg:whitespace-nowrap text-center lg:text-left">
-                <span className="text-[#1F5A3C] mr-3">MEET</span>
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-barlow tracking-normal leading-none uppercase mb-3 text-left">
+                <span className="text-[#127431] mr-2">MEET</span>
                 <span className="text-[#D62828]">THE TEAM</span>
               </h1>
 
-              <p className="text-black font-medium text-sm sm:text-base lg:text-[1vw] xl:text-lg leading-relaxed max-w-lg mb-4">
+              <p className="text-slate-800 font-medium text-xs sm:text-sm lg:text-base leading-relaxed mb-4 max-w-md">
                 The leadership team driving MEATIN's vision of delivering farm-fresh, hygienically processed meat with uncompromising quality and trust.
               </p>
 
-              {/* Custom Leaf Underline Asset */}
-              <div className="relative w-full max-w-[350px] sm:max-w-[450px] h-6 flex justify-center lg:justify-start">
-                <div className="relative w-full h-full">
-                  <Image
-                    src="/MeetOurTeam/hero/hero-leaf-underline.svg"
-                    alt="Underline"
-                    fill
-                    className="object-contain object-center lg:object-left"
-                  />
-                </div>
+              {/* Original Hero Leaf Underline SVG Asset */}
+              <div className="relative w-full max-w-[280px] sm:max-w-[360px] h-6 mt-1">
+                <Image
+                  src="/MeetOurTeam/hero/hero-leaf-underline.svg"
+                  alt="Leaf Underline"
+                  fill
+                  className="object-contain object-left"
+                />
               </div>
             </motion.div>
           </div>
-
-          {/* Hero Right Image with Fade Effect */}
-          <div className="lg:col-span-7 relative w-full h-[250px] sm:h-[350px] lg:h-auto lg:min-h-[38vh] overflow-hidden">
-            <Image
-              src="/MeetOurTeam/hero/meet-our-team-header-image.webp"
-              alt="Boardroom"
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 60vw"
-            />
-            {/* Gradient Mask on the Left (for desktop overlay blend) */}
-            <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-white via-white/80 to-transparent hidden lg:block" />
-          </div>
-
         </div>
       </section>
 
@@ -369,8 +364,177 @@ export default function TeamPage() {
         </div>
       </section>
 
-      {/* Reusable Careers Banner */}
-      <CareersBanner />
+      {/* MEET OUR TEAM BANNER SECTION */}
+      <section className="relative z-10 pt-12 pb-24 sm:pt-16 sm:pb-32 lg:pb-36 bg-[#FCFAF7] overflow-hidden">
+        {/* Background Side Doodles around the banner as seen in Reference Image 3 */}
+        {/* Left Side Handshake Doodle */}
+        <div className="absolute top-[8%] left-[0.5%] lg:left-[2%] xl:left-[3%] w-[120px] sm:w-[170px] lg:w-[220px] xl:w-[260px] aspect-square pointer-events-none select-none z-0 opacity-80">
+          <Image
+            src="/MeetOurTeam/doodles-bg/handshake-left-side.webp"
+            alt="Handshake doodle left"
+            fill
+            className="object-contain"
+          />
+        </div>
+
+        {/* Right Side Growth Arrow Doodle */}
+        <div className="absolute top-[5%] right-[0.5%] lg:right-[2%] xl:right-[3%] w-[110px] sm:w-[160px] lg:w-[210px] xl:w-[250px] aspect-square pointer-events-none select-none z-0 opacity-80">
+          <Image
+            src="/MeetOurTeam/doodles-bg/growth-image-right-side.webp"
+            alt="Growth doodle right"
+            fill
+            className="object-contain"
+          />
+        </div>
+
+        <div className="relative z-10 w-full max-w-[1280px] xl:max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-50px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="w-full bg-[#FAFDF7] rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-slate-200/80 overflow-hidden relative min-h-[340px] sm:min-h-[380px] md:min-h-[410px] lg:min-h-[430px] flex flex-col md:flex-row items-stretch"
+          >
+            {/* Background Texture & Soft Gradient Overlay */}
+            <div className="absolute inset-0 z-0 bg-[#FAFDF7]">
+              <Image
+                src="/Home/section-bg.webp"
+                alt="Background Pattern"
+                fill
+                className="object-cover object-center opacity-15"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#FAFDF7] via-[#FAFDF7]/90 to-transparent z-0 pointer-events-none" />
+            </div>
+
+            {/* Right Side Green Curved Graphic (right-side-bg.svg) */}
+            <div className="absolute top-0 right-0 w-[60%] sm:w-[55%] md:w-[50%] lg:w-[48%] h-full z-0 pointer-events-none">
+              <Image
+                src="/MeetOurTeam/banner/right-side-bg.svg"
+                alt="Green Background Graphic"
+                fill
+                className="object-cover object-right"
+              />
+            </div>
+
+            {/* Left Side Column: Title, Stamps, Subtext & Dashed Arrow */}
+            <div className="relative z-20 px-6 py-6 sm:px-8 md:px-10 lg:pl-12 lg:py-8 flex flex-col justify-between w-full md:w-[54%] lg:w-[52%] xl:w-[50%]">
+              
+              <div className="space-y-4">
+                {/* Upper Row: Title Block on Left + Stamp & Food Sketches on Right */}
+                <div className="flex flex-col min-[520px]:flex-row items-start justify-between gap-4 relative">
+                  
+                  {/* Left: MEET OUR TEAM title with Dashed Border Corner/Side Frame */}
+                  <div className="relative pt-2 pl-3 sm:pl-4 border-l-2 border-dashed border-[#8DC541]">
+                    {/* Top Dashed Line extending over title */}
+                    <div className="absolute top-0 left-0 w-12 sm:w-16 h-0 border-t-2 border-dashed border-[#8DC541]" />
+                    
+                    <h2 className="text-[34px] min-[400px]:text-[42px] sm:text-[50px] lg:text-[56px] xl:text-[62px] font-black font-barlow-condensed leading-[0.92] tracking-tight uppercase">
+                      <span className="text-[#8DC541] block">MEET</span>
+                      <span className="text-[#153520] block">OUR TEAM</span>
+                    </h2>
+                  </div>
+
+                  {/* Right: Food Meat Sketches + Good Food Happens Stamp Overlay */}
+                  <div className="flex items-center gap-2 sm:gap-3 shrink-0 pt-1">
+                    {/* Food Meat Sketches Doodle */}
+                    <div className="relative w-16 sm:w-20 lg:w-24 aspect-square">
+                      <Image
+                        src="/MeetOurTeam/banner/food-image.webp"
+                        alt="Food Meat Sketches"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+
+                    {/* Good Food Happens Stamp */}
+                    <div className="relative w-28 sm:w-36 lg:w-40 xl:w-44 aspect-[180/70]">
+                      <Image
+                        src="/MeetOurTeam/banner/good-food-happens-text.webp"
+                        alt="Good Food Happens"
+                        fill
+                        className="object-contain object-left"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Subheading & Paragraph Description */}
+                <div className="space-y-1 pt-1 max-w-[420px]">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold font-manrope text-[#153520] tracking-tight">
+                    The People Behind Freshness
+                  </h3>
+                  <p className="text-xs sm:text-sm md:text-sm lg:text-base text-slate-600 font-medium font-manrope leading-relaxed">
+                    Passionate professionals working together to bring quality and care to your table.
+                  </p>
+                </div>
+              </div>
+
+              {/* Vector Loop Arrow (Dashed Arrow below text pointing toward team) */}
+              <div className="relative pt-3 sm:pt-4 pl-16 sm:pl-24 md:pl-28">
+                <div className="relative w-24 sm:w-28 lg:w-32 aspect-[172/90]">
+                  <Image
+                    src="/MeetOurTeam/banner/leflt-side-vector-design.svg"
+                    alt="Dashed Arrow Vector"
+                    fill
+                    className="object-contain object-left"
+                  />
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right Side Column: Team Members Image & Floating Green Badge Overlay */}
+            <div className="relative z-20 w-full md:w-[50%] lg:w-[52%] xl:w-[54%] flex items-end justify-end min-h-[280px] sm:min-h-[320px] md:min-h-full pr-2 sm:pr-4 md:pr-6 lg:pr-8 pb-0">
+              
+              {/* Team Members Image */}
+              <div className="relative w-full max-w-[700px] h-[270px] sm:h-[320px] md:h-[360px] lg:h-[390px] xl:h-[425px]">
+                <Image
+                  src="/MeetOurTeam/banner/persons-image.webp"
+                  alt="MEATIN Team Members"
+                  fill
+                  className="object-contain object-bottom filter drop-shadow-xl"
+                  priority
+                />
+              </div>
+
+              {/* Floating Green Badge Overlay on Bottom Right Curve (Matching SVG badge positioning) */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: false }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="absolute bottom-4 right-4 sm:bottom-6 sm:right-8 z-30 bg-[#8DC541] text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl shadow-xl border border-white/40 flex items-center gap-2.5 sm:gap-3"
+              >
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/60 flex items-center justify-center shrink-0 text-white bg-white/10">
+                  <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                    <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" />
+                    <path d="M12 8l1.5 3 3.5.5-2.5 2.5.5 3.5-3-1.5-3 1.5.5-3.5-2.5-2.5 3.5-.5z" fill="currentColor" stroke="none" />
+                  </svg>
+                </div>
+                <div className="font-manrope">
+                  <h4 className="text-[11px] sm:text-xs font-bold text-white leading-tight tracking-wide">
+                    One Team. One Purpose.
+                  </h4>
+                  <p className="text-[9px] sm:text-[11px] text-white/90 font-medium leading-tight">
+                    Better Chicken. Better Lives.
+                  </p>
+                </div>
+              </motion.div>
+
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Position Absolute Centered Bottom Doodle (without green background) */}
+        <div className="absolute left-1/2 -translate-x-1/2 -bottom-[11%] w-[280px] sm:w-[440px] md:w-[540px] lg:w-[660px] h-[100px] sm:h-[150px] md:h-[180px] lg:h-[220px] pointer-events-none select-none z-20">
+          <Image
+            src="/MeetOurTeam/doodles-bg/bottom-doodle.webp"
+            alt="Bottom Doodle"
+            fill
+            className="object-contain object-bottom opacity-75"
+          />
+        </div>
+      </section>
 
     </div>
   );

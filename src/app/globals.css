@@ -27,10 +27,27 @@
   }
 }
 
+/* Custom Text Selection Highlight */
+::selection {
+  background-color: #8CC63F !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+::-moz-selection {
+  background-color: #8CC63F !important;
+  color: #ffffff !important;
+}
+
 /* Preloader pulse keyframes */
 @keyframes spinSlow {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-spin-slow {
@@ -43,6 +60,7 @@
   width: 0 !important;
   height: 0 !important;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
@@ -53,13 +71,16 @@
   width: 8px;
   height: 0px;
 }
+
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #153520;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #0B1B10;
 }
@@ -72,7 +93,8 @@
   font-family: var(--font-barlow-condensed);
 }
 
-.font-manrope, .font-Manrope {
+.font-manrope,
+.font-Manrope {
   font-family: var(--font-manrope);
 }
 
@@ -91,3 +113,9 @@ nextjs-portal,
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+/* Truck tire motion rotation rules */
+.is-moving .truck-tire,
+.is-moving svg .truck-tire {
+  animation-play-state: running !important;
+}

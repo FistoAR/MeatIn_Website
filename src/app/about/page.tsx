@@ -224,23 +224,22 @@ export default function AboutUsPage() {
       <section className="relative w-full bg-black pt-[6rem] sm:pt-[6.5rem] lg:pt-[7rem] xl:pt-[7.5rem] pb-10 md:pb-16 lg:pb-8 xl:pb-10 2xl:pb-12 overflow-hidden flex flex-col justify-between">
         {/* Background Image Overlay with full opacity from public folder */}
         <div className="absolute inset-0 pointer-events-none z-0 bg-black">
-          {/* On desktop: image is positioned on the right half (width 55%, starting at 45% left) */}
-          <div className="absolute top-0 bottom-0 right-0 left-0 lg:left-[45%] w-full lg:w-[55%]">
+          {/* On desktop: image covers right half with full vertical framing */}
+          <div className="absolute top-0 bottom-0 right-0 left-0 lg:left-[40%] w-full lg:w-[60%] overflow-hidden">
             <Image
               src="/AboutUs/about-us-hero-image.webp"
               alt="MEATIN Integrated Farming"
               fill
               priority
-              className="object-cover object-[30%_center] sm:object-left"
+              className="object-cover object-top lg:object-[center_15%]"
             />
-            {/* Horizontal fade gradient on desktop to blend the image's left edge into the solid black background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/65 to-transparent hidden lg:block" />
+            {/* Soft left-to-right gradient overlay with reduced intensity */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 via-[10%] to-transparent hidden lg:block" />
           </div>
 
-          {/* Vignette and dark overlays for mobile / bottom fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-t from-black via-black/95 to-transparent hidden lg:block" />
-          <div className="absolute inset-0 bg-black/55 lg:hidden" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/95 lg:hidden" />
+          {/* Bottom shadow gradient for bottom text readability */}
+          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black via-black/75 to-transparent hidden lg:block pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent lg:hidden" />
         </div>
 
         {/* Top/Middle Heading Content */}
@@ -254,7 +253,7 @@ export default function AboutUsPage() {
             <h2 className="text-[#D4A437] font-extrabold font-manrope tracking-widest text-sm sm:text-md uppercase flex items-center gap-2">
               <span className="w-6 h-[2px] bg-[#D4A437]" /> WHAT IS MEATIN?
             </h2>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[6.2vw] xl:text-[6.5vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[5.6vw] xl:text-[5.8vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
               <span className="text-white block">WE ENGINEER</span>
               <span className="text-[#8CC63F] block">QUALITY INTO</span>
               <span className="text-white block">EVERY CUT.</span>
@@ -277,15 +276,15 @@ export default function AboutUsPage() {
             <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8 lg:gap-y-0 lg:divide-x lg:divide-white/20 items-start">
               {stats.map((stat, idx) => {
                 return (
-                  <motion.div key={idx} variants={springScale} className="flex flex-col items-start text-left px-2 sm:px-4 lg:px-6 lg:first:pl-0 lg:last:pr-0 col-span-1 last:col-span-2 lg:last:col-span-1">
+                  <motion.div key={idx} variants={springScale} className="flex flex-col items-start lg:items-center text-left lg:text-center px-2 sm:px-4 lg:px-4 col-span-1 last:col-span-2 lg:last:col-span-1">
                     {/* Big Value Number */}
-                    <div className="text-3xl sm:text-4xl lg:text-[2.2vw] xl:text-[2.4rem] font-medium text-[#8CC63F] font-chau tracking-tight leading-none">
+                    <div className="text-3xl sm:text-4xl lg:text-[2.2vw] xl:text-[2.4rem] font-medium text-[#8CC63F] font-chau tracking-tight leading-none text-left lg:text-center">
                       <Counter value={stat.value} />
                     </div>
                     {/* Red underline bar under the number */}
                     <div className="w-10 sm:w-12 lg:w-10 h-[2px] bg-[#D62828] mt-1.5 mb-3" />
                     {/* Icon + Stacked Labels */}
-                    <div className="flex items-center gap-2 sm:gap-2.5">
+                    <div className="flex items-center lg:justify-center gap-2 sm:gap-2.5 w-full">
                       <div className="w-8 h-8 sm:w-9 sm:h-9 lg:w-8 lg:h-8 shrink-0 relative">
                         <Image
                           src={stat.icon}
@@ -308,7 +307,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* 3. WHO IS MEATIN SECTION */}
-      <section className="relative w-full py-14 md:py-18 bg-[#F3F3F3] overflow-hidden">
+      <section className="relative w-full bg-[#F3F3F3] overflow-hidden">
         {/* Background pattern image */}
         <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.8]">
           <Image
@@ -322,16 +321,16 @@ export default function AboutUsPage() {
           {/* <div className="absolute inset-0 bg-[#F3F3F3]/90" /> */}
         </div>
 
-        <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div className="w-full relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
 
-            {/* Left Side: Plant Image */}
+            {/* Left Side: Plant Video (Docked Flush Left - Exactly 50%) */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-6 relative w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[475px] xl:h-[600px] 2xl:h-[680px] shadow-xl"
+              className="relative w-full h-full min-h-[300px] sm:min-h-[360px] lg:min-h-[460px] xl:min-h-[500px] overflow-hidden"
             >
               <video
                 ref={videoRef}
@@ -342,13 +341,13 @@ export default function AboutUsPage() {
               />
             </motion.div>
 
-            {/* Right Side: Description */}
+            {/* Right Side: Description (Right 50% Column with comfortable padding) */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="lg:col-span-6 space-y-6"
+              className="space-y-4 sm:space-y-5 px-6 sm:px-10 lg:px-12 xl:px-16 2xl:px-24 py-6 sm:py-7 lg:py-10 xl:py-12"
             >
               <div className="space-y-2">
                 <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4vw] xl:text-[4.5vw] 2xl:text-[5.5rem] font-bold font-barlow-condensed tracking-normal uppercase leading-none">
@@ -359,7 +358,7 @@ export default function AboutUsPage() {
               </div>
 
               <div className="space-y-4">
-                <h3 className="text-lg sm:text-xl font-bold text-[#153520]">Building a better meat ecosystem.</h3>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#153520]">Building a better meat ecosystem.</h3>
                 <p className="text-xs sm:text-sm lg:text-[13px] xl:text-sm 2xl:text-base text-slate-700 font-medium leading-relaxed max-w-[600px]">
                   MEATIN delivers safe, hygienic meat through scientific processing and controlled cold-chain systems. Built on quality, safety, and Halal-certified standards, our integrated approach ensures reliable production and distribution. From responsible sourcing to advanced infrastructure, we are building a better meat ecosystem.
                 </p>
@@ -479,7 +478,7 @@ export default function AboutUsPage() {
               <div className="absolute -inset-2 rounded-full border border-[#1F5A3C]/20 animate-spin-slow" />
               <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden flex items-center justify-center p-1">
                 <Image
-                  src="/logo.webp"
+                  src="/meatin-logo.webp"
                   alt="MEATIN Logo"
                   width={70}
                   height={35}
@@ -498,7 +497,7 @@ export default function AboutUsPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[480px] lg:min-h-[780px] xl:min-h-[850px]"
+            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[375px] lg:min-h-[780px] xl:min-h-[850px]"
           >
             <Image
               src="/AboutUs/mission-bg.webp"
@@ -508,7 +507,7 @@ export default function AboutUsPage() {
               sizes="50vw"
             />
             {/* Full-height yellow-green overlay on mobile/tablet (1024px and below) for text contrast, and top-only (h-[65%]) overlay on desktop */}
-            <div className="absolute inset-0 lg:bottom-auto lg:h-[65%] bg-gradient-to-b from-[#E2F2B6]/95 via-[#E2F2B6]/85 lg:via-[#E2F2B6]/60 to-transparent z-0 pointer-events-none" />
+            <div className="absolute inset-0 lg:bottom-auto lg:h-[75%] bg-gradient-to-b from-[#E2F2B6]/95 via-[#E2F2B6]/85 lg:via-[#E2F2B6]/75 to-transparent z-0 pointer-events-none" />
             
             <motion.div 
               variants={staggerContainer}
@@ -528,10 +527,10 @@ export default function AboutUsPage() {
               </motion.div>
               <motion.p
                 variants={slideInLeft}
-                style={{ lineHeight: '1.5' }}
-                className="text-lg sm:text-xl lg:text-xl xl:text-[21px] text-black font-normal max-w-xl lg:max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%] relative z-10 font-manrope tracking-tight"
+                style={{ lineHeight: '1.4' }}
+                className="text-lg sm:text-xl lg:text-xl xl:text-[22px] text-black font-normal max-w-xl lg:max-w-[460px] xl:max-w-[500px] relative z-10 font-manrope tracking-tight"
               >
-                Build value-added meat products, farming and food supply chains while delivering <span className="text-[#B71C1C] font-semibold">quality, service</span> and a <span className="text-[#B71C1C] font-semibold">sustainable</span> food system.
+                Build value-added meat products, farming<br className="hidden sm:inline" /> and food supply chains while delivering<br className="hidden sm:inline" /> <span className="text-[#B71C1C] font-semibold">quality, service</span> and a <span className="text-[#B71C1C] font-semibold">sustainable</span> food system.
               </motion.p>
             </motion.div>
           </motion.div>
@@ -542,7 +541,7 @@ export default function AboutUsPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[480px] lg:min-h-[780px] xl:min-h-[850px]"
+            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[375px] lg:min-h-[780px] xl:min-h-[850px]"
           >
             {/* Floating Center MEATIN Logo Badge (Mobile/Tablet only, anchored directly to top seam) */}
             <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-20 lg:hidden">
@@ -557,7 +556,7 @@ export default function AboutUsPage() {
                   <div className="absolute -inset-1.5 sm:-inset-2 rounded-full border border-[#1F5A3C]/20 animate-spin-slow" />
                   <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden flex items-center justify-center p-1">
                     <Image
-                      src="/logo.webp"
+                      src="/meatin-logo.webp"
                       alt="MEATIN logo"
                       width={70}
                       height={35}
@@ -596,10 +595,10 @@ export default function AboutUsPage() {
               </motion.div>
               <motion.p
                 variants={slideInRight}
-                style={{ lineHeight: '1.5' }}
-                className="text-lg sm:text-xl lg:text-xl xl:text-[21px] text-white font-normal max-w-xl lg:max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%] relative z-10 font-manrope tracking-tight"
+                style={{ lineHeight: '1.4' }}
+                className="text-lg sm:text-xl lg:text-xl xl:text-[22px] text-white font-normal max-w-xl lg:max-w-[480px] xl:max-w-[520px] relative z-10 font-manrope tracking-tight"
               >
-                Become a leader in <span className="text-[#8CC63F] font-semibold">value-added</span> meat processing and a trusted premium-quality food supplier.
+                Become a leader in <span className="text-[#8CC63F] font-semibold">value-added</span> meat<br className="hidden sm:inline" /> processing and a trusted premium-quality<br className="hidden sm:inline" /> food supplier.
               </motion.p>
             </motion.div>
           </motion.div>
@@ -607,13 +606,13 @@ export default function AboutUsPage() {
         </div>
 
         {/* 5. FLOATING CORE VALUES CONTAINER CARD */}
-        <div className="relative lg:absolute lg:bottom-12 left-0 lg:left-1/2 lg:-translate-x-1/2 w-full max-w-[1100px] lg:max-w-[65vw] px-4 sm:px-6 lg:px-8 mx-auto lg:mx-0 -mt-20 lg:-mt-0 z-20">
+        <div className="bg-[#d8d8d6] lg:bg-transparent relative lg:absolute lg:bottom-12 left-0 lg:left-1/2 lg:-translate-x-1/2 w-full max-w-[1100px] lg:max-w-[65vw] pt-7 sm:pt-7 md:pt-12 lg:pt-0 px-4 sm:px-6 lg:px-8 mx-auto lg:mx-0 -mt-20 lg:-mt-0 z-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6 }}
-            className="bg-[#F6F5F0] rounded-[32px] border border-[#E5EAE1] shadow-[0_12px_36px_rgba(0,0,0,0.06)] p-4 sm:p-5 lg:py-5 lg:px-8 xl:px-12 text-center space-y-4"
+            className="bg-[#F6F5F0] rounded-[32px] border border-[#E5EAE1] shadow-[0_12px_36px_rgba(0,0,0,0.06)] p-4 sm:p-5 lg:py-5 md:px-3 lg:px-5 xl:px-6 text-center space-y-4"
           >
             <h3 className="text-2xl sm:text-3xl font-bold text-[#1F5A3C] tracking-tight uppercase flex items-center justify-center gap-3 sm:gap-4 font-barlow leading-none">
               <span className="w-8 sm:w-12 h-[2px] bg-[#D62828]" /> OUR VALUES <span className="w-8 sm:w-12 h-[2px] bg-[#D62828]" />
@@ -623,11 +622,17 @@ export default function AboutUsPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, margin: "-50px" }}
-              className="grid grid-cols-2 lg:grid-cols-[0.85fr_1fr_1fr_1.15fr] gap-y-6 lg:gap-y-0 divide-y divide-[#7CB325]/30 sm:divide-y-0 lg:divide-y-0 lg:divide-x lg:divide-[#7CB325] w-full items-start"
+              className="grid grid-cols-1 min-[400px]:grid-cols-2 md:grid-cols-4 lg:grid-cols-[0.85fr_1fr_1fr_1.15fr] gap-y-4 min-[400px]:gap-y-6 md:gap-y-0 divide-y divide-[#7CB325]/30 min-[400px]:divide-y-0 md:divide-x md:divide-[#7CB325] w-full items-start"
             >
               {coreValues.map((val, idx) => {
                 return (
-                  <motion.div key={idx} variants={springPop} className="flex flex-col items-center text-center px-2 sm:px-4 lg:px-6 pt-4 sm:pt-0 border-t border-[#7CB325]/30 sm:border-t-0 lg:border-t-0">
+                  <motion.div
+                    key={idx}
+                    variants={springPop}
+                    className={`flex flex-col items-center text-center px-2 sm:px-3 md:px-4 lg:px-6 pt-3 min-[400px]:pt-4 md:pt-0 ${
+                      idx >= 2 ? 'min-[400px]:border-t min-[400px]:border-[#7CB325]/30 md:border-t-0' : ''
+                    }`}
+                  >
                     {/* SVG Vector Icon (Direct render without circular bg) */}
                     <div className="relative w-9 h-9 sm:w-10 sm:h-10 lg:w-10 lg:h-10 xl:w-12 xl:h-12 mb-1.5">
                       <Image

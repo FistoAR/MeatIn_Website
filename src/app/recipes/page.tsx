@@ -1818,7 +1818,7 @@ export default function RecipesPage() {
   return (
     <div className="relative min-h-screen bg-gray-50 antialiased flex flex-col selection:bg-[#87B71D] selection:text-white overflow-x-hidden pt-0">
       {/* Top Header Banner: Full Top 0 Green Background + Bottom Border Radius + Doodle Pattern Overlay */}
-      <section className="relative w-full bg-[#638913] text-white pt-24 sm:pt-32  px-[2vw] rounded-b-[40px] md:rounded-b-[20px] overflow-hidden select-none shadow-xl">
+      <section className="relative w-full bg-[#638913] text-white pt-20 sm:pt-24 md:pt-28 pb-3 sm:pb-4 px-4 sm:px-8 lg:px-12 rounded-b-[30px] md:rounded-b-[40px] overflow-hidden select-none shadow-xl min-h-[335px] sm:min-h-[380px] md:min-h-[420px] flex flex-col justify-between">
         {/* Background Doodle Pattern Overlay */}
         <div
           className="absolute inset-0 pointer-events-none bg-repeat z-0 opacity-80"
@@ -1828,148 +1828,237 @@ export default function RecipesPage() {
           }}
         />
 
-        <div className="w-full relative z-10 space-y-5">
-          {/* Tagline - Fade & Slide in from Left */}
-          <motion.div
-            initial={{ opacity: 0, x: -35 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-            className="flex items-center gap-2"
-          >
-            <span className="w-6 h-[1.7px] bg-white" />
-            <span className="text-[16px] font-semibold text-[#E1C609] tracking-widest uppercase font-manrope">
-              RECIPES
-            </span>
-          </motion.div>
-
-          {/* Page Title & Controls - Animated Entrance on Load */}
-          <div className="flex items-center justify-between gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
-            <div>
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[76px] font-bold font-barlow-condensed tracking-wide uppercase leading-tight flex items-center gap-2.5 flex-wrap">
-                <motion.span
-                  initial={{ opacity: 0, x: -40, y: 10 }}
-                  animate={{ opacity: 1, x: 0, y: 0 }}
-                  transition={{ duration: 0.65, ease: "easeOut", delay: 0.25 }}
-                  className="inline-block"
+        {/* Outer Flex Layout: Left Main Content Box + Right Mascot Container Box */}
+        <div className="relative z-20 w-full flex items-stretch justify-between gap-4 md:gap-6 mt-[5%] sm:mt-2 md:my-auto">
+          
+          {/* LEFT MAIN CONTENT BOX (Top 3-col Grid + Bottom Selector Bar) */}
+          <div className="flex-1 min-w-0 flex flex-col justify-start gap-1.5 sm:gap-2.5">
+            
+            {/* TOP ROW: 3 Separate Flex Groups (Group 1: Text Content | Group 2: Wooden Spoon | Group 3: Food Bowls Display) */}
+            <div className="w-full flex flex-wrap lg:flex-nowrap items-center justify-between gap-3 sm:gap-4 lg:gap-5">
+              
+              {/* GROUP 1: Text Content Block (Tagline, Title & Subtitle with clean gaps) */}
+              <div className="space-y-3 sm:space-y-4 flex-1 min-w-[220px] max-w-xs sm:max-w-sm lg:max-w-md shrink-0">
+                {/* Tagline */}
+                <motion.div
+                  initial={{ opacity: 0, x: -35 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+                  className="flex items-center gap-2.5"
                 >
-                  CHICKEN
-                </motion.span>
-                <motion.span
-                  initial={{ opacity: 0, x: 40, y: 10 }}
-                  animate={{ opacity: 1, x: 0, y: 0 }}
-                  transition={{ duration: 0.75, ease: "easeOut", delay: 0.4 }}
-                  className="text-[#D62828] inline-block"
-                >
-                  {selectedRecipe
-                    ? selectedRecipe.part.toUpperCase()
-                    : activeFilter !== "all"
-                    ? activeFilter.toUpperCase()
-                    : "RECIPES"}
-                </motion.span>
-              </h1>
-            </div>
-          </div>
+                  <span className="w-7 h-[2.5px] bg-[#F2CE07]" />
+                  <span className="text-xs sm:text-sm lg:text-sm font-extrabold text-[#F2CE07] tracking-widest uppercase font-manrope">
+                    RECIPES
+                  </span>
+                </motion.div>
 
-          {/* 10 Chicken Parts Selector Bar - Clean Rounded White Circles with Part Name Below */}
-          <div className="pt-4">
-            <div className="flex flex-wrap lg:flex-nowrap items-center justify-center px-2 sm:px-4 lg:px-4 xl:px-6 2xl:px-10 gap-2.5 sm:gap-3.5 lg:gap-4 xl:gap-6 2xl:gap-8 pb-6 pt-2 select-none max-w-[1850px] mx-auto">
-              {/* ALL Filter Button (Staggered Pop Animation) */}
+                {/* Page Title: CHICKEN RECIPES */}
+                <div>
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] xl:text-[60px] 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none flex items-center gap-2 sm:gap-3.5 flex-nowrap whitespace-nowrap">
+                    <motion.span
+                      initial={{ opacity: 0, x: -40, y: 10 }}
+                      animate={{ opacity: 1, x: 0, y: 0 }}
+                      transition={{ duration: 0.65, ease: "easeOut", delay: 0.25 }}
+                      className="inline-block text-white font-bold"
+                    >
+                      CHICKEN
+                    </motion.span>
+                    <motion.span
+                      initial={{ opacity: 0, x: 40, y: 10 }}
+                      animate={{ opacity: 1, x: 0, y: 0 }}
+                      transition={{ duration: 0.75, ease: "easeOut", delay: 0.4 }}
+                      className="text-[#F2CE07] inline-block font-bold"
+                    >
+                      {selectedRecipe
+                        ? selectedRecipe.part.toUpperCase()
+                        : activeFilter !== "all"
+                        ? activeFilter.toUpperCase()
+                        : "RECIPES"}
+                    </motion.span>
+                  </h1>
+                </div>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.45 }}
+                  className="text-white/90 text-xs sm:text-sm font-medium leading-snug font-manrope max-w-xs sm:max-w-sm pt-0.5"
+                >
+                  Explore delicious chicken recipes for every part and every mood.
+                </motion.p>
+              </div>
+
+              {/* GROUP 2: Wooden Spoon with Black Pepper (Visible only on screens > 1300px) */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.5, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
-                onClick={() => {
-                  setActiveFilter("all");
-                  setSelectedRecipe(null);
-                  if (typeof window !== "undefined") {
-                    window.history.replaceState({}, "", "/recipes");
-                  }
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                className="flex flex-col items-center gap-2 sm:gap-2.5 lg:gap-2.5 xl:gap-3 mt-1 cursor-pointer group shrink-0"
+                initial={{ opacity: 0, scale: 0.8, x: -10 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="hidden min-[1301px]:block relative w-22 h-22 xl:w-28 xl:h-28 2xl:w-32 2xl:h-32 shrink-0 pointer-events-none mx-0"
               >
-                <motion.button
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`w-11 h-11 sm:w-14 sm:h-14 lg:w-[50px] lg:h-[50px] xl:w-[62px] xl:h-[62px] 2xl:w-[76px] 2xl:h-[76px] rounded-full flex items-center justify-center font-extrabold text-[10px] sm:text-xs xl:text-sm 2xl:text-base tracking-wider transition-all shrink-0 cursor-pointer text-white shadow-lg ${
-                    activeFilter === "all" && !selectedRecipe
-                      ? "bg-white/35 backdrop-blur-xl border-2 border-white ring-4 ring-white/50 scale-105 shadow-2xl"
-                      : "bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30"
-                  }`}
-                >
-                  ALL
-                </motion.button>
-                <span
-                  className={`text-[10px] sm:text-[12px] lg:text-[11px] xl:text-[13px] 2xl:text-[14px] font-extrabold tracking-wider uppercase font-manrope transition-colors ${
-                    activeFilter === "all" && !selectedRecipe
-                      ? "text-[#E1C609] font-black drop-shadow-sm"
-                      : "text-white/90 group-hover:text-[#E1C609]"
-                  }`}
-                >
-                  ALL
-                </span>
+                <Image
+                  src="/Recipies/header/spoon-image.webp"
+                  alt="Wooden Spoon with Pepper"
+                  fill
+                  className="object-contain drop-shadow-lg"
+                />
               </motion.div>
 
-              {chickenPartsList.map((part, index) => {
-                const isAutoHighlighted = highlightedPartIdx === index && !selectedRecipe && activeFilter === "all";
-                const isSelected = selectedRecipe
-                  ? selectedRecipe.part.toLowerCase() === part.id.toLowerCase()
-                  : activeFilter.toLowerCase() === part.id.toLowerCase();
+              {/* GROUP 3: Chicken Food Bowls Cluster Display (Visible only on Desktop lg+) */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
+                className="hidden lg:block relative w-full max-w-[420px] xl:max-w-[500px] h-[180px] xl:h-[210px] shrink min-w-[170px]"
+              >
+                <Image
+                  src="/Recipies/header/chicken-food-images.webp"
+                  alt="Chicken Recipes Display"
+                  fill
+                  priority
+                  className="object-contain drop-shadow-xl"
+                />
+              </motion.div>
+            </div>
 
-                return (
+            {/* BOTTOM ROW: Split into Filter Buttons Scroll Box (Left) + Spice Accent Box (Right) */}
+            <div className="w-full flex items-center justify-between gap-3 sm:gap-4 overflow-hidden pt-2 pb-1">
+              
+              {/* Item 1: Horizontal Scrollable Filter Buttons Container (Left Box) */}
+              <div className="flex-1 min-w-0 overflow-x-auto scrollbar-none [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-2 pl-1 pr-2">
+                <div className="flex items-center gap-4 sm:gap-5 md:gap-6 lg:gap-6 xl:gap-7 select-none flex-nowrap">
+                  {/* ALL Filter Button */}
                   <motion.div
-                    key={part.id}
                     initial={{ opacity: 0, scale: 0.5, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{
-                      duration: 0.45,
-                      delay: 0.55 + index * 0.05,
-                      ease: [0.34, 1.56, 0.64, 1],
-                    }}
+                    transition={{ duration: 0.45, delay: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
                     onClick={() => {
-                      setHighlightedPartIdx(index);
-                      handlePartClick(part.id);
+                      setActiveFilter("all");
+                      setSelectedRecipe(null);
+                      if (typeof window !== "undefined") {
+                        window.history.replaceState({}, "", "/recipes");
+                      }
+                      window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="flex flex-col items-center gap-2 sm:gap-2.5 lg:gap-2.5 xl:gap-3 mt-1 cursor-pointer group shrink-0"
+                    className="flex flex-col items-center gap-2 sm:gap-2.5 cursor-pointer group shrink-0"
                   >
                     <motion.button
-                      whileHover={{ scale: 1.12 }}
-                      whileTap={{ scale: 0.92 }}
-                      className={`relative w-11 h-11 sm:w-14 sm:h-14 lg:w-[50px] lg:h-[50px] xl:w-[62px] xl:h-[62px] 2xl:w-[76px] 2xl:h-[76px] rounded-full bg-white flex items-center justify-center p-1 sm:p-1.5 xl:p-2 shrink-0 cursor-pointer transition-all duration-500 shadow-md ${
-                        isSelected || isAutoHighlighted
-                          ? "ring-4 ring-[#E1C609] bg-[#FFFDE7] scale-110 shadow-[0_0_20px_rgba(225,198,9,0.7)]"
-                          : "border border-white/60 hover:scale-105"
+                      whileHover={{ scale: 1.08 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-[64px] lg:h-[64px] xl:w-[76px] xl:h-[76px] rounded-full flex items-center justify-center font-extrabold text-xs sm:text-sm lg:text-base tracking-wider transition-all shrink-0 cursor-pointer text-white shadow-lg ${
+                        activeFilter === "all" && !selectedRecipe
+                          ? "bg-white/35 backdrop-blur-xl border-2 border-white ring-4 ring-[#F2CE07] scale-105 shadow-2xl"
+                          : "bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30"
                       }`}
-                      title={part.name}
                     >
-                      <div className="relative w-full h-full">
-                        <Image
-                          src={part.img}
-                          alt={part.name}
-                          fill
-                          className="object-contain p-0.5"
-                        />
-                      </div>
+                      ALL
                     </motion.button>
                     <span
-                      className={`text-[10px] sm:text-[12px] lg:text-[11px] xl:text-[13px] 2xl:text-[14px] font-extrabold tracking-wider uppercase font-manrope transition-colors ${
-                        isSelected || isAutoHighlighted
-                          ? "text-[#E1C609] drop-shadow-sm font-black"
-                          : "text-white/90 group-hover:text-[#E1C609]"
+                      className={`text-[11px] sm:text-xs lg:text-[13px] xl:text-[15px] font-extrabold tracking-wider uppercase font-manrope transition-colors ${
+                        activeFilter === "all" && !selectedRecipe
+                          ? "text-[#F2CE07] font-black drop-shadow-sm"
+                          : "text-white/90 group-hover:text-[#F2CE07]"
                       }`}
                     >
-                      {part.name}
+                      ALL
                     </span>
                   </motion.div>
-                );
-              })}
+
+                  {chickenPartsList.map((part, index) => {
+                    const isAutoHighlighted = highlightedPartIdx === index && !selectedRecipe && activeFilter === "all";
+                    const isSelected = selectedRecipe
+                      ? selectedRecipe.part.toLowerCase() === part.id.toLowerCase()
+                      : activeFilter.toLowerCase() === part.id.toLowerCase();
+
+                    return (
+                      <motion.div
+                        key={part.id}
+                        initial={{ opacity: 0, scale: 0.5, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{
+                          duration: 0.45,
+                          delay: 0.55 + index * 0.05,
+                          ease: [0.34, 1.56, 0.64, 1],
+                        }}
+                        onClick={() => {
+                          setHighlightedPartIdx(index);
+                          handlePartClick(part.id);
+                        }}
+                        className="flex flex-col items-center gap-2 sm:gap-2.5 cursor-pointer group shrink-0"
+                      >
+                        <motion.button
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.92 }}
+                          className={`relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-[64px] lg:h-[64px] xl:w-[76px] xl:h-[76px] rounded-full bg-white flex items-center justify-center p-1.5 sm:p-2 shrink-0 cursor-pointer transition-all duration-300 shadow-md ${
+                            isSelected || isAutoHighlighted
+                              ? "ring-4 ring-[#F2CE07] bg-[#FFFDE7] scale-105 shadow-[0_0_18px_rgba(225,198,9,0.75)]"
+                              : "border border-white/60 hover:scale-105"
+                          }`}
+                          title={part.name}
+                        >
+                          <div className="relative w-full h-full">
+                            <Image
+                              src={part.img}
+                              alt={part.name}
+                              fill
+                              className="object-contain p-0.5"
+                            />
+                          </div>
+                        </motion.button>
+                        <span
+                          className={`text-[11px] sm:text-xs lg:text-[13px] xl:text-[15px] font-extrabold tracking-wider uppercase font-manrope transition-colors ${
+                            isSelected || isAutoHighlighted
+                              ? "text-[#F2CE07] drop-shadow-sm font-black"
+                              : "text-white/90 group-hover:text-[#F2CE07]"
+                          }`}
+                        >
+                          {part.name}
+                        </span>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Item 2: Star Anise Spice Accent Box (Visible only on Desktop lg+) */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="hidden lg:block relative w-20 h-20 xl:w-28 xl:h-28 shrink-0 pointer-events-none self-center"
+              >
+                <Image
+                  src="/Recipies/header/ingredient-image.webp"
+                  alt="Spice Accent"
+                  fill
+                  className="object-contain drop-shadow-md"
+                />
+              </motion.div>
             </div>
           </div>
+
+          {/* RIGHT CONTAINER BOX: Chicken Chef Mascot (Scaled down size) */}
+          <motion.div
+            initial={{ opacity: 0, x: 30, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+            className="hidden sm:flex shrink-0 w-[110px] sm:w-[135px] md:w-[165px] lg:w-[190px] xl:w-[215px] relative items-end justify-center pointer-events-none"
+          >
+            <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] xl:h-[350px]">
+              <Image
+                src="/Recipies/header/chicken-character-image.webp"
+                alt="MeatIn Chicken Chef Mascot"
+                fill
+                priority
+                className="object-contain object-bottom drop-shadow-2xl"
+              />
+            </div>
+          </motion.div>
+
         </div>
       </section>
 
       {/* Main Interactive Content Area */}
-      <main className="relative z-20 flex-1 w-full px-[2vw] py-6 sm:py-10 overflow-hidden">
+      <main className="relative z-20 flex-1 w-full px-[2vw] pt-1 sm:pt-2 pb-6 sm:pb-10 overflow-hidden">
         <AnimatePresence mode="wait">
           {!selectedRecipe ? (
             /* ========================================================= */
@@ -1981,7 +2070,7 @@ export default function RecipesPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-12 sm:space-y-16 relative"
+              className="space-y-6 sm:space-y-8 relative"
             >
               {/* Background Doodle Pattern Overlay (View 1 Only) */}
               <div
@@ -1991,13 +2080,14 @@ export default function RecipesPage() {
                   backgroundSize: "800px",
                 }}
               />
-            {partsToDisplay.map((part) => {
+            {partsToDisplay.map((part, index) => {
               const recipes = recipesDatabase[part.id] || [];
+              const isFirstItem = index === 0;
               return (
                 <section
                   key={part.id}
                   id={`part-section-${part.id}`}
-                  className="space-y-4 sm:space-y-6 pt-4 scroll-mt-28 sm:scroll-mt-36"
+                  className={`space-y-3 sm:space-y-4 scroll-mt-12 sm:scroll-mt-16 ${isFirstItem ? "pt-0 -mt-3 sm:-mt-6" : "pt-2"}`}
                 >
                   {/* Section Label Header with Icon & Badge - AOS Scroll Animation */}
                   <motion.div
@@ -2052,7 +2142,7 @@ export default function RecipesPage() {
                             );
                           }
                         }}
-                        className="relative aspect-[3/4.2] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-5 select-none recipe-card-box cursor-pointer border border-slate-200/40"
+                        className="relative aspect-[3/2.8] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-4 select-none recipe-card-box cursor-pointer border border-slate-200/40"
                       >
                         {/* Top Left Red Category Tag */}
                         <span className="absolute top-4 left-4 z-20 bg-[#D62828] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
@@ -2073,14 +2163,11 @@ export default function RecipesPage() {
                         {/* Card Content */}
                         <div className="relative z-10 space-y-3 font-inter">
                           {/* Recipe Title */}
-                          <h3 className="text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight group-hover:text-[#E1C609] transition-colors">
+                          <h3 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight group-hover:text-[#E1C609] transition-colors truncate whitespace-nowrap" title={recipe.title}>
                             {recipe.title}
                           </h3>
 
-                          {/* Description */}
-                          <p className="text-[12px] sm:text-[13px] lg:text-[13px] xl:text-[14px] font-medium text-slate-200 leading-snug line-clamp-2 font-manrope">
-                            {recipe.desc}
-                          </p>
+                          
 
                           {/* Spec Row (Easy, Time, Servings) */}
                           <div className="flex items-center gap-3 text-[12px] font-bold text-slate-300 font-manrope recipe-card-spec">

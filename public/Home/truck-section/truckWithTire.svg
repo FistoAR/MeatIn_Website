@@ -3,9 +3,15 @@
   .truck-tire {
     transform-box: fill-box;
     transform-origin: center;
-    animation: rotateTire 0.6s linear infinite;
+    animation: rotateWheel 0.4s linear infinite;
+    animation-play-state: paused;
   }
-  @keyframes rotateTire {
+  .is-moving .truck-tire,
+  svg.is-moving .truck-tire,
+  img.is-moving + svg .truck-tire {
+    animation-play-state: running !important;
+  }
+  @keyframes rotateWheel {
     0% {
       transform: rotate(0deg);
     }

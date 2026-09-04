@@ -1,7 +1,7 @@
 // Critical asset manifest for ultra-fast preloader performance
 export const PRELOAD_ASSETS: string[] = [
   "/preloader.gif",
-  "/logo.webp",
+  "/meatin-logo.webp",
   "/Home/section-bg.webp",
   "/Home/gray-bg-image.webp",
   "/Home/second-section.webp",

@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
-    apple: '/logo.webp',
+    apple: '/meatin-logo.webp',
   },
   openGraph: {
     title: 'MEATIn | Premium Meat Experience',

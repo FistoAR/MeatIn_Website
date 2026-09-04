@@ -50,7 +50,13 @@ export default function HomePage() {
     target: certSectionRef,
     offset: ["start end", "end start"],
   });
-  const truckY = useTransform(certScrollProgress, [0, 1], [-150, 1600]);
+  const rawTruckY = useTransform(certScrollProgress, [0, 1], [-150, 1600]);
+  const truckY = useSpring(rawTruckY, {
+    stiffness: 250,
+    damping: 30,
+    mass: 0.2,
+    restDelta: 0.0001,
+  });
   const certTruckOpacity = useTransform(
     certScrollProgress,
     [0, 0.15, 0.85, 1],
@@ -65,24 +71,70 @@ export default function HomePage() {
 
   const truckScrollX = useTransform(
     section2ScrollProgress,
-    [0, 0.35, 1],
-    ["65vw", "0vw", "0vw"],
+    [0, 1],
+    ["75vw", "-10vw"],
   );
   const truckScrollOpacity = useTransform(
     section2ScrollProgress,
-    [0, 0.1],
-    [0, 1],
+    [0, 0.15, 0.85, 1],
+    [0.2, 1, 1, 0.5],
   );
   const smoothTruckX = useSpring(truckScrollX, {
-    stiffness: 50,
-    damping: 16,
-    restDelta: 0.001,
+    stiffness: 250,
+    damping: 30,
+    mass: 0.2,
+    restDelta: 0.0001,
   });
   const smoothTruckOpacity = useSpring(truckScrollOpacity, {
-    stiffness: 50,
-    damping: 16,
-    restDelta: 0.001,
+    stiffness: 250,
+    damping: 30,
+    restDelta: 0.0001,
   });
+
+  const [isTruckMoving, setIsTruckMoving] = React.useState(false);
+  const stopTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  React.useEffect(() => {
+    const triggerMove = (duration = 200) => {
+      setIsTruckMoving(true);
+      if (stopTimeoutRef.current) clearTimeout(stopTimeoutRef.current);
+      stopTimeoutRef.current = setTimeout(() => {
+        setIsTruckMoving(false);
+      }, duration);
+    };
+
+    let lastY = typeof window !== "undefined" ? window.scrollY : 0;
+    
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (Math.abs(currentY - lastY) > 0.05) {
+        triggerMove(200);
+      }
+      lastY = currentY;
+    };
+
+    const handleWheel = () => triggerMove(200);
+    const handleTouchMove = () => triggerMove(200);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    
+    const unsubscribeX = smoothTruckX.on("change", () => {
+      const velocity = Math.abs(smoothTruckX.getVelocity());
+      if (velocity > 0.01) {
+        triggerMove(200);
+      }
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchmove", handleTouchMove, { passive: true } as any);
+      unsubscribeX();
+      if (stopTimeoutRef.current) clearTimeout(stopTimeoutRef.current);
+    };
+  }, [smoothTruckX]);
 
   const roadScrollX = useTransform(
     section2ScrollProgress,
@@ -352,7 +404,7 @@ export default function HomePage() {
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
-                  className="relative w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]"
+                  className="relative w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden sm:block lg:hidden"
                 >
                   <Image
                     src="/AboutUs/keralas-original.webp"
@@ -364,158 +416,42 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          {/* Fixed bottom-right badge attached to the sticky hero container */}
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
+            className="absolute bottom-6 right-6 lg:bottom-8 lg:right-10 w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden lg:block z-20"
+          >
+            <Image
+              src="/AboutUs/keralas-original.webp"
+              alt="Kerala's Original Meat Badge"
+              fill
+              className="object-contain"
+            />
+          </motion.div>
         </div>
       </section>
 
-      {/* 2. SECOND SECTION (TRUCK LOGISTICS WITH HIGHWAY ROAD SCENERY) */}
+      {/* 2. SECOND SECTION (MEATIN COLD CHAIN LOGISTICS TRUCK) */}
       <section
         ref={section2Ref}
-        className="relative w-full bg-[#EBF6E4] pt-6 pb-16 sm:pt-8 sm:pb-20 md:pt-10 md:pb-24 overflow-hidden flex flex-col items-center justify-end bg-cover bg-center bg-no-repeat min-h-[340px] sm:min-h-[400px] md:min-h-[440px] lg:min-h-[480px] xl:min-h-[540px]"
+        className="relative w-full bg-[#EBF6E4] pt-12 pb-24 sm:pt-16 sm:pb-28 md:pt-20 md:pb-32 overflow-hidden flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat min-h-[300px] sm:min-h-[360px] md:min-h-[400px] lg:min-h-[440px]"
         style={{
           backgroundImage: "url('/Home/truck-section/truck-section-bg.webp')",
         }}
       >
-        {/* Full 100vw Width Asphalt Road Bed (Always Covers Viewport 100% Without Gaps) */}
-        <div className="absolute bottom-0 left-0 right-0 w-full h-[75px] sm:h-[95px] md:h-[130px] lg:h-[150px] xl:h-[180px] 2xl:h-[210px] bg-[#1a1c20] flex flex-col justify-between shadow-2xl border-t-2 border-t-black/90 pointer-events-none z-0">
-          {/* Top Brick/Curb Tile Border */}
-          <div className="w-full h-[12px] sm:h-[15px] bg-[#111215] border-b border-black/80 flex overflow-hidden">
-            <motion.div
-              animate={{ backgroundPositionX: ["-32px", "0px"] }}
-              transition={{ repeat: Infinity, duration: 0.6, ease: "linear" }}
-              className="w-full h-full bg-[linear-gradient(90deg,#000_2px,transparent_2px)] bg-[size:32px_100%] opacity-60"
-            />
-          </div>
-
-          {/* Road Surface & Fast Left-to-Right Animated Dashed White Center Lane Stripe */}
-          <div className="w-full relative flex items-center my-auto overflow-hidden">
-            <motion.div
-              animate={{ backgroundPositionX: ["-168px", "0px"] }}
-              transition={{ repeat: Infinity, duration: 0.6, ease: "linear" }}
-              className="w-full h-[6px] sm:h-[10px] bg-[repeating-linear-gradient(90deg,#ffffff_0_84px,transparent_84px_168px)] bg-[size:168px_100%] opacity-95"
-            />
-          </div>
-
-          {/* Bottom Brick/Curb Tile Border */}
-          <div className="w-full h-[12px] sm:h-[15px] bg-[#111215] border-t border-black/80 flex overflow-hidden">
-            <motion.div
-              animate={{ backgroundPositionX: ["-32px", "0px"] }}
-              transition={{ repeat: Infinity, duration: 0.6, ease: "linear" }}
-              className="w-full h-full bg-[linear-gradient(90deg,#000_2px,transparent_2px)] bg-[size:32px_100%] opacity-60"
-            />
-          </div>
-        </div>
-
-        {/* Roadside Milestone Signboards & Logo Billboards Passing By Left-to-Right */}
-        <div className="absolute bottom-[75px] sm:bottom-[95px] md:bottom-[130px] lg:bottom-[150px] xl:bottom-[180px] 2xl:bottom-[210px] left-0 right-0 w-full h-[100px] sm:h-[120px] pointer-events-none z-0 overflow-hidden">
-          {/* Sign 1: Meatin Logo Billboard */}
-          <motion.div
-            animate={{ x: ["-300px", "100vw"] }}
-            transition={{
-              repeat: Infinity,
-              duration: 12,
-              ease: "linear",
-              delay: 0,
-            }}
-            className="absolute bottom-0 flex flex-col items-center"
-          >
-            <div className="bg-gradient-to-b from-white to-gray-100 border-3 border-[#1C5D2C] px-2 py-1 rounded-md shadow-xl flex items-center justify-center filter drop-shadow-lg">
-              <div className="relative w-28 h-9 sm:w-28 sm:h-12">
-                <Image
-                  src="/logo.webp"
-                  alt="Meatin Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </div>
-            {/* Taller Heavy Steel Pillar Poles */}
-            <div className="flex justify-between w-full">
-              <div className="w-1.5 h-12 sm:h-16 bg-gradient-to-b from-gray-600 to-gray-900 shadow-inner" />
-              <div className="w-1.5 h-12 sm:h-16 bg-gradient-to-b from-gray-600 to-gray-900 shadow-inner" />
-            </div>
-          </motion.div>
-
-          {/* Sign 2: Kerala Milestone Signboard (Rectangle Shape) */}
-          <motion.div
-            animate={{ x: ["-300px", "100vw"] }}
-            transition={{
-              repeat: Infinity,
-              duration: 12,
-              ease: "linear",
-              delay: -6.0,
-            }}
-            className="absolute bottom-0 flex flex-col items-center"
-          >
-            <div className="bg-[#1C5D2C] border-3 border-white text-white font-manrope font-extrabold text-[10px] sm:text-xs px-4 py-2 rounded-md shadow-xl text-center leading-tight filter drop-shadow-lg">
-              <span className="block text-[#F4C430] text-xs sm:text-sm font-black tracking-wider">
-                KERALA
-              </span>
-              <span className="block mt-0.5 text-white">2 KM AHEAD</span>
-            </div>
-            {/* Taller Steel Pole */}
-            <div className="w-2.5 h-12 sm:h-16 bg-gradient-to-b from-stone-600 via-stone-800 to-stone-950 shadow-md border-x border-stone-500" />
-          </motion.div>
-
-          {/* Sign 3: Cold Chain Highway Directional Arrow Signboard */}
-          <motion.div
-            animate={{ x: ["-300px", "100vw"] }}
-            transition={{
-              repeat: Infinity,
-              duration: 12,
-              ease: "linear",
-              delay: -3.0,
-            }}
-            className="absolute bottom-0 flex flex-col items-center"
-          >
-            <div
-              className="bg-[#C62828] text-white font-manrope font-extrabold text-[10px] sm:text-xs pr-6 pl-3 py-2 rounded-l-md shadow-xl text-center leading-tight filter drop-shadow-lg border-2 border-white"
-              style={{
-                clipPath: "polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%)",
-              }}
-            >
-              <span className="block text-white tracking-wide">COLD CHAIN</span>
-              <span className="block mt-0.5 text-[#FFD54F]">
-                100% FRESH MEAT
-              </span>
-            </div>
-            {/* Taller Steel Pole */}
-            <div className="w-2.5 h-12 sm:h-16 bg-gradient-to-b from-stone-600 via-stone-800 to-stone-950 shadow-md border-x border-stone-500" />
-          </motion.div>
-
-          {/* Sign 4: Meatin Store Signboard (Yellow Background with White Text) */}
-          <motion.div
-            animate={{ x: ["-300px", "100vw"] }}
-            transition={{
-              repeat: Infinity,
-              duration: 12,
-              ease: "linear",
-              delay: -9.0,
-            }}
-            className="absolute bottom-0 flex flex-col items-center"
-          >
-            <div className="bg-[#F4C430] border-3 border-white text-white font-manrope font-extrabold text-[10px] sm:text-xs px-4 py-2 rounded-md shadow-xl text-center leading-tight filter drop-shadow-lg">
-              <span className="block text-white text-xs sm:text-sm font-black tracking-wider drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
-                MEATIN STORE
-              </span>
-              <span className="block mt-0.5 text-white font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
-                5 KM AHEAD
-              </span>
-            </div>
-            {/* Taller Steel Pole */}
-            <div className="w-2.5 h-12 sm:h-16 bg-gradient-to-b from-stone-600 via-stone-800 to-stone-950 shadow-md border-x border-stone-500" />
-          </motion.div>
-        </div>
-
-        {/* Animated Truck Assembly Riding Directly On Top Of The White Dotted Line */}
-        <div className="w-full max-w-[90%] px-4 sm:px-8 absolute z-10 flex justify-start items-center bottom-[38px] sm:bottom-[50px] md:bottom-[65px] lg:bottom-[75px] xl:bottom-[90px] 2xl:bottom-[104px]">
+        {/* Animated Truck Assembly Moving Right-To-Left as User Scrolls Down */}
+        <div className="w-full max-w-[95%] px-4 sm:px-8 relative z-10 flex justify-start items-center my-auto">
           <motion.div
             style={{ x: smoothTruckX, opacity: smoothTruckOpacity }}
-            className="relative w-full aspect-[4096/1339] max-w-[320px] sm:max-w-[400px] md:max-w-[460px] lg:max-w-[500px] xl:max-w-[640px] 2xl:max-w-[760px]"
+            className="relative w-full aspect-[4096/1339] max-w-[320px] sm:max-w-[420px] md:max-w-[520px] lg:max-w-[620px] xl:max-w-[740px] 2xl:max-w-[850px]"
           >
-            {/* Ground / Road Shadow */}
-            <div className="absolute bottom-[2%] left-[4%] right-[4%] h-[8%] bg-black/30 blur-md rounded-full z-0" />
+            {/* Ground Soft Shadow */}
+            <div className="absolute -bottom-[4%] left-[4%] right-[4%] h-[12%] bg-black/20 blur-lg rounded-full z-0" />
 
-            {/* Vector Truck SVG with animated rotating tires */}
+            {/* Vector Truck SVG Body & Rotating Tire Layer */}
             <motion.div
               animate={{ y: [-1.5, 1.5, -1.5] }}
               transition={{
@@ -525,14 +461,54 @@ export default function HomePage() {
               }}
               className="absolute inset-0 w-full h-full z-20 pointer-events-none"
             >
-              <Image
-                src="/Home/truck-section/truckWithTire.svg"
-                alt="Meatin Cold Chain Delivery Truck with Animated Rotating Tires"
-                fill
-                unoptimized
-                className="object-contain"
-                priority
-              />
+              <svg
+                width="4096"
+                height="1339"
+                viewBox="0 0 4096 1339"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                className="w-full h-full object-contain"
+              >
+                <style>{`
+                  @keyframes rotateTireWheel {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(-360deg); }
+                  }
+                  .spinning-wheel {
+                    transform-box: fill-box;
+                    transform-origin: center;
+                    animation: rotateTireWheel 0.4s linear infinite;
+                  }
+                `}</style>
+                <rect width="4096" height="1339" fill="url(#pattern0_1246_36)"/>
+                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="280" y="921" width="365" height="365" fill="url(#pattern1_1246_36)"/>
+                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="1239" y="941" width="390" height="390" fill="url(#pattern2_1246_36)"/>
+                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="3446" y="949" width="365" height="365" fill="url(#pattern3_1246_36)"/>
+                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="3044" y="949" width="365" height="365" fill="url(#pattern4_1246_36)"/>
+                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="2642" y="949" width="365" height="365" fill="url(#pattern5_1246_36)"/>
+                <defs>
+                  <pattern id="pattern0_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image0_1246_36" transform="scale(0.000244141 0.000746826)"/>
+                  </pattern>
+                  <pattern id="pattern1_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
+                  </pattern>
+                  <pattern id="pattern2_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
+                  </pattern>
+                  <pattern id="pattern3_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
+                  </pattern>
+                  <pattern id="pattern4_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
+                  </pattern>
+                  <pattern id="pattern5_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
+                  </pattern>
+                  <image id="image0_1246_36" width="4096" height="1339" preserveAspectRatio="none" xlinkHref="/Home/truck-section/truckWithTire.svg"/>
+                </defs>
+              </svg>
             </motion.div>
 
             {/* Trailing Rope Hook attached vertically centered to the back of truck trailer */}
@@ -582,7 +558,7 @@ export default function HomePage() {
           </motion.div>
         </div>
 
-        {/* Wave SVG transition divider matching the Brand Story bg color */}
+        {/* Wave SVG transition divider matching the Brand Story top color */}
         <div className="absolute bottom-0 left-0 right-0 h-[35px] sm:h-[55px] md:h-[90px] w-full z-20 pointer-events-none overflow-hidden">
           <svg
             className="absolute bottom-0 w-full h-[35px] sm:h-[55px] md:h-[90px]"
@@ -593,7 +569,7 @@ export default function HomePage() {
           >
             <path
               d="M0 0C755.182 107.73 1158.5 130.5 1920 0V130.5H0V0Z"
-              fill="#60870C"
+              fill="#064823"
             />
           </svg>
         </div>
@@ -601,9 +577,20 @@ export default function HomePage() {
 
       {/* 3. BRAND STORY / TIMELINE SECTION */}
       <section
-        className="relative w-full pt-10 pb-10 bg-[#61870d] text-white overflow-hidden bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/Home/section-bg.webp')" }}
+        className="relative w-full pt-10 pb-10 text-white overflow-hidden"
+        style={{
+          background: "radial-gradient(circle at center, #458A3F 0%, #064823 100%)",
+        }}
       >
+        {/* Absolute Background Image Layer */}
+        <div className="absolute inset-0 pointer-events-none z-0 opacity-80">
+          <Image
+            src="/Home/section-bg.webp"
+            alt="Background pattern"
+            fill
+            className="object-cover object-center"
+          />
+        </div>
         <div className="w-full max-w-[1400px] lg:max-w-[92vw] mx-auto px-4 sm:px-6 lg:px-8 pt-4 relative z-10">
           {/* Header */}
           <motion.div
@@ -643,18 +630,20 @@ export default function HomePage() {
                 <motion.div
                   key={idx}
                   variants={fadeInUp}
-                  className={`bg-white rounded-[20px] border border-white/80 shadow-lg hover:shadow-2xl hover:scale-[1.03] flex flex-col justify-between h-max overflow-hidden group transition-all duration-300 min-h-[480px] relative ${idx % 2 === 0 ? "xl:-mt-10" : "xl:mt-14"}`}
+                  whileHover={{ scale: 1.05, zIndex: 30 }}
+                  transition={{ duration: 0.3 }}
+                  className={`bg-white rounded-[20px] border border-white/80 shadow-lg hover:shadow-2xl flex flex-col justify-between h-max overflow-hidden group min-h-[360px] relative ${idx % 2 === 0 ? 'xl:-mt-10' : 'xl:mt-14'}`}
                 >
                   {/* Top Image Frame (with icon and title inside) */}
-                  <div className="relative w-full h-[380px] overflow-hidden flex flex-col justify-end pb-4 items-center">
+                  <div className="relative w-full h-[300px] overflow-hidden flex flex-col justify-end pb-4 items-center">
                     <Image
                       src={step.image}
                       alt={step.title}
                       fill
-                      className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover object-top"
                     />
                     {/* Bottom gradient fade to white */}
-                    <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/75 to-transparent z-10" />
+                    <div className="absolute -bottom-1 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
 
                     {/* Icon */}
                     <div className="relative z-20 w-[64px] h-[64px] drop-shadow-md mb-4">
@@ -673,7 +662,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Bottom Text Panel */}
-                  <div className="bg-white pb-8 px-4 flex-1 flex flex-col items-center justify-start text-center">
+                  <div className="bg-white pb-8 px-4 flex-1 flex flex-col items-center justify-start text-center relative z-20 -mt-px">
                     <p className="text-[#3A3A3A] text-[0.8rem] 2xl:text-[0.85rem] font-semibold leading-relaxed font-manrope max-w-[195px] mx-auto">
                       {step.desc}
                     </p>
@@ -686,10 +675,7 @@ export default function HomePage() {
       </section>
 
       {/* 3. CERTIFIED EXCELLENCE SECTION */}
-      <section
-        ref={certSectionRef}
-        className="relative w-full py-16 lg:py-11 overflow-hidden"
-      >
+      <section ref={certSectionRef} className="relative w-full pt-10 pb-4 lg:pt-12 lg:pb-6 overflow-hidden">
         {/* Section Background Image */}
         <div className="absolute inset-0 pointer-events-none z-0 bg-[#DCDBDB]">
           <Image
@@ -701,11 +687,11 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-5">
           {/* Creative vertical green truck graphics on left side gutter */}
           <motion.div
             style={{ y: truckY, opacity: truckOpacity }}
-            className="absolute left-[-70px] top-[-100px] w-32 h-[650px] hidden lg:block pointer-events-none z-0"
+            className="absolute left-[-85px] xl:left-[-100px] top-[-100px] w-40 xl:w-44 h-[700px] hidden lg:block pointer-events-none z-0"
           >
             <div className="relative w-full h-full">
               <Image
@@ -723,7 +709,7 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.8 }}
-            className="text-center flex flex-col items-center mb-20"
+            className="text-center flex flex-col items-center mb-14 lg:mb-16"
           >
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="h-[1.5px] w-8 sm:w-12 bg-[#D4A437]" />
@@ -759,10 +745,10 @@ export default function HomePage() {
                 <motion.div
                   key={idx}
                   variants={fadeInUp}
-                  className="bg-white rounded-[32px] border border-slate-200/80 shadow-[0_12px_36px_rgba(0,0,0,0.035)] px-3.5 py-5 pt-14 flex flex-col justify-between items-center text-center relative hover:scale-[1.04] hover:shadow-[0_20px_48px_rgba(0,0,0,0.08)] hover:border-[#1F5A3C]/20 transition-all duration-300 ease-out min-h-[480px] certificate-parent-card"
+                  className="bg-white rounded-[28px] border border-slate-200/80 shadow-[0_12px_36px_rgba(0,0,0,0.035)] px-3.5 py-4 pt-12 flex flex-col justify-between items-center text-center relative hover:scale-[1.03] hover:shadow-[0_20px_48px_rgba(0,0,0,0.08)] hover:border-[#1F5A3C]/20 transition-all duration-300 ease-out min-h-[380px] certificate-parent-card"
                 >
                   {/* Top Circle logo overlay badge */}
-                  <div className="w-24 h-24 bg-white border border-slate-100 rounded-full flex items-center justify-center p-3 shadow-lg shadow-slate-200/60 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                  <div className="w-20 h-20 bg-white border border-slate-100 rounded-full flex items-center justify-center p-2 shadow-lg shadow-slate-200/60 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                     <div className="relative w-full h-full">
                       <Image
                         src={cert.icon}
@@ -775,19 +761,17 @@ export default function HomePage() {
 
                   {/* Card Header Content */}
                   <div className="flex flex-col items-center w-full">
-                    <h4 className="text-2xl sm:text-3xl font-extrabold text-[#1F5A3C] font-barlow tracking-wide uppercase leading-none mb-1.5">
-                      {cert.name}
-                    </h4>
-                    <span className="inline-block bg-[#7CB325] text-white px-4 py-0.5 rounded text-[11px] font-black uppercase tracking-wider mb-3 leading-none">
+                    <h4 className="text-xl sm:text-2xl font-extrabold text-[#1F5A3C] font-barlow tracking-wide uppercase leading-none mb-1">{cert.name}</h4>
+                    <span className="inline-block bg-[#7CB325] text-white px-3 py-0.5 rounded text-[10px] font-black uppercase tracking-wider mb-2 leading-none">
                       {cert.sub}
                     </span>
-                    <p className="text-xs text-slate-500 font-bold max-w-[200px] sm:max-w-none md:max-w-[200px] h-12 mb-4 leading-normal flex items-center justify-center">
+                    <p className="text-[11px] text-slate-500 font-bold sm:max-w-none  mb-2 leading-normal flex items-center justify-center min-h-[32px]">
                       {cert.desc}
                     </p>
                   </div>
 
                   {/* Certificate Image Frame */}
-                  <div className="w-full aspect-[4/3] relative rounded-2xl overflow-hidden mb-3 min-h-[250px]">
+                  <div className="w-full aspect-[4/3] relative rounded-xl overflow-hidden mb-2.5 h-[160px]">
                     <Image
                       src={cert.certificateImage}
                       alt={`${cert.name} Certificate`}
@@ -797,7 +781,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Action Buttons Stack (One Below The Other) */}
-                  <div className="flex flex-col gap-2 w-full mt-auto">
+                  <div className="flex flex-col gap-1.5 w-full mt-1">
                     <button
                       onClick={() => {
                         if (cert.pdf) {
@@ -808,25 +792,11 @@ export default function HomePage() {
                           );
                         }
                       }}
-                      className="bg-[#153520] hover:bg-[#1c452b] text-white text-xs xl:text-[11px] 2xl:text-xs font-extrabold h-11 px-3 rounded-xl transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
+                      className="bg-[#153520] hover:bg-[#1c452b] text-white text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
                     >
-                      <svg
-                        className="w-4 h-4 text-[#D4A437] shrink-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                        />
+                      <svg className="w-3.5 h-3.5 text-[#D4A437] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
                       <span>VIEW CERTIFICATE</span>
                     </button>
@@ -846,20 +816,10 @@ export default function HomePage() {
                           );
                         }
                       }}
-                      className="bg-white hover:bg-slate-50 border-2 border-[#153520] text-[#153520] text-xs xl:text-[11px] 2xl:text-xs font-extrabold h-11 px-3 rounded-xl transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 hover:shadow-md flex items-center justify-center gap-2 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
+                      className="bg-white hover:bg-slate-50 border border-[#153520] text-[#153520] text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 hover:shadow-md flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
                     >
-                      <svg
-                        className="w-4 h-4 text-[#153520] shrink-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                        />
+                      <svg className="w-3.5 h-3.5 text-[#153520] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
                       <span>DOWNLOAD PDF</span>
                     </button>
@@ -871,7 +831,7 @@ export default function HomePage() {
         </div>
 
         {/* 4. TRUST BANNER (Combined seamlessly inside same section) */}
-        <TrustedQualityBanner />
+        <TrustedQualityBanner className="pt-4 lg:pt-6 pb-2 lg:pb-4" />
       </section>
     </div>
   );
