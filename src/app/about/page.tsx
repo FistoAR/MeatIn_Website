@@ -478,7 +478,7 @@ export default function AboutUsPage() {
               <div className="absolute -inset-2 rounded-full border border-[#1F5A3C]/20 animate-spin-slow" />
               <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden flex items-center justify-center p-1">
                 <Image
-                  src="/logo.webp"
+                  src="/meatin-logo.webp"
                   alt="MEATIN Logo"
                   width={70}
                   height={35}
@@ -556,7 +556,7 @@ export default function AboutUsPage() {
                   <div className="absolute -inset-1.5 sm:-inset-2 rounded-full border border-[#1F5A3C]/20 animate-spin-slow" />
                   <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden flex items-center justify-center p-1">
                     <Image
-                      src="/logo.webp"
+                      src="/meatin-logo.webp"
                       alt="MEATIN logo"
                       width={70}
                       height={35}

@@ -91,6 +91,51 @@ export default function HomePage() {
     restDelta: 0.0001,
   });
 
+  const [isTruckMoving, setIsTruckMoving] = React.useState(false);
+  const stopTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  React.useEffect(() => {
+    const triggerMove = (duration = 200) => {
+      setIsTruckMoving(true);
+      if (stopTimeoutRef.current) clearTimeout(stopTimeoutRef.current);
+      stopTimeoutRef.current = setTimeout(() => {
+        setIsTruckMoving(false);
+      }, duration);
+    };
+
+    let lastY = typeof window !== "undefined" ? window.scrollY : 0;
+    
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (Math.abs(currentY - lastY) > 0.05) {
+        triggerMove(200);
+      }
+      lastY = currentY;
+    };
+
+    const handleWheel = () => triggerMove(200);
+    const handleTouchMove = () => triggerMove(200);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    
+    const unsubscribeX = smoothTruckX.on("change", () => {
+      const velocity = Math.abs(smoothTruckX.getVelocity());
+      if (velocity > 0.01) {
+        triggerMove(200);
+      }
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchmove", handleTouchMove, { passive: true } as any);
+      unsubscribeX();
+      if (stopTimeoutRef.current) clearTimeout(stopTimeoutRef.current);
+    };
+  }, [smoothTruckX]);
+
   const roadScrollX = useTransform(
     section2ScrollProgress,
     [0, 0.35, 1],
@@ -406,7 +451,7 @@ export default function HomePage() {
             {/* Ground Soft Shadow */}
             <div className="absolute -bottom-[4%] left-[4%] right-[4%] h-[12%] bg-black/20 blur-lg rounded-full z-0" />
 
-            {/* Vector Truck SVG with animated rotating tires */}
+            {/* Vector Truck SVG Body & Rotating Tire Layer */}
             <motion.div
               animate={{ y: [-1.5, 1.5, -1.5] }}
               transition={{
@@ -416,14 +461,54 @@ export default function HomePage() {
               }}
               className="absolute inset-0 w-full h-full z-20 pointer-events-none"
             >
-              <Image
-                src="/Home/truck-section/truckWithTire.svg"
-                alt="Meatin Cold Chain Delivery Truck with Animated Rotating Tires"
-                fill
-                unoptimized
-                className="object-contain"
-                priority
-              />
+              <svg
+                width="4096"
+                height="1339"
+                viewBox="0 0 4096 1339"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                className="w-full h-full object-contain"
+              >
+                <style>{`
+                  @keyframes rotateTireWheel {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(-360deg); }
+                  }
+                  .spinning-wheel {
+                    transform-box: fill-box;
+                    transform-origin: center;
+                    animation: rotateTireWheel 0.4s linear infinite;
+                  }
+                `}</style>
+                <rect width="4096" height="1339" fill="url(#pattern0_1246_36)"/>
+                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="280" y="921" width="365" height="365" fill="url(#pattern1_1246_36)"/>
+                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="1239" y="941" width="390" height="390" fill="url(#pattern2_1246_36)"/>
+                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="3446" y="949" width="365" height="365" fill="url(#pattern3_1246_36)"/>
+                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="3044" y="949" width="365" height="365" fill="url(#pattern4_1246_36)"/>
+                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="2642" y="949" width="365" height="365" fill="url(#pattern5_1246_36)"/>
+                <defs>
+                  <pattern id="pattern0_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image0_1246_36" transform="scale(0.000244141 0.000746826)"/>
+                  </pattern>
+                  <pattern id="pattern1_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
+                  </pattern>
+                  <pattern id="pattern2_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
+                  </pattern>
+                  <pattern id="pattern3_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
+                  </pattern>
+                  <pattern id="pattern4_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
+                  </pattern>
+                  <pattern id="pattern5_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
+                  </pattern>
+                  <image id="image0_1246_36" width="4096" height="1339" preserveAspectRatio="none" xlinkHref="/Home/truck-section/truckWithTire.svg"/>
+                </defs>
+              </svg>
             </motion.div>
 
             {/* Trailing Rope Hook attached vertically centered to the back of truck trailer */}

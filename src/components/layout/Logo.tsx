@@ -12,7 +12,7 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'dark', className = '' }) 
     <Link href="/" className={`inline-flex items-center group ${className}`} suppressHydrationWarning>
       <div className="relative flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
         <Image
-          src="/logo.webp"
+          src="/meatin-logo.webp"
           alt="MEATIN Logo"
           width={180}
           height={65}

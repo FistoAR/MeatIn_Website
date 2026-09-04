@@ -113,3 +113,9 @@ nextjs-portal,
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+/* Truck tire motion rotation rules */
+.is-moving .truck-tire,
+.is-moving svg .truck-tire {
+  animation-play-state: running !important;
+}

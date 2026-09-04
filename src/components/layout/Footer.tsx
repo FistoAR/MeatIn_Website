@@ -156,7 +156,7 @@ export const Footer: React.FC = () => {
                 className="inline-block hover:opacity-95 transition-opacity"
               >
                 <Image
-                  src="/logo.webp"
+                  src="/meatin-logo.webp"
                   alt="MEATIN Logo"
                   width={150}
                   height={55}

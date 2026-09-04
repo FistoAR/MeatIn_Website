@@ -3898,8 +3898,8 @@ export default function KnowYourMeatPage() {
                   <Image
                     src={
                       activeMeatType === "beef"
-                        ? "/Product/GoatBeef/beef.webp"
-                        : "/Product/GoatBeef/goat.webp"
+                        ? "/Product/GoatBeef/beef-image.webp"
+                        : "/Product/GoatBeef/goat-image.webp"
                     }
                     alt={activeMeatType}
                     fill
