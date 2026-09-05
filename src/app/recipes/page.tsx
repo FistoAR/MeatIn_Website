@@ -1906,8 +1906,8 @@ export default function RecipesPage() {
                 />
               </motion.div>
             </div>
-            <div className="w-full flex items-center justify-between gap-3 sm:gap-4 overflow-hidden pt-1 pb-0.5">
-              <div className="flex-1 min-w-0 overflow-x-auto scrollbar-none [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-1 pl-1 pr-2">
+            <div className="w-full flex items-center justify-between gap-3 sm:gap-4 pt-1 pb-1">
+              <div className="flex-1 min-w-0 overflow-x-auto scrollbar-none [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-3.5 sm:py-4 px-2 sm:px-3">
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-5 lg:gap-5 xl:gap-6 2xl:gap-7 select-none flex-nowrap">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.5, y: 20 }}
@@ -1924,7 +1924,7 @@ export default function RecipesPage() {
                     className="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0"
                   >
                     <motion.button
-                      whileHover={{ scale: 1.08 }}
+                      whileHover={{ scale: 1.06 }}
                       whileTap={{ scale: 0.95 }}
                       className={`w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] xl:w-[64px] xl:h-[64px] 2xl:w-[76px] 2xl:h-[76px] rounded-full flex items-center justify-center font-extrabold text-[11px] sm:text-xs lg:text-xs xl:text-xs 2xl:text-sm tracking-wider transition-all shrink-0 cursor-pointer text-white shadow-md ${
                         activeFilter === "all" && !selectedRecipe
@@ -1968,7 +1968,7 @@ export default function RecipesPage() {
                         className="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0"
                       >
                         <motion.button
-                          whileHover={{ scale: 1.1 }}
+                          whileHover={{ scale: 1.06 }}
                           whileTap={{ scale: 0.92 }}
                           className={`relative w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] xl:w-[64px] xl:h-[64px] 2xl:w-[76px] 2xl:h-[76px] rounded-full bg-white flex items-center justify-center p-1 sm:p-1.5 shrink-0 cursor-pointer transition-all duration-300 shadow-md ${
                             isSelected || isAutoHighlighted
@@ -2086,7 +2086,7 @@ export default function RecipesPage() {
                         />
                       </div>
                       <div>
-                        <h2 className="text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-bold font-barlow-condensed uppercase text-[#127431] tracking-wide">
+                        <h2 className="text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-bold font-barlow-condensed uppercase text-[#064823] tracking-wide">
                           {part.name} RECIPES
                         </h2>
                         <p className="text-[11px] sm:text-sm lg:text-xs xl:text-sm font-medium text-slate-600 font-manrope">
@@ -2185,7 +2185,7 @@ export default function RecipesPage() {
                           </div>
 
                           {/* Action Button */}
-                          <button className="w-full bg-[#064823] hover:bg-[#0a5e30] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
+                          <button className="w-full bg-[#8DC541] hover:bg-[#7db833] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
                             <span>VIEW RECIPE & STEPS →</span>
                           </button>
                         </div>

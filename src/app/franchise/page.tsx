@@ -251,7 +251,7 @@ export default function FranchisePage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#FDFBF7] text-slate-800 font-manrope selection:bg-[#127431] selection:text-white overflow-x-clip pt-0">
+    <div className="relative min-h-screen bg-[#FDFBF7] text-slate-800 font-manrope selection:bg-[#8DC541] selection:text-white overflow-x-clip pt-0">
       {/* ============================================================ */}
       {/* SECTION 1: HERO & STORE SHOWCASE (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
@@ -313,9 +313,9 @@ export default function FranchisePage() {
               transition={{ duration: 0.7, ease: "easeOut" }}
               className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] [@media(max-height:710px)]:lg:text-[11px] [@media(max-height:620px)]:lg:text-[10px] font-bold text-gray-800 tracking-[3px] uppercase font-manrope"
             >
-              <span className="w-5 md:w-7 h-[2px] bg-gradient-to-r from-transparent via-[#EAB308] to-[#82B224] rounded-full" />
+              <span className="w-5 md:w-7 h-[2px] bg-gradient-to-r from-transparent via-[#F7840F] to-[#8DC541] rounded-full" />
               GROWTH WITH
-              <span className="w-5 md:w-7 h-[2px] bg-gradient-to-l from-transparent via-[#EAB308] to-[#82B224] rounded-full" />
+              <span className="w-5 md:w-7 h-[2px] bg-gradient-to-l from-transparent via-[#F7840F] to-[#8DC541] rounded-full" />
             </motion.div>
 
             {/* Main Brand Title: MEATiN */}
@@ -326,7 +326,7 @@ export default function FranchisePage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
-                className="text-[#82B224] inline-block"
+                className="text-[#8DC541] inline-block"
               >
                 MEAT
               </motion.span>
@@ -649,10 +649,10 @@ export default function FranchisePage() {
                 transition={{ duration: 0.6, delay: 0.2, scale: { duration: 0.25, ease: "easeOut" } }}
                 className="absolute top-[25px] left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:microscope"
-                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
                 <div className="flex flex-col items-start text-left max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
@@ -933,7 +933,7 @@ export default function FranchisePage() {
                     <div className="block text-[#F7840F] mt-0.5 sm:mt-1">
                       {Array.from("KERALA").map((char, index) => (
                         <motion.span
-                          key={`red-${index}`}
+                          key={`kerala-${index}`}
                           initial={{ opacity: 0 }}
                           whileInView={{ opacity: 1 }}
                           viewport={{ once: false, amount: 0.2 }}
@@ -1409,7 +1409,7 @@ export default function FranchisePage() {
                       <div className="flex items-center gap-2.5 pt-1">
                         <div className="w-5 h-5 rounded-full bg-[#EBF3EC] flex items-center justify-center shrink-0">
                           <svg
-                            className="w-3.5 h-3.5 text-[#127431]"
+                            className="w-3.5 h-3.5 text-[#064823]"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -1437,15 +1437,52 @@ export default function FranchisePage() {
         {/* UNIFIED BOTTOM GRAPHICS ASSEMBLY: Bottom Slope Wave + Truck + Mascot Character (Flush to bottom-0) */}
         <div className="absolute bottom-0 left-0 right-0 w-full h-[90px] sm:h-[120px] md:h-[140px] lg:h-[160px] xl:h-[185px] pointer-events-none select-none shrink-0 z-30">
           
-          {/* 1. Bottom Slope Wave Background Transition */}
+          {/* 1. Bottom Slope Wave Background Transition (#064823 & #488E40 Brand Green Variant) */}
           <div className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-hidden">
-            <Image
-              src="/Franchies/bottomSlope.webp"
-              alt="Green Slope Transition"
-              fill
-              priority
-              className="object-cover object-bottom w-full h-full"
-            />
+            <svg
+              className="w-full h-full object-cover object-bottom"
+              viewBox="0 0 1440 185"
+              preserveAspectRatio="none"
+              fill="none"
+            >
+              <defs>
+                <linearGradient id="slopeGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#488E40" />
+                  <stop offset="45%" stopColor="#327A33" />
+                  <stop offset="100%" stopColor="#488E40" />
+                </linearGradient>
+                <linearGradient id="slopeGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#287435" />
+                  <stop offset="50%" stopColor="#1B602A" />
+                  <stop offset="100%" stopColor="#0D5028" />
+                </linearGradient>
+                <linearGradient id="slopeGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#064823" />
+                  <stop offset="50%" stopColor="#0B562B" />
+                  <stop offset="100%" stopColor="#064823" />
+                </linearGradient>
+              </defs>
+
+              {/* Wave 1: Topmost lighter green curve (#488E40 variant) */}
+              <path
+                d="M 0 55 Q 380 135 740 105 Q 1100 75 1440 25 L 1440 185 L 0 185 Z"
+                fill="url(#slopeGrad1)"
+                opacity="0.9"
+              />
+
+              {/* Wave 2: Middle green curve */}
+              <path
+                d="M 0 88 Q 390 152 770 122 Q 1130 92 1440 48 L 1440 185 L 0 185 Z"
+                fill="url(#slopeGrad2)"
+                opacity="0.95"
+              />
+
+              {/* Wave 3: Dark green base (#064823 variant) */}
+              <path
+                d="M 0 120 Q 400 170 800 140 Q 1160 110 1440 72 L 1440 185 L 0 185 Z"
+                fill="url(#slopeGrad3)"
+              />
+            </svg>
           </div>
 
           {/* 2. 3D Green Delivery Truck (Positioned flush on bottom slope wave) */}
@@ -1496,4 +1533,3 @@ export default function FranchisePage() {
     </div>
   );
 }
-  

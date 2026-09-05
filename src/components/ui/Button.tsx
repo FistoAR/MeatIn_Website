@@ -26,15 +26,15 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variants = {
     primary:
-      'bg-meatin-green text-white hover:bg-meatin-green-hover focus:ring-meatin-green shadow-green-glow/20 hover:shadow-green-glow/40',
+      'bg-[#064823] text-white hover:bg-[#0a5e30] focus:ring-[#064823] shadow-md',
     red:
-      'bg-meatin-red text-white hover:bg-meatin-red-hover focus:ring-meatin-red shadow-red-glow/20 hover:shadow-red-glow/40',
+      'bg-[#064823] text-white hover:bg-[#0a5e30] focus:ring-[#064823] shadow-md',
     yellow:
-      'bg-meatin-yellow text-slate-950 font-semibold hover:bg-meatin-yellow-hover focus:ring-meatin-yellow hover:shadow-md',
+      'bg-[#F7840F] text-white font-semibold hover:bg-[#e0750a] focus:ring-[#F7840F] hover:shadow-md',
     outline:
-      'border-2 border-meatin-green text-meatin-green hover:bg-meatin-green hover:text-white focus:ring-meatin-green',
+      'border-2 border-[#064823] text-[#064823] hover:bg-[#064823] hover:text-white focus:ring-[#064823]',
     ghost:
-      'text-slate-700 hover:bg-slate-100 hover:text-meatin-green focus:ring-slate-300 shadow-none',
+      'text-slate-700 hover:bg-slate-100 hover:text-[#064823] focus:ring-slate-300 shadow-none',
   };
 
   const sizes = {
