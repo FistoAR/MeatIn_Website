@@ -139,7 +139,7 @@ export const Footer: React.FC = () => {
       <Container className="relative z-10 max-w-full px-4 sm:px-6 lg:px-8 xl:px-12">
 
         {/* Main Flex Container */}
-        <div className="flex flex-col lg:flex-row justify-between items-center lg:items-stretch gap-6 lg:gap-4 pb-6 border-b border-white/20 w-full">
+        <div className="flex flex-col lg:flex-row justify-between items-center lg:items-stretch gap-6 lg:gap-8 pb-6 border-b border-white/20 w-full">
 
           {/* Column 1: Brand Info & Social Icons */}
           <motion.div
@@ -147,7 +147,7 @@ export const Footer: React.FC = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, amount: 0.1 }}
-            className="w-full lg:w-[22%] space-y-3 shrink-0 lg:border-r lg:border-white/20 lg:pr-6 pb-4 lg:pb-0"
+            className="w-full lg:w-[26%] space-y-3 shrink-0 lg:border-r lg:border-white/20 lg:pr-8 pb-4 lg:pb-0"
           >
             {/* Logo */}
             <motion.div variants={firstItemVariants} className="flex items-center">
@@ -222,7 +222,7 @@ export const Footer: React.FC = () => {
 
           {/* Links and Contact Wrapper */}
           <div
-            className="grid grid-cols-2 sm:grid-cols-3 justify-between items-start gap-4 sm:gap-6 w-full lg:w-[62%]"
+            className="grid grid-cols-1 sm:grid-cols-3 items-start gap-6 lg:gap-8 xl:gap-12 w-full lg:w-[74%] lg:pl-8"
             onMouseEnter={() => setIsUserHovering(true)}
             onMouseLeave={() => setIsUserHovering(false)}
           >
@@ -232,7 +232,7 @@ export const Footer: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, amount: 0.1 }}
               transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-              className="w-full space-y-4 shrink-0 lg:border-r lg:border-white/20 lg:pr-4 pb-2 lg:pb-0"
+              className="w-full space-y-4 shrink-0 lg:border-r lg:border-white/20 lg:pr-6 pb-2 lg:pb-0"
             >
               <div className="border-b-2 border-[#FFB300] pb-1 w-fit">
                 <h3 className="font-chau text-base sm:text-lg text-white tracking-wide uppercase whitespace-nowrap">
@@ -299,7 +299,7 @@ export const Footer: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, amount: 0.1 }}
               transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
-              className="w-full space-y-4 shrink-0 lg:border-r lg:border-white/20 lg:px-4 pb-2 lg:pb-0"
+              className="w-full space-y-4 shrink-0 lg:border-r lg:border-white/20 lg:pr-6 pb-2 lg:pb-0"
             >
               <div className="border-b-2 border-[#FFB300] pb-1 w-fit">
                 <h3 className="font-chau text-base sm:text-lg text-white tracking-wide uppercase whitespace-nowrap">
@@ -366,7 +366,7 @@ export const Footer: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, amount: 0.1 }}
               transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-              className="col-span-2 sm:col-span-1 w-full space-y-4 shrink-0 lg:pl-4 pb-2 lg:pb-0"
+              className="w-full space-y-4 shrink-0 pb-2 lg:pb-0"
             >
               <div className="border-b-2 border-[#FFB300] pb-1 w-fit">
                 <h3 className="font-chau text-base sm:text-lg text-white tracking-wide uppercase whitespace-nowrap">
@@ -420,8 +420,8 @@ export const Footer: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Column 5: Delivery Truck Image */}
-          <motion.div
+          {/* Column 5: Delivery Truck Image (Commented out for now) */}
+          {/* <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, amount: 0.1 }}
@@ -436,7 +436,7 @@ export const Footer: React.FC = () => {
               className="w-36 sm:w-44 lg:w-full h-auto object-contain transition-transform duration-300 hover:scale-105"
               priority
             />
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* Bottom Copyright & Legal Links Bar */}

@@ -218,7 +218,7 @@ export default function AboutUsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F3F3F3] font-manrope overflow-x-hidden">
+    <div className="min-h-screen bg-[#F3F3F3] font-manrope overflow-x-clip">
 
       {/* 1. HERO HEADER BANNER SECTION WITH INTEGRATED STATS */}
       <section className="relative w-full bg-black pt-[6rem] sm:pt-[6.5rem] lg:pt-[7rem] xl:pt-[7.5rem] pb-10 md:pb-16 lg:pb-8 xl:pb-10 2xl:pb-12 overflow-hidden flex flex-col justify-between">
@@ -233,13 +233,16 @@ export default function AboutUsPage() {
               priority
               className="object-cover object-top lg:object-[center_15%]"
             />
-            {/* Soft left-to-right gradient overlay with reduced intensity */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 via-[10%] to-transparent hidden lg:block" />
+            {/* Linear gradient overlay matching Figma design */}
+            <div
+              className="absolute inset-0 pointer-events-none z-10"
+              style={{
+                background:
+                  "linear-gradient(0.65deg, #000000 3.08%, rgba(0, 0, 0, 0.595944) 18.93%, rgba(0, 0, 0, 0) 30.13%), linear-gradient(90deg, #000000 3.22%, rgba(0, 0, 0, 0) 27.74%)",
+              }}
+            />
           </div>
-
-          {/* Bottom shadow gradient for bottom text readability */}
-          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black via-black/75 to-transparent hidden lg:block pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent lg:hidden" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent lg:hidden pointer-events-none" />
         </div>
 
         {/* Top/Middle Heading Content */}
@@ -253,7 +256,7 @@ export default function AboutUsPage() {
             <h2 className="text-[#D4A437] font-extrabold font-manrope tracking-widest text-sm sm:text-md uppercase flex items-center gap-2">
               <span className="w-6 h-[2px] bg-[#D4A437]" /> WHAT IS MEATIN?
             </h2>
-            <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-[5.8vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[54px] xl:text-[68px] 2xl:text-[5.8vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
               <span className="text-white block">WE ENGINEER</span>
               <span className="text-[#8CC63F] block">QUALITY INTO</span>
               <span className="text-white block">EVERY CUT.</span>
@@ -350,15 +353,15 @@ export default function AboutUsPage() {
               className="space-y-4 sm:space-y-5 px-6 sm:px-10 lg:px-12 xl:px-16 2xl:px-24 py-6 sm:py-7 lg:py-10 xl:py-12"
             >
               <div className="space-y-2">
-                <h2 className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-[5.5rem] font-bold font-barlow-condensed tracking-normal uppercase leading-none">
+                <h2 className="text-4xl sm:text-5xl lg:text-[50px] xl:text-[62px] 2xl:text-[5.5rem] font-extrabold font-barlow-condensed tracking-wide uppercase leading-[0.95]">
                   <span className="text-[#1F5A3C] block">WHO IS</span>
                   <span className="text-[#D62828] block">MEATIN?</span>
                 </h2>
-                <div className="h-[3px] w-14 bg-[#1F5A3C]" />
+                <div className="h-[3.5px] w-16 bg-[#1F5A3C]" />
               </div>
 
-              <div className="space-y-4">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#153520]">Building a better meat ecosystem.</h3>
+              <div className="space-y-3">
+                <h3 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-bold text-[#153520]">Building a better meat ecosystem.</h3>
                 <p className="text-xs sm:text-sm lg:text-[13px] xl:text-sm 2xl:text-base text-slate-700 font-medium leading-relaxed max-w-[600px]">
                   MEATIN delivers safe, hygienic meat through scientific processing and controlled cold-chain systems. Built on quality, safety, and Halal-certified standards, our integrated approach ensures reliable production and distribution. From responsible sourcing to advanced infrastructure, we are building a better meat ecosystem.
                 </p>
@@ -489,7 +492,7 @@ export default function AboutUsPage() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch min-h-[600px] lg:min-h-[780px] xl:min-h-[850px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch min-h-auto lg:min-h-[580px] xl:min-h-[635px]">
 
           {/* Mission Box */}
           <motion.div
@@ -497,7 +500,7 @@ export default function AboutUsPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[375px] lg:min-h-[780px] xl:min-h-[850px]"
+            className="relative px-6 pt-11 pb-32 sm:px-10 lg:px-14 xl:px-16 sm:pt-14 lg:pt-16 xl:pt-18 flex flex-col justify-start text-white lg:overflow-hidden min-h-auto lg:min-h-[580px] xl:min-h-[635px]"
           >
             <Image
               src="/AboutUs/mission-bg.webp"
@@ -514,9 +517,9 @@ export default function AboutUsPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, margin: "-50px" }}
-              className="relative z-10 space-y-6"
+              className="relative z-10 space-y-3.5 lg:space-y-4"
             >
-              <motion.div variants={slideInLeft} className="relative w-72 sm:w-80 md:w-96 lg:w-[350px] xl:w-[380px] 2xl:w-[410px] h-24 sm:h-28 md:h-32 lg:h-[135px] xl:h-[145px] 2xl:h-[155px]">
+              <motion.div variants={slideInLeft} className="relative w-52 sm:w-60 lg:w-[245px] xl:w-[280px] 2xl:w-[320px] h-15 sm:h-18 lg:h-[90px] xl:h-[102px] 2xl:h-[118px]">
                 <Image
                   src="/AboutUs/mission-vision/mission-text.svg"
                   alt="Our Mission"
@@ -527,8 +530,8 @@ export default function AboutUsPage() {
               </motion.div>
               <motion.p
                 variants={slideInLeft}
-                style={{ lineHeight: '1.4' }}
-                className="text-lg sm:text-xl lg:text-xl xl:text-[22px] text-black font-normal max-w-xl lg:max-w-[460px] xl:max-w-[500px] relative z-10 font-manrope tracking-tight"
+                style={{ lineHeight: '1.45' }}
+                className="text-sm sm:text-base lg:text-base xl:text-lg 2xl:text-xl text-black font-normal max-w-xl lg:max-w-[420px] xl:max-w-[460px] relative z-10 font-manrope tracking-tight"
               >
                 Build value-added meat products, farming<br className="hidden sm:inline" /> and food supply chains while delivering<br className="hidden sm:inline" /> <span className="text-[#B71C1C] font-semibold">quality, service</span> and a <span className="text-[#B71C1C] font-semibold">sustainable</span> food system.
               </motion.p>
@@ -541,7 +544,7 @@ export default function AboutUsPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="relative px-6 pt-10 pb-44 sm:px-12 lg:px-20 sm:pt-14 lg:pt-16 xl:pt-20 flex flex-col justify-start text-white lg:overflow-hidden min-h-[375px] lg:min-h-[780px] xl:min-h-[850px]"
+            className="relative px-6 pt-11 pb-32 sm:px-10 lg:px-14 xl:px-16 sm:pt-14 lg:pt-16 xl:pt-18 flex flex-col justify-start text-white lg:overflow-hidden min-h-auto lg:min-h-[580px] xl:min-h-[635px]"
           >
             {/* Floating Center MEATIN Logo Badge (Mobile/Tablet only, anchored directly to top seam) */}
             <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-20 lg:hidden">
@@ -582,9 +585,9 @@ export default function AboutUsPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, margin: "-50px" }}
-              className="relative z-10 space-y-6"
+              className="relative z-10 space-y-3.5 lg:space-y-4"
             >
-              <motion.div variants={slideInRight} className="relative w-72 sm:w-80 md:w-96 lg:w-[350px] xl:w-[380px] 2xl:w-[410px] h-24 sm:h-28 md:h-32 lg:h-[135px] xl:h-[145px] 2xl:h-[155px]">
+              <motion.div variants={slideInRight} className="relative w-52 sm:w-60 lg:w-[245px] xl:w-[280px] 2xl:w-[320px] h-15 sm:h-18 lg:h-[90px] xl:h-[102px] 2xl:h-[118px]">
                 <Image
                   src="/AboutUs/mission-vision/vision-text.svg"
                   alt="Our Vision"
@@ -595,8 +598,8 @@ export default function AboutUsPage() {
               </motion.div>
               <motion.p
                 variants={slideInRight}
-                style={{ lineHeight: '1.4' }}
-                className="text-lg sm:text-xl lg:text-xl xl:text-[22px] text-white font-normal max-w-xl lg:max-w-[480px] xl:max-w-[520px] relative z-10 font-manrope tracking-tight"
+                style={{ lineHeight: '1.45' }}
+                className="text-sm sm:text-base lg:text-base xl:text-lg 2xl:text-xl text-white font-normal max-w-xl lg:max-w-[440px] xl:max-w-[480px] relative z-10 font-manrope tracking-tight"
               >
                 Become a leader in <span className="text-[#8CC63F] font-semibold">value-added</span> meat<br className="hidden sm:inline" /> processing and a trusted premium-quality<br className="hidden sm:inline" /> food supplier.
               </motion.p>
@@ -606,35 +609,35 @@ export default function AboutUsPage() {
         </div>
 
         {/* 5. FLOATING CORE VALUES CONTAINER CARD */}
-        <div className="bg-[#d8d8d6] lg:bg-transparent relative lg:absolute lg:bottom-12 left-0 lg:left-1/2 lg:-translate-x-1/2 w-full max-w-[1100px] lg:max-w-[65vw] pt-7 sm:pt-7 md:pt-12 lg:pt-0 px-4 sm:px-6 lg:px-8 mx-auto lg:mx-0 -mt-20 lg:-mt-0 z-20">
+        <div className="bg-[#d8d8d6] lg:bg-transparent relative lg:absolute lg:bottom-6 left-0 lg:left-1/2 lg:-translate-x-1/2 w-full max-w-[950px] lg:max-w-[56vw] pt-6 sm:pt-6 md:pt-10 lg:pt-0 px-4 sm:px-6 lg:px-8 mx-auto lg:mx-0 -mt-16 lg:-mt-0 z-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6 }}
-            className="bg-[#F6F5F0] rounded-[32px] border border-[#E5EAE1] shadow-[0_12px_36px_rgba(0,0,0,0.06)] p-4 sm:p-5 lg:py-5 md:px-3 lg:px-5 xl:px-6 text-center space-y-4"
+            className="bg-[#F6F5F0] rounded-[24px] border border-[#E5EAE1] shadow-[0_10px_28px_rgba(0,0,0,0.06)] p-3.5 sm:p-4 lg:py-3.5 px-4 text-center space-y-2.5"
           >
-            <h3 className="text-2xl sm:text-3xl font-bold text-[#1F5A3C] tracking-tight uppercase flex items-center justify-center gap-3 sm:gap-4 font-barlow leading-none">
-              <span className="w-8 sm:w-12 h-[2px] bg-[#D62828]" /> OUR VALUES <span className="w-8 sm:w-12 h-[2px] bg-[#D62828]" />
+            <h3 className="text-xl sm:text-2xl lg:text-xl xl:text-2xl font-bold text-[#1F5A3C] tracking-tight uppercase flex items-center justify-center gap-3 font-barlow leading-none">
+              <span className="w-6 sm:w-10 h-[2px] bg-[#D62828]" /> OUR VALUES <span className="w-6 sm:w-10 h-[2px] bg-[#D62828]" />
             </h3>
             <motion.div
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, margin: "-50px" }}
-              className="grid grid-cols-1 min-[400px]:grid-cols-2 md:grid-cols-4 lg:grid-cols-[0.85fr_1fr_1fr_1.15fr] gap-y-4 min-[400px]:gap-y-6 md:gap-y-0 divide-y divide-[#7CB325]/30 min-[400px]:divide-y-0 md:divide-x md:divide-[#7CB325] w-full items-start"
+              className="grid grid-cols-1 min-[400px]:grid-cols-2 md:grid-cols-4 lg:grid-cols-[0.85fr_1fr_1fr_1.15fr] gap-y-3 min-[400px]:gap-y-4 md:gap-y-0 divide-y divide-[#7CB325]/30 min-[400px]:divide-y-0 md:divide-x md:divide-[#7CB325] w-full items-start"
             >
               {coreValues.map((val, idx) => {
                 return (
                   <motion.div
                     key={idx}
                     variants={springPop}
-                    className={`flex flex-col items-center text-center px-2 sm:px-3 md:px-4 lg:px-6 pt-3 min-[400px]:pt-4 md:pt-0 ${
+                    className={`flex flex-col items-center text-center px-2 sm:px-3 lg:px-4 pt-2 min-[400px]:pt-3 md:pt-0 ${
                       idx >= 2 ? 'min-[400px]:border-t min-[400px]:border-[#7CB325]/30 md:border-t-0' : ''
                     }`}
                   >
-                    {/* SVG Vector Icon (Direct render without circular bg) */}
-                    <div className="relative w-9 h-9 sm:w-10 sm:h-10 lg:w-10 lg:h-10 xl:w-12 xl:h-12 mb-1.5">
+                    {/* SVG Vector Icon */}
+                    <div className="relative w-7 h-7 sm:w-8 sm:h-8 lg:w-8 lg:h-8 xl:w-9 xl:h-9 mb-1">
                       <Image
                         src={val.icon}
                         alt={val.title}
@@ -642,8 +645,8 @@ export default function AboutUsPage() {
                         className="object-contain"
                       />
                     </div>
-                    <h4 className="text-base sm:text-[17px] lg:text-[15px] xl:text-[18px] 2xl:text-[21px] font-bold text-[#127431] font-barlow tracking-wide uppercase mb-1 leading-none whitespace-nowrap">{val.title}</h4>
-                    <p className="text-xs sm:text-sm lg:text-[13px] xl:text-sm 2xl:text-[15px] text-slate-700 font-normal leading-normal max-w-[140px] sm:max-w-[160px] lg:max-w-[150px] xl:max-w-[185px] mx-auto">
+                    <h4 className="text-sm sm:text-base lg:text-sm xl:text-base 2xl:text-[17px] font-bold text-[#127431] font-barlow tracking-wide uppercase mb-0.5 leading-none whitespace-nowrap">{val.title}</h4>
+                    <p className="text-[11px] sm:text-xs lg:text-[11px] xl:text-xs 2xl:text-xs text-slate-700 font-normal leading-tight max-w-[130px] sm:max-w-[150px] lg:max-w-[140px] xl:max-w-[170px] mx-auto">
                       {val.desc.split('\n').map((line, lIdx) => (
                         <React.Fragment key={lIdx}>
                           {line}

@@ -17,6 +17,7 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   /* Responsive typography & spacing scaling for normal laptop screens (1024px to 1535px) */
