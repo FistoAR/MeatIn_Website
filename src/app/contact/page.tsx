@@ -217,7 +217,7 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-xs sm:text-sm font-bold text-slate-800 tracking-normal mb-0.5">
+                  <h3 className="text-sm sm:text-base font-extrabold text-[#f58309] tracking-wide mb-0.5">
                     {item.label}
                   </h3>
                   <p className="text-xs sm:text-sm font-bold text-[#395B20] transition-colors break-words leading-relaxed font-manrope">
@@ -619,11 +619,11 @@ export default function ContactPage() {
       </section>
 
       {/* 5. REUSABLE CAREERS BANNER */}
-      <div className="py-10 md:py-14">
+      <section className="py-4 md:py-6 w-full">
         <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
           <CareersBanner />
         </div>
-      </div>
+      </section>
 
     </div>
   );
