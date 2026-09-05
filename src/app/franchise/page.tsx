@@ -319,7 +319,7 @@ export default function FranchisePage() {
             </motion.div>
 
             {/* Main Brand Title: MEATIN */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[76px] [@media(max-height:710px)]:lg:text-[54px] [@media(max-height:620px)]:lg:text-[44px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none flex items-center justify-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-[76px] [@media(max-height:710px)]:lg:text-[50px] [@media(max-height:620px)]:lg:text-[40px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none flex items-center justify-center">
               {/* MEAT (Fade in from RIGHT) */}
               <motion.span
                 initial={{ opacity: 0, x: 60 }}
@@ -915,7 +915,7 @@ export default function FranchisePage() {
               <div className="space-y-1.5 sm:space-y-3">
                 {/* Real Letter-by-Letter Typewriter Animation for Heading */}
                 <div>
-                  <h2 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#1F5A3C]">
+                  <h2 className="text-2xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#1F5A3C]">
                     <div className="block">
                       {Array.from("OUR PRESENCE ACROSS").map((char, index) => (
                         <motion.span

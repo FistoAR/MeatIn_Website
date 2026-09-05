@@ -376,7 +376,7 @@ export default function HomePage() {
                   transition={{ duration: 0.8 }}
                   className="space-y-3"
                 >
-                  <h1 className="text-5xl sm:text-7xl lg:text-[6vw] xl:text-[6.5vw] font-bold font-barlow tracking-tight uppercase leading-[0.9] space-y-1">
+                  <h1 className="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-[6.5vw] font-bold font-barlow tracking-tight uppercase leading-[0.9] space-y-1">
                     <span className="block text-[#87B71D]">MEATIN:</span>
                     <span className="block text-white">PURE QUALITY.</span>
                     <span className="block text-white">TRUSTED MEAT.</span>
@@ -607,7 +607,7 @@ export default function HomePage() {
               </h4>
               <div className="h-[1.5px] w-8 sm:w-12 bg-white" />
             </div>
-            <h2 className="text-5xl sm:text-6xl lg:text-[4vw] font-normal font-chau tracking-tight leading-none mb-4">
+            <h2 className="text-3xl sm:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[4vw] font-normal font-chau tracking-tight leading-none mb-4">
               More Than Meat. It&apos;s{" "}
               <span className="text-[#FFC72C]">Our</span> Promise.
             </h2>
@@ -718,7 +718,7 @@ export default function HomePage() {
               </h4>
               <div className="h-[1.5px] w-8 sm:w-12 bg-[#D4A437]" />
             </div>
-            <h2 className="text-5xl sm:text-6xl lg:text-[4vw] font-normal font-chau tracking-tight leading-none mb-4">
+            <h2 className="text-3xl sm:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[4vw] font-normal font-chau tracking-tight leading-none mb-4">
               <span className="text-[#D62828]">Certified</span>{" "}
               <span className="text-[#153520]">Excellence</span>
             </h2>

@@ -194,7 +194,7 @@ export default function CareersBanner() {
             </div>
 
             {/* Heading */}
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[3.4rem] xl:text-[3.8rem] 2xl:text-[4rem] font-extrabold leading-none font-barlow tracking-relaxed mb-4 uppercase">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[4rem] font-extrabold leading-none font-barlow tracking-relaxed mb-4 uppercase">
               <span className="text-[#7CB325] mr-2">Join</span>
               <span className="text-[#153520]">Our Team</span>
             </h2>

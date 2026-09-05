@@ -253,7 +253,7 @@ export default function AboutUsPage() {
             <h2 className="text-[#D4A437] font-extrabold font-manrope tracking-widest text-sm sm:text-md uppercase flex items-center gap-2">
               <span className="w-6 h-[2px] bg-[#D4A437]" /> WHAT IS MEATIN?
             </h2>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[5.6vw] xl:text-[5.8vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
+            <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-[5.8vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
               <span className="text-white block">WE ENGINEER</span>
               <span className="text-[#8CC63F] block">QUALITY INTO</span>
               <span className="text-white block">EVERY CUT.</span>
@@ -278,7 +278,7 @@ export default function AboutUsPage() {
                 return (
                   <motion.div key={idx} variants={springScale} className="flex flex-col items-start lg:items-center text-left lg:text-center px-2 sm:px-4 lg:px-4 col-span-1 last:col-span-2 lg:last:col-span-1">
                     {/* Big Value Number */}
-                    <div className="text-3xl sm:text-4xl lg:text-[2.2vw] xl:text-[2.4rem] font-medium text-[#8CC63F] font-chau tracking-tight leading-none text-left lg:text-center">
+                    <div className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl 2xl:text-[2.4rem] font-medium text-[#8CC63F] font-chau tracking-tight leading-none text-left lg:text-center">
                       <Counter value={stat.value} />
                     </div>
                     {/* Red underline bar under the number */}
@@ -350,7 +350,7 @@ export default function AboutUsPage() {
               className="space-y-4 sm:space-y-5 px-6 sm:px-10 lg:px-12 xl:px-16 2xl:px-24 py-6 sm:py-7 lg:py-10 xl:py-12"
             >
               <div className="space-y-2">
-                <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4vw] xl:text-[4.5vw] 2xl:text-[5.5rem] font-bold font-barlow-condensed tracking-normal uppercase leading-none">
+                <h2 className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-[5.5rem] font-bold font-barlow-condensed tracking-normal uppercase leading-none">
                   <span className="text-[#1F5A3C] block">WHO IS</span>
                   <span className="text-[#D62828] block">MEATIN?</span>
                 </h2>

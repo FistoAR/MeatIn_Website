@@ -1854,7 +1854,7 @@ export default function RecipesPage() {
 
                 {/* Page Title: CHICKEN RECIPES */}
                 <div>
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] xl:text-[60px] 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none flex items-center gap-2 sm:gap-3.5 flex-nowrap whitespace-nowrap">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] xl:text-5xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none flex items-center gap-2 sm:gap-3.5 flex-nowrap whitespace-nowrap">
                     <motion.span
                       initial={{ opacity: 0, x: -40, y: 10 }}
                       animate={{ opacity: 1, x: 0, y: 0 }}

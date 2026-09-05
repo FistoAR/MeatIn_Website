@@ -171,7 +171,7 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
             className="space-y-3"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7.5xl font-extrabold font-barlow tracking-normal uppercase">
+            <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7.5xl font-extrabold font-barlow tracking-normal uppercase">
               <span className="text-[#7CB325] mr-4">CONTACT</span>
               <span className="text-white">US</span>
             </h1>

@@ -4629,7 +4629,7 @@ export default function KnowYourMeatPage() {
                 <span className="text-[14px] sm:text-[16px] lg:text-[18px] font-bold text-[#D62828] tracking-wider uppercase font-manrope block">
                   CHICKEN
                 </span>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-[68px] [@media(min-width:1024px)]:text-[3.6vw] font-bold text-[#14421A] leading-[0.95] tracking-wide font-barlow-condensed uppercase detail-title">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[68px] 2xl:text-[3.6vw] font-bold text-[#14421A] leading-[0.95] tracking-wide font-barlow-condensed uppercase detail-title">
                   CHICKEN{" "}
                   <span className="text-white">
                     {chickenParts[manuallySelectedPartIdx].name}
