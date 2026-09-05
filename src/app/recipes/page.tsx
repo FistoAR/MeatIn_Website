@@ -2185,7 +2185,7 @@ export default function RecipesPage() {
                           </div>
 
                           {/* Action Button */}
-                          <button className="w-full bg-[#8DC541] hover:bg-[#7db833] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
+                          <button className="w-full bg-[#F7840F] hover:bg-[#e0730b] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
                             <span>VIEW RECIPE & STEPS →</span>
                           </button>
                         </div>
