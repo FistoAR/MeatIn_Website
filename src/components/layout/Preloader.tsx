@@ -129,14 +129,14 @@ export const Preloader: React.FC = () => {
           100% { background-position: 200px 0; }
         }
         .glowing-bar {
-          box-shadow: 0 0 12px rgba(21, 53, 32, 0.25);
+          box-shadow: 0 0 12px rgba(6, 72, 35, 0.25);
           background: linear-gradient(
             90deg,
-            #153520 0%,
-            #1f5a3c 30%,
-            #84cc16 50%,
-            #1f5a3c 70%,
-            #153520 100%
+            #064823 0%,
+            #488E40 30%,
+            #8DC541 50%,
+            #488E40 70%,
+            #064823 100%
           );
           background-size: 200px 100%;
           animation: shimmerEffect 1.8s linear infinite;
@@ -144,7 +144,7 @@ export const Preloader: React.FC = () => {
       `}</style>
 
       {/* Compact Round Circular Preloader Container */}
-      <div className="relative w-52 h-52 sm:w-60 sm:h-60 rounded-full flex items-center justify-center p-1 shadow-[0_20px_50px_rgba(21,53,32,0.15)]">
+      <div className="relative w-52 h-52 sm:w-60 sm:h-60 rounded-full flex items-center justify-center p-1 shadow-[0_20px_50px_rgba(6,72,35,0.15)]">
         
         {/* Animated Running Green Circular Border */}
         <div
@@ -152,7 +152,7 @@ export const Preloader: React.FC = () => {
           style={{
             animationDuration: '2.2s',
             padding: '7px',
-            background: 'conic-gradient(from 0deg, rgba(124, 179, 37, 0.15) 0%, #82B224 40%, #395B20 75%, #7CB325 100%)',
+            background: 'conic-gradient(from 0deg, rgba(141, 197, 65, 0.15) 0%, #8DC541 40%, #064823 75%, #488E40 100%)',
             WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
             WebkitMaskComposite: 'xor',
             maskComposite: 'exclude',
@@ -185,7 +185,7 @@ export const Preloader: React.FC = () => {
 
       {/* Percentage Counter Below Circle */}
       <div className="mt-6 flex items-center justify-center">
-        <span className="text-xl sm:text-2xl font-extrabold text-[#153520] tracking-wider font-manrope">
+        <span className="text-xl sm:text-2xl font-extrabold text-[#064823] tracking-wider font-manrope">
           {progress}%
         </span>
       </div>

@@ -344,8 +344,8 @@ export default function FranchisePage() {
             </h1>
           </div>
 
-          {/* Hero Store Interactive Canvas (Prominent & larger on mobile, proportional scaling on desktop) */}
-          <div className="relative w-full max-w-[1600px] h-auto lg:h-[520px] mx-auto flex items-center justify-center my-6 sm:my-10 md:my-14 lg:my-auto origin-center lg:-mt-1 px-2 sm:px-4 lg:px-6 shrink-0">
+          {/* Hero Store Interactive Canvas (Locked 1440:520 aspect-ratio canvas for 100% synchronous scaling across all screens) */}
+          <div className="relative w-full max-w-[1440px] aspect-[1440/520] max-h-[540px] mx-auto flex items-center justify-center my-4 sm:my-6 lg:my-auto shrink-0 select-none">
             {/* Center 3D Store Graphic (Desktop Spotlight Cursor-follow Reveal | Mobile/Tab Clean Display) */}
             <motion.div
               ref={heroImageContainerRef}
@@ -354,7 +354,7 @@ export default function FranchisePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative w-[88%] sm:w-[80%] md:w-[68%] lg:w-[580px] xl:w-[660px] 2xl:w-[720px] max-w-[480px] lg:max-w-none h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500 my-1 lg:my-0 cursor-default lg:cursor-crosshair overflow-hidden rounded-2xl select-none"
+              className="relative w-[88%] sm:w-[80%] md:w-[68%] lg:w-[48%] max-w-[480px] lg:max-w-[690px] h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500 my-1 lg:my-0 cursor-default lg:cursor-crosshair overflow-hidden rounded-2xl select-none"
             >
               {/* Mobile / Tablet View (Standard Single Image Display using hero-main-image.webp) */}
               <div className="block lg:hidden relative w-full h-auto">
@@ -428,7 +428,7 @@ export default function FranchisePage() {
                 }
               }
               .conveyer-dotted-path {
-                stroke-dasharray: 6px 6px !important;
+                stroke-dasharray: 5px 5px !important;
                 animation: conveyerFlow 0.8s linear infinite !important;
               }
             `}</style>
@@ -447,28 +447,28 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <path
-                  d="M 250 57 L 325 57 Q 340 57 340 72 L 340 210 Q 340 225 355 225 L 420 225"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 175 57 L 340 57 Q 355 57 355 72 L 355 210 Q 355 225 370 225 L 435 225"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(420, 225)">
+                <g transform="translate(435, 225)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
 
@@ -480,28 +480,28 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
                 <path
-                  d="M 250 257 L 405 257"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 175 257 L 420 257"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(405, 257)">
+                <g transform="translate(420, 257)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
 
@@ -513,28 +513,28 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
                 <path
-                  d="M 250 457 L 325 457 Q 340 457 340 442 L 340 375 Q 340 360 355 360 L 410 360"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 175 457 L 340 457 Q 355 457 355 442 L 355 375 Q 355 360 370 360 L 425 360"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(410, 360)">
+                <g transform="translate(425, 360)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 1.1 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
 
@@ -546,28 +546,28 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.35 }}
               >
                 <path
-                  d="M 1020 215 L 1085 215 Q 1100 215 1100 200 L 1100 72 Q 1100 57 1115 57 L 1190 57"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 1005 215 L 1070 215 Q 1085 215 1085 200 L 1085 72 Q 1085 57 1100 57 L 1265 57"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1020, 215)">
+                <g transform="translate(1005, 215)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.65 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.35 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
 
@@ -579,28 +579,28 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.65 }}
               >
                 <path
-                  d="M 1030 257 L 1190 257"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 1015 257 L 1265 257"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1030, 257)">
+                <g transform="translate(1015, 257)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.95 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.65 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
 
@@ -612,34 +612,34 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.95 }}
               >
                 <path
-                  d="M 1020 360 L 1085 360 Q 1100 360 1100 375 L 1100 442 Q 1100 457 1115 457 L 1190 457"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 1005 360 L 1070 360 Q 1085 360 1085 375 L 1085 442 Q 1085 457 1100 457 L 1265 457"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1020, 360)">
+                <g transform="translate(1005, 360)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 1.25 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.95 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
             </svg>
 
             {/* LEFT 3 FEATURE BADGES (01, 02, 03) */}
-            <div className="absolute left-2 sm:left-4 lg:left-6 xl:left-10 2xl:left-14 top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[250px] xl:w-[280px]">
+            <div className="absolute left-[1%] 2xl:left-[1.5%] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[180px] xl:w-[210px] 2xl:w-[285px]">
               {/* Feature 01: HYGIENIC PROCESSING */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -647,25 +647,25 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.2, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[25px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[25px] left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:microscope"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-start text-left max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
+                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
                     01
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
+                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     HYGIENIC
                     <br />
                     PROCESSING
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Processed under strict hygiene standards.
                   </p>
                 </div>
@@ -678,25 +678,25 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.5, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[225px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[225px] left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:shield-check"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-start text-left max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
+                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
                     02
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
+                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     PREMIUM
                     <br />
                     QUALITY
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Handpicked for superior freshness.
                   </p>
                 </div>
@@ -709,23 +709,23 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.8, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[425px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[425px] left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:plant"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-start text-left max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
+                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
                     03
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
+                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     FARM FRESH
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Sourced from trusted local farms.
                   </p>
                 </div>
@@ -733,7 +733,7 @@ export default function FranchisePage() {
             </div>
 
             {/* RIGHT 3 FEATURE BADGES (04, 05, 06 - REVERSED MATCHING REFERENCE IMAGE 2) */}
-            <div className="absolute right-2 sm:right-4 lg:right-6 xl:right-10 2xl:right-14 top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[250px] xl:w-[280px]">
+            <div className="absolute right-[1%] 2xl:right-[1.5%] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[180px] xl:w-[210px] 2xl:w-[285px]">
               {/* Feature 04: NO ARTIFICIAL ADDITIVES */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
@@ -741,25 +741,25 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.35, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[25px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[25px] right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:leaf"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-end text-right max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
+                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
                     04
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
+                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     NO ARTIFICIAL
                     <br />
                     ADDITIVES
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Free from artificial preservatives.
                   </p>
                 </div>
@@ -772,25 +772,25 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.65, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[225px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[225px] right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:package"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-end text-right max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
+                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
                     05
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
+                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     FRESHNESS
                     <br />
                     GUARANTEED
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Packed to lock in freshness.
                   </p>
                 </div>
@@ -803,25 +803,25 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.95, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[425px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[425px] right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:truck"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-end text-right max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
+                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
                     06
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
+                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     FAST
                     <br />
                     DELIVERY
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
                     Fresh meat delivered to your doorstep.
                   </p>
                 </div>
@@ -876,18 +876,18 @@ export default function FranchisePage() {
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: i * 0.08 }}
-                  className="group relative bg-white/80 backdrop-blur-md border border-white/90 p-3 sm:p-4 rounded-2xl shadow-[0_8px_25px_rgba(18,116,49,0.05)] hover:shadow-[0_12px_30px_rgba(214,40,40,0.12)] flex flex-col justify-between items-start gap-2.5 transition-all duration-300 overflow-hidden active:scale-[0.98]"
+                  className="group relative bg-white/80 backdrop-blur-md border border-white/90 p-3 sm:p-4 rounded-2xl shadow-[0_8px_25px_rgba(18,116,49,0.05)] hover:shadow-[0_12px_30px_rgba(6,72,35,0.12)] flex flex-col justify-between items-start gap-2.5 transition-all duration-300 overflow-hidden active:scale-[0.98]"
                 >
                   <div className="w-full flex items-center justify-between">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#127431]/10 to-[#82B224]/20 border border-[#82B224]/30 flex items-center justify-center text-[#127431] group-hover:bg-[#127431] group-hover:text-white transition-all duration-300 shadow-sm">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#064823]/10 to-[#8DC541]/20 border border-[#8DC541]/30 flex items-center justify-center text-[#064823] group-hover:bg-[#064823] group-hover:text-white transition-all duration-300 shadow-sm">
                       <Icon icon={feat.icon} className="w-5 h-5" />
                     </div>
-                    <span className="px-2 py-0.5 text-[11px] font-black text-[#D62828] bg-[#D62828]/10 rounded-full border border-[#D62828]/20 font-manrope">
+                    <span className="px-2 py-0.5 text-[11px] font-black text-[#F7840F] bg-[#F7840F]/10 rounded-full border border-[#F7840F]/20 font-manrope">
                       {feat.num}
                     </span>
                   </div>
                   <div>
-                    <h4 className="text-[12px] sm:text-[13px] font-extrabold text-[#153520] uppercase font-manrope tracking-wider leading-tight mt-0.5 group-hover:text-[#127431] transition-colors">
+                    <h4 className="text-[12px] sm:text-[13px] font-extrabold text-[#064823] uppercase font-manrope tracking-wider leading-tight mt-0.5 group-hover:text-[#064823] transition-colors">
                       {feat.title}
                     </h4>
                     <p className="text-[10px] sm:text-[11px] text-slate-600 leading-snug mt-1 font-semibold font-manrope">
@@ -915,7 +915,7 @@ export default function FranchisePage() {
               <div className="space-y-1.5 sm:space-y-3">
                 {/* Real Letter-by-Letter Typewriter Animation for Heading */}
                 <div>
-                  <h2 className="text-2xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#1F5A3C]">
+                  <h2 className="text-2xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#064823]">
                     <div className="block">
                       {Array.from("OUR PRESENCE ACROSS").map((char, index) => (
                         <motion.span
@@ -930,7 +930,7 @@ export default function FranchisePage() {
                         </motion.span>
                       ))}
                     </div>
-                    <div className="block text-[#D62828] mt-0.5 sm:mt-1">
+                    <div className="block text-[#F7840F] mt-0.5 sm:mt-1">
                       {Array.from("KERALA").map((char, index) => (
                         <motion.span
                           key={`red-${index}`}
@@ -952,7 +952,7 @@ export default function FranchisePage() {
                   whileInView={{ opacity: 1, scaleX: 1 }}
                   viewport={{ once: false, amount: 0.2 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
-                  className="w-12 sm:w-16 h-[2.5px] sm:h-[3px] bg-[#D62828] rounded-full origin-left"
+                  className="w-12 sm:w-16 h-[2.5px] sm:h-[3px] bg-[#F7840F] rounded-full origin-left"
                 />
 
                 <motion.p
@@ -980,10 +980,10 @@ export default function FranchisePage() {
                 >
                   <Icon
                     icon="proicons:location"
-                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#D62828] mb-0.5"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#F7840F] mb-0.5"
                   />
                   <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
-                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
+                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#F7840F] font-barlow-condensed leading-none block">
                       100+
                     </span>
                     <span className="text-[9px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5">
@@ -1006,10 +1006,10 @@ export default function FranchisePage() {
                 >
                   <Icon
                     icon="griddy-icons:building"
-                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#D62828] mb-0.5"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#F7840F] mb-0.5"
                   />
                   <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
-                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
+                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#F7840F] font-barlow-condensed leading-none block">
                       14
                     </span>
                     <span className="text-[9px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5">
@@ -1032,10 +1032,10 @@ export default function FranchisePage() {
                 >
                   <Icon
                     icon="ion:people-outline"
-                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#D62828] mb-0.5"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#F7840F] mb-0.5"
                   />
                   <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
-                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
+                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#F7840F] font-barlow-condensed leading-none block">
                       500+
                     </span>
                     <span className="text-[9px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5">
@@ -1059,7 +1059,7 @@ export default function FranchisePage() {
               className="w-full lg:w-[58%] relative z-20 h-[310px] sm:h-[450px] lg:h-[430px] xl:h-[500px] 2xl:h-[560px] [@media(max-height:720px)]:lg:h-[380px] flex items-center justify-center lg:justify-start shrink-0 mt-1 sm:mt-0"
             >
               {/* Dark Green Zoom Controls Pill (Top Right, mobile horizontal / desktop vertical) */}
-              <div className="absolute top-0 sm:top-2 lg:top-2 right-0 sm:right-12 md:right-16 lg:right-24 xl:right-28 z-40 bg-[#153520] text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-2xl shadow-xl flex flex-row sm:flex-col items-center gap-2 sm:gap-2.5 font-manrope text-[9px] sm:text-[11px]">
+              <div className="absolute top-0 sm:top-2 lg:top-2 right-0 sm:right-12 md:right-16 lg:right-24 xl:right-28 z-40 bg-[#064823] text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-2xl shadow-xl flex flex-row sm:flex-col items-center gap-2 sm:gap-2.5 font-manrope text-[9px] sm:text-[11px]">
                 {/* Back Button (Shown ONLY when viewing Kerala District Map) */}
                 {mapMode === "kerala" && (
                   <button
@@ -1067,7 +1067,7 @@ export default function FranchisePage() {
                       setMapMode("full");
                       setSelectedOutlet(null);
                     }}
-                    className="flex flex-col sm:flex-col items-center gap-0.5 text-[#82B224] hover:text-white transition-colors cursor-pointer border-r sm:border-r-0 sm:border-b border-white/15 pr-2 sm:pr-0 sm:pb-2 w-auto sm:w-full"
+                    className="flex flex-col sm:flex-col items-center gap-0.5 text-[#8DC541] hover:text-white transition-colors cursor-pointer border-r sm:border-r-0 sm:border-b border-white/15 pr-2 sm:pr-0 sm:pb-2 w-auto sm:w-full"
                     title="Back to India Map"
                   >
                     <Icon icon="ph:arrow-left-bold" className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -1077,7 +1077,7 @@ export default function FranchisePage() {
 
                 <button
                   onClick={handleZoomIn}
-                  className="flex flex-col items-center gap-0.5 hover:text-[#82B224] transition-colors cursor-pointer"
+                  className="flex flex-col items-center gap-0.5 hover:text-[#8DC541] transition-colors cursor-pointer"
                   title="Zoom In"
                 >
                   <Icon
@@ -1088,7 +1088,7 @@ export default function FranchisePage() {
                 </button>
                 <button
                   onClick={handleZoomOut}
-                  className="flex flex-col items-center gap-0.5 hover:text-[#82B224] transition-colors cursor-pointer"
+                  className="flex flex-col items-center gap-0.5 hover:text-[#8DC541] transition-colors cursor-pointer"
                   title="Zoom Out"
                 >
                   <Icon
@@ -1099,7 +1099,7 @@ export default function FranchisePage() {
                 </button>
                 <button
                   onClick={handleResetZoom}
-                  className="flex flex-col items-center gap-0.5 hover:text-[#82B224] transition-colors cursor-pointer"
+                  className="flex flex-col items-center gap-0.5 hover:text-[#8DC541] transition-colors cursor-pointer"
                   title="Reset View"
                 >
                   <Icon
@@ -1367,7 +1367,7 @@ export default function FranchisePage() {
                     >
                       <path
                         d="M12 0 L12 28"
-                        stroke="#D62828"
+                        stroke="#F7840F"
                         strokeWidth="2"
                         strokeDasharray="3 3"
                       />
@@ -1395,10 +1395,10 @@ export default function FranchisePage() {
                     {/* Popup Content: Address & Phone */}
                     <div className="space-y-3 text-[12px] lg:text-[13px] text-slate-700 font-manrope">
                       <div className="flex items-start gap-2.5">
-                        <div className="w-6 h-6 rounded-full bg-[#FEF2F2] flex items-center justify-center shrink-0 mt-0.5">
+                        <div className="w-6 h-6 rounded-full bg-[#FFF7ED] flex items-center justify-center shrink-0 mt-0.5">
                           <Icon
                             icon="ph:map-pin-fill"
-                            className="w-4 h-4 text-[#D62828]"
+                            className="w-4 h-4 text-[#F7840F]"
                           />
                         </div>
                         <p className="leading-snug text-slate-700 font-medium">
@@ -1496,3 +1496,4 @@ export default function FranchisePage() {
     </div>
   );
 }
+  

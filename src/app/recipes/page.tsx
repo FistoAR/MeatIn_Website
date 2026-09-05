@@ -1816,8 +1816,13 @@ export default function RecipesPage() {
       : chickenPartsList.filter((p) => p.id === activeFilter);
 
   return (
-    <div className="relative min-h-screen bg-gray-50 antialiased flex flex-col selection:bg-[#87B71D] selection:text-white overflow-x-clip pt-0">
-      <section className="relative w-full bg-[#638913] text-white pt-20 sm:pt-22 md:pt-24 pb-2 sm:pb-3 px-4 sm:px-8 lg:px-12 rounded-b-[30px] md:rounded-b-[40px] overflow-hidden select-none shadow-xl min-h-[280px] sm:min-h-[320px] md:min-h-[350px] flex flex-col justify-between">
+    <div className="relative min-h-screen bg-gray-50 antialiased flex flex-col selection:bg-[#8DC541] selection:text-white overflow-x-clip pt-0">
+      <section
+        style={{
+          background: "radial-gradient(circle at center, #488E40 0%, #064823 100%)",
+        }}
+        className="relative w-full text-white pt-20 sm:pt-22 md:pt-24 pb-2 sm:pb-3 px-4 sm:px-8 lg:px-12 rounded-b-[30px] md:rounded-b-[40px] overflow-hidden select-none shadow-xl min-h-[280px] sm:min-h-[320px] md:min-h-[350px] flex flex-col justify-between"
+      >
         <div
           className="absolute inset-0 pointer-events-none bg-repeat z-0 opacity-80"
           style={{
@@ -2118,7 +2123,7 @@ export default function RecipesPage() {
                         className="relative aspect-[3/2.8] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-4 select-none recipe-card-box cursor-pointer border border-slate-200/40"
                       >
                         {/* Top Left Red Category Tag */}
-                        <span className="absolute top-4 left-4 z-20 bg-[#D62828] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
+                        <span className="absolute top-4 left-4 z-20 bg-[#064823] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
                           {recipe.label}
                         </span>
 
@@ -2180,7 +2185,7 @@ export default function RecipesPage() {
                           </div>
 
                           {/* Action Button */}
-                          <button className="w-full bg-[#82B224] hover:bg-[#6C971B] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
+                          <button className="w-full bg-[#064823] hover:bg-[#0a5e30] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
                             <span>VIEW RECIPE & STEPS →</span>
                           </button>
                         </div>
@@ -2252,7 +2257,7 @@ export default function RecipesPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent z-0" />
 
                 <div className="relative z-10 p-6 sm:p-8 space-y-3 font-inter">
-                  <span className="bg-[#D62828] text-white text-xs font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-md inline-block">
+                  <span className="bg-[#064823] text-white text-xs font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-md inline-block">
                     {selectedRecipe.label}
                   </span>
                   <h1 className="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl 2xl:text-[46px] font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight">
@@ -2275,7 +2280,7 @@ export default function RecipesPage() {
                   {/* ABOUT THIS RECIPE */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xs sm:text-sm lg:text-base xl:text-lg font-semibold text-[#1F5807] tracking-wider uppercase font-barlow-condensed">
+                      <h3 className="text-xs sm:text-sm lg:text-base xl:text-lg font-semibold text-[#064823] tracking-wider uppercase font-barlow-condensed">
                         ABOUT THIS RECIPE
                       </h3>
                       <div className="flex items-center gap-3">
@@ -2287,7 +2292,7 @@ export default function RecipesPage() {
                               window.history.replaceState({}, "", "/recipes");
                             }
                           }}
-                          className="bg-[#D62828] hover:bg-red-700 text-white font-bold text-sm uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+                          className="bg-[#064823] hover:bg-[#0a5e30] text-white font-bold text-sm uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                         >
                           <span>←</span>
                           <span>BACK TO ALL RECIPES</span>
@@ -2312,13 +2317,13 @@ export default function RecipesPage() {
                   {/* TIPS */}
                   <div className="space-y-3">
                     <div className="w-full border-b border-dashed border-slate-300" />
-                    <h4 className="text-base sm:text-lg lg:text-base xl:text-lg font-bold text-[#127431] tracking-wider uppercase font-barlow-condensed">
+                    <h4 className="text-base sm:text-lg lg:text-base xl:text-lg font-bold text-[#064823] tracking-wider uppercase font-barlow-condensed">
                       COOKING TIPS & TRICKS
                     </h4>
                     <ul className="space-y-2.5 text-xs sm:text-sm lg:text-xs xl:text-sm font-medium text-slate-700 font-manrope">
                       {selectedRecipe.tips.map((tip, idx) => (
                         <li key={idx} className="flex items-start gap-2.5">
-                          <span className="w-2 h-2 rounded-full bg-[#87B71D] shrink-0 mt-1.5" />
+                          <span className="w-2 h-2 rounded-full bg-[#8DC541] shrink-0 mt-1.5" />
                           <span>{tip}</span>
                         </li>
                       ))}
@@ -2411,7 +2416,7 @@ export default function RecipesPage() {
                         className="object-contain"
                       />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-[#127431] tracking-wider uppercase font-barlow-condensed">
+                    <h3 className="text-xl sm:text-2xl font-bold text-[#064823] tracking-wider uppercase font-barlow-condensed">
                       INGREDIENTS
                     </h3>
                   </div>
@@ -2425,7 +2430,7 @@ export default function RecipesPage() {
                           key={idx}
                           className="flex items-start gap-2.5 text-xs sm:text-sm font-semibold text-slate-800 font-inter"
                         >
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#87B71D] shrink-0 mt-1 shadow-sm" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#8DC541] shrink-0 mt-1 shadow-sm" />
                           <span>{item}</span>
                         </div>
                       ))}
@@ -2437,7 +2442,7 @@ export default function RecipesPage() {
                           key={idx}
                           className="flex items-start gap-2.5 text-xs sm:text-sm font-semibold text-slate-800 font-inter"
                         >
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#87B71D] shrink-0 mt-1 shadow-sm" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#8DC541] shrink-0 mt-1 shadow-sm" />
                           <span>{item}</span>
                         </div>
                       ))}
@@ -2462,7 +2467,7 @@ export default function RecipesPage() {
                         className="object-contain"
                       />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-[#127431] tracking-wider uppercase font-barlow-condensed">
+                    <h3 className="text-xl sm:text-2xl font-bold text-[#064823] tracking-wider uppercase font-barlow-condensed">
                       COOKING STEPS
                     </h3>
                   </div>
@@ -2475,7 +2480,7 @@ export default function RecipesPage() {
                         key={idx}
                         className="flex items-start gap-3.5 text-xs sm:text-sm font-semibold text-slate-800 font-inter leading-relaxed"
                       >
-                        <span className="w-6 h-6 rounded-full bg-[#638913] text-white text-xs font-bold flex items-center justify-center shrink-0 shadow-md font-inter mt-0.5">
+                        <span className="w-6 h-6 rounded-full bg-[#064823] text-white text-xs font-bold flex items-center justify-center shrink-0 shadow-md font-inter mt-0.5">
                           {idx + 1}
                         </span>
                         <span className="pt-0.5">{stepText}</span>

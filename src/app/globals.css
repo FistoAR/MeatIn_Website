@@ -37,13 +37,13 @@
 
 /* Custom Text Selection Highlight */
 ::selection {
-  background-color: #8CC63F !important;
+  background-color: #8DC541 !important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
 ::-moz-selection {
-  background-color: #8CC63F !important;
+  background-color: #8DC541 !important;
   color: #ffffff !important;
 }
 
@@ -85,12 +85,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #153520;
+  background: #064823;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0B1B10;
+  background: #0a5e30;
 }
 
 .font-dm-serif {

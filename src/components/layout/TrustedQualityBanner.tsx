@@ -73,8 +73,8 @@ export default function TrustedQualityBanner({ className }: { className?: string
               variants={fadeInUp}
               className="text-[25px] min-[400px]:text-[29px] sm:text-[34px] lg:text-[38px] xl:text-[44px] font-bold font-barlow-condensed leading-[1.05] tracking-tight pr-24 min-[450px]:pr-28 sm:pr-32 lg:pr-0"
             >
-              <span className="text-[#122A1A] block">Trusted Quality</span>
-              <span className="text-[#D62828] block mt-0.5">Delivery Fresh.</span>
+              <span className="text-[#064823] block">Trusted Quality</span>
+              <span className="text-[#F7840F] block mt-0.5">Delivery Fresh.</span>
             </motion.h2>
 
             <motion.p
@@ -87,7 +87,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
             <motion.div variants={fadeInUp} className="pt-0.5">
               <Link
                 href="/know-your-meat"
-                className="inline-flex items-center gap-1 px-3 sm:px-5 py-1 sm:py-1.5 bg-[#122A1A] hover:bg-[#1C422A] text-white rounded-md font-bold text-[10px] sm:text-xs md:text-sm transition-all duration-300 shadow-md hover:shadow-xl hover:scale-[1.02] group"
+                className="inline-flex items-center gap-1 px-3 sm:px-5 py-1 sm:py-1.5 bg-[#064823] hover:bg-[#0a5e30] text-white rounded-md font-bold text-[10px] sm:text-xs md:text-sm transition-all duration-300 shadow-md hover:shadow-xl hover:scale-[1.02] group"
               >
                 <span>Shop Now</span>
                 <span className="text-[10px] sm:text-xs md:text-sm transition-transform duration-300 group-hover:translate-x-1">→</span>

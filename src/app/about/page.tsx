@@ -258,7 +258,7 @@ export default function AboutUsPage() {
             </h2>
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[54px] xl:text-[68px] 2xl:text-[5.8vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
               <span className="text-white block">WE ENGINEER</span>
-              <span className="text-[#8CC63F] block">QUALITY INTO</span>
+              <span className="text-[#8DC541] block">QUALITY INTO</span>
               <span className="text-white block">EVERY CUT.</span>
             </h1>
             <p className="text-slate-100 text-xs sm:text-sm md:text-base font-semibold max-w-xl leading-relaxed mt-4">
@@ -281,11 +281,11 @@ export default function AboutUsPage() {
                 return (
                   <motion.div key={idx} variants={springScale} className="flex flex-col items-start lg:items-center text-left lg:text-center px-2 sm:px-4 lg:px-4 col-span-1 last:col-span-2 lg:last:col-span-1">
                     {/* Big Value Number */}
-                    <div className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl 2xl:text-[2.4rem] font-medium text-[#8CC63F] font-chau tracking-tight leading-none text-left lg:text-center">
+                    <div className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl 2xl:text-[2.4rem] font-medium text-[#8DC541] font-chau tracking-tight leading-none text-left lg:text-center">
                       <Counter value={stat.value} />
                     </div>
                     {/* Red underline bar under the number */}
-                    <div className="w-10 sm:w-12 lg:w-10 h-[2px] bg-[#D62828] mt-1.5 mb-3" />
+                    <div className="w-10 sm:w-12 lg:w-10 h-[2px] bg-[#F7840F] mt-1.5 mb-3" />
                     {/* Icon + Stacked Labels */}
                     <div className="flex items-center lg:justify-center gap-2 sm:gap-2.5 w-full">
                       <div className="w-8 h-8 sm:w-9 sm:h-9 lg:w-8 lg:h-8 shrink-0 relative">
@@ -354,14 +354,14 @@ export default function AboutUsPage() {
             >
               <div className="space-y-2">
                 <h2 className="text-4xl sm:text-5xl lg:text-[50px] xl:text-[62px] 2xl:text-[5.5rem] font-extrabold font-barlow-condensed tracking-wide uppercase leading-[0.95]">
-                  <span className="text-[#1F5A3C] block">WHO IS</span>
-                  <span className="text-[#D62828] block normal-case">MEATiN?</span>
+                  <span className="text-[#064823] block">WHO IS</span>
+                  <span className="text-[#F7840F] block normal-case">MEATiN?</span>
                 </h2>
-                <div className="h-[3.5px] w-16 bg-[#1F5A3C]" />
+                <div className="h-[3.5px] w-16 bg-[#064823]" />
               </div>
 
               <div className="space-y-3">
-                <h3 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-bold text-[#153520]">Building a better meat ecosystem.</h3>
+                <h3 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-bold text-[#064823]">Building a better meat ecosystem.</h3>
                 <p className="text-xs sm:text-sm lg:text-[13px] xl:text-sm 2xl:text-base text-slate-700 font-medium leading-relaxed max-w-[600px]">
                   MEATiN delivers safe, hygienic meat through scientific processing and controlled cold-chain systems. Built on quality, safety, and Halal-certified standards, our integrated approach ensures reliable production and distribution. From responsible sourcing to advanced infrastructure, we are building a better meat ecosystem.
                 </p>
@@ -478,7 +478,7 @@ export default function AboutUsPage() {
           >
             <div className="relative w-24 h-24 rounded-full bg-white flex items-center justify-center shadow-lg border border-white/20">
               {/* Decorative concentric thin circle */}
-              <div className="absolute -inset-2 rounded-full border border-[#1F5A3C]/20 animate-spin-slow" />
+              <div className="absolute -inset-2 rounded-full border border-[#064823]/20 animate-spin-slow" />
               <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden flex items-center justify-center p-1">
                 <Image
                   src="/meatin-logo.webp"
@@ -533,7 +533,7 @@ export default function AboutUsPage() {
                 style={{ lineHeight: '1.45' }}
                 className="text-sm sm:text-base lg:text-base xl:text-lg 2xl:text-xl text-black font-normal max-w-xl lg:max-w-[420px] xl:max-w-[460px] relative z-10 font-manrope tracking-tight"
               >
-                Build value-added meat products, farming<br className="hidden sm:inline" /> and food supply chains while delivering<br className="hidden sm:inline" /> <span className="text-[#B71C1C] font-semibold">quality, service</span> and a <span className="text-[#B71C1C] font-semibold">sustainable</span> food system.
+                Build value-added meat products, farming<br className="hidden sm:inline" /> and food supply chains while delivering<br className="hidden sm:inline" /> <span className="text-[#F7840F] font-semibold">quality, service</span> and a <span className="text-[#F7840F] font-semibold">sustainable</span> food system.
               </motion.p>
             </motion.div>
           </motion.div>
@@ -556,7 +556,7 @@ export default function AboutUsPage() {
                 className="w-full h-full"
               >
                 <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white flex items-center justify-center shadow-lg border border-white/20">
-                  <div className="absolute -inset-1.5 sm:-inset-2 rounded-full border border-[#1F5A3C]/20 animate-spin-slow" />
+                  <div className="absolute -inset-1.5 sm:-inset-2 rounded-full border border-[#064823]/20 animate-spin-slow" />
                   <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden flex items-center justify-center p-1">
                     <Image
                       src="/meatin-logo.webp"
@@ -601,7 +601,7 @@ export default function AboutUsPage() {
                 style={{ lineHeight: '1.45' }}
                 className="text-sm sm:text-base lg:text-base xl:text-lg 2xl:text-xl text-white font-normal max-w-xl lg:max-w-[440px] xl:max-w-[480px] relative z-10 font-manrope tracking-tight"
               >
-                Become a leader in <span className="text-[#8CC63F] font-semibold">value-added</span> meat<br className="hidden sm:inline" /> processing and a trusted premium-quality<br className="hidden sm:inline" /> food supplier.
+                Become a leader in <span className="text-[#8DC541] font-semibold">value-added</span> meat<br className="hidden sm:inline" /> processing and a trusted premium-quality<br className="hidden sm:inline" /> food supplier.
               </motion.p>
             </motion.div>
           </motion.div>
@@ -617,15 +617,15 @@ export default function AboutUsPage() {
             transition={{ duration: 0.6 }}
             className="bg-[#F6F5F0] rounded-[24px] border border-[#E5EAE1] shadow-[0_10px_28px_rgba(0,0,0,0.06)] p-3.5 sm:p-4 lg:py-3.5 px-4 text-center space-y-2.5"
           >
-            <h3 className="text-xl sm:text-2xl lg:text-xl xl:text-2xl font-bold text-[#1F5A3C] tracking-tight uppercase flex items-center justify-center gap-3 font-barlow leading-none">
-              <span className="w-6 sm:w-10 h-[2px] bg-[#D62828]" /> OUR VALUES <span className="w-6 sm:w-10 h-[2px] bg-[#D62828]" />
+            <h3 className="text-xl sm:text-2xl lg:text-xl xl:text-2xl font-bold text-[#064823] tracking-tight uppercase flex items-center justify-center gap-3 font-barlow leading-none">
+              <span className="w-6 sm:w-10 h-[2px] bg-[#F7840F]" /> OUR VALUES <span className="w-6 sm:w-10 h-[2px] bg-[#F7840F]" />
             </h3>
             <motion.div
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, margin: "-50px" }}
-              className="grid grid-cols-1 min-[400px]:grid-cols-2 md:grid-cols-4 lg:grid-cols-[0.85fr_1fr_1fr_1.15fr] gap-y-3 min-[400px]:gap-y-4 md:gap-y-0 divide-y divide-[#7CB325]/30 min-[400px]:divide-y-0 md:divide-x md:divide-[#7CB325] w-full items-start"
+              className="grid grid-cols-1 min-[400px]:grid-cols-2 md:grid-cols-4 lg:grid-cols-[0.85fr_1fr_1fr_1.15fr] gap-y-3 min-[400px]:gap-y-4 md:gap-y-0 divide-y divide-[#8DC541]/30 min-[400px]:divide-y-0 md:divide-x md:divide-[#8DC541] w-full items-start"
             >
               {coreValues.map((val, idx) => {
                 return (
@@ -633,7 +633,7 @@ export default function AboutUsPage() {
                     key={idx}
                     variants={springPop}
                     className={`flex flex-col items-center text-center px-2 sm:px-3 lg:px-4 pt-2 min-[400px]:pt-3 md:pt-0 ${
-                      idx >= 2 ? 'min-[400px]:border-t min-[400px]:border-[#7CB325]/30 md:border-t-0' : ''
+                      idx >= 2 ? 'min-[400px]:border-t min-[400px]:border-[#8DC541]/30 md:border-t-0' : ''
                     }`}
                   >
                     {/* SVG Vector Icon */}
@@ -645,7 +645,7 @@ export default function AboutUsPage() {
                         className="object-contain"
                       />
                     </div>
-                    <h4 className="text-sm sm:text-base lg:text-sm xl:text-base 2xl:text-[17px] font-bold text-[#127431] font-barlow tracking-wide uppercase mb-0.5 leading-none whitespace-nowrap">{val.title}</h4>
+                    <h4 className="text-sm sm:text-base lg:text-sm xl:text-base 2xl:text-[17px] font-bold text-[#064823] font-barlow tracking-wide uppercase mb-0.5 leading-none whitespace-nowrap">{val.title}</h4>
                     <p className="text-[11px] sm:text-xs lg:text-[11px] xl:text-xs 2xl:text-xs text-slate-700 font-normal leading-tight max-w-[130px] sm:max-w-[150px] lg:max-w-[140px] xl:max-w-[170px] mx-auto">
                       {val.desc.split('\n').map((line, lIdx) => (
                         <React.Fragment key={lIdx}>

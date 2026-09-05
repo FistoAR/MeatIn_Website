@@ -179,7 +179,7 @@ export default function HomePage() {
 
   React.useEffect(() => {
     // Preload all frames to avoid flickering
-    const totalFrames = 240;
+    const totalFrames = 404;
     (window as any).__HERO_FRAMES__ = (window as any).__HERO_FRAMES__ || {};
     for (let i = 1; i <= totalFrames; i++) {
       const frameStr = String(i).padStart(5, "0");
@@ -262,7 +262,7 @@ export default function HomePage() {
   }, [currentFrame]);
 
   useMotionValueEvent(smoothProgress, "change", (latest) => {
-    const totalFrames = 240;
+    const totalFrames = 404;
     const frame = Math.min(
       totalFrames,
       Math.max(1, Math.floor(latest * totalFrames)),
@@ -377,7 +377,7 @@ export default function HomePage() {
                   className="space-y-3"
                 >
                   <h1 className="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-[6.5vw] font-bold font-barlow tracking-tight uppercase leading-[0.9] space-y-1">
-                    <span className="block text-[#87B71D] normal-case">MEATiN:</span>
+                    <span className="block text-[#8DC541] normal-case">MEATiN:</span>
                     <span className="block text-white">PURE QUALITY.</span>
                     <span className="block text-white">TRUSTED MEAT.</span>
                   </h1>
@@ -390,9 +390,9 @@ export default function HomePage() {
                 >
                   <p className="text-white text-base sm:text-lg md:text-xl font-normal leading-relaxed font-inter max-w-xl">
                     South India&apos;s{" "}
-                    <span className="text-[#87B71D] font-bold">Largest</span>{" "}
+                    <span className="text-[#8DC541] font-bold">Largest</span>{" "}
                     Multi Species{" "}
-                    <span className="text-[#87B71D] font-bold">Meat</span>{" "}
+                    <span className="text-[#8DC541] font-bold">Meat</span>{" "}
                     Processing Plant
                   </p>
                 </motion.div>
@@ -579,7 +579,7 @@ export default function HomePage() {
       <section
         className="relative w-full pt-6 pb-6 lg:pt-8 lg:pb-8 2xl:pt-10 2xl:pb-10 text-white overflow-hidden"
         style={{
-          background: "radial-gradient(circle at center, #458A3F 0%, #064823 100%)",
+          background: "radial-gradient(circle at center, #488E40 0%, #064823 100%)",
         }}
       >
         {/* Absolute Background Image Layer */}
@@ -609,7 +609,7 @@ export default function HomePage() {
             </div>
             <h2 className="text-2xl sm:text-4xl lg:text-3xl xl:text-4xl 2xl:text-[3.5vw] font-normal font-chau tracking-tight leading-none mb-2">
               More Than Meat. It&apos;s{" "}
-              <span className="text-[#FFC72C]">Our</span> Promise.
+              <span className="text-[#F7840F]">Our</span> Promise.
             </h2>
             <p className="text-[#F6F5F0]/90 text-xs sm:text-sm xl:text-sm 2xl:text-base max-w-2xl mx-auto font-manrope font-semibold leading-relaxed">
               From farm to fork, every step we take is guided by science, driven
@@ -656,7 +656,7 @@ export default function HomePage() {
                     </div>
 
                     {/* Title */}
-                    <h4 className="relative z-20 text-[#153520] font-extrabold text-[0.82rem] xl:text-[0.82rem] 2xl:text-[1.05rem] tracking-wide uppercase font-manrope leading-[1.3] text-center px-1.5 max-w-[95%]">
+                    <h4 className="relative z-20 text-[#064823] font-extrabold text-[0.82rem] xl:text-[0.82rem] 2xl:text-[1.05rem] tracking-wide uppercase font-manrope leading-[1.3] text-center px-1.5 max-w-[95%]">
                       {step.title}
                     </h4>
                   </div>
@@ -713,14 +713,14 @@ export default function HomePage() {
           >
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="h-[1.5px] w-8 sm:w-12 bg-[#D4A437]" />
-              <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#153520] font-manrope">
+              <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#064823] font-manrope">
                 OUR PROMISE
               </h4>
               <div className="h-[1.5px] w-8 sm:w-12 bg-[#D4A437]" />
             </div>
             <h2 className="text-3xl sm:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[4vw] font-normal font-chau tracking-tight leading-none mb-4">
-              <span className="text-[#D62828]">Certified</span>{" "}
-              <span className="text-[#153520]">Excellence</span>
+              <span className="text-[#F7840F]">Certified</span>{" "}
+              <span className="text-[#064823]">Excellence</span>
             </h2>
             <p className="text-slate-700 text-sm sm:text-base max-w-xl mx-auto font-manrope font-semibold leading-relaxed">
               Our commitment to international food safety and quality standards.
@@ -745,7 +745,7 @@ export default function HomePage() {
                 <motion.div
                   key={idx}
                   variants={fadeInUp}
-                  className="bg-white rounded-[28px] border border-slate-200/80 shadow-[0_12px_36px_rgba(0,0,0,0.035)] px-3.5 py-4 pt-12 flex flex-col justify-between items-center text-center relative hover:scale-[1.03] hover:shadow-[0_20px_48px_rgba(0,0,0,0.08)] hover:border-[#1F5A3C]/20 transition-all duration-300 ease-out min-h-[380px] certificate-parent-card"
+                  className="bg-white rounded-[28px] border border-slate-200/80 shadow-[0_12px_36px_rgba(0,0,0,0.035)] px-3.5 py-4 pt-12 flex flex-col justify-between items-center text-center relative hover:scale-[1.03] hover:shadow-[0_20px_48px_rgba(0,0,0,0.08)] hover:border-[#064823]/20 transition-all duration-300 ease-out min-h-[380px] certificate-parent-card"
                 >
                   {/* Top Circle logo overlay badge */}
                   <div className="w-20 h-20 bg-white border border-slate-100 rounded-full flex items-center justify-center p-2 shadow-lg shadow-slate-200/60 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
@@ -761,8 +761,8 @@ export default function HomePage() {
 
                   {/* Card Header Content */}
                   <div className="flex flex-col items-center w-full">
-                    <h4 className="text-xl sm:text-2xl font-extrabold text-[#1F5A3C] font-barlow tracking-wide uppercase leading-none mb-1">{cert.name}</h4>
-                    <span className="inline-block bg-[#7CB325] text-white px-3 py-0.5 rounded text-[10px] font-black uppercase tracking-wider mb-2 leading-none">
+                    <h4 className="text-xl sm:text-2xl font-extrabold text-[#064823] font-barlow tracking-wide uppercase leading-none mb-1">{cert.name}</h4>
+                    <span className="inline-block bg-[#8DC541] text-white px-3 py-0.5 rounded text-[10px] font-black uppercase tracking-wider mb-2 leading-none">
                       {cert.sub}
                     </span>
                     <p className="text-[11px] text-slate-500 font-bold sm:max-w-none  mb-2 leading-normal flex items-center justify-center min-h-[32px]">
@@ -792,7 +792,7 @@ export default function HomePage() {
                           );
                         }
                       }}
-                      className="bg-[#153520] hover:bg-[#1c452b] text-white text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
+                      className="bg-[#064823] hover:bg-[#0a5e30] text-white text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
                     >
                       <svg className="w-3.5 h-3.5 text-[#D4A437] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -816,9 +816,9 @@ export default function HomePage() {
                           );
                         }
                       }}
-                      className="bg-white hover:bg-slate-50 border border-[#153520] text-[#153520] text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 hover:shadow-md flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
+                      className="bg-white hover:bg-slate-50 border border-[#064823] text-[#064823] text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 hover:shadow-md flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
                     >
-                      <svg className="w-3.5 h-3.5 text-[#153520] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <svg className="w-3.5 h-3.5 text-[#064823] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
                       <span>DOWNLOAD PDF</span>

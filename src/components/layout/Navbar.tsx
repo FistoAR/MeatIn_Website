@@ -50,13 +50,13 @@ export const Navbar: React.FC = () => {
 
   const getLinkColorClass = (isActive: boolean) => {
     if (isActive) {
-      return 'text-[#D62828]';
+      return 'text-[#064823] font-black';
     }
-    return 'text-slate-800 hover:text-[#1F5A3C]';
+    return 'text-slate-800 hover:text-[#064823]';
   };
 
   const getUnderlineColorClass = () => {
-    return 'bg-[#D62828]';
+    return 'bg-[#F7840F]';
   };
 
   const hamburgerColorClass = 'text-slate-800 hover:bg-slate-100';
@@ -95,7 +95,7 @@ export const Navbar: React.FC = () => {
             <Link
               href="/contact"
               suppressHydrationWarning
-              className="hidden sm:inline-block bg-[#D62828] hover:bg-red-700 text-white font-bold font-inter text-xs lg:text-xs xl:text-xs 2xl:text-[0.75vw] px-4 lg:px-4 py-2 lg:py-2 rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95"
+              className="hidden sm:inline-block bg-[#064823] hover:bg-[#0a5e30] text-white font-bold font-inter text-xs lg:text-xs xl:text-xs 2xl:text-[0.75vw] px-4 lg:px-4 py-2 lg:py-2 rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95"
             >
               Enquiry Now
             </Link>
@@ -152,13 +152,13 @@ export const Navbar: React.FC = () => {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold font-inter tracking-wider transition-all ${
                   isActive
-                    ? 'bg-[#D62828]/10 text-[#D62828] font-extrabold border-l-4 border-[#D62828]'
-                    : 'text-slate-800 hover:bg-slate-50 hover:text-[#1F5A3C]'
+                    ? 'bg-[#064823]/10 text-[#064823] font-extrabold border-l-4 border-[#064823]'
+                    : 'text-slate-800 hover:bg-slate-50 hover:text-[#064823]'
                 }`}
               >
                 <span>{item.label}</span>
                 {isActive && (
-                  <span className="w-2 h-2 rounded-full bg-[#D62828]" />
+                  <span className="w-2 h-2 rounded-full bg-[#F7840F]" />
                 )}
               </Link>
             );
@@ -168,7 +168,7 @@ export const Navbar: React.FC = () => {
               href="/contact"
               suppressHydrationWarning
               onClick={() => setMobileMenuOpen(false)}
-              className="block w-full text-center bg-[#D62828] hover:bg-red-700 text-white font-bold font-inter text-xs py-3 rounded-xl uppercase tracking-wider transition-all"
+              className="block w-full text-center bg-[#064823] hover:bg-[#0a5e30] text-white font-bold font-inter text-xs py-3 rounded-xl uppercase tracking-wider transition-all shadow-md"
             >
               Enquiry Now
             </Link>

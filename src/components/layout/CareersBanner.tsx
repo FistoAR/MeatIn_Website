@@ -215,14 +215,14 @@ export default function CareersBanner() {
             {/* Header Title & Subtitle */}
             <div className="flex flex-col items-start space-y-1.5">
               <div className="relative flex flex-col items-start">
-                <span className="text-[#153520] font-extrabold text-xs tracking-widest uppercase font-manrope">
+                <span className="text-[#064823] font-extrabold text-xs tracking-widest uppercase font-manrope">
                   Careers
                 </span>
-                <div className="h-[2px] w-[50%] bg-[#153520] mt-0.5" />
+                <div className="h-[2px] w-[50%] bg-[#064823] mt-0.5" />
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold font-barlow tracking-relaxed uppercase leading-tight">
-                <span className="text-[#7CB325] mr-2">Join</span>
-                <span className="text-[#153520]">Our Team</span>
+                <span className="text-[#8DC541] mr-2">Join</span>
+                <span className="text-[#064823]">Our Team</span>
               </h2>
               <p className="text-slate-800 font-medium text-xs sm:text-sm leading-relaxed font-manrope pt-0.5">
                 Build your career with MEATiN. We're always looking for passionate and driven people to grow with us.
@@ -238,12 +238,12 @@ export default function CareersBanner() {
                 transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
                 className="bg-white/90 border border-slate-200/80 rounded-xl p-2.5 flex flex-col items-center text-center shadow-2xs"
               >
-                <div className="w-7 h-7 rounded-full bg-[#7CB325]/15 flex items-center justify-center text-[#395B20] mb-1">
+                <div className="w-7 h-7 rounded-full bg-[#8DC541]/15 flex items-center justify-center text-[#064823] mb-1">
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" />
                   </svg>
                 </div>
-                <span className="text-[11px] font-extrabold text-[#7CB325] font-barlow uppercase tracking-wider">Grow</span>
+                <span className="text-[11px] font-extrabold text-[#8DC541] font-barlow uppercase tracking-wider">Grow</span>
                 <span className="text-[9px] text-slate-500 font-medium font-manrope mt-0.5 leading-tight">Build career</span>
               </motion.div>
 
@@ -254,12 +254,12 @@ export default function CareersBanner() {
                 transition={{ repeat: Infinity, duration: 3.4, ease: "easeInOut", delay: 0.2 }}
                 className="bg-white/90 border border-slate-200/80 rounded-xl p-2.5 flex flex-col items-center text-center shadow-2xs"
               >
-                <div className="w-7 h-7 rounded-full bg-[#7CB325]/15 flex items-center justify-center text-[#395B20] mb-1">
+                <div className="w-7 h-7 rounded-full bg-[#8DC541]/15 flex items-center justify-center text-[#064823] mb-1">
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
                   </svg>
                 </div>
-                <span className="text-[11px] font-extrabold text-[#7CB325] font-barlow uppercase tracking-wider">Learn</span>
+                <span className="text-[11px] font-extrabold text-[#8DC541] font-barlow uppercase tracking-wider">Learn</span>
                 <span className="text-[9px] text-slate-500 font-medium font-manrope mt-0.5 leading-tight">Develop skills</span>
               </motion.div>
 
@@ -270,12 +270,12 @@ export default function CareersBanner() {
                 transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut", delay: 0.4 }}
                 className="bg-white/90 border border-slate-200/80 rounded-xl p-2.5 flex flex-col items-center text-center shadow-2xs"
               >
-                <div className="w-7 h-7 rounded-full bg-[#7CB325]/15 flex items-center justify-center text-[#395B20] mb-1">
+                <div className="w-7 h-7 rounded-full bg-[#8DC541]/15 flex items-center justify-center text-[#064823] mb-1">
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
                   </svg>
                 </div>
-                <span className="text-[11px] font-extrabold text-[#7CB325] font-barlow uppercase tracking-wider">Belong</span>
+                <span className="text-[11px] font-extrabold text-[#8DC541] font-barlow uppercase tracking-wider">Belong</span>
                 <span className="text-[9px] text-slate-500 font-medium font-manrope mt-0.5 leading-tight">Be part of team</span>
               </motion.div>
             </div>
@@ -286,7 +286,7 @@ export default function CareersBanner() {
                 onClick={() => setIsModalOpen(true)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
-                className="w-full bg-[#395B20] hover:bg-[#1E3C11] text-white font-bold text-xs sm:text-sm px-5 py-3.5 rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95 flex items-center justify-center gap-2.5 font-manrope group"
+                className="w-full bg-[#064823] hover:bg-[#0a5e30] text-white font-bold text-xs sm:text-sm px-5 py-3.5 rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95 flex items-center justify-center gap-2.5 font-manrope group"
               >
                 <span>Apply Now</span>
                 <motion.div
@@ -341,10 +341,10 @@ export default function CareersBanner() {
                 <div className="overflow-y-auto pr-1 flex flex-col h-full">
                   {/* Header Title with Briefcase Icon */}
                   <div className="flex items-center gap-3 mb-6 pb-2 border-b border-slate-100">
-                    <div className="w-10 h-10 rounded-full bg-[#FAF9F5] flex items-center justify-center text-[#395B20] border border-[#EBEAE5]">
+                    <div className="w-10 h-10 rounded-full bg-[#FAF9F5] flex items-center justify-center text-[#064823] border border-[#EBEAE5]">
                       <BriefcaseBusiness className="w-5 h-5" />
                     </div>
-                    <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#153520] font-manrope uppercase">
+                    <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#064823] font-manrope uppercase">
                       Apply For A Position
                     </h2>
                   </div>
@@ -356,7 +356,7 @@ export default function CareersBanner() {
                       <div className="space-y-1">
                         <label className="text-xs sm:text-sm font-bold text-slate-700">Full Name <span className="text-[#D62828]">*</span></label>
                         <div className="relative">
-                          <User className="absolute left-3 top-1/2 -translate-y-1/2 text-[#395B20] w-4 h-4" />
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 text-[#064823] w-4 h-4" />
                           <input
                             type="text"
                             placeholder="Enter your full name"
@@ -371,7 +371,7 @@ export default function CareersBanner() {
                                 });
                               }
                             }}
-                            className={`w-full pl-9 pr-4 py-2.5 sm:py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-400/80 ${errors.fullName ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                            className={`w-full pl-9 pr-4 py-2.5 sm:py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-400/80 ${errors.fullName ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#064823] focus:ring-1 focus:ring-[#064823]/20'}`}
                           />
                         </div>
                         {errors.fullName && <p className="text-xs text-[#D62828]">{errors.fullName}</p>}
@@ -381,7 +381,7 @@ export default function CareersBanner() {
                       <div className="space-y-1">
                         <label className="text-xs sm:text-sm font-bold text-slate-700">Email Address <span className="text-[#D62828]">*</span></label>
                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#395B20] w-4 h-4" />
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#064823] w-4 h-4" />
                           <input
                             type="email"
                             placeholder="Enter your email"
@@ -396,7 +396,7 @@ export default function CareersBanner() {
                                 });
                               }
                             }}
-                            className={`w-full pl-9 pr-4 py-2.5 sm:py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-400/80 ${errors.email ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                            className={`w-full pl-9 pr-4 py-2.5 sm:py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-400/80 ${errors.email ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#064823] focus:ring-1 focus:ring-[#064823]/20'}`}
                           />
                         </div>
                         {errors.email && <p className="text-xs text-[#D62828]">{errors.email}</p>}
@@ -406,7 +406,7 @@ export default function CareersBanner() {
                       <div className="space-y-1">
                         <label className="text-xs sm:text-sm font-bold text-slate-700">Mobile Number <span className="text-[#D62828]">*</span></label>
                         <div className="relative">
-                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-[#395B20] w-4 h-4" />
+                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-[#064823] w-4 h-4" />
                           <input
                             type="text"
                             placeholder="Enter your mobile number"
@@ -421,7 +421,7 @@ export default function CareersBanner() {
                                 });
                               }
                             }}
-                            className={`w-full pl-9 pr-4 py-2.5 sm:py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-400/80 ${errors.mobile ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                            className={`w-full pl-9 pr-4 py-2.5 sm:py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-400/80 ${errors.mobile ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#064823] focus:ring-1 focus:ring-[#064823]/20'}`}
                           />
                         </div>
                         {errors.mobile && <p className="text-xs text-[#D62828]">{errors.mobile}</p>}
@@ -437,12 +437,12 @@ export default function CareersBanner() {
                               setShowPositionDropdown(!showPositionDropdown);
                               setShowExperienceDropdown(false);
                             }}
-                            className={`w-full px-4 py-2.5 sm:py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all ${errors.position ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20]'} bg-white`}
+                            className={`w-full px-4 py-2.5 sm:py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all ${errors.position ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#064823]'} bg-white`}
                           >
                             <span className={position ? 'text-slate-800' : 'text-slate-400/80'}>
                               {position || 'Select Position'}
                             </span>
-                            <ChevronDown className="w-4 h-4 text-[#395B20] shrink-0" />
+                            <ChevronDown className="w-4 h-4 text-[#064823] shrink-0" />
                           </button>
                           {showPositionDropdown && (
                             <div
@@ -462,7 +462,7 @@ export default function CareersBanner() {
                                       return next;
                                     });
                                   }}
-                                  className={`w-full text-left px-4 py-2.5 transition-colors ${position === p ? 'bg-[#395B20] text-white' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
+                                  className={`w-full text-left px-4 py-2.5 transition-colors ${position === p ? 'bg-[#064823] text-white' : 'hover:bg-[#EEF6E8] text-[#064823] hover:text-[#064823]'}`}
                                 >
                                   {p}
                                 </button>
@@ -483,12 +483,12 @@ export default function CareersBanner() {
                               setShowExperienceDropdown(!showExperienceDropdown);
                               setShowPositionDropdown(false);
                             }}
-                            className={`w-full px-4 py-2.5 sm:py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all ${errors.experience ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#395B20]'} bg-white`}
+                            className={`w-full px-4 py-2.5 sm:py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all ${errors.experience ? 'border-[#D62828]' : 'border-slate-400 focus:border-[#064823]'} bg-white`}
                           >
                             <span className={experience ? 'text-slate-800' : 'text-slate-400/80'}>
                               {experience || 'Select Experience'}
                             </span>
-                            <ChevronDown className="w-4 h-4 text-[#395B20] shrink-0" />
+                            <ChevronDown className="w-4 h-4 text-[#064823] shrink-0" />
                           </button>
                           {showExperienceDropdown && (
                             <div
@@ -508,7 +508,7 @@ export default function CareersBanner() {
                                       return next;
                                     });
                                   }}
-                                  className={`w-full text-left px-4 py-2.5 transition-colors ${experience === exp ? 'bg-[#395B20] text-white' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
+                                  className={`w-full text-left px-4 py-2.5 transition-colors ${experience === exp ? 'bg-[#064823] text-white' : 'hover:bg-[#EEF6E8] text-[#064823] hover:text-[#064823]'}`}
                                 >
                                   {exp}
                                 </button>
@@ -526,7 +526,7 @@ export default function CareersBanner() {
                           onDragOver={handleDragOver}
                           onDragLeave={handleDragLeave}
                           onDrop={handleDrop}
-                          className={`border rounded-xl p-2 flex flex-wrap sm:flex-nowrap items-center gap-2 bg-white transition-all ${isDragging ? 'border-dashed border-[#395B20] bg-[#EEF6E8]/30' : errors.resume ? 'border-[#D62828]' : 'border-slate-400 focus-within:border-[#395B20]'}`}
+                          className={`border rounded-xl p-2 flex flex-wrap sm:flex-nowrap items-center gap-2 bg-white transition-all ${isDragging ? 'border-dashed border-[#064823] bg-[#EEF6E8]/30' : errors.resume ? 'border-[#D62828]' : 'border-slate-400 focus-within:border-[#064823]'}`}
                         >
                           {/* File input (Hidden) */}
                           <input
@@ -538,7 +538,7 @@ export default function CareersBanner() {
                           />
 
                           {/* Green square container with Upload icon */}
-                          <div className="w-10 h-10 shrink-0 rounded-lg bg-[#EEF6E8] flex items-center justify-center text-[#395B20] mr-1">
+                          <div className="w-10 h-10 shrink-0 rounded-lg bg-[#EEF6E8] flex items-center justify-center text-[#064823] mr-1">
                             <Upload className="w-5 h-5" />
                           </div>
 
@@ -546,7 +546,7 @@ export default function CareersBanner() {
                           <button
                             type="button"
                             onClick={() => fileInputRef.current?.click()}
-                            className="shrink-0 border border-slate-200 text-[#153520] hover:bg-[#EEF6E8] hover:text-[#395B20] hover:border-[#EEF6E8] transition-all font-bold text-xs px-3.5 py-2.5 rounded-lg active:scale-95 bg-white shadow-xs"
+                            className="shrink-0 border border-slate-200 text-[#064823] hover:bg-[#EEF6E8] hover:text-[#064823] hover:border-[#EEF6E8] transition-all font-bold text-xs px-3.5 py-2.5 rounded-lg active:scale-95 bg-white shadow-xs"
                           >
                             Choose File
                           </button>
@@ -566,7 +566,7 @@ export default function CareersBanner() {
                                   alert(`Previewing is supported directly in the browser for PDF resumes. For Word docs (${selectedFile.name}), please download to view.`);
                                 }
                               }}
-                              className="shrink-0 border border-[#395B20] text-[#395B20] hover:bg-[#395B20] hover:text-white transition-all font-bold text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg active:scale-95 ml-auto"
+                              className="shrink-0 border border-[#064823] text-[#064823] hover:bg-[#064823] hover:text-white transition-all font-bold text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg active:scale-95 ml-auto"
                             >
                               Preview
                             </button>
@@ -582,13 +582,13 @@ export default function CareersBanner() {
                     <div className="space-y-1">
                       <label className="text-xs sm:text-sm font-bold text-slate-700">Cover Letter (Optional)</label>
                       <div className="relative">
-                        <Pencil className="absolute left-3 top-3 text-[#395B20] w-4 h-4" />
+                        <Pencil className="absolute left-3 top-3 text-[#064823] w-4 h-4" />
                         <textarea
                           rows={3}
                           placeholder="Write a few lines about yourself"
                           value={coverLetter}
                           onChange={(e) => setCoverLetter(e.target.value)}
-                          className="w-full pl-9 pr-4 py-3 border border-slate-400 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20 rounded-xl text-sm outline-none transition-all placeholder:text-slate-400/80 resize-none"
+                          className="w-full pl-9 pr-4 py-3 border border-slate-400 focus:border-[#064823] focus:ring-1 focus:ring-[#064823]/20 rounded-xl text-sm outline-none transition-all placeholder:text-slate-400/80 resize-none"
                         />
                       </div>
                     </div>
@@ -597,7 +597,7 @@ export default function CareersBanner() {
                     <div className="pt-2">
                       <button
                         type="submit"
-                        className="bg-[#395B20] hover:bg-[#1E3C11] text-white font-bold text-xs sm:text-sm px-6 py-3.5 sm:px-6 sm:py-3.5 rounded-xl uppercase transition-all duration-300 flex items-center gap-2 shadow-md active:scale-95 hover:shadow-lg font-manrope"
+                        className="bg-[#064823] hover:bg-[#0a5e30] text-white font-bold text-xs sm:text-sm px-6 py-3.5 sm:px-6 sm:py-3.5 rounded-xl uppercase transition-all duration-300 flex items-center gap-2 shadow-md active:scale-95 hover:shadow-lg font-manrope"
                       >
                         Submit Application <Send className="w-4 h-4" />
                       </button>
@@ -611,10 +611,10 @@ export default function CareersBanner() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="flex flex-col items-center justify-center text-center py-10 px-4 space-y-4"
                 >
-                  <div className="w-16 h-16 rounded-full bg-[#7CB325]/10 flex items-center justify-center text-[#7CB325] mb-2">
+                  <div className="w-16 h-16 rounded-full bg-[#8DC541]/15 flex items-center justify-center text-[#8DC541] mb-2">
                     <CheckCircle className="w-10 h-10" />
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#153520] font-manrope uppercase tracking-relaxed">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#064823] font-manrope uppercase tracking-relaxed">
                     Application Submitted!
                   </h2>
                   <p className="text-slate-800 font-medium text-sm sm:text-base max-w-md leading-relaxed">
@@ -622,7 +622,7 @@ export default function CareersBanner() {
                   </p>
                   <button
                     onClick={handleResetAndClose}
-                    className="mt-8 bg-[#395B20] hover:bg-[#1E3C11] text-white font-bold text-xs sm:text-sm px-8 py-3.5 rounded-xl uppercase transition-all shadow-md active:scale-95"
+                    className="mt-8 bg-[#064823] hover:bg-[#0a5e30] text-white font-bold text-xs sm:text-sm px-8 py-3.5 rounded-xl uppercase transition-all shadow-md active:scale-95"
                   >
                     Close
                   </button>
