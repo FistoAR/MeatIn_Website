@@ -171,7 +171,7 @@ export default function CareersBanner() {
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, margin: "-30px" }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-[1334px] mx-auto rounded-2xl md:rounded-3xl overflow-hidden border border-slate-200/80 bg-[#FBF7F2] shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_14px_40px_rgba(0,0,0,0.12)] transition-all duration-300 relative group"
+        className="w-full max-w-[1334px] mx-auto rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-300 relative group"
       >
         {/* =========================================================================
             1. DESKTOP VIEW (hidden md:block) - Clean SVG Banner with Interactive Apply Button
@@ -195,9 +195,9 @@ export default function CareersBanner() {
             className="absolute z-20 cursor-pointer focus:outline-none group/btn rounded-xl overflow-hidden"
             style={{
               left: '3.2%',
-              top: '70.9%',
-              width: '15.79%',
-              height: '15.7%',
+              top: '72.6%',
+              width: '13.1%',
+              height: '12.2%',
             }}
             aria-label="Apply Now for Careers at MEATIN"
           >
@@ -301,7 +301,7 @@ export default function CareersBanner() {
             {/* MEATIN Team Image Header */}
             <div className="relative w-full h-[150px] sm:h-[180px] rounded-xl overflow-hidden shadow-xs border border-slate-200/60">
               <Image
-                src="/CareersBanner/careers_image.webp"
+                src="/ContactUs/banner-img.webp"
                 alt="MEATIN Team"
                 fill
                 className="object-cover object-center"
