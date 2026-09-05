@@ -345,7 +345,7 @@ export default function FranchisePage() {
           </div>
 
           {/* Hero Store Interactive Canvas (Prominent & larger on mobile, proportional scaling on desktop) */}
-          <div className="relative w-full max-w-[1360px] h-auto lg:h-[520px] mx-auto flex items-center justify-center my-6 sm:my-10 md:my-14 lg:my-auto origin-center lg:-mt-1 [@media(max-height:750px)]:lg:-mt-2 [@media(max-height:620px)]:lg:-mt-10 [@media(max-height:600px)]:lg:-mt-24 [@media(max-height:600px)]:lg:-translate-y-9 [@media(min-height:800px)]:lg:mt-4 [@media(min-height:890px)]:lg:mt-6 scale-100 lg:scale-[0.62] [@media(max-height:600px)]:lg:scale-[0.56] [@media(min-height:620px)]:lg:scale-[0.70] [@media(min-height:710px)]:lg:scale-[0.78] [@media(min-height:800px)]:lg:scale-[0.88] [@media(min-height:890px)]:lg:scale-[1.02] transition-transform duration-300 shrink-0">
+          <div className="relative w-full max-w-[1600px] h-auto lg:h-[520px] mx-auto flex items-center justify-center my-6 sm:my-10 md:my-14 lg:my-auto origin-center lg:-mt-1 px-2 sm:px-4 lg:px-6 shrink-0">
             {/* Center 3D Store Graphic (Desktop Spotlight Cursor-follow Reveal | Mobile/Tab Clean Display) */}
             <motion.div
               ref={heroImageContainerRef}
@@ -354,7 +354,7 @@ export default function FranchisePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative w-[88%] sm:w-[80%] md:w-[68%] lg:w-[750px] xl:w-[820px] max-w-[480px] lg:max-w-none h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500 my-1 lg:my-0 cursor-default lg:cursor-crosshair overflow-hidden rounded-2xl select-none"
+              className="relative w-[88%] sm:w-[80%] md:w-[68%] lg:w-[580px] xl:w-[660px] 2xl:w-[720px] max-w-[480px] lg:max-w-none h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500 my-1 lg:my-0 cursor-default lg:cursor-crosshair overflow-hidden rounded-2xl select-none"
             >
               {/* Mobile / Tablet View (Standard Single Image Display using hero-main-image.webp) */}
               <div className="block lg:hidden relative w-full h-auto">
@@ -436,7 +436,7 @@ export default function FranchisePage() {
             {/* SVG Connector Dotted Lines & Red Dots Overlay with Conveyor Animation */}
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none z-30 hidden lg:block"
-              viewBox="0 0 1280 520"
+              viewBox="0 0 1440 520"
               fill="none"
             >
               {/* Item 01 Dotted Line (Left Top) */}
@@ -447,13 +447,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <path
-                  d="M 155 55 L 155 55 Q 180 55 180 70 L 180 180 Q 180 190 210 190 L 250 190"
+                  d="M 250 57 L 325 57 Q 340 57 340 72 L 340 210 Q 340 225 355 225 L 420 225"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(250, 190)">
+                <g transform="translate(420, 225)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -480,13 +480,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
                 <path
-                  d="M 155 275 L 250 275"
+                  d="M 250 257 L 405 257"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(250, 275)">
+                <g transform="translate(405, 257)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -513,13 +513,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
                 <path
-                  d="M 155 495 L 155 495 Q 180 495 180 480 L 180 370 Q 180 360 210 360 L 250 360"
+                  d="M 250 457 L 325 457 Q 340 457 340 442 L 340 375 Q 340 360 355 360 L 410 360"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(250, 360)">
+                <g transform="translate(410, 360)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -546,13 +546,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.35 }}
               >
                 <path
-                  d="M 1140 57 L 1110 57 Q 1095 57 1095 72 L 1095 175 Q 1095 190 1080 190"
+                  d="M 1020 215 L 1085 215 Q 1100 215 1100 200 L 1100 72 Q 1100 57 1115 57 L 1190 57"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1080, 190)">
+                <g transform="translate(1020, 215)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -579,13 +579,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.65 }}
               >
                 <path
-                  d="M 1140 275 L 1080 275"
+                  d="M 1030 257 L 1190 257"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1080, 275)">
+                <g transform="translate(1030, 257)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -612,13 +612,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.95 }}
               >
                 <path
-                  d="M 1140 495 L 1115 495 Q 1095 495 1095 480 L 1095 375 Q 1095 360 1080 360"
+                  d="M 1020 360 L 1085 360 Q 1100 360 1100 375 L 1100 442 Q 1100 457 1115 457 L 1190 457"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1080, 360)">
+                <g transform="translate(1020, 360)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -639,23 +639,23 @@ export default function FranchisePage() {
             </svg>
 
             {/* LEFT 3 FEATURE BADGES (01, 02, 03) */}
-            <div className="absolute left-[-110px] xl:left-[-70px] 2xl:left-[-30px] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[300px]">
+            <div className="absolute left-2 sm:left-4 lg:left-6 xl:left-10 2xl:left-14 top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[250px] xl:w-[280px]">
               {/* Feature 01: HYGIENIC PROCESSING */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.2, scale: { duration: 0.25, ease: "easeOut" } }}
                 className="absolute top-[25px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:microscope"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-start text-left max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     01
                   </span>
@@ -675,18 +675,18 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.5, scale: { duration: 0.25, ease: "easeOut" } }}
                 className="absolute top-[225px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:shield-check"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-start text-left max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     02
                   </span>
@@ -706,18 +706,18 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.8, scale: { duration: 0.25, ease: "easeOut" } }}
                 className="absolute top-[425px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:plant"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-start text-left max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     03
                   </span>
@@ -732,28 +732,28 @@ export default function FranchisePage() {
               </motion.div>
             </div>
 
-            {/* RIGHT 3 FEATURE BADGES (04, 05, 06) */}
-            <div className="absolute right-[-110px] xl:right-[-70px] 2xl:right-[-30px] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[300px]">
+            {/* RIGHT 3 FEATURE BADGES (04, 05, 06 - REVERSED MATCHING REFERENCE IMAGE 2) */}
+            <div className="absolute right-2 sm:right-4 lg:right-6 xl:right-10 2xl:right-14 top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[250px] xl:w-[280px]">
               {/* Feature 04: NO ARTIFICIAL ADDITIVES */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.35, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[25px] left-0 flex items-center gap-4 group select-none origin-left cursor-default"
+                className="absolute top-[25px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:leaf"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-end text-right max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     04
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
+                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
                   <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
                     NO ARTIFICIAL
                     <br />
@@ -769,22 +769,22 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.65, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[225px] left-0 flex items-center gap-4 group select-none origin-left cursor-default"
+                className="absolute top-[225px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:package"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-end text-right max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     05
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
+                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
                   <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
                     FRESHNESS
                     <br />
@@ -800,22 +800,22 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.95, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[425px] left-0 flex items-center gap-4 group select-none origin-left cursor-default"
+                className="absolute top-[425px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:truck"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-end text-right max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     06
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
+                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
                   <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
                     FAST
                     <br />
