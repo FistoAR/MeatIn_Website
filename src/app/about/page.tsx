@@ -224,8 +224,8 @@ export default function AboutUsPage() {
       <section className="relative w-full bg-black pt-[6rem] sm:pt-[6.5rem] lg:pt-[7rem] xl:pt-[7.5rem] pb-10 md:pb-16 lg:pb-8 xl:pb-10 2xl:pb-12 overflow-hidden flex flex-col justify-between">
         {/* Background Image Overlay with full opacity from public folder */}
         <div className="absolute inset-0 pointer-events-none z-0 bg-black">
-          {/* On desktop: image covers right half with full vertical framing */}
-          <div className="absolute top-0 bottom-0 right-0 left-0 lg:left-[40%] w-full lg:w-[60%] overflow-hidden">
+          {/* On desktop: image covers 70% right width with full vertical framing */}
+          <div className="absolute top-0 bottom-0 right-0 left-0 lg:left-[30%] w-full lg:w-[70%] overflow-hidden">
             <Image
               src="/AboutUs/about-hero-img.webp"
               alt="MEATIN Integrated Farming"

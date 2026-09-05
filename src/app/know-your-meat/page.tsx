@@ -3574,11 +3574,11 @@ export default function KnowYourMeatPage() {
                   {/* Exact Stacked chicken viewport */}
                   <div className="relative w-[300px] h-[300px] sm:w-[340px] sm:h-[340px] lg:w-[400px] lg:h-[400px] xl:w-[450px] xl:h-[450px] aspect-square flex items-center justify-center viz-chicken-box">
                     {/* Background Golden Outline Circle SVG behind chicken */}
-                    <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none select-none z-0">
+                    <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none select-none z-0 -translate-y-5 sm:-translate-y-6 lg:-translate-y-7">
                       <img
                         src="/Product/Chicken/bg-circle.svg"
                         alt="Background Circle"
-                        className="w-[73%] h-[73%] object-contain"
+                        className="w-[67%] h-[67%] object-contain"
                       />
                     </div>
 
