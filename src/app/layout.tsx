@@ -43,14 +43,14 @@ const barlow = Barlow_Condensed({
 export const metadata: Metadata = {
   metadataBase: new URL('https://meatinfoods.com'),
   title: {
-    default: 'MEATIn | Premium Meat Experience',
-    template: '%s | MEATIn'
+    default: 'MEATiN | Premium Meat Experience',
+    template: '%s | MEATiN'
   },
-  description: 'Fresh meat delivered with trust. Discover premium cuts, hygienic processing, and ethical sourcing with MEATIn.',
-  keywords: ['fresh meat', 'premium cuts', 'buy meat online', 'hygienic meat', 'ethical sourcing', 'MEATIn', 'meat delivery', 'fresh chicken', 'fresh mutton', 'fresh fish'],
-  authors: [{ name: 'MEATIn Foods' }],
-  creator: 'MEATIn Foods',
-  publisher: 'MEATIn Foods',
+  description: 'Fresh meat delivered with trust. Discover premium cuts, hygienic processing, and ethical sourcing with MEATiN.',
+  keywords: ['fresh meat', 'premium cuts', 'buy meat online', 'hygienic meat', 'ethical sourcing', 'MEATiN', 'meat delivery', 'fresh chicken', 'fresh mutton', 'fresh fish'],
+  authors: [{ name: 'MEATiN Foods' }],
+  creator: 'MEATiN Foods',
+  publisher: 'MEATiN Foods',
   formatDetection: {
     email: false,
     address: false,
@@ -62,16 +62,16 @@ export const metadata: Metadata = {
     apple: '/meatin-logo.webp',
   },
   openGraph: {
-    title: 'MEATIn | Premium Meat Experience',
-    description: 'Fresh meat delivered with trust. Discover premium cuts, hygienic processing, and ethical sourcing with MEATIn.',
+    title: 'MEATiN | Premium Meat Experience',
+    description: 'Fresh meat delivered with trust. Discover premium cuts, hygienic processing, and ethical sourcing with MEATiN.',
     url: 'https://meatinfoods.com',
-    siteName: 'MEATIn',
+    siteName: 'MEATiN',
     images: [
       {
         url: '/assets/logo-image.webp',
         width: 800,
         height: 600,
-        alt: 'MEATIn Logo',
+        alt: 'MEATiN Logo',
       },
     ],
     locale: 'en_US',
@@ -79,8 +79,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MEATIn | Premium Meat Experience',
-    description: 'Fresh meat delivered with trust. Discover premium cuts, hygienic processing, and ethical sourcing with MEATIn.',
+    title: 'MEATiN | Premium Meat Experience',
+    description: 'Fresh meat delivered with trust. Discover premium cuts, hygienic processing, and ethical sourcing with MEATiN.',
     images: ['/assets/logo-image.webp'],
   },
   robots: {
@@ -107,14 +107,14 @@ export default function RootLayout({
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    'name': 'MEATIn',
+    'name': 'MEATiN',
     'url': 'https://meatinfoods.com',
     'logo': 'https://meatinfoods.com/assets/logo-image.webp',
     'sameAs': [
       'https://www.facebook.com/meatinfoods',
       'https://www.instagram.com/meatinfoods',
     ],
-    'description': 'Fresh meat delivered with trust. Discover premium cuts, hygienic processing, and ethical sourcing with MEATIn.',
+    'description': 'Fresh meat delivered with trust. Discover premium cuts, hygienic processing, and ethical sourcing with MEATiN.',
     'contactPoint': {
       '@type': 'ContactPoint',
       'telephone': '+91-XXXXXXXXXX', // Fallback or template contact

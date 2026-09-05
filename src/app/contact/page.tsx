@@ -47,11 +47,11 @@ interface FaqItem {
 
 const faqs: FaqItem[] = [
   {
-    question: "How do I apply for a job at MEATIN?",
+    question: "How do I apply for a job at MEATiN?",
     answer: "You can apply directly using our careers form! Scroll down to the 'Join Our Team' banner below, click 'Apply Now', upload your resume, and submit. Our HR team will review your details."
   },
   {
-    question: "How can I become a distributor / trader for MEATIN Product?",
+    question: "How can I become a distributor / trader for MEATiN Product?",
     answer: "We are always expanding our distribution network! Please submit an enquiry using the form above, selecting 'Distributor Enquiry' as the type, or email us directly at info@meatinfoods.com with your location and business profile."
   },
   {
@@ -59,7 +59,7 @@ const faqs: FaqItem[] = [
     answer: "Typically, you will need business registration proofs, food safety licenses (FSSAI), identity verification (Aadhaar/PAN), and floor layouts of your proposed retail location. Our executive team will share a detailed checklist once you submit a request."
   },
   {
-    question: "How can I partner with MEATIN for business collaborations?",
+    question: "How can I partner with MEATiN for business collaborations?",
     answer: "We welcome strategic partnerships and corporate tie-ups. Please reach out to our Business Development team via enquiry form, or drop a detailed proposal at info@meatinfoods.com."
   }
 ];
@@ -155,7 +155,7 @@ export default function ContactPage() {
         <div className="absolute inset-0 pointer-events-none">
           <Image
             src="/ContactUs/contact-us-bg.webp"
-            alt="MEATIN Delivery Truck"
+            alt="MEATiN Delivery Truck"
             fill
             priority
             className="object-cover object-center lg:object-right"
@@ -171,7 +171,7 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
             className="space-y-3"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7.5xl font-extrabold font-barlow tracking-normal uppercase">
+            <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7.5xl font-extrabold font-barlow tracking-normal uppercase">
               <span className="text-[#7CB325] mr-4">CONTACT</span>
               <span className="text-white">US</span>
             </h1>
@@ -217,7 +217,7 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-xs sm:text-sm font-bold text-slate-800 tracking-normal mb-0.5">
+                  <h3 className="text-sm sm:text-base font-extrabold text-[#f58309] tracking-wide mb-0.5">
                     {item.label}
                   </h3>
                   <p className="text-xs sm:text-sm font-bold text-[#395B20] transition-colors break-words leading-relaxed font-manrope">
@@ -565,7 +565,7 @@ export default function ContactPage() {
                 </h2>
                 <div className="h-[3px] w-14 bg-[#7CB325] mt-2 mb-3 mx-auto sm:mx-0 rounded-full" />
                 <p className="text-sm text-[#535353] font-medium leading-relaxed">
-                  Find quick answers to common questions about working and partnering with MEATIN.
+                  Find quick answers to common questions about working and partnering with MEATiN.
                 </p>
               </div>
             </div>
@@ -619,11 +619,11 @@ export default function ContactPage() {
       </section>
 
       {/* 5. REUSABLE CAREERS BANNER */}
-      <div className="py-10 md:py-14">
+      <section className="py-4 md:py-6 w-full">
         <div className="w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
           <CareersBanner />
         </div>
-      </div>
+      </section>
 
     </div>
   );

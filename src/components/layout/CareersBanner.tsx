@@ -164,81 +164,152 @@ export default function CareersBanner() {
   };
 
   return (
-    <div className="w-full px-8 sm:px-4 lg:px-[2.5vw] py-10 lg:py-15">
+    <div className="w-full">
+      {/* Scroll Reveal Animation Wrapper */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-10px" }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="w-full max-w-[1200px] xl:max-w-[1300px] 2xl:max-w-[1400px] mx-auto rounded-2xl border border-slate-100 bg-[#FCFAF7] shadow-[0_4px_24px_rgba(0,0,0,0.06)] overflow-hidden grid grid-cols-1 md:grid-cols-12 relative"
+        initial={{ opacity: 0, y: 30, scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-30px" }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-[1334px] mx-auto rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-300 relative group"
       >
-        {/* Left Side Content */}
-        <div className="relative md:col-span-7 px-6 py-6 sm:px-12 sm:py-12 lg:px-[3vw] lg:py-8 flex flex-col justify-center bg-[#FDFBF9] overflow-hidden">
-          {/* Subtle background doodle pattern */}
-          <div className="absolute inset-0 opacity-[0.13] pointer-events-none select-none">
-            <Image
-              src="/CareersBanner/careers-left-bg.webp"
-              alt="Pattern Background"
-              fill
-              className="object-cover object-left"
-            />
-          </div>
+        {/* =========================================================================
+            1. DESKTOP VIEW (hidden md:block) - Clean SVG Banner with Interactive Apply Button
+           ========================================================================= */}
+        <div className="hidden md:block relative w-full aspect-[1334/427] select-none overflow-hidden">
+          {/* Base SVG Banner Asset */}
+          <Image
+            src="/ContactUs/careers-banner.svg"
+            alt="Join Our Team - MEATiN Careers"
+            fill
+            priority
+            className="object-contain w-full h-full pointer-events-none"
+            sizes="(max-width: 1334px) 100vw, 1334px"
+          />
 
-          <div className="relative z-10 flex flex-col items-start w-full">
-            {/* Label with 55% underline */}
-            <div className="relative flex flex-col items-start mb-3">
-              <span className="text-[#153520] font-extrabold text-xs sm:text-sm tracking-widest uppercase font-manrope">
-                Careers
-              </span>
-              <div className="h-[2px] w-[55%] bg-[#153520] mt-1" />
-            </div>
-
-            {/* Heading */}
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[3.4rem] xl:text-[3.8rem] 2xl:text-[4rem] font-extrabold leading-none font-barlow tracking-relaxed mb-4 uppercase">
-              <span className="text-[#7CB325] mr-2">Join</span>
-              <span className="text-[#153520]">Our Team</span>
-            </h2>
-
-            {/* Description */}
-            <p className="text-slate-900 font-medium text-sm sm:text-base max-w-[400px] mb-3.5 leading-relaxed font-manrope">
-              Build your career with MEATIN. We're always looking for passionate and driven people to grow with us.
-            </p>
-
-            {/* Button & Arrow doodle alignment wrapper */}
-            <div className="relative w-full flex items-center mt-2">
-              {/* Button triggers Popup Modal */}
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="bg-[#395B20] hover:bg-[#1E3C11] text-white font-bold text-xs sm:text-sm px-6 py-3.5 sm:px-5.5 sm:py-3.5 rounded-xl uppercase tracking-relaxed transition-all duration-300 flex items-center gap-2 shadow-md active:scale-95 hover:shadow-lg font-manrope z-10"
-              >
-                Apply Now <ArrowRight className="w-4 h-4" />
-              </button>
-
-              {/* Float Arrow Doodle */}
-              <div className="relative ml-[15%] w-[90px] h-[45px] sm:w-[120px] sm:h-[60px] opacity-[0.8] select-none pointer-events-none hidden sm:block">
-                <Image
-                  src="/CareersBanner/careers-arrow.svg"
-                  alt="Arrow Doodle"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </div>
-          </div>
+          {/* Interactive Clickable Hotspot for APPLY NOW Button */}
+          <motion.button
+            onClick={() => setIsModalOpen(true)}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="absolute z-20 cursor-pointer focus:outline-none group/btn rounded-xl overflow-hidden"
+            style={{
+              left: '3.2%',
+              top: '72.6%',
+              width: '13.1%',
+              height: '12.2%',
+            }}
+            aria-label="Apply Now for Careers at MEATiN"
+          >
+            {/* Subtle glow & sheen overlay on hover */}
+            <div className="absolute inset-0 bg-white/0 group-hover/btn:bg-white/20 transition-all duration-300 rounded-xl" />
+            <div className="absolute inset-0 ring-2 ring-white/0 group-hover/btn:ring-white/60 transition-all duration-300 rounded-xl shadow-lg" />
+          </motion.button>
         </div>
 
-        {/* Right Side Image */}
-        <div className="relative md:col-span-5 min-h-[260px] md:min-h-full w-full overflow-hidden bg-slate-100">
-          <Image
-            src="/CareersBanner/careers_image.webp"
-            alt="MEATIN Team"
-            fill
-            className="object-cover object-left md:object-left"
-            sizes="(max-width: 768px) 100vw, 42vw"
-            priority
-          />
-          {/* Gradient fade overlay linking right image to left content on desktop */}
-          <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-[#FDFBF9] via-[#FDFBF9]/80 to-transparent hidden md:block z-10" />
+        {/* =========================================================================
+            2. MOBILE & TABLET VIEW (block md:hidden) - Custom Compact Animated Layout
+           ========================================================================= */}
+        <div className="block md:hidden p-4 sm:p-5 bg-[#FBF7F2]">
+          <div className="flex flex-col space-y-4">
+            {/* Header Title & Subtitle */}
+            <div className="flex flex-col items-start space-y-1.5">
+              <div className="relative flex flex-col items-start">
+                <span className="text-[#153520] font-extrabold text-xs tracking-widest uppercase font-manrope">
+                  Careers
+                </span>
+                <div className="h-[2px] w-[50%] bg-[#153520] mt-0.5" />
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold font-barlow tracking-relaxed uppercase leading-tight">
+                <span className="text-[#7CB325] mr-2">Join</span>
+                <span className="text-[#153520]">Our Team</span>
+              </h2>
+              <p className="text-slate-800 font-medium text-xs sm:text-sm leading-relaxed font-manrope pt-0.5">
+                Build your career with MEATiN. We're always looking for passionate and driven people to grow with us.
+              </p>
+            </div>
+
+            {/* Feature Cards Grid (Grow, Learn, Belong) */}
+            <div className="grid grid-cols-3 gap-2 py-1">
+              {/* Grow Pill */}
+              <motion.div
+                whileHover={{ scale: 1.04 }}
+                animate={{ y: [0, -3, 0] }}
+                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                className="bg-white/90 border border-slate-200/80 rounded-xl p-2.5 flex flex-col items-center text-center shadow-2xs"
+              >
+                <div className="w-7 h-7 rounded-full bg-[#7CB325]/15 flex items-center justify-center text-[#395B20] mb-1">
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-extrabold text-[#7CB325] font-barlow uppercase tracking-wider">Grow</span>
+                <span className="text-[9px] text-slate-500 font-medium font-manrope mt-0.5 leading-tight">Build career</span>
+              </motion.div>
+
+              {/* Learn Pill */}
+              <motion.div
+                whileHover={{ scale: 1.04 }}
+                animate={{ y: [0, -3, 0] }}
+                transition={{ repeat: Infinity, duration: 3.4, ease: "easeInOut", delay: 0.2 }}
+                className="bg-white/90 border border-slate-200/80 rounded-xl p-2.5 flex flex-col items-center text-center shadow-2xs"
+              >
+                <div className="w-7 h-7 rounded-full bg-[#7CB325]/15 flex items-center justify-center text-[#395B20] mb-1">
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-extrabold text-[#7CB325] font-barlow uppercase tracking-wider">Learn</span>
+                <span className="text-[9px] text-slate-500 font-medium font-manrope mt-0.5 leading-tight">Develop skills</span>
+              </motion.div>
+
+              {/* Belong Pill */}
+              <motion.div
+                whileHover={{ scale: 1.04 }}
+                animate={{ y: [0, -3, 0] }}
+                transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut", delay: 0.4 }}
+                className="bg-white/90 border border-slate-200/80 rounded-xl p-2.5 flex flex-col items-center text-center shadow-2xs"
+              >
+                <div className="w-7 h-7 rounded-full bg-[#7CB325]/15 flex items-center justify-center text-[#395B20] mb-1">
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-extrabold text-[#7CB325] font-barlow uppercase tracking-wider">Belong</span>
+                <span className="text-[9px] text-slate-500 font-medium font-manrope mt-0.5 leading-tight">Be part of team</span>
+              </motion.div>
+            </div>
+
+            {/* Apply Now Button with Infinite Arrow Motion */}
+            <div className="pt-0.5">
+              <motion.button
+                onClick={() => setIsModalOpen(true)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                className="w-full bg-[#395B20] hover:bg-[#1E3C11] text-white font-bold text-xs sm:text-sm px-5 py-3.5 rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95 flex items-center justify-center gap-2.5 font-manrope group"
+              >
+                <span>Apply Now</span>
+                <motion.div
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                >
+                  <ArrowRight className="w-4 h-4" />
+                </motion.div>
+              </motion.button>
+            </div>
+
+            {/* MEATiN Team Image Header */}
+            <div className="relative w-full h-[150px] sm:h-[180px] rounded-xl overflow-hidden shadow-xs border border-slate-200/60">
+              <Image
+                src="/ContactUs/banner-img.webp"
+                alt="MEATiN Team"
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+            </div>
+          </div>
         </div>
       </motion.div>
 
@@ -547,7 +618,7 @@ export default function CareersBanner() {
                     Application Submitted!
                   </h2>
                   <p className="text-slate-800 font-medium text-sm sm:text-base max-w-md leading-relaxed">
-                    Successful submission! We will contact you shortly. Thank you for your interest in joining MEATIN.
+                    Successful submission! We will contact you shortly. Thank you for your interest in joining MEATiN.
                   </p>
                   <button
                     onClick={handleResetAndClose}

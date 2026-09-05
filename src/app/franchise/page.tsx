@@ -80,7 +80,7 @@ export default function FranchisePage() {
       city: "Kerala",
       malayalam: "കേരളം",
       address:
-        "MEATIN Regional Head Office, Panchami Complex, Thrissur - 680519",
+        "MEATiN Regional Head Office, Panchami Complex, Thrissur - 680519",
       phone: "+91 99466 16162",
       xPercent: 47.0,
       yPercent: 78.0,
@@ -90,7 +90,7 @@ export default function FranchisePage() {
       city: "Bengaluru",
       malayalam: "ബെംഗളൂരു",
       address:
-        "MEATIN Express Outlet, Indiranagar, Bengaluru, Karnataka - 560038",
+        "MEATiN Express Outlet, Indiranagar, Bengaluru, Karnataka - 560038",
       phone: "+91 99466 16162",
       xPercent: 51.0,
       yPercent: 68.0,
@@ -99,7 +99,7 @@ export default function FranchisePage() {
       id: "mumbai",
       city: "Mumbai",
       malayalam: "മുംബൈ",
-      address: "MEATIN Store, Bandra West, Mumbai, Maharashtra - 400050",
+      address: "MEATiN Store, Bandra West, Mumbai, Maharashtra - 400050",
       phone: "+91 99466 16162",
       xPercent: 38.0,
       yPercent: 57.0,
@@ -108,7 +108,7 @@ export default function FranchisePage() {
       id: "hyderabad",
       city: "Hyderabad",
       malayalam: "ഹൈദരാബാദ്",
-      address: "MEATIN Fresh Hub, Jubilee Hills, Hyderabad, Telangana - 500033",
+      address: "MEATiN Fresh Hub, Jubilee Hills, Hyderabad, Telangana - 500033",
       phone: "+91 99466 16162",
       xPercent: 50.0,
       yPercent: 61.0,
@@ -118,7 +118,7 @@ export default function FranchisePage() {
       city: "Kolkata",
       malayalam: "കൊൽക്കത്ത",
       address:
-        "MEATIN Store, Salt Lake Sector 5, Kolkata, West Bengal - 700091",
+        "MEATiN Store, Salt Lake Sector 5, Kolkata, West Bengal - 700091",
       phone: "+91 99466 16162",
       xPercent: 69.0,
       yPercent: 48.0,
@@ -127,7 +127,7 @@ export default function FranchisePage() {
       id: "lucknow",
       city: "Lucknow",
       malayalam: "ലക്നൗ",
-      address: "MEATIN Store, Gomti Nagar, Lucknow, Uttar Pradesh - 226010",
+      address: "MEATiN Store, Gomti Nagar, Lucknow, Uttar Pradesh - 226010",
       phone: "+91 99466 16162",
       xPercent: 55.0,
       yPercent: 37.0,
@@ -136,7 +136,7 @@ export default function FranchisePage() {
       id: "delhi",
       city: "Delhi",
       malayalam: "ഡൽഹി",
-      address: "MEATIN Prime Hub, Connaught Place, New Delhi - 110001",
+      address: "MEATiN Prime Hub, Connaught Place, New Delhi - 110001",
       phone: "+91 99466 16162",
       xPercent: 47.0,
       yPercent: 30.0,
@@ -150,7 +150,7 @@ export default function FranchisePage() {
       id: "kannur",
       city: "Kannur",
       malayalam: "കണ്ണൂർ",
-      address: "MEATIN Outlet, City Centre Complex, Fort Road, Kannur - 670001",
+      address: "MEATiN Outlet, City Centre Complex, Fort Road, Kannur - 670001",
       phone: "+91 99466 16162",
       xPercent: 25.0,
       yPercent: 10.0,
@@ -159,7 +159,7 @@ export default function FranchisePage() {
       id: "kozhikode",
       city: "Kozhikode",
       malayalam: "കോഴിക്കോട്",
-      address: "MEATIN Outlet, Focus Mall Road, Kozhikode - 673004",
+      address: "MEATiN Outlet, Focus Mall Road, Kozhikode - 673004",
       phone: "+91 99466 16162",
       xPercent: 38.0,
       yPercent: 29.0,
@@ -168,7 +168,7 @@ export default function FranchisePage() {
       id: "malappuram",
       city: "Malappuram",
       malayalam: "മലപ്പുറം",
-      address: "MEATIN Hub, Calicut Road, Malappuram - 676505",
+      address: "MEATiN Hub, Calicut Road, Malappuram - 676505",
       phone: "+91 99466 16162",
       xPercent: 50.0,
       yPercent: 38.0,
@@ -177,7 +177,7 @@ export default function FranchisePage() {
       id: "thrissur",
       city: "Thrissur",
       malayalam: "തൃശ്ശൂർ",
-      address: "MEATIN Flagship Store, Perumpilavu, Thrissur - 680519",
+      address: "MEATiN Flagship Store, Perumpilavu, Thrissur - 680519",
       phone: "+91 99466 16162",
       xPercent: 36.0,
       yPercent: 30.0,
@@ -186,7 +186,7 @@ export default function FranchisePage() {
       id: "ernakulam",
       city: "Ernakulam",
       malayalam: "എറണാകുളം",
-      address: "MEATIN Prime Outlet, MG Road, Ernakulam - 682016",
+      address: "MEATiN Prime Outlet, MG Road, Ernakulam - 682016",
       phone: "+91 99466 16162",
        xPercent: 38.0,
       yPercent: 37.0,
@@ -195,7 +195,7 @@ export default function FranchisePage() {
       id: "kottayam",
       city: "Kottayam",
       malayalam: "കോട്ടയം",
-      address: "MEATIN Store, KK Road, Kottayam - 686001",
+      address: "MEATiN Store, KK Road, Kottayam - 686001",
       phone: "+91 99466 16162",
        xPercent: 40.0,
       yPercent: 44.0,
@@ -204,7 +204,7 @@ export default function FranchisePage() {
       id: "alappuzha",
       city: "Alappuzha",
       malayalam: "ആലപ്പുഴ",
-      address: "MEATIN Fresh Hub, Boat Jetty Road, Alappuzha - 688001",
+      address: "MEATiN Fresh Hub, Boat Jetty Road, Alappuzha - 688001",
       phone: "+91 99466 16162",
       xPercent: 44.0,
       yPercent: 51.0,
@@ -213,7 +213,7 @@ export default function FranchisePage() {
       id: "kollam",
       city: "Kollam",
       malayalam: "കൊല്ലം",
-      address: "MEATIN Outlet, Chinnakada, Kollam - 691001",
+      address: "MEATiN Outlet, Chinnakada, Kollam - 691001",
       phone: "+91 99466 16162",
       xPercent: 47.0,
       yPercent: 62.0,
@@ -222,7 +222,7 @@ export default function FranchisePage() {
       id: "kochi",
       city: "Kochi",
       malayalam: "കൊച്ചി",
-      address: "MEATIN Express Hub, Marine Drive, Kochi - 682031",
+      address: "MEATiN Express Hub, Marine Drive, Kochi - 682031",
       phone: "+91 99466 16162",
       xPercent: 49.0,
       yPercent: 69.0,
@@ -232,7 +232,7 @@ export default function FranchisePage() {
       city: "Thiruvananthapuram",
       malayalam: "തിരുവനന്തപുരം",
       address:
-        "MEATIN Main Outlet, MG Road, Statue, Thiruvananthapuram - 695001",
+        "MEATiN Main Outlet, MG Road, Statue, Thiruvananthapuram - 695001",
       phone: "+91 99466 16162",
       xPercent: 56.0,
       yPercent: 80.0,
@@ -251,11 +251,11 @@ export default function FranchisePage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#FDFBF7] text-slate-800 font-manrope selection:bg-[#127431] selection:text-white overflow-x-hidden pt-0">
+    <div className="relative min-h-screen bg-[#FDFBF7] text-slate-800 font-manrope selection:bg-[#127431] selection:text-white overflow-x-clip pt-0">
       {/* ============================================================ */}
       {/* SECTION 1: HERO & STORE SHOWCASE (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full min-h-screen lg:h-screen lg:max-h-screen pt-[78px] sm:pt-[84px] lg:pt-[98px] [@media(max-height:710px)]:lg:pt-[86px] [@media(max-height:620px)]:lg:pt-[68px] [@media(max-height:600px)]:lg:pt-[56px] pb-4 lg:pb-2 px-3 sm:px-6 lg:px-8 bg-gradient-to-b from-[#D8E6F5] via-[#EAF2F9] to-[#FAF7F2] overflow-hidden select-none flex flex-col justify-between items-center">
+      <section className="relative w-full min-h-[calc(100vh-80px)] h-auto pt-[95px] sm:pt-[105px] md:pt-[120px] lg:pt-[110px] pb-12 sm:pb-16 md:pb-20 lg:pb-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#D8E6F5] via-[#EAF2F9] to-[#FAF7F2] overflow-hidden select-none flex flex-col justify-between items-center">
         {/* Sky Cloud Background Pattern */}
         <div className="absolute inset-0 pointer-events-none opacity-60 mix-blend-multiply z-0">
           <Image
@@ -302,7 +302,7 @@ export default function FranchisePage() {
           />
         </div>
 
-        <div className="w-full relative z-10 flex-1 flex flex-col justify-between items-center max-w-[1600px] mx-auto h-full overflow-hidden">
+        <div className="w-full relative z-10 flex-1 flex flex-col justify-between items-center max-w-[1600px] mx-auto">
           {/* Header Title Block (Tight margin on mobile, spacious clear margin on desktop) */}
           <div className="text-center space-y-0.5 shrink-0 mt-0 lg:mt-3.5 py-0.5">
             {/* Subtitle: — GROWTH WITH — (Fade in from LEFT) */}
@@ -318,8 +318,8 @@ export default function FranchisePage() {
               <span className="w-5 md:w-7 h-[2px] bg-gradient-to-l from-transparent via-[#EAB308] to-[#82B224] rounded-full" />
             </motion.div>
 
-            {/* Main Brand Title: MEATIN */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[76px] [@media(max-height:710px)]:lg:text-[54px] [@media(max-height:620px)]:lg:text-[44px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none flex items-center justify-center">
+            {/* Main Brand Title: MEATiN */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-[76px] [@media(max-height:710px)]:lg:text-[50px] [@media(max-height:620px)]:lg:text-[40px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none flex items-center justify-center">
               {/* MEAT (Fade in from RIGHT) */}
               <motion.span
                 initial={{ opacity: 0, x: 60 }}
@@ -331,21 +331,21 @@ export default function FranchisePage() {
                 MEAT
               </motion.span>
 
-              {/* IN (Fade in from RIGHT, slightly slower and delayed) */}
+              {/* iN (Fade in from RIGHT, slightly slower and delayed) */}
               <motion.span
                 initial={{ opacity: 0, x: 60 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.95, ease: "easeOut", delay: 0.45 }}
-                className="text-[#D62828] inline-block"
+                className="text-[#D62828] inline-block normal-case"
               >
-                IN
+                iN
               </motion.span>
             </h1>
           </div>
 
           {/* Hero Store Interactive Canvas (Prominent & larger on mobile, proportional scaling on desktop) */}
-          <div className="relative w-full max-w-[1360px] h-auto lg:h-[520px] mx-auto flex items-center justify-center my-2 lg:my-auto origin-center lg:-mt-1 [@media(max-height:750px)]:lg:-mt-2 [@media(max-height:620px)]:lg:-mt-10 [@media(max-height:600px)]:lg:-mt-24 [@media(max-height:600px)]:lg:-translate-y-9 [@media(min-height:800px)]:lg:mt-4 [@media(min-height:890px)]:lg:mt-6 scale-100 lg:scale-[0.62] [@media(max-height:600px)]:lg:scale-[0.56] [@media(min-height:620px)]:lg:scale-[0.70] [@media(min-height:710px)]:lg:scale-[0.78] [@media(min-height:800px)]:lg:scale-[0.88] [@media(min-height:890px)]:lg:scale-[1.02] transition-transform duration-300 shrink-0">
+          <div className="relative w-full max-w-[1600px] h-auto lg:h-[520px] mx-auto flex items-center justify-center my-6 sm:my-10 md:my-14 lg:my-auto origin-center lg:-mt-1 px-2 sm:px-4 lg:px-6 shrink-0">
             {/* Center 3D Store Graphic (Desktop Spotlight Cursor-follow Reveal | Mobile/Tab Clean Display) */}
             <motion.div
               ref={heroImageContainerRef}
@@ -354,13 +354,13 @@ export default function FranchisePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative w-[88%] sm:w-[80%] md:w-[68%] lg:w-[750px] xl:w-[820px] max-w-[480px] lg:max-w-none h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500 my-1 lg:my-0 cursor-default lg:cursor-crosshair overflow-hidden rounded-2xl select-none"
+              className="relative w-[88%] sm:w-[80%] md:w-[68%] lg:w-[580px] xl:w-[660px] 2xl:w-[720px] max-w-[480px] lg:max-w-none h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500 my-1 lg:my-0 cursor-default lg:cursor-crosshair overflow-hidden rounded-2xl select-none"
             >
-              {/* Mobile / Tablet View (Standard Single Image Display - No hover spotlight) */}
+              {/* Mobile / Tablet View (Standard Single Image Display using hero-main-image.webp) */}
               <div className="block lg:hidden relative w-full h-auto">
                 <Image
-                  src="/Franchies/hero-overlay-image.webp"
-                  alt="MEATIN Outlet Storefront"
+                  src="/Franchies/hero-main-image.webp"
+                  alt="MEATiN Outlet Storefront"
                   width={920}
                   height={720}
                   priority
@@ -373,7 +373,7 @@ export default function FranchisePage() {
                 {/* Layer 1 (Base): Overlay Image (visible everywhere on desktop by default) */}
                 <Image
                   src="/Franchies/hero-overlay-image.webp"
-                  alt="MEATIN Overlay Storefront"
+                  alt="MEATiN Overlay Storefront"
                   width={920}
                   height={720}
                   priority
@@ -394,7 +394,7 @@ export default function FranchisePage() {
                 >
                   <Image
                     src="/Franchies/hero-main-image.webp"
-                    alt="MEATIN Main Outlet Storefront"
+                    alt="MEATiN Main Outlet Storefront"
                     width={920}
                     height={720}
                     priority
@@ -436,7 +436,7 @@ export default function FranchisePage() {
             {/* SVG Connector Dotted Lines & Red Dots Overlay with Conveyor Animation */}
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none z-30 hidden lg:block"
-              viewBox="0 0 1280 520"
+              viewBox="0 0 1440 520"
               fill="none"
             >
               {/* Item 01 Dotted Line (Left Top) */}
@@ -447,13 +447,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <path
-                  d="M 155 55 L 155 55 Q 180 55 180 70 L 180 180 Q 180 190 210 190 L 250 190"
+                  d="M 250 57 L 325 57 Q 340 57 340 72 L 340 210 Q 340 225 355 225 L 420 225"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(250, 190)">
+                <g transform="translate(420, 225)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -480,13 +480,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
                 <path
-                  d="M 155 275 L 250 275"
+                  d="M 250 257 L 405 257"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(250, 275)">
+                <g transform="translate(405, 257)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -513,13 +513,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
                 <path
-                  d="M 155 495 L 155 495 Q 180 495 180 480 L 180 370 Q 180 360 210 360 L 250 360"
+                  d="M 250 457 L 325 457 Q 340 457 340 442 L 340 375 Q 340 360 355 360 L 410 360"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(250, 360)">
+                <g transform="translate(410, 360)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -546,13 +546,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.35 }}
               >
                 <path
-                  d="M 1140 57 L 1110 57 Q 1095 57 1095 72 L 1095 175 Q 1095 190 1080 190"
+                  d="M 1020 215 L 1085 215 Q 1100 215 1100 200 L 1100 72 Q 1100 57 1115 57 L 1190 57"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1080, 190)">
+                <g transform="translate(1020, 215)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -579,13 +579,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.65 }}
               >
                 <path
-                  d="M 1140 275 L 1080 275"
+                  d="M 1030 257 L 1190 257"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1080, 275)">
+                <g transform="translate(1030, 257)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -612,13 +612,13 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.95 }}
               >
                 <path
-                  d="M 1140 495 L 1115 495 Q 1095 495 1095 480 L 1095 375 Q 1095 360 1080 360"
+                  d="M 1020 360 L 1085 360 Q 1100 360 1100 375 L 1100 442 Q 1100 457 1115 457 L 1190 457"
                   stroke="#82B224"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1080, 360)">
+                <g transform="translate(1020, 360)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
@@ -639,23 +639,23 @@ export default function FranchisePage() {
             </svg>
 
             {/* LEFT 3 FEATURE BADGES (01, 02, 03) */}
-            <div className="absolute left-[-160px] xl:left-[-130px] 2xl:left-[-90px] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[320px]">
+            <div className="absolute left-2 sm:left-4 lg:left-6 xl:left-10 2xl:left-14 top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[250px] xl:w-[280px]">
               {/* Feature 01: HYGIENIC PROCESSING */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.2, scale: { duration: 0.25, ease: "easeOut" } }}
                 className="absolute top-[25px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:microscope"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-start text-left max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     01
                   </span>
@@ -675,18 +675,18 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.5, scale: { duration: 0.25, ease: "easeOut" } }}
                 className="absolute top-[225px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:shield-check"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-start text-left max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     02
                   </span>
@@ -706,18 +706,18 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.8, scale: { duration: 0.25, ease: "easeOut" } }}
                 className="absolute top-[425px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:plant"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-start text-left max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     03
                   </span>
@@ -732,28 +732,28 @@ export default function FranchisePage() {
               </motion.div>
             </div>
 
-            {/* RIGHT 3 FEATURE BADGES (04, 05, 06) */}
-            <div className="absolute right-[-215px] xl:right-[-185px] 2xl:right-[-145px] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[320px]">
+            {/* RIGHT 3 FEATURE BADGES (04, 05, 06 - REVERSED MATCHING REFERENCE IMAGE 2) */}
+            <div className="absolute right-2 sm:right-4 lg:right-6 xl:right-10 2xl:right-14 top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[250px] xl:w-[280px]">
               {/* Feature 04: NO ARTIFICIAL ADDITIVES */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.35, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[25px] left-0 flex items-center gap-4 group select-none origin-left cursor-default"
+                className="absolute top-[25px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:leaf"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-end text-right max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     04
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
+                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
                   <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
                     NO ARTIFICIAL
                     <br />
@@ -769,22 +769,22 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.65, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[225px] left-0 flex items-center gap-4 group select-none origin-left cursor-default"
+                className="absolute top-[225px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:package"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-end text-right max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     05
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
+                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
                   <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
                     FRESHNESS
                     <br />
@@ -800,22 +800,22 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.12 }}
+                whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.95, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[425px] left-0 flex items-center gap-4 group select-none origin-left cursor-default"
+                className="absolute top-[425px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-transparent border border-slate-400/80 flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
                   <Icon
                     icon="ph:truck"
                     className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col max-w-[170px]">
+                <div className="flex flex-col items-end text-right max-w-[170px]">
                   <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
                     06
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
+                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
                   <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
                     FAST
                     <br />
@@ -904,7 +904,7 @@ export default function FranchisePage() {
       {/* ============================================================ */}
       {/* SECTION 2: INTERACTIVE PRESENCE MAP (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full pt-16 sm:pt-24 lg:pt-[100px] pb-16 sm:pb-24 lg:pb-32 flex flex-col justify-between bg-[#EFF2EB] overflow-x-clip select-none">
+      <section className="relative w-full pt-20 sm:pt-28 lg:pt-[125px] xl:pt-[145px] pb-28 sm:pb-36 lg:pb-44 xl:pb-52 flex flex-col justify-between bg-[#EFF2EB] overflow-x-clip select-none">
         {/* Content Wrapper */}
         <div className="w-full px-3.5 sm:px-8 lg:px-12 flex-1 flex flex-col justify-center relative z-30 max-w-[1850px] mx-auto">
           {/* Flexbox Layout: Left Content Container & Right Map/Image Container */}
@@ -915,7 +915,7 @@ export default function FranchisePage() {
               <div className="space-y-1.5 sm:space-y-3">
                 {/* Real Letter-by-Letter Typewriter Animation for Heading */}
                 <div>
-                  <h2 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#1F5A3C]">
+                  <h2 className="text-2xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#1F5A3C]">
                     <div className="block">
                       {Array.from("OUR PRESENCE ACROSS").map((char, index) => (
                         <motion.span
@@ -968,7 +968,7 @@ export default function FranchisePage() {
               </div>
 
               {/* 3 Stat Cards arranged Side-by-Side in a Row (Mobile Compact Grid) */}
-              <div className="grid grid-cols-3 gap-1.5 sm:gap-3.5 max-w-lg w-full mb-8 sm:mb-12 lg:mb-16">
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-3.5 max-w-lg w-full mb-4 sm:mb-6 lg:mb-8">
                 {/* Card 1: Stores */}
                 <motion.div
                   initial={{ opacity: 0, y: 35, scale: 0.9 }}
@@ -1056,10 +1056,10 @@ export default function FranchisePage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, amount: 0.15 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }}
-              className="w-full lg:w-[58%] relative z-20 h-[310px] sm:h-[520px] lg:h-[65vh] xl:h-[70vh] max-h-[720px] flex items-center justify-center lg:justify-start shrink-0 mt-1 sm:mt-0"
+              className="w-full lg:w-[58%] relative z-20 h-[310px] sm:h-[450px] lg:h-[430px] xl:h-[500px] 2xl:h-[560px] [@media(max-height:720px)]:lg:h-[380px] flex items-center justify-center lg:justify-start shrink-0 mt-1 sm:mt-0"
             >
               {/* Dark Green Zoom Controls Pill (Top Right, mobile horizontal / desktop vertical) */}
-              <div className="absolute top-0 sm:top-6 lg:top-8 right-0 sm:right-12 md:right-16 lg:right-24 xl:right-28 z-40 bg-[#153520] text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-2xl shadow-xl flex flex-row sm:flex-col items-center gap-2 sm:gap-2.5 font-manrope text-[9px] sm:text-[11px]">
+              <div className="absolute top-0 sm:top-2 lg:top-2 right-0 sm:right-12 md:right-16 lg:right-24 xl:right-28 z-40 bg-[#153520] text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-2xl shadow-xl flex flex-row sm:flex-col items-center gap-2 sm:gap-2.5 font-manrope text-[9px] sm:text-[11px]">
                 {/* Back Button (Shown ONLY when viewing Kerala District Map) */}
                 {mapMode === "kerala" && (
                   <button
@@ -1113,10 +1113,10 @@ export default function FranchisePage() {
               {/* Map Canvas Container with Zoom Transform (Scaled Down on Mobile) */}
               <div
                 className="relative w-full h-full flex items-center justify-center lg:justify-start transition-transform duration-500 ease-out scale-[0.85] sm:scale-100 origin-center"
-                style={{ transform: `scale(${zoomLevel * (typeof window !== "undefined" && window.innerWidth < 640 ? 0.88 : 1.22)})` }}
+                style={{ transform: `scale(${zoomLevel * (typeof window !== "undefined" && window.innerWidth < 640 ? 0.88 : 1.12)})` }}
               >
                 {/* 3D Map SVG Illustration with AnimatePresence Mode Toggle Animation */}
-                <div className="relative h-full w-auto aspect-[888/982] max-w-full translate-x-0 lg:translate-x-6 xl:translate-x-12 2xl:translate-x-14 translate-y-0 lg:translate-y-6 xl:translate-y-10 2xl:translate-y-14 flex items-center justify-center">
+                <div className="relative h-full w-auto aspect-[888/982] max-w-full translate-x-0 lg:translate-x-4 xl:translate-x-8 flex items-center justify-center">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={mapMode}
@@ -1434,8 +1434,8 @@ export default function FranchisePage() {
           </div>
         </div>
 
-        {/* UNIFIED BOTTOM GRAPHICS ASSEMBLY: Bottom Slope Wave + Truck + Mascot Character */}
-        <div className="relative w-full mt-10 sm:mt-14 lg:mt-0 h-[80px] sm:h-[110px] md:h-[140px] lg:h-[160px] xl:h-[180px] pointer-events-none select-none shrink-0 z-30">
+        {/* UNIFIED BOTTOM GRAPHICS ASSEMBLY: Bottom Slope Wave + Truck + Mascot Character (Flush to bottom-0) */}
+        <div className="absolute bottom-0 left-0 right-0 w-full h-[90px] sm:h-[120px] md:h-[140px] lg:h-[160px] xl:h-[185px] pointer-events-none select-none shrink-0 z-30">
           
           {/* 1. Bottom Slope Wave Background Transition */}
           <div className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-hidden">
@@ -1458,11 +1458,11 @@ export default function FranchisePage() {
               delay: 0.3,
               ease: "easeOut",
             }}
-            className="absolute bottom-1 sm:bottom-2 md:bottom-3 lg:bottom-4 xl:bottom-5 left-1 sm:left-3 md:left-6 lg:left-8 xl:left-10 z-30 pointer-events-none w-[130px] min-[420px]:w-[155px] sm:w-[220px] md:w-[260px] lg:w-[175px] xl:w-[215px] [@media(min-width:1500px)]:w-[290px] [@media(min-width:1700px)]:w-[390px] 2xl:w-[480px]"
+            className="absolute bottom-1 sm:bottom-2 md:bottom-3 lg:bottom-4 xl:bottom-5 left-1 sm:left-3 md:left-6 lg:left-8 xl:left-10 z-30 pointer-events-none w-[130px] min-[420px]:w-[155px] sm:w-[200px] md:w-[240px] lg:w-[215px] xl:w-[255px] [@media(min-width:1500px)]:w-[300px] 2xl:w-[350px]"
           >
             <Image
               src="/Franchies/truck-image.webp"
-              alt="MEATIN Delivery Truck"
+              alt="MEATiN Delivery Truck"
               width={500}
               height={350}
               priority
@@ -1480,11 +1480,11 @@ export default function FranchisePage() {
               delay: 0.35,
               ease: [0.34, 1.56, 0.64, 1],
             }}
-            className="absolute bottom-1 sm:bottom-2 md:bottom-3 lg:bottom-4 xl:bottom-5 right-1 sm:right-2 md:right-4 lg:right-6 xl:right-10 z-30 pointer-events-none w-[85px] min-[420px]:w-[100px] sm:w-[130px] md:w-[155px] lg:w-[170px] xl:w-[210px]"
+            className="absolute bottom-1 sm:bottom-2 md:bottom-3 lg:bottom-4 xl:bottom-5 right-1 sm:right-2 md:right-4 lg:right-6 xl:right-10 z-30 pointer-events-none w-[85px] min-[420px]:w-[100px] sm:w-[125px] md:w-[145px] lg:w-[160px] xl:w-[190px]"
           >
             <Image
               src="/Franchies/chicken.webp"
-              alt="MEATIN Chicken Mascot"
+              alt="MEATiN Chicken Mascot"
               width={400}
               height={500}
               priority

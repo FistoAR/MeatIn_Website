@@ -17,6 +17,14 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  /* Responsive typography & spacing scaling for normal laptop screens (1024px to 1535px) */
+  @media (min-width: 1024px) and (max-width: 1535px) {
+    html {
+      font-size: 90%; /* Scales down rem font sizes, margins & paddings gracefully on laptop screens */
+    }
   }
 
   body {

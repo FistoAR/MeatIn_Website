@@ -69,7 +69,7 @@ export const Navbar: React.FC = () => {
           <Logo variant="dark" className="shrink-0" />
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-[2.5vw] whitespace-nowrap" suppressHydrationWarning>
+          <nav className="hidden lg:flex items-center gap-3 xl:gap-5 2xl:gap-[2.5vw] whitespace-nowrap" suppressHydrationWarning>
             {navItems.map((item) => {
               const isActive = pathname === item.href;
 
@@ -79,11 +79,11 @@ export const Navbar: React.FC = () => {
                   href={item.href}
                   prefetch={true}
                   suppressHydrationWarning
-                  className={`relative lg:text-[0.75vw] xl:text-[0.8vw] font-black font-inter tracking-wider transition-all duration-200 lg:px-[0.2vw] lg:py-[0.4vw] ${getLinkColorClass(isActive)}`}
+                  className={`relative text-xs lg:text-xs xl:text-xs 2xl:text-[0.8vw] font-black font-inter tracking-wider transition-all duration-200 lg:px-1 xl:px-1.5 py-1 ${getLinkColorClass(isActive)}`}
                 >
                   {item.label}
                   {isActive && (
-                    <span className={`absolute bottom-0 left-0 right-0 lg:h-[0.14vw] rounded-full ${getUnderlineColorClass()}`} />
+                    <span className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full ${getUnderlineColorClass()}`} />
                   )}
                 </Link>
               );
@@ -91,11 +91,11 @@ export const Navbar: React.FC = () => {
           </nav>
 
           {/* Enquiry Button (Desktop) & Hamburger Menu (Mobile/Tablet) */}
-          <div className="flex items-center gap-3 lg:gap-[1vw]">
+          <div className="flex items-center gap-3 lg:gap-4 2xl:gap-[1vw]">
             <Link
               href="/contact"
               suppressHydrationWarning
-              className="hidden sm:inline-block bg-[#D62828] hover:bg-red-700 text-white font-bold font-inter text-xs lg:text-[0.7vw] xl:text-[0.75vw] px-4 lg:px-[1.2vw] py-2.5 lg:py-[0.6vw] rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95"
+              className="hidden sm:inline-block bg-[#D62828] hover:bg-red-700 text-white font-bold font-inter text-xs lg:text-xs xl:text-xs 2xl:text-[0.75vw] px-4 lg:px-4 py-2 lg:py-2 rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95"
             >
               Enquiry Now
             </Link>

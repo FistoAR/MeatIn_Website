@@ -22,7 +22,7 @@ export const PageBanner: React.FC<PageBannerProps> = ({
       <Container className="relative z-10 text-center">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-meatin-yellow text-xs font-semibold uppercase tracking-wider mb-4">
           <span className="w-2 h-2 rounded-full bg-meatin-red animate-ping" />
-          MEATIn Fresh Quality
+          <span className="normal-case">MEATiN</span> Fresh Quality
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-4">
           {title}

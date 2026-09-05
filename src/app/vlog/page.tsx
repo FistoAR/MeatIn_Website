@@ -23,7 +23,7 @@ export default function VlogComingSoonPage() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D62828]/10 text-[#D62828] border border-[#D62828]/20 font-black text-xs uppercase tracking-widest">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>MEATIN VLOG</span>
+          <span><span className="normal-case">MEATiN</span> VLOG</span>
         </div>
 
         {/* Main Heading */}
