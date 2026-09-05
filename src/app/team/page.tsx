@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Linkedin, Mail } from 'lucide-react';
 import CareersBanner from '@/components/layout/CareersBanner';
+import MeetOurTeamBanner from '@/components/team/MeetOurTeamBanner';
 
 interface TeamMember {
   name: string;
@@ -181,15 +182,15 @@ export default function TeamPage() {
         <div className="absolute top-[60%] right-[-5%] sm:right-[-2%] w-[110px] h-[110px] sm:w-[160px] sm:h-[160px] lg:w-[200px] lg:h-[200px] xl:w-[240px] xl:h-[240px] 2xl:w-[280px] 2xl:h-[280px] z-0 opacity-40 sm:opacity-60 lg:opacity-100 select-none pointer-events-none">
           <Image src="/MeetOurTeam/doodles-bg/right-shake-right-side.webp" alt="Doodle" fill className="object-contain" />
         </div>
-        <div className="relative z-10 w-full max-w-[1400px] lg:max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw]">
+        <div className="relative z-10 w-full max-w-[1400px] lg:max-w-[85vw] mx-auto px-3 sm:px-6 lg:px-[1.5vw]">
 
           {/* Centered LED BY Title with Gold Separator Lines */}
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center justify-center mb-16"
+            className="flex items-center justify-center mb-8 min-[380px]:mb-10 sm:mb-16"
           >
             <div className="flex items-center">
               <div className="h-[2px] w-12 sm:w-20 bg-[#D4A437]" />
@@ -206,16 +207,16 @@ export default function TeamPage() {
             </div>
           </motion.div>
 
-          {/* Flexbox layout to cleanly wrap and center the rows */}
-          <div className="flex flex-wrap justify-center gap-x-10 gap-y-16 lg:gap-x-[3vw] xl:gap-x-[2.5vw] lg:gap-y-20 max-w-7xl xl:max-w-[1350px] 2xl:max-w-[1400px] mx-auto">
+          {/* Flexbox layout to cleanly wrap and center the rows — 2 per row on mobile */}
+          <div className="flex flex-wrap justify-center gap-x-3.5 gap-y-8 min-[380px]:gap-x-4 min-[380px]:gap-y-10 sm:gap-x-10 sm:gap-y-16 lg:gap-x-[3vw] xl:gap-x-[2.5vw] lg:gap-y-20 max-w-7xl xl:max-w-[1350px] 2xl:max-w-[1400px] mx-auto">
             {ledByMembers.map((member, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 35 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                viewport={{ once: false, amount: 0.15 }}
                 transition={{ duration: 0.6, delay: (idx % 4) * 0.1 }}
-                className="group relative flex flex-col items-center w-[270px] sm:w-[260px] md:w-[260px] lg:w-[260px] xl:w-[275px] 2xl:w-[285px] transition-transform duration-500 hover:scale-[1.03]"
+                className="group relative flex flex-col items-center w-[calc(50%-7px)] min-[380px]:w-[calc(50%-8px)] max-w-[195px] sm:max-w-none sm:w-[260px] md:w-[260px] lg:w-[260px] xl:w-[275px] 2xl:w-[285px] transition-transform duration-500 hover:scale-[1.03]"
               >
                 {/* Photo container */}
                 <div className="relative w-full aspect-[622/564] overflow-hidden flex items-end justify-center">
@@ -224,17 +225,18 @@ export default function TeamPage() {
                     alt={member.name}
                     fill
                     className="object-contain object-bottom"
-                    sizes="(max-width: 768px) 270px, 285px"
+                    sizes="(max-width: 640px) 195px, (max-width: 768px) 260px, 285px"
                   />
                 </div>
 
                 {/* Bright green box */}
-                <div className="relative w-full h-[70px] sm:h-[70px] bg-[#60860E] text-white pl-[15px] pr-4 sm:pr-5 flex flex-col justify-center items-start">
-                  <h3 className="text-sm min-[380px]:text-base sm:text-[1.1rem] lg:text-[1.05rem] xl:text-[1.1rem] 2xl:text-[1.2rem] font-bold text-white font-barlow tracking-relaxed leading-tight">
+                <div className="relative w-full h-[48px] min-[360px]:h-[52px] sm:h-[68px] bg-[#60860E] text-white pl-1.5 min-[360px]:pl-2 sm:pl-3 pr-1.5 sm:pr-3 py-1 sm:py-2 flex flex-col justify-center items-start">
+                  <h3 className="w-full text-[11px] min-[350px]:text-[11.5px] min-[375px]:text-[12.5px] min-[400px]:text-[13.5px] sm:text-[1.1rem] lg:text-[1.05rem] xl:text-[1.1rem] 2xl:text-[1.2rem] font-bold text-white font-barlow tracking-tight sm:tracking-wide leading-tight whitespace-nowrap">
                     {member.name}
                   </h3>
-                  <p className="text-sm sm:text-md font-semibold text-white/95 tracking-wider mt-1 flex items-center gap-1.5 font-manrope">
-                    <span className="text-white/80 group-hover:text-[#D4A437] transition-colors duration-300">★</span> {member.role}
+                  <p className="text-[10.5px] min-[360px]:text-[11px] min-[390px]:text-[12px] sm:text-sm font-semibold text-white/95 tracking-normal mt-0.5 sm:mt-1 flex items-center gap-1 sm:gap-1.5 font-manrope leading-tight pr-5 min-[360px]:pr-6 sm:pr-7">
+                    <span className="text-white/80 group-hover:text-[#D4A437] transition-colors duration-300 shrink-0 text-[10px] sm:text-xs">★</span>
+                    <span className="whitespace-nowrap sm:whitespace-normal">{member.role}</span>
                   </p>
                   
                   {/* Floating blue LinkedIn icon */}
@@ -242,9 +244,9 @@ export default function TeamPage() {
                     href="https://linkedin.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-20 w-8 h-8 rounded-full bg-[#0077B5] hover:bg-[#005582] transition-colors flex items-center justify-center text-white shadow-md active:scale-90"
+                    className="absolute bottom-1 right-1 min-[360px]:bottom-1.5 min-[360px]:right-1.5 sm:bottom-2 sm:right-2.5 z-20 w-4.5 h-4.5 min-[360px]:w-5 min-[360px]:h-5 sm:w-6.5 sm:h-6.5 rounded-full bg-[#0077B5] hover:bg-[#005582] transition-colors flex items-center justify-center text-white shadow-md active:scale-90 shrink-0"
                   >
-                    <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
+                    <svg viewBox="0 0 24 24" className="w-2.5 h-2.5 min-[360px]:w-3 min-[360px]:h-3 sm:w-3.5 sm:h-3.5 fill-white">
                       <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
                     </svg>
                   </a>
@@ -256,7 +258,7 @@ export default function TeamPage() {
       </section>
 
       {/* Board of Directors Section */}
-      <section className="relative py-20 lg:py-28 bg-[#FCFAF7] overflow-hidden border-t border-slate-100">
+      <section className="relative pt-16 pb-8 sm:pt-20 sm:pb-10 lg:pt-24 lg:pb-12 bg-[#FCFAF7] overflow-hidden border-t border-slate-100">
 
         {/* Background Doodles */}
         {/* Mid-Left: Together piece left side doodle */}
@@ -276,15 +278,15 @@ export default function TeamPage() {
           <Image src="/MeetOurTeam/doodles-bg/growth-image-right-side.webp" alt="Doodle" fill className="object-contain" />
         </div>
 
-        <div className="relative z-10 w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-[1.5vw]">
+        <div className="relative z-10 w-full max-w-[1400px] lg:max-w-[90vw] mx-auto px-3 sm:px-6 lg:px-[1.5vw]">
 
           {/* Centered DIRECTORS Title with Gold Separator Lines */}
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center justify-center mb-16"
+            className="flex items-center justify-center mb-8 min-[380px]:mb-10 sm:mb-16"
           >
             <div className="flex items-center">
               <div className="h-[2px] w-12 sm:w-20 bg-[#D4A437]" />
@@ -299,16 +301,16 @@ export default function TeamPage() {
             </div>
           </motion.div>
 
-          {/* Directors Grid — 5 per row on large desktop, 4 on laptop, wraps below */}
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-14 lg:gap-x-[2vw] xl:gap-x-[1.8vw] lg:gap-y-16 max-w-[1300px] xl:max-w-[1400px] 2xl:max-w-[1500px] mx-auto">
+          {/* Directors Grid — 2 per row on mobile, 4-5 per row on desktop */}
+          <div className="flex flex-wrap justify-center gap-x-3.5 gap-y-8 min-[380px]:gap-x-4 min-[380px]:gap-y-10 sm:gap-x-6 sm:gap-y-14 lg:gap-x-[2vw] xl:gap-x-[1.8vw] lg:gap-y-16 max-w-[1300px] xl:max-w-[1400px] 2xl:max-w-[1500px] mx-auto">
             {directors.map((member, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 35 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                viewport={{ once: false, amount: 0.15 }}
                 transition={{ duration: 0.6, delay: (idx % 5) * 0.08 }}
-                className="group relative flex flex-col items-center w-[220px] sm:w-[220px] md:w-[220px] lg:w-[210px] xl:w-[220px] 2xl:w-[230px] transition-transform duration-500 hover:scale-[1.03]"
+                className="group relative flex flex-col items-center w-[calc(50%-7px)] min-[380px]:w-[calc(50%-8px)] max-w-[185px] sm:max-w-none sm:w-[220px] md:w-[220px] lg:w-[210px] xl:w-[220px] 2xl:w-[230px] transition-transform duration-500 hover:scale-[1.03]"
               >
                 {/* Photo container */}
                 <div className="relative w-full aspect-[624/543] overflow-hidden flex items-end justify-center">
@@ -317,17 +319,18 @@ export default function TeamPage() {
                     alt={member.name}
                     fill
                     className="object-contain object-bottom"
-                    sizes="(max-width: 768px) 220px, 230px"
+                    sizes="(max-width: 640px) 185px, (max-width: 768px) 220px, 230px"
                   />
                 </div>
 
                 {/* Green name block */}
-                <div className="relative w-full h-[70px] sm:h-[70px] bg-[#60860E] text-white pl-[15px] pr-4 sm:pr-5 flex flex-col justify-center items-start">
-                  <h3 className="text-sm sm:text-[0.95rem] xl:text-[1.05rem] font-bold text-white font-barlow tracking-wide leading-tight">
+                <div className="relative w-full h-[48px] min-[360px]:h-[52px] sm:h-[68px] bg-[#60860E] text-white pl-1.5 min-[360px]:pl-2 sm:pl-3 pr-1.5 sm:pr-3 py-1 sm:py-2 flex flex-col justify-center items-start">
+                  <h3 className="w-full text-[11px] min-[350px]:text-[11.5px] min-[375px]:text-[12.5px] min-[400px]:text-[13px] sm:text-[0.95rem] xl:text-[1.05rem] font-bold text-white font-barlow tracking-tight sm:tracking-wide leading-tight whitespace-nowrap">
                     {member.name}
                   </h3>
-                  <p className="text-xs sm:text-sm font-semibold text-white/95 tracking-wider mt-1 flex items-center gap-1.5 font-manrope">
-                    <span className="text-white/80 group-hover:text-[#D4A437] transition-colors duration-300">★</span> {member.role}
+                  <p className="text-[10.5px] min-[360px]:text-[11px] min-[390px]:text-[12px] sm:text-xs md:text-sm font-semibold text-white/95 tracking-normal mt-0.5 sm:mt-1 flex items-center gap-1 sm:gap-1.5 font-manrope leading-tight pr-5 min-[360px]:pr-6 sm:pr-7">
+                    <span className="text-white/80 group-hover:text-[#D4A437] transition-colors duration-300 shrink-0 text-[10px] sm:text-xs">★</span>
+                    <span className="whitespace-nowrap sm:whitespace-normal">{member.role}</span>
                   </p>
                   
                   {/* LinkedIn icon */}
@@ -335,9 +338,9 @@ export default function TeamPage() {
                     href="https://linkedin.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute bottom-2.5 right-2.5 z-20 w-7 h-7 rounded-full bg-[#0077B5] hover:bg-[#005582] transition-colors flex items-center justify-center text-white shadow-md active:scale-90"
+                    className="absolute bottom-1 right-1 min-[360px]:bottom-1.5 min-[360px]:right-1.5 sm:bottom-2 sm:right-2.5 z-20 w-4.5 h-4.5 min-[360px]:w-5 min-[360px]:h-5 sm:w-6.5 sm:h-6.5 rounded-full bg-[#0077B5] hover:bg-[#005582] transition-colors flex items-center justify-center text-white shadow-md active:scale-90 shrink-0"
                   >
-                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white">
+                    <svg viewBox="0 0 24 24" className="w-2.5 h-2.5 min-[360px]:w-3 min-[360px]:h-3 sm:w-3 sm:h-3 fill-white">
                       <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
                     </svg>
                   </a>
@@ -349,7 +352,7 @@ export default function TeamPage() {
       </section>
 
       {/* MEET OUR TEAM BANNER SECTION */}
-      <section className="relative z-10 pt-12 pb-24 sm:pt-16 sm:pb-32 lg:pb-36 bg-[#FCFAF7] overflow-hidden">
+      <section className="relative z-10 pt-0 pb-20 sm:pt-0 sm:pb-28 lg:pb-32 bg-[#FCFAF7] overflow-hidden">
         {/* Background Side Doodles around the banner as seen in Reference Image 3 */}
         {/* Left Side Handshake Doodle */}
         <div className="absolute top-[8%] left-[0.5%] lg:left-[2%] xl:left-[3%] w-[120px] sm:w-[170px] lg:w-[220px] xl:w-[260px] aspect-square pointer-events-none select-none z-0 opacity-80">
@@ -372,19 +375,7 @@ export default function TeamPage() {
         </div>
 
         <div className="relative z-10 w-full max-w-[1280px] xl:max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="w-full relative select-none"
-          >
-            <img
-              src="/MeetOurTeam/banner/banner.svg"
-              alt="Meet Our Team Banner"
-              className="w-full h-auto block "
-            />
-          </motion.div>
+          <MeetOurTeamBanner />
         </div>
 
         {/* Position Absolute Centered Bottom Doodle (without green background) */}
