@@ -13,7 +13,7 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'dark', className = '' }) 
       <div className="relative flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
         <Image
           src="/meatin-logo.webp"
-          alt="MEATIN Logo"
+          alt="MEATiN Logo"
           width={180}
           height={65}
           className="h-10 sm:h-12 lg:h-[3.6vw] w-auto object-contain"

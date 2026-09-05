@@ -175,7 +175,7 @@ export const Preloader: React.FC = () => {
               />
             </div>
 
-            {/* 2. MEATIN Logo */}
+            {/* 2. MEATiN Logo */}
             <div className="animated-logo scale-100 sm:scale-105 shrink-0 -mt-2">
               <Logo variant="dark" />
             </div>

@@ -45,7 +45,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
             />
           </div>
 
-          {/* Top Right Absolute: MEATIN Logo */}
+          {/* Top Right Absolute: MEATiN Logo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.6, y: -20 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -55,7 +55,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
           >
             <Image
               src="/meatin-logo.webp"
-              alt="MEATIN Logo"
+              alt="MEATiN Logo"
               fill
               className="object-contain object-right-top"
             />

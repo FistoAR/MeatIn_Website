@@ -377,7 +377,7 @@ export default function HomePage() {
                   className="space-y-3"
                 >
                   <h1 className="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-[6.5vw] font-bold font-barlow tracking-tight uppercase leading-[0.9] space-y-1">
-                    <span className="block text-[#87B71D]">MEATIN:</span>
+                    <span className="block text-[#87B71D] normal-case">MEATiN:</span>
                     <span className="block text-white">PURE QUALITY.</span>
                     <span className="block text-white">TRUSTED MEAT.</span>
                   </h1>
@@ -434,7 +434,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. SECOND SECTION (MEATIN COLD CHAIN LOGISTICS TRUCK) */}
+      {/* 2. SECOND SECTION (MEATiN COLD CHAIN LOGISTICS TRUCK) */}
       <section
         ref={section2Ref}
         className="relative w-full bg-[#EBF6E4] pt-12 pb-24 sm:pt-16 sm:pb-28 md:pt-20 md:pb-32 overflow-hidden flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat min-h-[300px] sm:min-h-[360px] md:min-h-[400px] lg:min-h-[440px]"
@@ -577,7 +577,7 @@ export default function HomePage() {
 
       {/* 3. BRAND STORY / TIMELINE SECTION */}
       <section
-        className="relative w-full pt-10 pb-10 text-white overflow-hidden"
+        className="relative w-full pt-6 pb-6 lg:pt-8 lg:pb-8 2xl:pt-10 2xl:pb-10 text-white overflow-hidden"
         style={{
           background: "radial-gradient(circle at center, #458A3F 0%, #064823 100%)",
         }}
@@ -591,28 +591,28 @@ export default function HomePage() {
             className="object-cover object-center"
           />
         </div>
-        <div className="w-full max-w-[1400px] lg:max-w-[92vw] mx-auto px-4 sm:px-6 lg:px-8 pt-4 relative z-10">
+        <div className="w-full max-w-[1400px] lg:max-w-[92vw] mx-auto px-4 sm:px-6 lg:px-8 pt-2 lg:pt-2 2xl:pt-4 relative z-10">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.8 }}
-            className="text-center flex flex-col items-center mb-4 lg:mb-16"
+            className="text-center flex flex-col items-center mb-3 lg:mb-6 xl:mb-6 2xl:mb-10"
           >
-            <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="flex items-center justify-center gap-3 mb-2">
               <div className="h-[1.5px] w-8 sm:w-12 bg-white" />
               <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-white font-manrope">
                 BRAND STORY
               </h4>
               <div className="h-[1.5px] w-8 sm:w-12 bg-white" />
             </div>
-            <h2 className="text-3xl sm:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[4vw] font-normal font-chau tracking-tight leading-none mb-4">
+            <h2 className="text-2xl sm:text-4xl lg:text-3xl xl:text-4xl 2xl:text-[3.5vw] font-normal font-chau tracking-tight leading-none mb-2">
               More Than Meat. It&apos;s{" "}
               <span className="text-[#FFC72C]">Our</span> Promise.
             </h2>
-            <p className="text-[#F6F5F0]/90 text-sm sm:text-base max-w-2xl mx-auto font-manrope font-semibold leading-relaxed">
-              From farm tp fork, every step we talk is guided by science, driven
+            <p className="text-[#F6F5F0]/90 text-xs sm:text-sm xl:text-sm 2xl:text-base max-w-2xl mx-auto font-manrope font-semibold leading-relaxed">
+              From farm to fork, every step we take is guided by science, driven
               by care and delivered with trust.
             </p>
           </motion.div>
@@ -623,7 +623,7 @@ export default function HomePage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, margin: "-50px" }}
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6 xl:gap-4 items-stretch pt-8 pb-2"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6 xl:gap-3 2xl:gap-4 items-stretch pt-4 xl:pt-4 2xl:pt-6 pb-2"
           >
             {storySteps.map((step, idx) => {
               return (
@@ -632,10 +632,10 @@ export default function HomePage() {
                   variants={fadeInUp}
                   whileHover={{ scale: 1.05, zIndex: 30 }}
                   transition={{ duration: 0.3 }}
-                  className={`bg-white rounded-[20px] border border-white/80 shadow-lg hover:shadow-2xl flex flex-col justify-between h-max overflow-hidden group min-h-[360px] relative ${idx % 2 === 0 ? 'xl:-mt-10' : 'xl:mt-14'}`}
+                  className={`bg-white rounded-[18px] 2xl:rounded-[20px] border border-white/80 shadow-lg hover:shadow-2xl flex flex-col justify-between h-max overflow-hidden group min-h-[250px] xl:min-h-[250px] 2xl:min-h-[310px] relative ${idx % 2 === 0 ? 'xl:-mt-4 2xl:-mt-8' : 'xl:mt-4 2xl:mt-8'}`}
                 >
                   {/* Top Image Frame (with icon and title inside) */}
-                  <div className="relative w-full h-[300px] overflow-hidden flex flex-col justify-end pb-4 items-center">
+                  <div className="relative w-full h-[195px] xl:h-[195px] 2xl:h-[245px] overflow-hidden flex flex-col justify-end pb-3 2xl:pb-4 items-center">
                     <Image
                       src={step.image}
                       alt={step.title}
@@ -643,10 +643,10 @@ export default function HomePage() {
                       className="object-cover object-top"
                     />
                     {/* Bottom gradient fade to white */}
-                    <div className="absolute -bottom-1 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
+                    <div className="absolute -bottom-1 left-0 right-0 h-20 xl:h-20 2xl:h-28 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
 
                     {/* Icon */}
-                    <div className="relative z-20 w-[64px] h-[64px] drop-shadow-md mb-4">
+                    <div className="relative z-20 w-10 h-10 xl:w-10 xl:h-10 2xl:w-14 2xl:h-14 drop-shadow-md mb-2">
                       <Image
                         src={step.icon}
                         alt={`${step.title} icon`}
@@ -656,14 +656,14 @@ export default function HomePage() {
                     </div>
 
                     {/* Title */}
-                    <h4 className="relative z-20 text-[#153520] font-extrabold text-[1.05rem] xl:text-[1rem] 2xl:text-[1.1rem] tracking-wide uppercase font-manrope leading-[1.5] text-center px-2 max-w-[90%]">
+                    <h4 className="relative z-20 text-[#153520] font-extrabold text-[0.82rem] xl:text-[0.82rem] 2xl:text-[1.05rem] tracking-wide uppercase font-manrope leading-[1.3] text-center px-1.5 max-w-[95%]">
                       {step.title}
                     </h4>
                   </div>
 
                   {/* Bottom Text Panel */}
-                  <div className="bg-white pb-8 px-4 flex-1 flex flex-col items-center justify-start text-center relative z-20 -mt-px">
-                    <p className="text-[#3A3A3A] text-[0.8rem] 2xl:text-[0.85rem] font-semibold leading-relaxed font-manrope max-w-[195px] mx-auto">
+                  <div className="bg-white pb-3 xl:pb-3 2xl:pb-6 px-3 flex-1 flex flex-col items-center justify-start text-center relative z-20 -mt-px">
+                    <p className="text-[#3A3A3A] text-[0.72rem] xl:text-[0.72rem] 2xl:text-[0.83rem] font-semibold leading-snug font-manrope max-w-[170px] 2xl:max-w-[195px] mx-auto">
                       {step.desc}
                     </p>
                   </div>

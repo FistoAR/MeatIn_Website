@@ -4710,7 +4710,7 @@ export default function KnowYourMeatPage() {
                     />
                   </div>
                   <span className="text-[12px] sm:text-[13px] lg:text-[14px] font-extrabold text-[#14421A] tracking-wider uppercase font-manrope whitespace-nowrap">
-                    MEATIN PACK
+                    <span className="normal-case">MEATiN</span> PACK
                   </span>
                 </div>
               </motion.div>

@@ -180,7 +180,7 @@ export default function CareersBanner() {
           {/* Base SVG Banner Asset */}
           <Image
             src="/ContactUs/careers-banner.svg"
-            alt="Join Our Team - MEATIN Careers"
+            alt="Join Our Team - MEATiN Careers"
             fill
             priority
             className="object-contain w-full h-full pointer-events-none"
@@ -199,7 +199,7 @@ export default function CareersBanner() {
               width: '13.1%',
               height: '12.2%',
             }}
-            aria-label="Apply Now for Careers at MEATIN"
+            aria-label="Apply Now for Careers at MEATiN"
           >
             {/* Subtle glow & sheen overlay on hover */}
             <div className="absolute inset-0 bg-white/0 group-hover/btn:bg-white/20 transition-all duration-300 rounded-xl" />
@@ -225,7 +225,7 @@ export default function CareersBanner() {
                 <span className="text-[#153520]">Our Team</span>
               </h2>
               <p className="text-slate-800 font-medium text-xs sm:text-sm leading-relaxed font-manrope pt-0.5">
-                Build your career with MEATIN. We're always looking for passionate and driven people to grow with us.
+                Build your career with MEATiN. We're always looking for passionate and driven people to grow with us.
               </p>
             </div>
 
@@ -298,11 +298,11 @@ export default function CareersBanner() {
               </motion.button>
             </div>
 
-            {/* MEATIN Team Image Header */}
+            {/* MEATiN Team Image Header */}
             <div className="relative w-full h-[150px] sm:h-[180px] rounded-xl overflow-hidden shadow-xs border border-slate-200/60">
               <Image
                 src="/ContactUs/banner-img.webp"
-                alt="MEATIN Team"
+                alt="MEATiN Team"
                 fill
                 className="object-cover object-center"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -618,7 +618,7 @@ export default function CareersBanner() {
                     Application Submitted!
                   </h2>
                   <p className="text-slate-800 font-medium text-sm sm:text-base max-w-md leading-relaxed">
-                    Successful submission! We will contact you shortly. Thank you for your interest in joining MEATIN.
+                    Successful submission! We will contact you shortly. Thank you for your interest in joining MEATiN.
                   </p>
                   <button
                     onClick={handleResetAndClose}

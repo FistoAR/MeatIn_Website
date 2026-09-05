@@ -228,7 +228,7 @@ export default function AboutUsPage() {
           <div className="absolute top-0 bottom-0 right-0 left-0 lg:left-[30%] w-full lg:w-[70%] overflow-hidden">
             <Image
               src="/AboutUs/about-hero-img.webp"
-              alt="MEATIN Integrated Farming"
+              alt="MEATiN Integrated Farming"
               fill
               priority
               className="object-cover object-top lg:object-[center_15%]"
@@ -254,7 +254,7 @@ export default function AboutUsPage() {
             className="space-y-4 max-w-4xl"
           >
             <h2 className="text-[#D4A437] font-extrabold font-manrope tracking-widest text-sm sm:text-md uppercase flex items-center gap-2">
-              <span className="w-6 h-[2px] bg-[#D4A437]" /> WHAT IS MEATIN?
+              <span className="w-6 h-[2px] bg-[#D4A437]" /> WHAT IS <span className="normal-case">MEATiN</span>?
             </h2>
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[54px] xl:text-[68px] 2xl:text-[5.8vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
               <span className="text-white block">WE ENGINEER</span>
@@ -309,7 +309,7 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      {/* 3. WHO IS MEATIN SECTION */}
+      {/* 3. WHO IS MEATiN SECTION */}
       <section className="relative w-full bg-[#F3F3F3] overflow-hidden">
         {/* Background pattern image */}
         <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.8]">
@@ -355,7 +355,7 @@ export default function AboutUsPage() {
               <div className="space-y-2">
                 <h2 className="text-4xl sm:text-5xl lg:text-[50px] xl:text-[62px] 2xl:text-[5.5rem] font-extrabold font-barlow-condensed tracking-wide uppercase leading-[0.95]">
                   <span className="text-[#1F5A3C] block">WHO IS</span>
-                  <span className="text-[#D62828] block">MEATIN?</span>
+                  <span className="text-[#D62828] block normal-case">MEATiN?</span>
                 </h2>
                 <div className="h-[3.5px] w-16 bg-[#1F5A3C]" />
               </div>
@@ -363,7 +363,7 @@ export default function AboutUsPage() {
               <div className="space-y-3">
                 <h3 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-bold text-[#153520]">Building a better meat ecosystem.</h3>
                 <p className="text-xs sm:text-sm lg:text-[13px] xl:text-sm 2xl:text-base text-slate-700 font-medium leading-relaxed max-w-[600px]">
-                  MEATIN delivers safe, hygienic meat through scientific processing and controlled cold-chain systems. Built on quality, safety, and Halal-certified standards, our integrated approach ensures reliable production and distribution. From responsible sourcing to advanced infrastructure, we are building a better meat ecosystem.
+                  MEATiN delivers safe, hygienic meat through scientific processing and controlled cold-chain systems. Built on quality, safety, and Halal-certified standards, our integrated approach ensures reliable production and distribution. From responsible sourcing to advanced infrastructure, we are building a better meat ecosystem.
                 </p>
               </div>
 
@@ -467,7 +467,7 @@ export default function AboutUsPage() {
         {/* Vertical Divider Line */}
         <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/10 z-10 hidden lg:block" />
 
-        {/* Floating Center MEATIN Logo Badge (visible on desktop screens) */}
+        {/* Floating Center MEATiN Logo Badge (visible on desktop screens) */}
         <div className="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 z-20 hidden lg:block">
           <motion.div
             initial={{ scale: 0.6, opacity: 0 }}
@@ -482,7 +482,7 @@ export default function AboutUsPage() {
               <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden flex items-center justify-center p-1">
                 <Image
                   src="/meatin-logo.webp"
-                  alt="MEATIN Logo"
+                  alt="MEATiN Logo"
                   width={70}
                   height={35}
                   className="object-contain w-[70px]"
@@ -546,7 +546,7 @@ export default function AboutUsPage() {
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="relative px-6 pt-11 pb-32 sm:px-10 lg:px-14 xl:px-16 sm:pt-14 lg:pt-16 xl:pt-18 flex flex-col justify-start text-white lg:overflow-hidden min-h-auto lg:min-h-[580px] xl:min-h-[635px]"
           >
-            {/* Floating Center MEATIN Logo Badge (Mobile/Tablet only, anchored directly to top seam) */}
+            {/* Floating Center MEATiN Logo Badge (Mobile/Tablet only, anchored directly to top seam) */}
             <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-20 lg:hidden">
               <motion.div
                 initial={{ scale: 0.6, opacity: 0 }}
@@ -560,7 +560,7 @@ export default function AboutUsPage() {
                   <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden flex items-center justify-center p-1">
                     <Image
                       src="/meatin-logo.webp"
-                      alt="MEATIN logo"
+                      alt="MEATiN logo"
                       width={70}
                       height={35}
                       className="object-contain w-10 sm:w-12"

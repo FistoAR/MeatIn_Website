@@ -80,7 +80,7 @@ export default function FranchisePage() {
       city: "Kerala",
       malayalam: "കേരളം",
       address:
-        "MEATIN Regional Head Office, Panchami Complex, Thrissur - 680519",
+        "MEATiN Regional Head Office, Panchami Complex, Thrissur - 680519",
       phone: "+91 99466 16162",
       xPercent: 47.0,
       yPercent: 78.0,
@@ -90,7 +90,7 @@ export default function FranchisePage() {
       city: "Bengaluru",
       malayalam: "ബെംഗളൂരു",
       address:
-        "MEATIN Express Outlet, Indiranagar, Bengaluru, Karnataka - 560038",
+        "MEATiN Express Outlet, Indiranagar, Bengaluru, Karnataka - 560038",
       phone: "+91 99466 16162",
       xPercent: 51.0,
       yPercent: 68.0,
@@ -99,7 +99,7 @@ export default function FranchisePage() {
       id: "mumbai",
       city: "Mumbai",
       malayalam: "മുംബൈ",
-      address: "MEATIN Store, Bandra West, Mumbai, Maharashtra - 400050",
+      address: "MEATiN Store, Bandra West, Mumbai, Maharashtra - 400050",
       phone: "+91 99466 16162",
       xPercent: 38.0,
       yPercent: 57.0,
@@ -108,7 +108,7 @@ export default function FranchisePage() {
       id: "hyderabad",
       city: "Hyderabad",
       malayalam: "ഹൈദരാബാദ്",
-      address: "MEATIN Fresh Hub, Jubilee Hills, Hyderabad, Telangana - 500033",
+      address: "MEATiN Fresh Hub, Jubilee Hills, Hyderabad, Telangana - 500033",
       phone: "+91 99466 16162",
       xPercent: 50.0,
       yPercent: 61.0,
@@ -118,7 +118,7 @@ export default function FranchisePage() {
       city: "Kolkata",
       malayalam: "കൊൽക്കത്ത",
       address:
-        "MEATIN Store, Salt Lake Sector 5, Kolkata, West Bengal - 700091",
+        "MEATiN Store, Salt Lake Sector 5, Kolkata, West Bengal - 700091",
       phone: "+91 99466 16162",
       xPercent: 69.0,
       yPercent: 48.0,
@@ -127,7 +127,7 @@ export default function FranchisePage() {
       id: "lucknow",
       city: "Lucknow",
       malayalam: "ലക്നൗ",
-      address: "MEATIN Store, Gomti Nagar, Lucknow, Uttar Pradesh - 226010",
+      address: "MEATiN Store, Gomti Nagar, Lucknow, Uttar Pradesh - 226010",
       phone: "+91 99466 16162",
       xPercent: 55.0,
       yPercent: 37.0,
@@ -136,7 +136,7 @@ export default function FranchisePage() {
       id: "delhi",
       city: "Delhi",
       malayalam: "ഡൽഹി",
-      address: "MEATIN Prime Hub, Connaught Place, New Delhi - 110001",
+      address: "MEATiN Prime Hub, Connaught Place, New Delhi - 110001",
       phone: "+91 99466 16162",
       xPercent: 47.0,
       yPercent: 30.0,
@@ -150,7 +150,7 @@ export default function FranchisePage() {
       id: "kannur",
       city: "Kannur",
       malayalam: "കണ്ണൂർ",
-      address: "MEATIN Outlet, City Centre Complex, Fort Road, Kannur - 670001",
+      address: "MEATiN Outlet, City Centre Complex, Fort Road, Kannur - 670001",
       phone: "+91 99466 16162",
       xPercent: 25.0,
       yPercent: 10.0,
@@ -159,7 +159,7 @@ export default function FranchisePage() {
       id: "kozhikode",
       city: "Kozhikode",
       malayalam: "കോഴിക്കോട്",
-      address: "MEATIN Outlet, Focus Mall Road, Kozhikode - 673004",
+      address: "MEATiN Outlet, Focus Mall Road, Kozhikode - 673004",
       phone: "+91 99466 16162",
       xPercent: 38.0,
       yPercent: 29.0,
@@ -168,7 +168,7 @@ export default function FranchisePage() {
       id: "malappuram",
       city: "Malappuram",
       malayalam: "മലപ്പുറം",
-      address: "MEATIN Hub, Calicut Road, Malappuram - 676505",
+      address: "MEATiN Hub, Calicut Road, Malappuram - 676505",
       phone: "+91 99466 16162",
       xPercent: 50.0,
       yPercent: 38.0,
@@ -177,7 +177,7 @@ export default function FranchisePage() {
       id: "thrissur",
       city: "Thrissur",
       malayalam: "തൃശ്ശൂർ",
-      address: "MEATIN Flagship Store, Perumpilavu, Thrissur - 680519",
+      address: "MEATiN Flagship Store, Perumpilavu, Thrissur - 680519",
       phone: "+91 99466 16162",
       xPercent: 36.0,
       yPercent: 30.0,
@@ -186,7 +186,7 @@ export default function FranchisePage() {
       id: "ernakulam",
       city: "Ernakulam",
       malayalam: "എറണാകുളം",
-      address: "MEATIN Prime Outlet, MG Road, Ernakulam - 682016",
+      address: "MEATiN Prime Outlet, MG Road, Ernakulam - 682016",
       phone: "+91 99466 16162",
        xPercent: 38.0,
       yPercent: 37.0,
@@ -195,7 +195,7 @@ export default function FranchisePage() {
       id: "kottayam",
       city: "Kottayam",
       malayalam: "കോട്ടയം",
-      address: "MEATIN Store, KK Road, Kottayam - 686001",
+      address: "MEATiN Store, KK Road, Kottayam - 686001",
       phone: "+91 99466 16162",
        xPercent: 40.0,
       yPercent: 44.0,
@@ -204,7 +204,7 @@ export default function FranchisePage() {
       id: "alappuzha",
       city: "Alappuzha",
       malayalam: "ആലപ്പുഴ",
-      address: "MEATIN Fresh Hub, Boat Jetty Road, Alappuzha - 688001",
+      address: "MEATiN Fresh Hub, Boat Jetty Road, Alappuzha - 688001",
       phone: "+91 99466 16162",
       xPercent: 44.0,
       yPercent: 51.0,
@@ -213,7 +213,7 @@ export default function FranchisePage() {
       id: "kollam",
       city: "Kollam",
       malayalam: "കൊല്ലം",
-      address: "MEATIN Outlet, Chinnakada, Kollam - 691001",
+      address: "MEATiN Outlet, Chinnakada, Kollam - 691001",
       phone: "+91 99466 16162",
       xPercent: 47.0,
       yPercent: 62.0,
@@ -222,7 +222,7 @@ export default function FranchisePage() {
       id: "kochi",
       city: "Kochi",
       malayalam: "കൊച്ചി",
-      address: "MEATIN Express Hub, Marine Drive, Kochi - 682031",
+      address: "MEATiN Express Hub, Marine Drive, Kochi - 682031",
       phone: "+91 99466 16162",
       xPercent: 49.0,
       yPercent: 69.0,
@@ -232,7 +232,7 @@ export default function FranchisePage() {
       city: "Thiruvananthapuram",
       malayalam: "തിരുവനന്തപുരം",
       address:
-        "MEATIN Main Outlet, MG Road, Statue, Thiruvananthapuram - 695001",
+        "MEATiN Main Outlet, MG Road, Statue, Thiruvananthapuram - 695001",
       phone: "+91 99466 16162",
       xPercent: 56.0,
       yPercent: 80.0,
@@ -318,7 +318,7 @@ export default function FranchisePage() {
               <span className="w-5 md:w-7 h-[2px] bg-gradient-to-l from-transparent via-[#EAB308] to-[#82B224] rounded-full" />
             </motion.div>
 
-            {/* Main Brand Title: MEATIN */}
+            {/* Main Brand Title: MEATiN */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-[76px] [@media(max-height:710px)]:lg:text-[50px] [@media(max-height:620px)]:lg:text-[40px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none flex items-center justify-center">
               {/* MEAT (Fade in from RIGHT) */}
               <motion.span
@@ -331,15 +331,15 @@ export default function FranchisePage() {
                 MEAT
               </motion.span>
 
-              {/* IN (Fade in from RIGHT, slightly slower and delayed) */}
+              {/* iN (Fade in from RIGHT, slightly slower and delayed) */}
               <motion.span
                 initial={{ opacity: 0, x: 60 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.95, ease: "easeOut", delay: 0.45 }}
-                className="text-[#D62828] inline-block"
+                className="text-[#D62828] inline-block normal-case"
               >
-                IN
+                iN
               </motion.span>
             </h1>
           </div>
@@ -360,7 +360,7 @@ export default function FranchisePage() {
               <div className="block lg:hidden relative w-full h-auto">
                 <Image
                   src="/Franchies/hero-main-image.webp"
-                  alt="MEATIN Outlet Storefront"
+                  alt="MEATiN Outlet Storefront"
                   width={920}
                   height={720}
                   priority
@@ -373,7 +373,7 @@ export default function FranchisePage() {
                 {/* Layer 1 (Base): Overlay Image (visible everywhere on desktop by default) */}
                 <Image
                   src="/Franchies/hero-overlay-image.webp"
-                  alt="MEATIN Overlay Storefront"
+                  alt="MEATiN Overlay Storefront"
                   width={920}
                   height={720}
                   priority
@@ -394,7 +394,7 @@ export default function FranchisePage() {
                 >
                   <Image
                     src="/Franchies/hero-main-image.webp"
-                    alt="MEATIN Main Outlet Storefront"
+                    alt="MEATiN Main Outlet Storefront"
                     width={920}
                     height={720}
                     priority
@@ -1462,7 +1462,7 @@ export default function FranchisePage() {
           >
             <Image
               src="/Franchies/truck-image.webp"
-              alt="MEATIN Delivery Truck"
+              alt="MEATiN Delivery Truck"
               width={500}
               height={350}
               priority
@@ -1484,7 +1484,7 @@ export default function FranchisePage() {
           >
             <Image
               src="/Franchies/chicken.webp"
-              alt="MEATIN Chicken Mascot"
+              alt="MEATiN Chicken Mascot"
               width={400}
               height={500}
               priority

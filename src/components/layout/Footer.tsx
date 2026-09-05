@@ -157,7 +157,7 @@ export const Footer: React.FC = () => {
               >
                 <Image
                   src="/meatin-logo.webp"
-                  alt="MEATIN Logo"
+                  alt="MEATiN Logo"
                   width={150}
                   height={55}
                   className="w-32 sm:w-36 h-auto object-contain shadow-sm"
@@ -167,7 +167,7 @@ export const Footer: React.FC = () => {
             </motion.div>
 
             <motion.h4 variants={firstItemVariants} className="font-chau text-sm sm:text-base text-white tracking-wider uppercase whitespace-nowrap">
-              MEATIN FARMS AND FOODS LLP
+              MEATiN FARMS AND FOODS LLP
             </motion.h4>
 
             <motion.div variants={firstItemVariants} className="space-y-3">
@@ -176,7 +176,7 @@ export const Footer: React.FC = () => {
                 unforgettable culinary experiences.
               </p>
 
-              {/* Social Icons with Meatin Red Backgrounds */}
+              {/* Social Icons with MEATiN Red Backgrounds */}
               <div className="flex items-center gap-3.5 pt-2">
                 <a
                   href="#facebook"
@@ -430,7 +430,7 @@ export const Footer: React.FC = () => {
           >
             <Image
               src="/Footer/rightside.webp"
-              alt="MEATIN Delivery Truck"
+              alt="MEATiN Delivery Truck"
               width={400}
               height={320}
               className="w-36 sm:w-44 lg:w-full h-auto object-contain transition-transform duration-300 hover:scale-105"
@@ -442,7 +442,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Copyright & Legal Links Bar */}
         <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] sm:text-xs text-white/90 font-medium w-full">
           <p className="text-center sm:text-left whitespace-nowrap">
-            @ 2025 MEATIN FARMS AND FOODS LLP. All Rights Reserved.
+            @ 2025 MEATiN FARMS AND FOODS LLP. All Rights Reserved.
           </p>
           <div className="flex items-center gap-3">
             <a

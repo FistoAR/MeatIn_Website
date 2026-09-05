@@ -124,7 +124,7 @@ export default function TeamPage() {
           <div className="absolute inset-0 w-full h-full z-0">
             <Image
               src="/MeetOurTeam/hero/meet-our-team-hero-image.webp"
-              alt="MEATIN Boardroom"
+              alt="MEATiN Boardroom"
               fill
               priority
               className="object-cover object-center"
@@ -150,7 +150,7 @@ export default function TeamPage() {
               </h1>
 
               <p className="text-slate-800 font-medium text-xs sm:text-sm lg:text-base leading-relaxed mb-4 max-w-md">
-                The leadership team driving MEATIN's vision of delivering farm-fresh, hygienically processed meat with uncompromising quality and trust.
+                The leadership team driving MEATiN's vision of delivering farm-fresh, hygienically processed meat with uncompromising quality and trust.
               </p>
 
               {/* Original Hero Leaf Underline SVG Asset */}

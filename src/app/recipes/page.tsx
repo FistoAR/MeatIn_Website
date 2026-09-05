@@ -97,7 +97,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Serve hot with mint chutney or ranch dip.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Wings",
+        "500 g MEATiN Chicken Wings",
         "2 tbsp Cornflour",
         "1 tbsp Red Chili Powder",
         "1 tsp Garlic Paste",
@@ -137,7 +137,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Garnish with toasted sesame seeds.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Wings",
+        "500 g MEATiN Chicken Wings",
         "3 tbsp BBQ Sauce",
         "2 tbsp Honey",
         "1 tbsp Soy Sauce",
@@ -177,7 +177,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Garnish with fresh parsley.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Wings",
+        "500 g MEATiN Chicken Wings",
         "3 tbsp Melted Butter",
         "4 cloves Garlic (minced)",
         "1/4 cup Grated Parmesan",
@@ -217,7 +217,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Keep wings dry before frying for extra crispiness.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Wings",
+        "500 g MEATiN Chicken Wings",
         "1/3 cup Frank Hot Sauce",
         "3 tbsp Melted Butter",
         "1 tsp Vinegar",
@@ -258,7 +258,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Squeeze fresh lemon before serving.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Hearts",
+        "500 g MEATiN Chicken Hearts",
         "2 tbsp Soy Sauce",
         "1 tbsp Garlic Paste",
         "1 tsp Black Pepper",
@@ -298,7 +298,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Sauté onions until dark golden brown.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Hearts",
+        "500 g MEATiN Chicken Hearts",
         "2 tbsp Coconut Oil",
         "2 Large Onions (sliced)",
         "1 tbsp Ginger Garlic Paste",
@@ -338,7 +338,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Pairs wonderfully with Kerala parotta or appam.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Hearts",
+        "500 g MEATiN Chicken Hearts",
         "1 cup Coconut Milk",
         "1 Onion (chopped)",
         "1 Tomato (chopped)",
@@ -378,7 +378,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Add capsicum for crunch.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Hearts",
+        "500 g MEATiN Chicken Hearts",
         "2 tbsp Butter",
         "1/2 cup Bell Peppers",
         "4 cloves Garlic",
@@ -420,7 +420,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Serve with spicy garlic mayo.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Drumettes",
+        "500 g MEATiN Chicken Drumettes",
         "1 cup Buttermilk",
         "1 cup All-Purpose Flour",
         "1 tbsp Paprika",
@@ -460,7 +460,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Baste twice for deep flavor.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Drumettes",
+        "500 g MEATiN Chicken Drumettes",
         "1/2 cup Hickory BBQ Sauce",
         "1 tbsp Brown Sugar",
         "1 tbsp Apple Cider Vinegar",
@@ -500,7 +500,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Wrap bone tips in foil for neat serving.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Drumettes",
+        "500 g MEATiN Chicken Drumettes",
         "2 tbsp Schezwan Sauce",
         "1 tbsp Ginger Garlic Paste",
         "2 tbsp Cornflour",
@@ -540,7 +540,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Squeeze lemon before serving.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Drumettes",
+        "500 g MEATiN Chicken Drumettes",
         "2 tbsp Olive Oil",
         "2 sprigs Fresh Rosemary",
         "1 tsp Thyme",
@@ -582,7 +582,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Serve with butter naan or saffron rice.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Thighs",
+        "500 g MEATiN Chicken Thighs",
         "2 Large Onions (chopped)",
         "2 Tomatoes (pureed)",
         "1 tbsp Ginger Garlic Paste",
@@ -622,7 +622,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Baste with butter on grill.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Thighs",
+        "500 g MEATiN Chicken Thighs",
         "1/2 cup Hung Curd",
         "1 tbsp Tandoori Masala",
         "1 tbsp Mustard Oil",
@@ -662,7 +662,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Let rest on rack 3 mins before serving.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Thighs (boneless)",
+        "500 g MEATiN Chicken Thighs (boneless)",
         "1 cup Flour",
         "1 Egg (beaten)",
         "1/2 cup Breadcrumbs",
@@ -702,7 +702,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Roast until liquid evaporates and dark glaze forms.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Thighs",
+        "500 g MEATiN Chicken Thighs",
         "15 Small Shallots (sliced)",
         "2 sprigs Curry Leaves",
         "1 tbsp Ginger Garlic",
@@ -744,7 +744,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Great remedy for cold and immune boost.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Necks",
+        "500 g MEATiN Chicken Necks",
         "1 inch Ginger (crushed)",
         "6 cloves Garlic",
         "1/2 tsp Turmeric",
@@ -784,7 +784,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Pairs great with dosa or steamed rice.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Necks",
+        "500 g MEATiN Chicken Necks",
         "2 Onions (chopped)",
         "1 Tomato (chopped)",
         "1 tbsp Ginger Garlic",
@@ -824,7 +824,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Use as base for soups and risottos.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Necks",
+        "500 g MEATiN Chicken Necks",
         "1 Carrot (chunked)",
         "1 Celery stalk",
         "1 Onion (halved)",
@@ -864,7 +864,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Serve as a side dish with rice & rasam.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Necks",
+        "500 g MEATiN Chicken Necks",
         "1 tbsp Chili Powder",
         "1/2 tsp Turmeric",
         "1 tbsp Rice Flour",
@@ -906,7 +906,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Rest for 5 minutes before slicing.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Breast (Boneless)",
+        "500 g MEATiN Chicken Breast (Boneless)",
         "2 tbsp Olive Oil",
         "2 tbsp Lemon Juice",
         "3 cloves Garlic (minced)",
@@ -946,7 +946,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Serve with garlic butter naan.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Breast (cubed)",
+        "500 g MEATiN Chicken Breast (cubed)",
         "3 tbsp Butter",
         "1 cup Tomato Puree",
         "2 tbsp Cashew Paste",
@@ -986,7 +986,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Great snack for kids and movie nights.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Breast (bites)",
+        "500 g MEATiN Chicken Breast (bites)",
         "1/2 cup Flour",
         "1 Egg (beaten)",
         "1 cup Panko Breadcrumbs",
@@ -1026,7 +1026,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "High protein, low carb meal.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Breast",
+        "500 g MEATiN Chicken Breast",
         "2 cups Mixed Salad Greens",
         "1/2 Cucumber (sliced)",
         "1/2 cup Cherry Tomatoes",
@@ -1068,7 +1068,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Freeze in ice cube trays for easy cooking stock.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Backs",
+        "500 g MEATiN Chicken Backs",
         "1 Onion (quartered)",
         "2 Carrots",
         "4 Garlic cloves",
@@ -1108,7 +1108,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Serve with rice cakes or parotta.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Backs",
+        "500 g MEATiN Chicken Backs",
         "2 Onions (sliced)",
         "1 cup Coconut Milk",
         "1 tbsp Chili Powder",
@@ -1148,7 +1148,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Top with white pepper.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Backs",
+        "500 g MEATiN Chicken Backs",
         "1/2 cup Sweet Corn",
         "1 Egg (beaten)",
         "1 tbsp Soy Sauce",
@@ -1188,7 +1188,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Serve as side dish.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Backs",
+        "500 g MEATiN Chicken Backs",
         "1 tbsp Garam Masala",
         "1 tbsp Chili Powder",
         "1 tbsp Ginger Garlic",
@@ -1230,7 +1230,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Cook on medium heat.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Liver",
+        "500 g MEATiN Chicken Liver",
         "2 Onions (sliced)",
         "1 tbsp Ginger Garlic",
         "1 tbsp Black Pepper",
@@ -1270,7 +1270,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Pairs great with rice or roti.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Liver",
+        "500 g MEATiN Chicken Liver",
         "1 Onion (finely chopped)",
         "2 Tomatoes (chopped)",
         "1 tsp Cumin Powder",
@@ -1310,7 +1310,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Baste liberally with herb butter.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Liver",
+        "500 g MEATiN Chicken Liver",
         "3 tbsp Butter (melted)",
         "3 cloves Garlic",
         "1 tsp Paprika",
@@ -1350,7 +1350,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Serve with toasted baguette or crackers.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Liver",
+        "500 g MEATiN Chicken Liver",
         "1/2 cup Butter",
         "2 Shallots (minced)",
         "2 cloves Garlic",
@@ -1392,7 +1392,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Baste with melted butter.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Drumsticks",
+        "500 g MEATiN Chicken Drumsticks",
         "1/2 cup Curd (Yogurt)",
         "1 tbsp Ginger Garlic Paste",
         "1 tbsp Kashmiri Chili",
@@ -1432,7 +1432,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Serve with fries.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Drumsticks",
+        "500 g MEATiN Chicken Drumsticks",
         "1.5 cups Flour",
         "1 tsp Paprika",
         "1 tsp Garlic Powder",
@@ -1472,7 +1472,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Best paired with steamed rice or parotta.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Drumsticks",
+        "500 g MEATiN Chicken Drumsticks",
         "2 Onions (chopped)",
         "2 Tomatoes",
         "2 tbsp Chettinad Masala",
@@ -1512,7 +1512,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Serve with roasted veggies.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Drumsticks",
+        "500 g MEATiN Chicken Drumsticks",
         "4 tbsp Melted Butter",
         "5 cloves Garlic (minced)",
         "1 tbsp Parsley",
@@ -1554,7 +1554,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Squeeze lemon juice before eating.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Gizzards",
+        "500 g MEATiN Chicken Gizzards",
         "2 Onions (sliced)",
         "3 Green Chillies",
         "1 tbsp Ginger Garlic",
@@ -1594,7 +1594,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Great with roti or parotta.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Gizzards",
+        "500 g MEATiN Chicken Gizzards",
         "2 Onions (chopped)",
         "2 Tomatoes",
         "1 tbsp Ginger Garlic",
@@ -1634,7 +1634,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Brush with chili oil while grilling.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Gizzards",
+        "500 g MEATiN Chicken Gizzards",
         "2 tbsp Soy Sauce",
         "1 tbsp Chili Paste",
         "1 tsp Sesame Oil",
@@ -1674,7 +1674,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
         "Flavor improves after 24 hours.",
       ],
       ingredientsCol1: [
-        "500 g MEATIN Chicken Gizzards",
+        "500 g MEATiN Chicken Gizzards",
         "3 tbsp Mustard Oil",
         "2 tbsp Vinegar",
         "1 tbsp Pickle Masala",
@@ -2021,7 +2021,7 @@ export default function RecipesPage() {
             <div className="relative w-full h-[160px] sm:h-[190px] md:h-[220px] lg:h-[250px] xl:h-[280px]">
               <Image
                 src="/Recipies/header/chicken-character-image.webp"
-                alt="MeatIn Chicken Chef Mascot"
+                alt="MEATiN Chicken Chef Mascot"
                 fill
                 priority
                 className="object-contain object-bottom drop-shadow-2xl"
