@@ -194,7 +194,7 @@ export default function FranchisePage() {
 
   // Kerala Map Hotspot Outlets
   const keralaOutlets: OutletInfo[] = [
-  
+
     {
       id: "kannur",
       city: "Kannur",
@@ -237,7 +237,7 @@ export default function FranchisePage() {
       malayalam: "എറണാകുളം",
       address: "MEATiN Prime Outlet, MG Road, Ernakulam - 682016",
       phone: "+91 99466 16162",
-       xPercent: 38.0,
+      xPercent: 38.0,
       yPercent: 37.0,
     },
     {
@@ -246,7 +246,7 @@ export default function FranchisePage() {
       malayalam: "കോട്ടയം",
       address: "MEATiN Store, KK Road, Kottayam - 686001",
       phone: "+91 99466 16162",
-       xPercent: 40.0,
+      xPercent: 40.0,
       yPercent: 44.0,
     },
     {
@@ -720,7 +720,7 @@ export default function FranchisePage() {
                     className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                <div className="flex flex-col items-start text-left max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px] backdrop-blur-md px-1 py-0.5 rounded-lg">
                   <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     01
                   </span>
@@ -743,7 +743,7 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.5, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[49.42%] -translate-y-1/2 left-0 flex items-center gap-2.5 xl:gap-3 group select-none origin-left cursor-default"
+                className="absolute top-[39.5%] xl:top-[40%] -translate-y-1/2 left-0 flex items-center gap-2.5 xl:gap-3 group select-none origin-left cursor-default"
               >
                 <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-sm flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
@@ -751,7 +751,7 @@ export default function FranchisePage() {
                     className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                <div className="flex flex-col items-start text-left max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px] backdrop-blur-md px-1 py-0.5 rounded-lg">
                   <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     02
                   </span>
@@ -782,7 +782,7 @@ export default function FranchisePage() {
                     className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                <div className="flex flex-col items-start text-left max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px] backdrop-blur-md px-1 py-0.5 rounded-lg">
                   <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     03
                   </span>
@@ -814,7 +814,7 @@ export default function FranchisePage() {
                     className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                <div className="flex flex-col items-end text-right max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px] backdrop-blur-md px-1 py-0.5 rounded-lg">
                   <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     04
                   </span>
@@ -837,7 +837,7 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.65, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[49.42%] -translate-y-1/2 right-0 flex flex-row-reverse items-center gap-2.5 xl:gap-3 group select-none origin-right cursor-default"
+                className="absolute top-[42.5%] xl:top-[43%] -translate-y-1/2 right-0 flex flex-row-reverse items-center gap-2.5 xl:gap-3 group select-none origin-right cursor-default"
               >
                 <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-sm flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
@@ -845,7 +845,7 @@ export default function FranchisePage() {
                     className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                <div className="flex flex-col items-end text-right max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px] backdrop-blur-md px-1 py-0.5 rounded-lg">
                   <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     05
                   </span>
@@ -876,7 +876,7 @@ export default function FranchisePage() {
                     className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                <div className="flex flex-col items-end text-right max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px] backdrop-blur-md px-1 py-0.5 rounded-lg">
                   <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     06
                   </span>
@@ -1355,53 +1355,52 @@ export default function FranchisePage() {
                             onClick={() => setSelectedOutlet(outlet)}
                             title={`Click to view ${outlet.city} details`}
                           >
-                          {/* Red Location Pin with Centered Glow Ring when Selected */}
-                          <div className="relative flex items-center justify-center shrink-0">
-                            {isSelected && (
-                              <>
-                                <span className="absolute inset-0 m-auto w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#FF3B30]/60 animate-ping pointer-events-none z-0" />
-                                <span className="absolute inset-0 m-auto w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FF3B30]/35 animate-pulse pointer-events-none z-0" />
-                              </>
-                            )}
+                            {/* Red Location Pin with Centered Glow Ring when Selected */}
+                            <div className="relative flex items-center justify-center shrink-0">
+                              {isSelected && (
+                                <>
+                                  <span className="absolute inset-0 m-auto w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#FF3B30]/60 animate-ping pointer-events-none z-0" />
+                                  <span className="absolute inset-0 m-auto w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FF3B30]/35 animate-pulse pointer-events-none z-0" />
+                                </>
+                              )}
 
-                            {/* Red Location Pin SVG Icon */}
-                            <div className="relative w-[13px] sm:w-[15px] md:w-[17px] lg:w-[18px] xl:w-[20px] 2xl:w-[22px] h-[17px] sm:h-[19px] md:h-[21px] lg:h-[23px] xl:h-[25px] 2xl:h-[28px] shrink-0 drop-shadow-lg z-10">
-                              <svg viewBox="0 0 38 48" fill="none" className="w-full h-full">
-                                <path
-                                  d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
-                                  fill={`url(#pinGrad_${outlet.id})`}
-                                />
-                                <circle cx="19" cy="17" r="6.5" fill="white" />
-                                <defs>
-                                  <linearGradient
-                                    id={`pinGrad_${outlet.id}`}
-                                    x1="19"
-                                    y1="0"
-                                    x2="19"
-                                    y2="48"
-                                    gradientUnits="userSpaceOnUse"
-                                  >
-                                    <stop stopColor="#FF3B30" />
-                                    <stop offset="1" stopColor="#C41C1C" />
-                                  </linearGradient>
-                                </defs>
-                              </svg>
+                              {/* Red Location Pin SVG Icon */}
+                              <div className="relative w-[13px] sm:w-[15px] md:w-[17px] lg:w-[18px] xl:w-[20px] 2xl:w-[22px] h-[17px] sm:h-[19px] md:h-[21px] lg:h-[23px] xl:h-[25px] 2xl:h-[28px] shrink-0 drop-shadow-lg z-10">
+                                <svg viewBox="0 0 38 48" fill="none" className="w-full h-full">
+                                  <path
+                                    d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
+                                    fill={`url(#pinGrad_${outlet.id})`}
+                                  />
+                                  <circle cx="19" cy="17" r="6.5" fill="white" />
+                                  <defs>
+                                    <linearGradient
+                                      id={`pinGrad_${outlet.id}`}
+                                      x1="19"
+                                      y1="0"
+                                      x2="19"
+                                      y2="48"
+                                      gradientUnits="userSpaceOnUse"
+                                    >
+                                      <stop stopColor="#FF3B30" />
+                                      <stop offset="1" stopColor="#C41C1C" />
+                                    </linearGradient>
+                                  </defs>
+                                </svg>
+                              </div>
                             </div>
-                          </div>
 
-                          {/* Dark Green Tag Label Pill */}
-                          <div
-                            className={`-ml-1 bg-gradient-to-r from-[#043312] via-[#0B4D1E] to-[#125D25] text-white px-1.5 sm:px-2 py-[1px] rounded-r-lg sm:rounded-r-xl rounded-l-sm border-[1px] sm:border-[1.5px] border-white shadow-lg flex items-center justify-center font-bold font-manrope text-[8px] sm:text-[8.5px] md:text-[9px] lg:text-[9.5px] xl:text-[10px] 2xl:text-[11px] tracking-wide whitespace-nowrap transition-transform duration-300 ${
-                              isSelected
-                                ? "scale-110 border-yellow-300 ring-2 ring-yellow-400/50"
-                                : ""
-                            }`}
-                          >
-                            <span>{outlet.city}</span>
-                          </div>
-                        </motion.div>
-                      );
-                    })}
+                            {/* Dark Green Tag Label Pill */}
+                            <div
+                              className={`-ml-1 bg-gradient-to-r from-[#043312] via-[#0B4D1E] to-[#125D25] text-white px-1.5 sm:px-2 py-[1px] rounded-r-lg sm:rounded-r-xl rounded-l-sm border-[1px] sm:border-[1.5px] border-white shadow-lg flex items-center justify-center font-bold font-manrope text-[8px] sm:text-[8.5px] md:text-[9px] lg:text-[9.5px] xl:text-[10px] 2xl:text-[11px] tracking-wide whitespace-nowrap transition-transform duration-300 ${isSelected
+                                  ? "scale-110 border-yellow-300 ring-2 ring-yellow-400/50"
+                                  : ""
+                                }`}
+                            >
+                              <span>{outlet.city}</span>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
                 </div>
               </div>
 
@@ -1501,7 +1500,7 @@ export default function FranchisePage() {
 
         {/* UNIFIED BOTTOM GRAPHICS ASSEMBLY: Bottom Slope Wave + Truck + Mascot Character (Flush to bottom-0) */}
         <div className="absolute bottom-0 left-0 right-0 w-full h-[90px] sm:h-[120px] md:h-[140px] lg:h-[160px] xl:h-[185px] pointer-events-none select-none shrink-0 z-30">
-          
+
           {/* 1. Bottom Slope Wave Background Transition (#064823 & #488E40 Brand Green Variant) */}
           <div className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-hidden">
             <svg
