@@ -24,9 +24,9 @@ export default function KnowYourMeatPage() {
   >("chicken");
   const [selectedPartIdx, setSelectedPartIdx] = useState(0);
   const [manuallySelectedPartIdx, setManuallySelectedPartIdx] = useState(0);
-  const [activeViewTab, setActiveViewTab] = useState<"raw" | "packed" | "3d">(
-    "raw",
-  );
+  const [activeViewTab, setActiveViewTab] = useState<
+    "raw" | "platter" | "packed" | "3d"
+  >("raw");
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [isLandedInSection2, setIsLandedInSection2] = useState(false);
   const [hasSelectedAnyPart, setHasSelectedAnyPart] = useState(false);
@@ -404,6 +404,7 @@ export default function KnowYourMeatPage() {
     {
       name: "Wing",
       img: "/Product/Chicken/ChickenParts/wing.webp",
+      platterImg: "/Product/Chicken/Platters/wings.webp",
       desc: "Crispy and delicious chicken wings, perfect for deep frying, barbecue, or baking with your favorite glaze.",
       weight: "500g",
       nutrition: {
@@ -416,6 +417,7 @@ export default function KnowYourMeatPage() {
     {
       name: "Heart",
       img: "/Product/Chicken/ChickenParts/heart.webp",
+      platterImg: "/Product/Chicken/Platters/heart.webp",
       desc: "Clean and trimmed chicken hearts. High in protein and iron with a firm, chewy texture, excellent for skewers and stir-fries.",
       weight: "500g",
       nutrition: {
@@ -428,6 +430,7 @@ export default function KnowYourMeatPage() {
     {
       name: "Drumette",
       img: "/Product/Chicken/ChickenParts/drumette.webp",
+      platterImg: "/Product/Chicken/Platters/drumette.webp",
       desc: "Juicy and meaty drumettes, the perfect party starter. Great for spicy buffalo wings or crispy batter fry.",
       weight: "500g",
       nutrition: {
@@ -440,6 +443,7 @@ export default function KnowYourMeatPage() {
     {
       name: "Thigh",
       img: "/Product/Chicken/ChickenParts/thig.webp",
+      platterImg: "/Product/Chicken/Platters/thig.webp",
       desc: "Flavorful and tender chicken thighs, bone-in and skin-on. Holds moisture perfectly for slow cooking and roasts.",
       weight: "500g",
       nutrition: {
@@ -452,6 +456,7 @@ export default function KnowYourMeatPage() {
     {
       name: "Neck",
       img: "/Product/Chicken/ChickenParts/neck.webp",
+      platterImg: "/Product/Chicken/Platters/neck.webp",
       desc: "Rich bone-in chicken necks, perfect for preparing highly nutritious stocks, soups, and slow-cooked gravies.",
       weight: "500g",
       nutrition: {
@@ -464,6 +469,7 @@ export default function KnowYourMeatPage() {
     {
       name: "Breast",
       img: "/Product/Chicken/ChickenParts/brest.webp",
+      platterImg: "/Product/Chicken/Platters/brest.webp",
       desc: "Lean and protein-rich boneless chicken breast fillets. Extremely versatile and perfect for healthy salads, grilling, and baking.",
       weight: "500g",
       nutrition: {
@@ -476,6 +482,7 @@ export default function KnowYourMeatPage() {
     {
       name: "Back",
       img: "/Product/Chicken/ChickenParts/bact.webp",
+      platterImg: "/Product/Chicken/Platters/bact.webp",
       desc: "Clean-cut chicken backs, rich in marrow and collagen. The ultimate choice for deep, flavorful bone broths and stocks.",
       weight: "500g",
       nutrition: {
@@ -488,6 +495,7 @@ export default function KnowYourMeatPage() {
     {
       name: "Liver",
       img: "/Product/Chicken/ChickenParts/liver.webp",
+      platterImg: "/Product/Chicken/Platters/liver.webp",
       desc: "Fresh and nutrient-dense chicken liver, rich in iron, vitamin A, and essential vitamins. Soft texture and rich taste.",
       weight: "500g",
       nutrition: {
@@ -500,6 +508,7 @@ export default function KnowYourMeatPage() {
     {
       name: "Drumstick",
       img: "/Product/Chicken/ChickenParts/drumstick.webp",
+      platterImg: "/Product/Chicken/Platters/drumstick.webp",
       desc: "Tender and juicy drumsticks, perfectly cut and hygienically packed to retain natural freshness and rich taste in every bite.",
       weight: "500g",
       nutrition: {
@@ -512,6 +521,7 @@ export default function KnowYourMeatPage() {
     {
       name: "Gizzard",
       img: "/Product/Chicken/ChickenParts/gizzard.webp",
+      platterImg: "/Product/Chicken/Platters/gizzard.webp",
       desc: "Tough and highly flavorful chicken gizzards. Firm texture that becomes beautifully tender when braised or slow-cooked.",
       weight: "500g",
       nutrition: {
@@ -1191,73 +1201,255 @@ export default function KnowYourMeatPage() {
             font-size: 14px !important;
           }
           /* Section 2 details responsive overrides for height breakpoints */
-          @media (max-height: 620px) and (min-width: 768px) {
-            .detail-section-wrap {
-              padding-top: 100px !important;
-              padding-bottom: 4px !important;
-            }
+          /* Section 2 details responsive width offsets */
+          @media (min-width: 768px) and (max-width: 1023px) {
             .detail-showcase-box {
-              width: 320px !important;
-              height: 320px !important;
+              margin-left: 0px !important;
+            }
+            .detail-carousel-bar {
+              margin-left: 0px !important;
+            }
+          }
+          @media (min-width: 1024px) and (max-width: 1279px) {
+            .detail-showcase-box {
+              margin-left: -12px !important;
+            }
+            .detail-carousel-bar {
+              margin-left: -12px !important;
+            }
+          }
+          @media (min-width: 1280px) and (max-width: 1535px) {
+            .detail-showcase-box {
+              margin-left: -28px !important;
+            }
+            .detail-carousel-bar {
+              margin-left: -32px !important;
+            }
+          }
+          @media (min-width: 1536px) {
+            .detail-showcase-box {
+              margin-left: -48px !important;
+            }
+            .detail-carousel-bar {
+              margin-left: -64px !important;
+            }
+          }
+
+          /* Section 2 details responsive height tiers for medium & laptop viewports */
+          /* 3D Model Viewer full space mode */
+          .detail-showcase-box.is-3d {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: 48vh !important;
+            max-height: 52vh !important;
+          }
+          @media (min-height: 711px) {
+            .detail-showcase-box.is-3d {
+              height: 56vh !important;
+              max-height: 60vh !important;
+            }
+          }
+          @media (min-height: 800px) {
+            .detail-showcase-box.is-3d {
+              height: 64vh !important;
+              max-height: 70vh !important;
+            }
+          }
+
+          /* Tier 1: Ultra-compact (height <= 630px) */
+          @media (max-height: 630px) and (min-width: 768px) {
+            .detail-section-wrap {
+              padding-top: 80px !important;
+              padding-bottom: 2px !important;
+            }
+            .detail-left-col {
+              padding-top: 0px !important;
+              padding-bottom: 2px !important;
+              justify-content: center !important;
+              gap: 14px !important;
+            }
+            .detail-showcase-box:not(.is-3d) {
+              width: min(290px, 40vh) !important;
+              height: min(290px, 40vh) !important;
+              max-height: 42vh !important;
+            }
+            .detail-carousel-bar {
+              margin-top: 2px !important;
+              gap: 4px !important;
+            }
+            .detail-carousel-btn {
+              width: 64px !important;
             }
             .detail-right-col {
-              gap: 4px !important;
-              justify-content: center !important;
-              padding-top: 0px !important;
-              overflow-y: hidden !important;
+              gap: 6px !important;
+              justify-content: flex-start !important;
+              padding-top: 82px !important;
+              padding-bottom: 10px !important;
+            }
+            .detail-title {
+              font-size: 26px !important;
+              line-height: 0.95 !important;
+              margin-bottom: 0 !important;
             }
             .detail-inner-gap {
-              gap: 4px !important;
+              gap: 2px !important;
             }
             .detail-desc {
-              font-size: 12px !important;
+              font-size: 11px !important;
               line-height: 1.2 !important;
-              max-width: 480px !important;
-              line-clamp: 2 !important;
-              overflow: hidden;
+              max-width: 460px !important;
+              -webkit-line-clamp: 2 !important;
               display: -webkit-box;
-              -webkit-line-clamp: 2;
-              -webkit-box-orient: vertical;
+              overflow: hidden;
+              margin-bottom: 0 !important;
+            }
+            .detail-weight-row {
+              padding-top: 1px !important;
+              padding-bottom: 1px !important;
+              margin-bottom: 0 !important;
+              font-size: 11px !important;
+            }
+            .detail-nutrition-wrap {
+              margin-bottom: 0 !important;
+            }
+            .detail-nutrition-title {
+              font-size: 10.5px !important;
+              margin-bottom: 2px !important;
+            }
+            .detail-nutrition-grid {
+              gap: 5px !important;
+            }
+            .detail-nutrition-card {
+              min-height: 52px !important;
+              max-height: 58px !important;
+              padding: 3px 6px !important;
+              gap: 1px !important;
+            }
+            .detail-nutrition-card .relative {
+              width: 14px !important;
+              height: 14px !important;
+            }
+            .detail-nutrition-card span {
+              font-size: 8.5px !important;
+            }
+            .detail-nutrition-card span:last-of-type {
+              font-size: 11px !important;
+            }
+            .detail-cooking-card {
+              margin-top: 2px !important;
+              max-height: 75px !important;
+            }
+            .detail-cooking-img {
+              width: 80px !important;
+            }
+            .detail-cooking-content {
+              padding: 4px 8px !important;
+              gap: 1px !important;
+            }
+            .detail-cooking-content h5 {
+              font-size: 11px !important;
+            }
+            .detail-cooking-content p {
+              display: none !important;
+            }
+            .detail-cooking-content button {
+              font-size: 9px !important;
+              padding: 2px 8px !important;
+            }
+          }
+
+          /* Tier 2: Compact laptops (height 631px to 710px, e.g. 1305x651, 1519x695) */
+          @media (min-height: 631px) and (max-height: 710px) and (min-width: 768px) {
+            .detail-section-wrap {
+              padding-top: 86px !important;
+              padding-bottom: 4px !important;
+            }
+            .detail-left-col {
+              padding-top: 0px !important;
+              padding-bottom: 4px !important;
+              justify-content: center !important;
+              gap: 16px !important;
+            }
+            .detail-showcase-box:not(.is-3d) {
+              width: min(340px, 46vh) !important;
+              height: min(340px, 46vh) !important;
+              max-height: 48vh !important;
+            }
+            .detail-carousel-bar {
+              margin-top: 4px !important;
+              gap: 6px !important;
+            }
+            .detail-carousel-btn {
+              width: 72px !important;
+            }
+            .detail-right-col {
+              gap: 8px !important;
+              justify-content: flex-start !important;
+              padding-top: 90px !important;
+              padding-bottom: 14px !important;
+            }
+            .detail-title {
+              font-size: 28px !important;
+              line-height: 1 !important;
+              margin-bottom: 0 !important;
+            }
+            .detail-inner-gap {
+              gap: 3px !important;
+            }
+            .detail-desc {
+              font-size: 11.5px !important;
+              line-height: 1.25 !important;
+              max-width: 490px !important;
+              -webkit-line-clamp: 2 !important;
+              display: -webkit-box;
+              overflow: hidden;
+              margin-bottom: 0 !important;
+            }
+            .detail-weight-row {
+              padding-top: 2px !important;
+              padding-bottom: 2px !important;
+              margin-bottom: 0 !important;
+              font-size: 11.5px !important;
+            }
+            .detail-nutrition-wrap {
+              margin-bottom: 0 !important;
+            }
+            .detail-nutrition-title {
+              font-size: 11px !important;
+              margin-bottom: 2px !important;
             }
             .detail-nutrition-grid {
               gap: 6px !important;
             }
             .detail-nutrition-card {
-              min-height: 48px !important;
-              padding: 3px !important;
-              gap: 1px !important;
+              min-height: 56px !important;
+              max-height: 64px !important;
+              padding: 4px 8px !important;
+              gap: 1.5px !important;
             }
             .detail-nutrition-card .relative {
               width: 16px !important;
               height: 16px !important;
             }
             .detail-nutrition-card span {
-              font-size: 9.5px !important;
+              font-size: 9px !important;
             }
             .detail-nutrition-card span:last-of-type {
-              font-size: 11.5px !important;
-            }
-            .detail-share-btn {
-              padding-top: 3px !important;
-              padding-bottom: 3px !important;
-              font-size: 10px !important;
-            }
-            .detail-share-btn .relative {
-              width: 12px !important;
-              height: 12px !important;
+              font-size: 12px !important;
             }
             .detail-cooking-card {
-              margin-top: 2px !important;
+              margin-top: 3px !important;
+              max-height: 82px !important;
             }
             .detail-cooking-img {
-              width: 95px !important;
+              width: 90px !important;
             }
             .detail-cooking-content {
-              padding: 6px 10px !important;
+              padding: 5px 10px !important;
               gap: 2px !important;
             }
             .detail-cooking-content span {
-              font-size: 11.5px !important;
+              font-size: 12px !important;
             }
             .detail-cooking-content h5 {
               font-size: 12px !important;
@@ -1265,187 +1457,125 @@ export default function KnowYourMeatPage() {
             .detail-cooking-content p {
               font-size: 10.5px !important;
               line-height: 1.2 !important;
-              line-clamp: 1 !important;
-              overflow: hidden;
+              -webkit-line-clamp: 1 !important;
               display: -webkit-box;
-              -webkit-line-clamp: 1;
-              -webkit-box-orient: vertical;
+              overflow: hidden;
             }
             .detail-cooking-content button {
-              font-size: 10px !important;
-              padding: 4px 10px !important;
-              width: auto !important;
-              max-width: max-content !important;
-              white-space: nowrap !important;
+              font-size: 9.5px !important;
+              padding: 2.5px 8px !important;
             }
           }
 
-          @media (min-height: 621px) and (max-height: 665px) and (min-width: 768px) {
+          /* Tier 3: Medium laptops (height 711px to 790px) */
+          @media (min-height: 711px) and (max-height: 790px) and (min-width: 768px) {
             .detail-section-wrap {
-              padding-top: 108px !important;
+              padding-top: 92px !important;
               padding-bottom: 6px !important;
             }
-            .detail-showcase-box {
-              width: 360px !important;
-              height: 360px !important;
+            .detail-left-col {
+              padding-top: 0px !important;
+              padding-bottom: 6px !important;
+              justify-content: center !important;
+              gap: 20px !important;
+            }
+            .detail-showcase-box:not(.is-3d) {
+              width: min(380px, 48vh) !important;
+              height: min(380px, 48vh) !important;
+              max-height: 50vh !important;
+            }
+            .detail-carousel-bar {
+              margin-top: 6px !important;
+            }
+            .detail-carousel-btn {
+              width: 78px !important;
             }
             .detail-right-col {
-              gap: 6px !important;
+              gap: 10px !important;
               justify-content: flex-start !important;
-              padding-top: 0px !important;
+              padding-top: 96px !important;
+              padding-bottom: 16px !important;
+            }
+            .detail-title {
+              font-size: 34px !important;
+              line-height: 1.05 !important;
             }
             .detail-inner-gap {
-              gap: 6px !important;
+              gap: 5px !important;
             }
             .detail-desc {
               font-size: 12.5px !important;
-              line-height: 1.28 !important;
-              max-width: 500px !important;
-              line-clamp: 2 !important;
-              overflow: hidden;
-              display: -webkit-box;
-              -webkit-line-clamp: 2;
-              -webkit-box-orient: vertical;
-            }
-            .detail-nutrition-grid {
-              gap: 7px !important;
-            }
-            .detail-nutrition-card {
-              min-height: 50px !important;
-              padding: 4px !important;
-              gap: 1px !important;
-            }
-            .detail-nutrition-card .relative {
-              width: 17px !important;
-              height: 17px !important;
-            }
-            .detail-nutrition-card span {
-              font-size: 9.5px !important;
-            }
-            .detail-share-btn {
-              padding-top: 4px !important;
-              padding-bottom: 4px !important;
-              font-size: 10.5px !important;
-            }
-            .detail-cooking-card {
-              margin-top: 6px !important;
-            }
-            .detail-cooking-img {
-              width: 105px !important;
-            }
-            .detail-cooking-content {
-              padding: 7px 11px !important;
-              gap: 2.5px !important;
-            }
-            .detail-cooking-content button {
-              font-size: 10.5px !important;
-              padding: 4.5px 11px !important;
-              width: auto !important;
-              max-width: max-content !important;
-              white-space: nowrap !important;
-            }
-          }
-
-          @media (min-height: 666px) and (max-height: 750px) and (min-width: 768px) {
-            .detail-section-wrap {
-              padding-top: 110px !important;
-              padding-bottom: 8px !important;
-            }
-            .detail-showcase-box {
-              width: 400px !important;
-              height: 400px !important;
-              max-width: 42vw !important;
-              max-height: 56vh !important;
-            }
-            .detail-right-col {
-              gap: 8px !important;
-              justify-content: center !important;
-              padding-top: 0px !important;
-              overflow-y: hidden !important;
-            }
-            .detail-inner-gap {
-              gap: 10px !important;
-            }
-            .detail-desc {
-              font-size: 13px !important;
               line-height: 1.3 !important;
               max-width: 520px !important;
-              line-clamp: 2 !important;
-              overflow: hidden;
+              -webkit-line-clamp: 2 !important;
               display: -webkit-box;
-              -webkit-line-clamp: 2;
-              -webkit-box-orient: vertical;
-            }
-            .detail-nutrition-grid {
-              gap: 7px !important;
+              overflow: hidden;
             }
             .detail-nutrition-card {
-              min-height: 52px !important;
-              padding: 4px !important;
-              gap: 1px !important;
+              min-height: 64px !important;
+              padding: 5px 8px !important;
             }
             .detail-nutrition-card .relative {
               width: 18px !important;
               height: 18px !important;
             }
-            .detail-nutrition-card span {
-              font-size: 10px !important;
-            }
-            .detail-share-btn {
-              padding-top: 4px !important;
-              padding-bottom: 4px !important;
-              font-size: 11px !important;
-            }
             .detail-cooking-card {
-              margin-top: 8px !important;
+              margin-top: 5px !important;
+              max-height: 95px !important;
             }
             .detail-cooking-img {
-              width: 110px !important;
+              width: 105px !important;
             }
             .detail-cooking-content {
-              padding: 8px 12px !important;
-              gap: 2.5px !important;
-            }
-            .detail-cooking-content button {
-              font-size: 10.5px !important;
-              padding: 4.5px 11px !important;
-              width: auto !important;
-              max-width: max-content !important;
-              white-space: nowrap !important;
+              padding: 6px 12px !important;
+              gap: 2px !important;
             }
           }
 
-          @media (min-height: 751px) and (min-width: 768px) {
+          /* Tier 4: Standard & tall desktop screens (height >= 791px) */
+          @media (min-height: 791px) and (min-width: 768px) {
             .detail-section-wrap {
               padding-top: 96px !important;
               padding-bottom: 12px !important;
             }
-            .detail-showcase-box {
-              width: 440px !important;
-              height: 440px !important;
-              max-width: 42vw !important;
-              max-height: 60vh !important;
+            .detail-showcase-box:not(.is-3d) {
+              width: min(460px, 46vw) !important;
+              height: min(460px, 46vw) !important;
+              max-width: 44vw !important;
+              max-height: 62vh !important;
             }
             .detail-right-col {
-              gap: 10px !important;
+              gap: 14px !important;
               justify-content: flex-start !important;
+              padding-top: 100px !important;
+              padding-bottom: 20px !important;
             }
             .detail-inner-gap {
               gap: 10px !important;
             }
-            .detail-desc {
-              font-size: 15px !important;
-              line-height: 1.4 !important;
-              max-width: 580px !important;
-            }
           }
 
-          @media (min-width: 1400px) and (min-height: 800px) {
-            .detail-showcase-box {
+          @media (min-width: 1400px) and (min-height: 820px) {
+            .detail-showcase-box:not(.is-3d) {
               width: 480px !important;
               height: 480px !important;
               max-width: 44vw !important;
               max-height: 62vh !important;
+            }
+            .detail-carousel-btn {
+              width: 100px !important;
+            }
+          }
+
+          @media (min-width: 1600px) and (min-height: 860px) {
+            .detail-showcase-box:not(.is-3d) {
+              width: 500px !important;
+              height: 500px !important;
+              max-width: 46vw !important;
+              max-height: 68vh !important;
+            }
+            .detail-carousel-btn {
+              width: 110px !important;
             }
           }
           /* Section 3 recipes responsive overrides */
@@ -1664,23 +1794,19 @@ export default function KnowYourMeatPage() {
             align-items: center !important;
           }
           .detail-showcase-box {
-            width: 260px !important;
-            height: 260px !important;
+            width: min(280px, 80vw) !important;
+            height: min(280px, 80vw) !important;
+            max-width: 80vw !important;
+            max-height: 42vh !important;
             margin-left: 0px !important;
             margin-top: 0px !important;
           }
-          .detail-showcase-box > div:first-child {
-            width: 48px !important;
-            height: 48px !important;
-            top: -16px !important;
-            right: 8px !important;
-          }
-          .detail-section-wrap .flex.items-center.justify-center.gap-5 {
+          .detail-carousel-bar {
             margin-left: 0px !important;
-            gap: 10px !important;
+            gap: 6px !important;
           }
           .detail-carousel-btn {
-            width: 72px !important;
+            width: min(76px, 22vw) !important;
           }
           .detail-right-col {
             width: 100% !important;
@@ -4334,17 +4460,20 @@ export default function KnowYourMeatPage() {
             />
           </svg>
         </button>
-        <div className="relative z-10 w-full h-full flex flex-col md:flex-row items-stretch px-4 md:px-10 lg:px-16">
+        <div className="relative z-10 w-full h-full flex flex-col md:flex-row items-stretch px-3 sm:px-6 md:px-8 lg:px-12 xl:px-16">
           {/* Left Column (50% flex) - Green panel area with centered preview & bottom carousel */}
           <motion.div
             key={`detail-left-${manuallySelectedPartIdx}`}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full md:w-1/2 relative h-auto md:h-full flex flex-col items-center justify-around py-4 md:py-8 px-6 select-none"
+            className="w-full md:w-1/2 relative h-auto md:h-full flex flex-col items-center justify-around py-4 md:py-8 px-3 sm:px-6 md:px-4 lg:px-6 select-none detail-left-col"
           >
             {/* Center Showcase Box */}
-            <div className="relative w-[440px] h-[440px] sm:w-[520px] sm:h-[520px] md:w-[500px] md:h-[500px] max-h-[75vh] flex items-center justify-center md:-ml-12 overflow-visible">
+            <div className={`relative detail-showcase-box ${activeViewTab === "3d"
+              ? "is-3d w-full h-[360px] sm:h-[400px] md:h-[420px] lg:h-[460px] xl:h-[500px] 2xl:h-[540px] max-h-[58vh] lg:max-h-[64vh]"
+              : "w-[280px] h-[280px] xs:w-[310px] xs:h-[310px] sm:w-[350px] sm:h-[350px] md:w-[340px] md:h-[340px] lg:w-[410px] lg:h-[410px] xl:w-[470px] xl:h-[470px] 2xl:w-[520px] 2xl:h-[520px] max-h-[48vh] sm:max-h-[52vh] md:max-h-[56vh] lg:max-h-[66vh] 2xl:max-h-[75vh]"
+            } max-w-[85vw] md:max-w-full flex items-center justify-center ml-0 md:ml-0 lg:-ml-4 xl:-ml-8 2xl:-ml-12 overflow-visible`}>
               {/* Showcase Box Content: Interactive 3D Model Viewer OR 2D Product Image */}
               <div
                 ref={centerCircleRef}
@@ -4393,7 +4522,7 @@ export default function KnowYourMeatPage() {
                   </div>
                 )}
 
-                {/* 2D Image View (Raw or Packed) */}
+                {/* 2D Image View (Raw, Platter, or Packed) */}
                 {activeViewTab !== "3d" && (
                   <div
                     className={`relative w-full h-full flex items-center justify-center transition-all duration-300 pointer-events-none ${isLandedInSection2
@@ -4405,11 +4534,13 @@ export default function KnowYourMeatPage() {
                       src={
                         activeViewTab === "raw"
                           ? chickenParts[manuallySelectedPartIdx].img
-                          : "/Product/details/packedProduct.webp"
+                          : activeViewTab === "platter"
+                            ? (chickenParts[manuallySelectedPartIdx].platterImg || chickenParts[manuallySelectedPartIdx].img)
+                            : "/Product/details/packedProduct.webp"
                       }
                       alt={chickenParts[manuallySelectedPartIdx].name}
-                      className={`w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-300 ${activeViewTab === "raw"
-                        ? "scale-100"
+                      className={`w-full h-full max-w-full max-h-full object-contain filter drop-shadow-2xl transition-transform duration-300 ${activeViewTab === "raw" || activeViewTab === "platter"
+                        ? "scale-110 sm:scale-115"
                         : "scale-100"
                         }`}
                     />
@@ -4423,20 +4554,26 @@ export default function KnowYourMeatPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.15 }}
-              className="flex items-center justify-center gap-2.5 sm:gap-3.5 z-30 md:-ml-20"
+              className="detail-carousel-bar flex items-center justify-center gap-1.5 sm:gap-2.5 md:gap-2 lg:gap-2.5 xl:gap-3.5 z-30 ml-0 md:ml-0 lg:-ml-4 xl:-ml-8 2xl:-ml-16 mt-3 sm:mt-4 md:mt-0"
             >
               {/* Left Arrow Button */}
               <button
                 onClick={() => {
                   setActiveViewTab((prev) =>
-                    prev === "raw" ? "3d" : prev === "3d" ? "packed" : "raw",
+                    prev === "raw"
+                      ? "3d"
+                      : prev === "3d"
+                        ? "packed"
+                        : prev === "packed"
+                          ? "platter"
+                          : "raw",
                   );
                 }}
-                className="w-8 h-8 rounded-full bg-white text-slate-800 shadow-md flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-slate-800 shadow-md flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
                 title="Previous Card"
               >
                 <svg
-                  className="w-4 h-4"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -4453,8 +4590,8 @@ export default function KnowYourMeatPage() {
               {/* Thumbnail 1: Raw Cut Part Image */}
               <button
                 onClick={() => setActiveViewTab("raw")}
-                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden p-2 transition-all duration-300 cursor-pointer detail-carousel-btn bg-[#FEF6DB] ${activeViewTab === "raw"
-                  ? "border-4 border-[#D62828] scale-105 shadow-lg"
+                className={`relative w-[68px] xs:w-[76px] sm:w-[86px] md:w-[76px] lg:w-[88px] xl:w-[100px] 2xl:w-[110px] aspect-[679/738] rounded-xl sm:rounded-2xl overflow-hidden p-1.5 sm:p-2 transition-all duration-300 cursor-pointer detail-carousel-btn bg-[#FEF6DB] shrink-0 ${activeViewTab === "raw"
+                  ? "border-2 sm:border-4 border-[#D62828] scale-105 shadow-lg"
                   : "border border-[#F5E5B8] hover:scale-105"
                   }`}
                 title="Raw Cut View"
@@ -4466,11 +4603,30 @@ export default function KnowYourMeatPage() {
                 />
               </button>
 
-              {/* Thumbnail 2: Packed Product Image */}
+              {/* Thumbnail 2: Platter View Image */}
+              <button
+                onClick={() => setActiveViewTab("platter")}
+                className={`relative w-[68px] xs:w-[76px] sm:w-[86px] md:w-[76px] lg:w-[88px] xl:w-[100px] 2xl:w-[110px] aspect-[679/738] rounded-xl sm:rounded-2xl overflow-hidden p-1.5 sm:p-2 transition-all duration-300 cursor-pointer detail-carousel-btn bg-[#FEF6DB] shrink-0 ${activeViewTab === "platter"
+                  ? "border-2 sm:border-4 border-[#D62828] scale-105 shadow-lg"
+                  : "border border-[#F5E5B8] hover:scale-105"
+                  }`}
+                title="Platter View"
+              >
+                <img
+                  src={
+                    chickenParts[manuallySelectedPartIdx].platterImg ||
+                    chickenParts[manuallySelectedPartIdx].img
+                  }
+                  alt="Platter View"
+                  className="w-full h-full object-contain"
+                />
+              </button>
+
+              {/* Thumbnail 3: Packed Product Image */}
               <button
                 onClick={() => setActiveViewTab("packed")}
-                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer detail-carousel-btn ${activeViewTab === "packed"
-                  ? "border-4 border-[#D62828] scale-105 shadow-lg"
+                className={`relative w-[68px] xs:w-[76px] sm:w-[86px] md:w-[76px] lg:w-[88px] xl:w-[100px] 2xl:w-[110px] aspect-[679/738] rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer detail-carousel-btn shrink-0 ${activeViewTab === "packed"
+                  ? "border-2 sm:border-4 border-[#D62828] scale-105 shadow-lg"
                   : "border-2 border-[#D62828] hover:scale-105"
                   }`}
                 title="Packed Product View"
@@ -4482,11 +4638,11 @@ export default function KnowYourMeatPage() {
                 />
               </button>
 
-              {/* Thumbnail 3: 360 Image with 3D View Intimation Tag */}
+              {/* Thumbnail 4: 360 Image with 3D View Intimation Tag */}
               <button
                 onClick={() => setActiveViewTab("3d")}
-                className={`relative w-[95px] sm:w-[110px] aspect-[679/738] rounded-2xl overflow-hidden p-1.5 transition-all duration-300 cursor-pointer detail-carousel-btn flex flex-col items-center justify-between ${activeViewTab === "3d"
-                  ? "border-4 border-[#F2CE07] bg-white/50 scale-105"
+                className={`relative w-[68px] xs:w-[76px] sm:w-[86px] md:w-[76px] lg:w-[88px] xl:w-[100px] 2xl:w-[110px] aspect-[679/738] rounded-xl sm:rounded-2xl overflow-hidden p-1 sm:p-1.5 transition-all duration-300 cursor-pointer detail-carousel-btn flex flex-col items-center justify-between shrink-0 ${activeViewTab === "3d"
+                  ? "border-2 sm:border-4 border-[#F2CE07] bg-white/50 scale-105"
                   : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
                   }`}
                 title="Click to view 360° 3D Model"
@@ -4500,7 +4656,7 @@ export default function KnowYourMeatPage() {
                   />
                 </div>
                 {/* Intimation badge below 360 image */}
-                <span className="w-full text-center bg-[#F2CE07] text-slate-900 font-extrabold text-[9px] sm:text-[10px] py-0.5 rounded-lg uppercase tracking-wider font-manrope shadow-sm border border-white/90">
+                <span className="w-full text-center bg-[#F2CE07] text-slate-900 font-extrabold text-[8px] sm:text-[9px] lg:text-[10px] py-0.5 rounded-md sm:rounded-lg uppercase tracking-wider font-manrope shadow-sm border border-white/90">
                   3D View
                 </span>
               </button>
@@ -4510,17 +4666,19 @@ export default function KnowYourMeatPage() {
                 onClick={() => {
                   setActiveViewTab((prev) =>
                     prev === "raw"
-                      ? "packed"
-                      : prev === "packed"
-                        ? "3d"
-                        : "raw",
+                      ? "platter"
+                      : prev === "platter"
+                        ? "packed"
+                        : prev === "packed"
+                          ? "3d"
+                          : "raw",
                   );
                 }}
-                className="w-8 h-8 rounded-full bg-white text-slate-800 shadow-md flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-slate-800 shadow-md flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
                 title="Next Card"
               >
                 <svg
-                  className="w-4 h-4"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -4559,7 +4717,7 @@ export default function KnowYourMeatPage() {
                 },
               },
             }}
-            className="w-full md:w-1/2 h-auto md:h-full px-4 md:px-8 lg:px-12 xl:px-14 flex flex-col justify-center detail-right-col overflow-hidden py-2 selection:bg-[#8CC63F] selection:text-white"
+            className="w-full md:w-1/2 h-auto md:h-full px-4 md:px-8 lg:px-12 xl:px-14 flex flex-col justify-start detail-right-col overflow-y-auto py-2 selection:bg-[#8CC63F] selection:text-white"
           >
             {/* Breadcrumbs */}
             <motion.div
@@ -4689,7 +4847,7 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-3 sm:gap-4 lg:gap-5 py-2 sm:py-2.5 lg:py-3 border-t border-b border-[#87BB3A]/40 mb-2.5 sm:mb-3 lg:mb-3.5"
+                className="detail-weight-row flex items-center gap-3 sm:gap-4 lg:gap-5 py-2 sm:py-2.5 lg:py-3 border-t border-b border-[#87BB3A]/40 mb-2.5 sm:mb-3 lg:mb-3.5"
               >
                 <div className="flex items-center gap-2 shrink-0">
                   <span className="text-[12px] sm:text-[13px] lg:text-[14px] font-extrabold text-[#14421A] tracking-wider uppercase font-manrope whitespace-nowrap">
@@ -4730,9 +4888,9 @@ export default function KnowYourMeatPage() {
                 whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-2 mb-2.5 sm:mb-3 lg:mb-3.5"
+                className="detail-nutrition-wrap space-y-2 mb-2.5 sm:mb-3 lg:mb-3.5"
               >
-                <h4 className="text-[12px] sm:text-[13px] lg:text-[14px] font-extrabold text-[#14421A] tracking-wider uppercase font-manrope">
+                <h4 className="detail-nutrition-title text-[12px] sm:text-[13px] lg:text-[14px] font-extrabold text-[#14421A] tracking-wider uppercase font-manrope">
                   NUTRITION INFORMATION (PER 100g)
                 </h4>
                 <div className="grid grid-cols-4 gap-2 sm:gap-2.5 lg:gap-3 detail-nutrition-grid">
