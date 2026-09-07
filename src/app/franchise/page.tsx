@@ -304,7 +304,7 @@ export default function FranchisePage() {
       {/* ============================================================ */}
       {/* SECTION 1: HERO & STORE SHOWCASE (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full h-auto pt-[115px] sm:pt-[125px] lg:pt-[130px] xl:pt-[140px] pb-10 sm:pb-14 lg:pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#D8E6F5] via-[#EAF2F9] to-[#FAF7F2] overflow-hidden select-none flex flex-col items-center">
+      <section className="relative w-full h-auto pt-[80px] sm:pt-[85px] lg:pt-[88px] xl:pt-[95px] pb-8 sm:pb-12 lg:pb-14 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#D8E6F5] via-[#EAF2F9] to-[#FAF7F2] overflow-hidden select-none flex flex-col items-center">
         {/* Sky Cloud Background Pattern */}
         <div className="absolute inset-0 pointer-events-none opacity-60 mix-blend-multiply z-0">
           <Image
@@ -704,33 +704,33 @@ export default function FranchisePage() {
             </svg>
 
             {/* LEFT 3 FEATURE BADGES (01, 02, 03) */}
-            <div className="absolute left-[1%] 2xl:left-[1.5%] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[180px] xl:w-[210px] 2xl:w-[285px]">
+            <div className="absolute left-[0.5%] xl:left-[1%] 2xl:left-[1.5%] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[195px] xl:w-[230px] 2xl:w-[285px]">
               {/* Feature 01: HYGIENIC PROCESSING */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.2, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[10.96%] -translate-y-1/2 left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[4%] xl:top-[4.5%] left-0 flex items-center gap-2.5 xl:gap-3 group select-none origin-left cursor-default"
               >
-                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-sm flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:microscope"
-                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
-                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
+                <div className="flex flex-col items-start text-left max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     01
                   </span>
-                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
-                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     HYGIENIC
                     <br />
                     PROCESSING
                   </h3>
-                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[10px] xl:text-[11px] 2xl:text-[13px] text-slate-700 leading-snug mt-0.5 font-semibold font-manrope">
                     Processed under strict hygiene standards.
                   </p>
                 </div>
@@ -740,28 +740,28 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.5, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[49.42%] -translate-y-1/2 left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[49.42%] -translate-y-1/2 left-0 flex items-center gap-2.5 xl:gap-3 group select-none origin-left cursor-default"
               >
-                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-sm flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:shield-check"
-                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
-                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
+                <div className="flex flex-col items-start text-left max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     02
                   </span>
-                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
-                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     PREMIUM
                     <br />
                     QUALITY
                   </h3>
-                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[10px] xl:text-[11px] 2xl:text-[13px] text-slate-700 leading-snug mt-0.5 font-semibold font-manrope">
                     Handpicked for superior freshness.
                   </p>
                 </div>
@@ -771,26 +771,26 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.8, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[87.88%] -translate-y-1/2 left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[76%] xl:top-[77%] left-0 flex items-center gap-2.5 xl:gap-3 group select-none origin-left cursor-default"
               >
-                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-sm flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:plant"
-                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
-                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
+                <div className="flex flex-col items-start text-left max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     03
                   </span>
-                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
-                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     FARM FRESH
                   </h3>
-                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[10px] xl:text-[11px] 2xl:text-[13px] text-slate-700 leading-snug mt-0.5 font-semibold font-manrope">
                     Sourced from trusted local farms.
                   </p>
                 </div>
@@ -798,33 +798,33 @@ export default function FranchisePage() {
             </div>
 
             {/* RIGHT 3 FEATURE BADGES (04, 05, 06 - REVERSED MATCHING REFERENCE IMAGE 2) */}
-            <div className="absolute right-[1%] 2xl:right-[1.5%] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[180px] xl:w-[210px] 2xl:w-[285px]">
+            <div className="absolute right-[0.5%] xl:right-[1%] 2xl:right-[1.5%] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[195px] xl:w-[230px] 2xl:w-[285px]">
               {/* Feature 04: NO ARTIFICIAL ADDITIVES */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.35, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[10.96%] -translate-y-1/2 right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[4%] xl:top-[4.5%] right-0 flex flex-row-reverse items-center gap-2.5 xl:gap-3 group select-none origin-right cursor-default"
               >
-                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-sm flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:leaf"
-                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
-                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
+                <div className="flex flex-col items-end text-right max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     04
                   </span>
-                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
-                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     NO ARTIFICIAL
                     <br />
                     ADDITIVES
                   </h3>
-                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[10px] xl:text-[11px] 2xl:text-[13px] text-slate-700 leading-snug mt-0.5 font-semibold font-manrope">
                     Free from artificial preservatives.
                   </p>
                 </div>
@@ -834,28 +834,28 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.65, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[49.42%] -translate-y-1/2 right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[49.42%] -translate-y-1/2 right-0 flex flex-row-reverse items-center gap-2.5 xl:gap-3 group select-none origin-right cursor-default"
               >
-                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-sm flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:package"
-                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
-                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
+                <div className="flex flex-col items-end text-right max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     05
                   </span>
-                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
-                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     FRESHNESS
                     <br />
                     GUARANTEED
                   </h3>
-                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[10px] xl:text-[11px] 2xl:text-[13px] text-slate-700 leading-snug mt-0.5 font-semibold font-manrope">
                     Packed to lock in freshness.
                   </p>
                 </div>
@@ -865,28 +865,28 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.95, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[87.88%] -translate-y-1/2 right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[76%] xl:top-[77%] right-0 flex flex-row-reverse items-center gap-2.5 xl:gap-3 group select-none origin-right cursor-default"
               >
-                <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-sm flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:truck"
-                    className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[115px] xl:max-w-[135px] 2xl:max-w-[170px]">
-                  <span className="text-sm xl:text-base 2xl:text-2xl font-bold text-[#F7840F] font-manrope leading-none block">
+                <div className="flex flex-col items-end text-right max-w-[130px] xl:max-w-[155px] 2xl:max-w-[185px]">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     06
                   </span>
-                  <div className="w-3.5 xl:w-4.5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
-                  <h3 className="text-[10.5px] xl:text-[12px] 2xl:text-[15px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     FAST
                     <br />
                     DELIVERY
                   </h3>
-                  <p className="text-[9px] xl:text-[10px] 2xl:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[9px] xl:text-[11px] 2xl:text-[13px] text-slate-700 leading-snug mt-0.5 font-semibold font-manrope">
                     Fresh meat delivered to your doorstep.
                   </p>
                 </div>
