@@ -2240,7 +2240,7 @@ export default function RecipesPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
-            className="space-y-12 relative scroll-mt-24"
+            className="space-y-12 relative scroll-mt-24 w-full"
           >
             {/* Decorative Left Bottom Chicken & Herbs Bowl Graphic (Shifted left to clear ingredients text) */}
             <div className="absolute left-[-140px] sm:left-[-120px] lg:left-[-180px] xl:left-[-130px] 2xl:left-[-70px] bottom-[-20px] sm:bottom-[-30px] lg:bottom-[-50px] z-0 pointer-events-none w-[160px] sm:w-[220px] lg:w-[230px] xl:w-[290px] 2xl:w-[360px] opacity-70 lg:opacity-80 xl:opacity-100">
@@ -2271,14 +2271,14 @@ export default function RecipesPage() {
               />
             </div>
 
-            {/* Top Hero Section: Recipe Image (Left) + Overview & Stats (Right) */}
-            <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative z-10">
-              {/* Left: Recipe Hero Image Card */}
+            {/* Top Hero Section: Recipe Image (Docked Left & Top) + Overview & Stats (Right) */}
+            <section className="-mx-[2vw] -mt-1 sm:-mt-2 lg:-mt-3 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-stretch relative z-10">
+              {/* Left: Recipe Hero Image Card (Docked Flush to Left & Top Edge, Proportional Height) */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                className="lg:col-span-6 relative w-full min-h-[320px] sm:min-h-[360px] lg:min-h-0 h-full rounded-xl overflow-hidden shadow-2xl group flex flex-col justify-end select-none border border-slate-300/60"
+                className="lg:col-span-5 xl:col-span-5 relative w-full h-full min-h-[260px] sm:min-h-[300px] lg:min-h-0 rounded-r-3xl rounded-l-none overflow-hidden shadow-xl group flex flex-col justify-end select-none border-y border-r border-slate-300/60"
               >
                 <Image
                   src={selectedRecipe.img}
@@ -2287,16 +2287,16 @@ export default function RecipesPage() {
                   priority
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent z-0" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-0" />
 
-                <div className="relative z-10 p-6 sm:p-8 space-y-3 font-inter">
-                  <span className="bg-[#064823] text-white text-xs font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-md inline-block">
+                <div className="relative z-10 p-4 sm:p-6 lg:pl-8 xl:pl-12 space-y-2 font-inter">
+                  <span className="bg-[#064823] text-white text-[11px] font-extrabold px-3 py-1 rounded-md uppercase tracking-wider shadow-md inline-block">
                     {selectedRecipe.label}
                   </span>
-                  <h1 className="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl 2xl:text-[46px] font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight">
+                  <h1 className="text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight">
                     {selectedRecipe.title}
                   </h1>
-                  <p className="text-xs sm:text-base lg:text-sm xl:text-base font-medium text-slate-200 font-manrope max-w-[480px] leading-relaxed">
+                  <p className="text-xs sm:text-sm font-medium text-slate-200 font-manrope max-w-[420px] leading-relaxed line-clamp-2">
                     {selectedRecipe.desc}
                   </p>
                 </div>
@@ -2307,7 +2307,7 @@ export default function RecipesPage() {
                 initial={{ opacity: 0, x: 25 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="lg:col-span-6 flex flex-col justify-between space-y-6 font-inter py-1"
+                className="lg:col-span-7 xl:col-span-7 flex flex-col justify-between space-y-4 font-inter py-1 px-4 sm:px-6 lg:px-0 lg:pr-8 xl:pr-12"
               >
                 <div className="space-y-6">
                   {/* ABOUT THIS RECIPE */}

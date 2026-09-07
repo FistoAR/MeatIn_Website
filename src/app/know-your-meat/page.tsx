@@ -3996,18 +3996,18 @@ export default function KnowYourMeatPage() {
       </div>
 
       {/* 2. Categories Section */}
-      <section className="bg-[#EBFFE6] rounded-t-[60px] pt-10 pb-6 relative z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] transition-all duration-500 recipe-bottom-banner overflow-visible mt-12 md:mt-16">
-        <div className="px-6 md:px-16 relative flex flex-col md:flex-row gap-6 md:gap-8 items-center max-w-[1400px] mx-auto">
+      <section className="bg-[#EBFFE6] rounded-t-[50px] sm:rounded-t-[60px] pt-4 sm:pt-5 pb-3 sm:pb-4 relative z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] transition-all duration-500 recipe-bottom-banner overflow-visible mt-16 md:mt-24">
+        <div className="px-4 sm:px-6 md:px-8 lg:px-10 relative flex flex-col md:flex-row gap-3 sm:gap-4 md:gap-6 items-center max-w-[1400px] mx-auto">
           {/* Overlapping Mascot on the left */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, x: -40 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-[180px] h-[270px] md:w-[220px] md:h-[330px] relative -mt-20 md:-mt-28 shrink-0 pointer-events-none drop-shadow-lg"
+            className="w-[210px] h-[330px] sm:w-[250px] sm:h-[390px] md:w-[290px] md:h-[450px] lg:w-[330px] lg:h-[490px] relative -mt-36 sm:-mt-48 md:-mt-64 lg:-mt-72 -mb-8 sm:-mb-12 md:-mb-16 lg:-mb-20 shrink-0 pointer-events-none drop-shadow-2xl z-20"
           >
             <Image
-              src="/Product/Chicken/Banner/image 282.webp"
+              src="/Product/chicken-gif.gif"
               alt="Chicken Mascot"
               fill
               className="object-contain"
@@ -4015,7 +4015,7 @@ export default function KnowYourMeatPage() {
           </motion.div>
 
           {/* Heading and Categories grid */}
-          <div className="flex-1 space-y-6 flex flex-col items-center w-full">
+          <div className="flex-1 space-y-3 sm:space-y-4 flex flex-col items-center justify-center w-full md:-ml-8 lg:-ml-16">
             <div className="space-y-2 text-center w-full">
               {/* CATEGORIES Typewriter Title */}
               <motion.h3

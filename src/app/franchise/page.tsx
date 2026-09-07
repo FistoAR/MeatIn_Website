@@ -327,12 +327,12 @@ export default function FranchisePage() {
       {/* ============================================================ */}
       <section className="relative w-full h-auto pt-[80px] sm:pt-[85px] lg:pt-[88px] xl:pt-[95px] pb-8 sm:pb-12 lg:pb-14 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#D8E6F5] via-[#EAF2F9] to-[#FAF7F2] overflow-hidden select-none flex flex-col items-center">
         {/* Sky Cloud Background Pattern */}
-        <div className="absolute inset-0 pointer-events-none opacity-60 mix-blend-multiply z-0">
+        <div className="absolute inset-0 pointer-events-none z-0">
           <Image
-            src="/Franchies/bg.webp"
+            src="/Franchies/franchise-hero-bg.webp"
             alt="Sky Background Texture"
             fill
-            className="object-cover object-top"
+            className="object-cover object-bottom"
           />
         </div>
 

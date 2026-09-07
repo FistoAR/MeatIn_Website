@@ -10,6 +10,7 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import TrustedQualityBanner from "@/components/layout/TrustedQualityBanner";
+import TruckSvg from "@/components/TruckSvg";
 
 // Animation variants
 const fadeInUp = {
@@ -72,7 +73,7 @@ export default function HomePage() {
   const truckScrollX = useTransform(
     section2ScrollProgress,
     [0, 1],
-    ["48vw", "-18vw"],
+    ["36vw", "-26vw"],
   );
   const truckScrollOpacity = useTransform(
     section2ScrollProgress,
@@ -91,11 +92,13 @@ export default function HomePage() {
     restDelta: 0.0001,
   });
 
+
+
   const [isTruckMoving, setIsTruckMoving] = React.useState(false);
   const stopTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   React.useEffect(() => {
-    const triggerMove = (duration = 200) => {
+    const triggerMove = (duration = 400) => {
       setIsTruckMoving(true);
       if (stopTimeoutRef.current) clearTimeout(stopTimeoutRef.current);
       stopTimeoutRef.current = setTimeout(() => {
@@ -104,26 +107,26 @@ export default function HomePage() {
     };
 
     let lastY = typeof window !== "undefined" ? window.scrollY : 0;
-    
+
     const handleScroll = () => {
       const currentY = window.scrollY;
       if (Math.abs(currentY - lastY) > 0.05) {
-        triggerMove(200);
+        triggerMove(400);
       }
       lastY = currentY;
     };
 
-    const handleWheel = () => triggerMove(200);
-    const handleTouchMove = () => triggerMove(200);
+    const handleWheel = () => triggerMove(400);
+    const handleTouchMove = () => triggerMove(400);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("wheel", handleWheel, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: true });
-    
+
     const unsubscribeX = smoothTruckX.on("change", () => {
       const velocity = Math.abs(smoothTruckX.getVelocity());
       if (velocity > 0.01) {
-        triggerMove(200);
+        triggerMove(400);
       }
     });
 
@@ -467,12 +470,12 @@ export default function HomePage() {
         <div className="w-full max-w-[95%] px-4 sm:px-8 relative z-10 flex justify-start items-center my-auto">
           <motion.div
             style={{ x: smoothTruckX, opacity: smoothTruckOpacity }}
-            className="relative w-full aspect-[4096/1339] max-w-[320px] sm:max-w-[420px] md:max-w-[520px] lg:max-w-[620px] xl:max-w-[740px] 2xl:max-w-[850px]"
+            className="relative w-full aspect-[4096/1339] max-w-[300px] sm:max-w-[380px] md:max-w-[460px] lg:max-w-[520px] xl:max-w-[640px] 2xl:max-w-[850px]"
           >
             {/* Ground Soft Shadow */}
             <div className="absolute -bottom-[4%] left-[4%] right-[4%] h-[12%] bg-black/20 blur-lg rounded-full z-0" />
 
-            {/* Vector Truck SVG Body & Rotating Tire Layer */}
+            {/* Cold Chain Logistics Truck SVG with Dynamic Wheel Speed */}
             <motion.div
               animate={{ y: [-1.5, 1.5, -1.5] }}
               transition={{
@@ -482,54 +485,7 @@ export default function HomePage() {
               }}
               className="absolute inset-0 w-full h-full z-20 pointer-events-none"
             >
-              <svg
-                width="4096"
-                height="1339"
-                viewBox="0 0 4096 1339"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlnsXlink="http://www.w3.org/1999/xlink"
-                className="w-full h-full object-contain"
-              >
-                <style>{`
-                  @keyframes rotateTireWheel {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(-360deg); }
-                  }
-                  .spinning-wheel {
-                    transform-box: fill-box;
-                    transform-origin: center;
-                    animation: rotateTireWheel 0.4s linear infinite;
-                  }
-                `}</style>
-                <rect width="4096" height="1339" fill="url(#pattern0_1246_36)"/>
-                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="280" y="921" width="365" height="365" fill="url(#pattern1_1246_36)"/>
-                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="1239" y="941" width="390" height="390" fill="url(#pattern2_1246_36)"/>
-                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="3446" y="949" width="365" height="365" fill="url(#pattern3_1246_36)"/>
-                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="3044" y="949" width="365" height="365" fill="url(#pattern4_1246_36)"/>
-                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="2642" y="949" width="365" height="365" fill="url(#pattern5_1246_36)"/>
-                <defs>
-                  <pattern id="pattern0_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image0_1246_36" transform="scale(0.000244141 0.000746826)"/>
-                  </pattern>
-                  <pattern id="pattern1_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
-                  </pattern>
-                  <pattern id="pattern2_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
-                  </pattern>
-                  <pattern id="pattern3_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
-                  </pattern>
-                  <pattern id="pattern4_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
-                  </pattern>
-                  <pattern id="pattern5_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
-                  </pattern>
-                  <image id="image0_1246_36" width="4096" height="1339" preserveAspectRatio="none" xlinkHref="/Home/truck-section/truckWithTire.svg"/>
-                </defs>
-              </svg>
+              <TruckSvg isMoving={isTruckMoving} />
             </motion.div>
 
             {/* Trailing Rope Hook attached vertically centered to the back of truck trailer */}
@@ -668,10 +624,10 @@ export default function HomePage() {
                   variants={fadeInUp}
                   whileHover={{ scale: 1.05, zIndex: 30 }}
                   transition={{ duration: 0.3 }}
-                  className={`bg-white rounded-[18px] 2xl:rounded-[20px] border border-white/80 shadow-lg hover:shadow-2xl flex flex-col justify-between h-max overflow-hidden group min-h-[250px] xl:min-h-[250px] 2xl:min-h-[310px] relative ${idx % 2 === 0 ? 'xl:-mt-4 2xl:-mt-8' : 'xl:mt-4 2xl:mt-8'}`}
+                  className={`bg-white rounded-[18px] 2xl:rounded-[20px] border border-white/80 shadow-lg hover:shadow-2xl flex flex-col justify-between h-max overflow-hidden group min-h-[270px] xl:min-h-[270px] 2xl:min-h-[335px] relative ${idx % 2 === 0 ? 'xl:-mt-4 2xl:-mt-8' : 'xl:mt-4 2xl:mt-8'}`}
                 >
                   {/* Top Image Frame (with icon and title inside) */}
-                  <div className="relative w-full h-[195px] xl:h-[195px] 2xl:h-[245px] overflow-hidden flex flex-col justify-end pb-3 2xl:pb-4 items-center">
+                  <div className="relative w-full h-[210px] xl:h-[210px] 2xl:h-[265px] overflow-hidden flex flex-col justify-end pb-3.5 2xl:pb-4 items-center">
                     <Image
                       src={step.image}
                       alt={step.title}
@@ -679,7 +635,7 @@ export default function HomePage() {
                       className="object-cover object-top"
                     />
                     {/* Bottom gradient fade to white */}
-                    <div className="absolute -bottom-1 left-0 right-0 h-20 xl:h-20 2xl:h-28 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
+                    <div className="absolute -bottom-1 left-0 right-0 h-[88px] xl:h-[88px] 2xl:h-[120px] bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
 
                     {/* Icon */}
                     <div className="relative z-20 w-10 h-10 xl:w-10 xl:h-10 2xl:w-14 2xl:h-14 drop-shadow-md mb-2">
@@ -698,7 +654,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Bottom Text Panel */}
-                  <div className="bg-white pb-3 xl:pb-3 2xl:pb-6 px-3 flex-1 flex flex-col items-center justify-start text-center relative z-20 -mt-px">
+                  <div className="bg-white pb-3.5 xl:pb-3.5 2xl:pb-6 px-3 flex-1 flex flex-col items-center justify-start text-center relative z-20 -mt-px">
                     <p className="text-[#3A3A3A] text-[0.72rem] xl:text-[0.72rem] 2xl:text-[0.83rem] font-semibold leading-snug font-manrope max-w-[170px] 2xl:max-w-[195px] mx-auto">
                       {step.desc}
                     </p>
