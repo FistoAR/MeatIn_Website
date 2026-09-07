@@ -1921,27 +1921,43 @@ export default function RecipesPage() {
                       }
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0"
+                    className="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0 relative"
                   >
                     <motion.button
                       whileHover={{ scale: 1.06 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] xl:w-[64px] xl:h-[64px] 2xl:w-[76px] 2xl:h-[76px] rounded-full flex items-center justify-center font-extrabold text-[11px] sm:text-xs lg:text-xs xl:text-xs 2xl:text-sm tracking-wider transition-all shrink-0 cursor-pointer text-white shadow-md ${
+                      whileTap={{ scale: 0.94 }}
+                      animate={{ scale: activeFilter === "all" && !selectedRecipe ? 1.05 : 1 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      className={`relative z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] xl:w-[64px] xl:h-[64px] 2xl:w-[76px] 2xl:h-[76px] rounded-full flex items-center justify-center font-extrabold text-[11px] sm:text-xs lg:text-xs xl:text-xs 2xl:text-sm tracking-wider shrink-0 cursor-pointer text-white transition-all duration-300 ${
                         activeFilter === "all" && !selectedRecipe
-                          ? "bg-white/35 backdrop-blur-xl border-2 border-white ring-4 ring-[#F2CE07] scale-105 shadow-xl"
-                          : "bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30"
+                          ? "bg-white/35 backdrop-blur-xl border-2 border-[#F2CE07] ring-4 ring-[#F2CE07]/30 shadow-[0_4px_18px_rgba(242,206,7,0.45)]"
+                          : "bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 shadow-md"
                       }`}
                     >
-                      ALL
+                      {activeFilter === "all" && !selectedRecipe && (
+                        <motion.div
+                          layoutId="activeCategoryHighlight"
+                          className="absolute -inset-1 rounded-full border-2 border-[#F2CE07] bg-[#F2CE07]/15 pointer-events-none z-0"
+                          transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                        />
+                      )}
+                      <span className="relative z-10">ALL</span>
                     </motion.button>
                     <span
-                      className={`text-[10px] sm:text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-extrabold tracking-wider uppercase font-manrope transition-colors ${
+                      className={`text-[10px] sm:text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-extrabold tracking-wider uppercase font-manrope transition-colors flex flex-col items-center gap-1 ${
                         activeFilter === "all" && !selectedRecipe
                           ? "text-[#F2CE07] font-black drop-shadow-sm"
                           : "text-white/90 group-hover:text-[#F2CE07]"
                       }`}
                     >
                       ALL
+                      {activeFilter === "all" && !selectedRecipe && (
+                        <motion.span
+                          layoutId="activeCategoryDot"
+                          className="w-1.5 h-1.5 rounded-full bg-[#F2CE07] shadow-sm"
+                          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                        />
+                      )}
                     </span>
                   </motion.div>
 
@@ -1950,6 +1966,7 @@ export default function RecipesPage() {
                     const isSelected = selectedRecipe
                       ? selectedRecipe.part.toLowerCase() === part.id.toLowerCase()
                       : activeFilter.toLowerCase() === part.id.toLowerCase();
+                    const isHighlighted = isSelected || isAutoHighlighted;
 
                     return (
                       <motion.div
@@ -1965,19 +1982,28 @@ export default function RecipesPage() {
                           setHighlightedPartIdx(index);
                           handlePartClick(part.id);
                         }}
-                        className="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0"
+                        className="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0 relative"
                       >
                         <motion.button
                           whileHover={{ scale: 1.06 }}
-                          whileTap={{ scale: 0.92 }}
-                          className={`relative w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] xl:w-[64px] xl:h-[64px] 2xl:w-[76px] 2xl:h-[76px] rounded-full bg-white flex items-center justify-center p-1 sm:p-1.5 shrink-0 cursor-pointer transition-all duration-300 shadow-md ${
-                            isSelected || isAutoHighlighted
-                              ? "ring-4 ring-[#F2CE07] bg-[#FFFDE7] scale-105 shadow-[0_0_14px_rgba(225,198,9,0.75)]"
-                              : "border border-white/60 hover:scale-105"
+                          whileTap={{ scale: 0.94 }}
+                          animate={{ scale: isHighlighted ? 1.06 : 1 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                          className={`relative z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] xl:w-[64px] xl:h-[64px] 2xl:w-[76px] 2xl:h-[76px] rounded-full bg-white flex items-center justify-center p-1 sm:p-1.5 shrink-0 cursor-pointer transition-all duration-300 ${
+                            isHighlighted
+                              ? "ring-4 ring-[#F2CE07]/40 bg-[#FFFDE7] shadow-[0_4px_20px_rgba(242,206,7,0.45)] border-2 border-[#F2CE07]"
+                              : "border border-white/60 hover:scale-105 shadow-md"
                           }`}
                           title={part.name}
                         >
-                          <div className="relative w-full h-full">
+                          {isHighlighted && (
+                            <motion.div
+                              layoutId="activeCategoryHighlight"
+                              className="absolute -inset-1 rounded-full border-2 border-[#F2CE07] bg-[#F2CE07]/15 pointer-events-none z-0"
+                              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                            />
+                          )}
+                          <div className="relative w-full h-full z-10">
                             <Image
                               src={part.img}
                               alt={part.name}
@@ -1987,13 +2013,20 @@ export default function RecipesPage() {
                           </div>
                         </motion.button>
                         <span
-                          className={`text-[10px] sm:text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-extrabold tracking-wider uppercase font-manrope transition-colors ${
-                            isSelected || isAutoHighlighted
+                          className={`text-[10px] sm:text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-extrabold tracking-wider uppercase font-manrope transition-colors flex flex-col items-center gap-1 ${
+                            isHighlighted
                               ? "text-[#F2CE07] drop-shadow-sm font-black"
                               : "text-white/90 group-hover:text-[#F2CE07]"
                           }`}
                         >
                           {part.name}
+                          {isHighlighted && (
+                            <motion.span
+                              layoutId="activeCategoryDot"
+                              className="w-1.5 h-1.5 rounded-full bg-[#F2CE07] shadow-sm"
+                              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                            />
+                          )}
                         </span>
                       </motion.div>
                     );
@@ -2239,13 +2272,13 @@ export default function RecipesPage() {
             </div>
 
             {/* Top Hero Section: Recipe Image (Left) + Overview & Stats (Right) */}
-            <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
+            <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative z-10">
               {/* Left: Recipe Hero Image Card */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="lg:col-span-6 relative w-full min-h-[280px] sm:min-h-[340px] lg:min-h-[380px] rounded-xl overflow-hidden shadow-2xl group flex flex-col justify-end select-none border border-slate-300/60"
+                className="lg:col-span-6 relative w-full min-h-[320px] sm:min-h-[360px] lg:min-h-0 h-full rounded-xl overflow-hidden shadow-2xl group flex flex-col justify-end select-none border border-slate-300/60"
               >
                 <Image
                   src={selectedRecipe.img}
@@ -2280,7 +2313,7 @@ export default function RecipesPage() {
                   {/* ABOUT THIS RECIPE */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xs sm:text-sm lg:text-base xl:text-lg font-semibold text-[#064823] tracking-wider uppercase font-barlow-condensed">
+                      <h3 className="text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-extrabold text-[#064823] tracking-wide uppercase font-barlow-condensed">
                         ABOUT THIS RECIPE
                       </h3>
                       <div className="flex items-center gap-3">
@@ -2292,7 +2325,7 @@ export default function RecipesPage() {
                               window.history.replaceState({}, "", "/recipes");
                             }
                           }}
-                          className="bg-[#064823] hover:bg-[#0a5e30] text-white font-bold text-sm uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+                          className="bg-[#064823] hover:bg-[#0a5e30] text-white font-bold text-xs sm:text-sm uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                         >
                           <span>←</span>
                           <span>BACK TO ALL RECIPES</span>
@@ -2309,21 +2342,24 @@ export default function RecipesPage() {
                       </div>
                     </div>
                     <div className="w-full border-b border-dashed border-slate-300" />
-                    <p className="text-xs sm:text-[14px] lg:text-[14px] xl:text-[15px] font-medium text-slate-700 leading-relaxed font-manrope">
+                    <p className="text-sm sm:text-base lg:text-base xl:text-[17px] font-medium text-slate-700 leading-relaxed font-manrope">
                       {selectedRecipe.about}
                     </p>
                   </div>
 
                   {/* TIPS */}
-                  <div className="space-y-3">
+                  <div className="space-y-3.5 pt-1">
                     <div className="w-full border-b border-dashed border-slate-300" />
-                    <h4 className="text-base sm:text-lg lg:text-base xl:text-lg font-bold text-[#064823] tracking-wider uppercase font-barlow-condensed">
-                      COOKING TIPS & TRICKS
-                    </h4>
-                    <ul className="space-y-2.5 text-xs sm:text-sm lg:text-xs xl:text-sm font-medium text-slate-700 font-manrope">
+                    <div className="flex items-center gap-2.5">
+                      <span className="w-1.5 h-6 bg-[#8DC541] rounded-full inline-block shrink-0" />
+                      <h4 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-extrabold text-[#064823] tracking-wider uppercase font-barlow-condensed">
+                        COOKING TIPS & TRICKS
+                      </h4>
+                    </div>
+                    <ul className="space-y-3 pt-1">
                       {selectedRecipe.tips.map((tip, idx) => (
-                        <li key={idx} className="flex items-start gap-2.5">
-                          <span className="w-2 h-2 rounded-full bg-[#8DC541] shrink-0 mt-1.5" />
+                        <li key={idx} className="flex items-start gap-3 text-sm sm:text-base lg:text-sm xl:text-base font-medium text-slate-800 leading-relaxed font-manrope">
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#8DC541] shrink-0 mt-1.5 shadow-2xs" />
                           <span>{tip}</span>
                         </li>
                       ))}

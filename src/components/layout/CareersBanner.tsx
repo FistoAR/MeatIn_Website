@@ -187,6 +187,27 @@ export default function CareersBanner() {
             sizes="(max-width: 1334px) 100vw, 1334px"
           />
 
+          {/* Overlay People Cutout & Truck Image */}
+          <div
+            className="absolute z-10 overflow-hidden pointer-events-none"
+            style={{
+              left: '56.1%',
+              top: '1.1%',
+              width: '42.5%',
+              height: '94.6%',
+              borderRadius: '26% 0 0 0',
+            }}
+          >
+            <Image
+              src="/ContactUs/contact-banner-people-image.webp"
+              alt="MEATiN Team & Truck"
+              fill
+              priority
+              className="object-cover object-left"
+              sizes="(max-width: 1334px) 50vw, 600px"
+            />
+          </div>
+
           {/* Interactive Clickable Hotspot for APPLY NOW Button */}
           <motion.button
             onClick={() => setIsModalOpen(true)}
@@ -301,7 +322,7 @@ export default function CareersBanner() {
             {/* MEATiN Team Image Header */}
             <div className="relative w-full h-[150px] sm:h-[180px] rounded-xl overflow-hidden shadow-xs border border-slate-200/60">
               <Image
-                src="/ContactUs/banner-img.webp"
+                src="/ContactUs/contact-banner-mobile-image.webp"
                 alt="MEATiN Team"
                 fill
                 className="object-cover object-center"

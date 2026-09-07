@@ -50,16 +50,16 @@ export default function HomePage() {
     target: certSectionRef,
     offset: ["start end", "end start"],
   });
-  const rawTruckY = useTransform(certScrollProgress, [0, 1], [-150, 1600]);
+  const rawTruckY = useTransform(certScrollProgress, [0, 1], [-120, 1250]);
   const truckY = useSpring(rawTruckY, {
     stiffness: 250,
-    damping: 30,
-    mass: 0.2,
+    damping: 28,
+    mass: 0.15,
     restDelta: 0.0001,
   });
   const certTruckOpacity = useTransform(
     certScrollProgress,
-    [0, 0.15, 0.85, 1],
+    [0, 0.08, 0.82, 0.95],
     [0, 1, 1, 0],
   );
 
@@ -220,6 +220,16 @@ export default function HomePage() {
     }
 
     const draw = () => {
+      // Guard against broken or uninitialized images
+      if (
+        !img ||
+        !img.complete ||
+        img.naturalWidth === 0 ||
+        img.naturalHeight === 0
+      ) {
+        return;
+      }
+
       const containerWidth = canvas.clientWidth || window.innerWidth;
       const containerHeight = canvas.clientHeight || window.innerHeight;
 
@@ -241,23 +251,36 @@ export default function HomePage() {
       const shiftY = (canvas.height - imgHeight * ratio) / 2;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(
-        img,
-        0,
-        0,
-        imgWidth,
-        imgHeight,
-        shiftX,
-        shiftY,
-        imgWidth * ratio,
-        imgHeight * ratio,
-      );
+      try {
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          imgWidth,
+          imgHeight,
+          shiftX,
+          shiftY,
+          imgWidth * ratio,
+          imgHeight * ratio,
+        );
+      } catch (err) {
+        // Silently skip if image state changes mid-render
+      }
     };
 
     if (img.complete) {
-      draw();
+      if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+        draw();
+      }
     } else {
-      img.onload = draw;
+      img.onload = () => {
+        if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+          draw();
+        }
+      };
+      img.onerror = () => {
+        // Silently ignore broken frame load to prevent canvas crash
+      };
     }
   }, [currentFrame]);
 
@@ -376,10 +399,10 @@ export default function HomePage() {
                   transition={{ duration: 0.8 }}
                   className="space-y-3"
                 >
-                  <h1 className="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-[6.5vw] font-bold font-barlow tracking-tight uppercase leading-[0.9] space-y-1">
+                  <h1 className="text-4xl sm:text-6xl lg:text-6xl xl:text-7xl 2xl:text-[6vw] font-bold font-barlow tracking-tight uppercase leading-[0.92] space-y-1.5">
                     <span className="block text-[#8DC541] normal-case">MEATiN:</span>
                     <span className="block text-white">PURE QUALITY.</span>
-                    <span className="block text-white">TRUSTED MEAT.</span>
+                    <span className="block text-[#F7840F]">TRUSTED MEAT.</span>
                   </h1>
                 </motion.div>
 
@@ -388,10 +411,8 @@ export default function HomePage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
-                  <p className="text-white text-base sm:text-lg md:text-xl font-normal leading-relaxed font-inter max-w-xl">
-                    South India&apos;s{" "}
-                    <span className="text-[#8DC541] font-bold">Largest</span>{" "}
-                    Multi Species{" "}
+                  <p className="text-white/90 text-sm sm:text-base lg:text-base xl:text-lg font-medium leading-relaxed font-inter max-w-xl">
+                    South India&apos;s{" "} Multi Species{" "} <br/>
                     <span className="text-[#8DC541] font-bold">Meat</span>{" "}
                     Processing Plant
                   </p>
@@ -404,7 +425,7 @@ export default function HomePage() {
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
-                  className="relative w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden sm:block lg:hidden"
+                  className="relative w-44 h-22 sm:w-48 sm:h-24 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden sm:block lg:hidden"
                 >
                   <Image
                     src="/AboutUs/keralas-original.webp"
@@ -422,7 +443,7 @@ export default function HomePage() {
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
-            className="absolute bottom-6 right-6 lg:bottom-8 lg:right-10 w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden lg:block z-20"
+            className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 lg:bottom-6 lg:right-8 xl:bottom-8 xl:right-10 w-44 h-22 sm:w-48 sm:h-24 lg:w-48 lg:h-24 xl:w-56 xl:h-28 2xl:w-64 2xl:h-32 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden lg:block z-20"
           >
             <Image
               src="/AboutUs/keralas-original.webp"
@@ -567,9 +588,23 @@ export default function HomePage() {
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="none"
           >
+            <defs>
+              <radialGradient
+                id="truckBottomWaveGradient"
+                cx="50%"
+                cy="50%"
+                r="50%"
+                fx="50%"
+                fy="50%"
+              >
+                <stop offset="0%" stopColor="#67BE47" />
+                <stop offset="39.42%" stopColor="#094824" />
+                <stop offset="100%" stopColor="#094824" />
+              </radialGradient>
+            </defs>
             <path
               d="M0 0C755.182 107.73 1158.5 130.5 1920 0V130.5H0V0Z"
-              fill="#064823"
+              fill="url(#truckBottomWaveGradient)"
             />
           </svg>
         </div>
@@ -579,7 +614,8 @@ export default function HomePage() {
       <section
         className="relative w-full pt-6 pb-6 lg:pt-8 lg:pb-8 2xl:pt-10 2xl:pb-10 text-white overflow-hidden"
         style={{
-          background: "radial-gradient(circle at center, #488E40 0%, #064823 100%)",
+          background:
+            "radial-gradient(50% 50% at 50% 50%, rgba(103, 190, 71, 0.68) 0%, #094824 100%)",
         }}
       >
         {/* Absolute Background Image Layer */}
@@ -691,7 +727,7 @@ export default function HomePage() {
           {/* Creative vertical green truck graphics on left side gutter */}
           <motion.div
             style={{ y: truckY, opacity: truckOpacity }}
-            className="absolute left-[-85px] xl:left-[-100px] top-[-100px] w-40 xl:w-44 h-[700px] hidden lg:block pointer-events-none z-0"
+            className="absolute left-0 sm:left-1 lg:left-1 xl:left-2 2xl:left-[-40px] [@media(min-width:1800px)]:left-[-75px] top-2 lg:top-6 w-28 sm:w-30 lg:w-[130px] xl:w-[145px] 2xl:w-44 aspect-[1/2.35] hidden lg:block pointer-events-none z-0"
           >
             <div className="relative w-full h-full">
               <Image
@@ -738,7 +774,7 @@ export default function HomePage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, margin: "-50px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-y-16 md:gap-y-12 gap-x-6 lg:gap-x-8 lg:pl-12 xl:pl-24 items-stretch"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-y-16 md:gap-y-12 gap-x-6 lg:gap-x-6 xl:gap-x-6 2xl:gap-x-8 lg:pl-24 xl:pl-28 2xl:pl-24 [@media(min-width:1800px)]:pl-20 items-stretch"
           >
             {certificates.map((cert, idx) => {
               return (
