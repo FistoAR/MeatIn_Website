@@ -112,7 +112,7 @@
 }
 
 /* Hide Next.js Development Toast Indicator Badge */
-nextjs-portal,
+/* nextjs-portal,
 [data-nextjs-toast],
 [data-nextjs-toast-wrapper],
 [data-nextjs-dialog-overlay] {
@@ -120,10 +120,10 @@ nextjs-portal,
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
-}
+} */
 
 /* Truck tire motion rotation rules */
 .is-moving .truck-tire,
 .is-moving svg .truck-tire {
   animation-play-state: running !important;
-}
+}

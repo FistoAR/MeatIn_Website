@@ -25,7 +25,50 @@ export default function FranchisePage() {
 
   // Mouse hover spotlight position state for Hero Store reveal
   const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [autoPos, setAutoPos] = useState<{ xPercent: number; yPercent: number; radius: number }>({
+    xPercent: 50,
+    yPercent: 50,
+    radius: 0,
+  });
   const heroImageContainerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-demonstration animation when user is not hovering over hero image
+  useEffect(() => {
+    if (isHovered) return;
+
+    let animationFrameId: number;
+    let startTime: number | null = null;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+
+      // Smooth expansion of spotlight radius up to 125px over 900ms
+      const targetRadius = 125;
+      const radiusProgress = Math.min(elapsed / 900, 1);
+      const currentRadius = targetRadius * (1 - Math.pow(1 - radiusProgress, 3));
+
+      // Organic glide movement across the storefront image
+      const moveElapsed = Math.max(0, elapsed - 300);
+      const xPercent = 50 + Math.sin(moveElapsed * 0.0014) * 22; // moves smoothly between 28% and 72%
+      const yPercent = 50 + Math.sin(moveElapsed * 0.0022) * 12; // moves smoothly between 38% and 62%
+
+      setAutoPos({
+        xPercent,
+        yPercent,
+        radius: currentRadius,
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isHovered]);
 
   const handleHeroMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!heroImageContainerRef.current) return;
@@ -33,10 +76,16 @@ export default function FranchisePage() {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     setMousePos({ x, y });
+    if (!isHovered) setIsHovered(true);
+  };
+
+  const handleHeroMouseEnter = () => {
+    setIsHovered(true);
   };
 
   const handleHeroMouseLeave = () => {
     setMousePos(null);
+    setIsHovered(false);
   };
 
   // Ref for Map Container Column & Popup Card
@@ -255,7 +304,7 @@ export default function FranchisePage() {
       {/* ============================================================ */}
       {/* SECTION 1: HERO & STORE SHOWCASE (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full min-h-[calc(100vh-80px)] h-auto pt-[95px] sm:pt-[105px] md:pt-[120px] lg:pt-[110px] pb-12 sm:pb-16 md:pb-20 lg:pb-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#D8E6F5] via-[#EAF2F9] to-[#FAF7F2] overflow-hidden select-none flex flex-col justify-between items-center">
+      <section className="relative w-full h-auto pt-[115px] sm:pt-[125px] lg:pt-[130px] xl:pt-[140px] pb-10 sm:pb-14 lg:pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#D8E6F5] via-[#EAF2F9] to-[#FAF7F2] overflow-hidden select-none flex flex-col items-center">
         {/* Sky Cloud Background Pattern */}
         <div className="absolute inset-0 pointer-events-none opacity-60 mix-blend-multiply z-0">
           <Image
@@ -302,16 +351,16 @@ export default function FranchisePage() {
           />
         </div>
 
-        <div className="w-full relative z-10 flex-1 flex flex-col justify-between items-center max-w-[1600px] mx-auto">
+        <div className="w-full relative z-10 flex-1 flex flex-col items-center max-w-[1600px] mx-auto">
           {/* Header Title Block (Tight margin on mobile, spacious clear margin on desktop) */}
-          <div className="text-center space-y-0.5 shrink-0 mt-0 lg:mt-3.5 py-0.5">
+          <div className="text-center space-y-0.5 shrink-0 mt-0 lg:mt-1 py-0.5 z-10">
             {/* Subtitle: — GROWTH WITH — (Fade in from LEFT) */}
             <motion.div
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] [@media(max-height:710px)]:lg:text-[11px] [@media(max-height:620px)]:lg:text-[10px] font-bold text-gray-800 tracking-[3px] uppercase font-manrope"
+              className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] font-bold text-gray-800 tracking-[3px] uppercase font-manrope"
             >
               <span className="w-5 md:w-7 h-[2px] bg-gradient-to-r from-transparent via-[#F7840F] to-[#8DC541] rounded-full" />
               GROWTH WITH
@@ -319,7 +368,7 @@ export default function FranchisePage() {
             </motion.div>
 
             {/* Main Brand Title: MEATiN */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-[76px] [@media(max-height:710px)]:lg:text-[50px] [@media(max-height:620px)]:lg:text-[40px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none flex items-center justify-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[68px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none flex items-center justify-center">
               {/* MEAT (Fade in from RIGHT) */}
               <motion.span
                 initial={{ opacity: 0, x: 60 }}
@@ -345,10 +394,11 @@ export default function FranchisePage() {
           </div>
 
           {/* Hero Store Interactive Canvas (Locked 1440:520 aspect-ratio canvas for 100% synchronous scaling across all screens) */}
-          <div className="relative w-full max-w-[1440px] aspect-[1440/520] max-h-[540px] mx-auto flex items-center justify-center my-4 sm:my-6 lg:my-auto shrink-0 select-none">
+          <div className="relative w-full max-w-[1440px] aspect-[1440/520] mx-auto flex items-center justify-center my-2 sm:my-4 lg:my-3 shrink-0 select-none">
             {/* Center 3D Store Graphic (Desktop Spotlight Cursor-follow Reveal | Mobile/Tab Clean Display) */}
             <motion.div
               ref={heroImageContainerRef}
+              onMouseEnter={handleHeroMouseEnter}
               onMouseMove={handleHeroMouseMove}
               onMouseLeave={handleHeroMouseLeave}
               initial={{ opacity: 0, y: 20 }}
@@ -380,16 +430,16 @@ export default function FranchisePage() {
                   className="w-full h-auto object-contain block pointer-events-none"
                 />
 
-                {/* Layer 2 (Spotlight Overlay): Main Hero Image (Revealed inside cursor circular lens) */}
+                {/* Layer 2 (Spotlight Overlay): Main Hero Image (Revealed inside cursor circular lens or auto-demo) */}
                 <div
                   className="absolute inset-0 w-full h-full pointer-events-none transition-[clip-path] duration-75 ease-out"
                   style={{
-                    clipPath: mousePos
-                      ? `circle(120px at ${mousePos.x}px ${mousePos.y}px)`
-                      : "circle(0px at 50% 50%)",
-                    WebkitClipPath: mousePos
-                      ? `circle(120px at ${mousePos.x}px ${mousePos.y}px)`
-                      : "circle(0px at 50% 50%)",
+                    clipPath: isHovered && mousePos
+                      ? `circle(125px at ${mousePos.x}px ${mousePos.y}px)`
+                      : `circle(${autoPos.radius}px at ${autoPos.xPercent}% ${autoPos.yPercent}%)`,
+                    WebkitClipPath: isHovered && mousePos
+                      ? `circle(125px at ${mousePos.x}px ${mousePos.y}px)`
+                      : `circle(${autoPos.radius}px at ${autoPos.xPercent}% ${autoPos.yPercent}%)`,
                   }}
                 >
                   <Image
@@ -400,20 +450,35 @@ export default function FranchisePage() {
                     priority
                     className="w-full h-auto object-contain block"
                   />
-                  
-                  {/* Glowing ring edge around spotlight lens */}
-                  {mousePos && (
-                    <div
-                      className="absolute pointer-events-none rounded-full border-2 border-white/60 shadow-[0_0_25px_rgba(255,255,255,0.8)] -translate-x-1/2 -translate-y-1/2"
-                      style={{
-                        left: `${mousePos.x}px`,
-                        top: `${mousePos.y}px`,
-                        width: '240px',
-                        height: '240px',
-                      }}
-                    />
-                  )}
                 </div>
+
+                {/* Glowing ring edge around spotlight lens (follows cursor or auto-demo) */}
+                <div
+                  className="absolute pointer-events-none rounded-full border-2 border-white/80 shadow-[0_0_30px_rgba(255,255,255,0.9)] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300"
+                  style={{
+                    left: isHovered && mousePos ? `${mousePos.x}px` : `${autoPos.xPercent}%`,
+                    top: isHovered && mousePos ? `${mousePos.y}px` : `${autoPos.yPercent}%`,
+                    width: isHovered ? '250px' : `${autoPos.radius * 2}px`,
+                    height: isHovered ? '250px' : `${autoPos.radius * 2}px`,
+                    opacity: (!isHovered && autoPos.radius < 5) ? 0 : 1,
+                  }}
+                />
+
+                {/* Subtle Interactive Hint Badge (Visible during auto-demo, hides on hover) */}
+                <AnimatePresence>
+                  {!isHovered && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 5 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 bg-slate-950/80 backdrop-blur-md text-white text-[11px] font-medium px-3.5 py-1.5 rounded-full flex items-center gap-2 border border-white/20 shadow-xl pointer-events-none"
+                    >
+                      <Icon icon="ph:cursor-click-duotone" className="w-3.5 h-3.5 text-[#8DC541] animate-bounce" />
+                      <span className="tracking-wide">Hover over with cursor to reveal the store</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
 
@@ -647,7 +712,7 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.2, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[25px] left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[10.96%] -translate-y-1/2 left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
               >
                 <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
@@ -678,7 +743,7 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.5, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[225px] left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[49.42%] -translate-y-1/2 left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
               >
                 <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
@@ -709,7 +774,7 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.8, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[425px] left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[87.88%] -translate-y-1/2 left-0 flex items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-left cursor-default"
               >
                 <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
@@ -741,7 +806,7 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.35, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[25px] right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[10.96%] -translate-y-1/2 right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
               >
                 <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
@@ -772,7 +837,7 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.65, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[225px] right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[49.42%] -translate-y-1/2 right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
               >
                 <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
@@ -803,7 +868,7 @@ export default function FranchisePage() {
                 whileHover={{ scale: 1.08 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.95, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[425px] right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[87.88%] -translate-y-1/2 right-0 flex flex-row-reverse items-center gap-2 xl:gap-2.5 2xl:gap-3.5 group select-none origin-right cursor-default"
               >
                 <div className="w-10 h-10 xl:w-11 xl:h-11 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
