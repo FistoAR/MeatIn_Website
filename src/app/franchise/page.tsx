@@ -20,6 +20,7 @@ export default function FranchisePage() {
   // Map View Mode: 'full' (India Map) | 'kerala' (Kerala State Map)
   const [mapMode, setMapMode] = useState<"full" | "kerala">("full");
   const [zoomLevel, setZoomLevel] = useState<number>(1);
+  const [panPos, setPanPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [selectedOutlet, setSelectedOutlet] = useState<OutletInfo | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
@@ -121,6 +122,25 @@ export default function FranchisePage() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [selectedOutlet]);
+
+  // Ctrl + Mouse Wheel Zoom Handler (Only zooms map canvas when Ctrl/Cmd is held down)
+  useEffect(() => {
+    const mapContainer = mapRightColRef.current;
+    if (!mapContainer) return;
+
+    const handleWheelZoom = (e: WheelEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.12 : -0.12;
+        setZoomLevel((prev) => Math.min(Math.max(prev + delta, 0.8), 2.2));
+      }
+    };
+
+    mapContainer.addEventListener("wheel", handleWheelZoom, { passive: false });
+    return () => {
+      mapContainer.removeEventListener("wheel", handleWheelZoom);
+    };
+  }, []);
 
   // India Map Hotspot Outlets
   const indiaOutlets: OutletInfo[] = [
@@ -290,12 +310,13 @@ export default function FranchisePage() {
 
   const activeOutlets = mapMode === "full" ? [] : keralaOutlets;
 
-  // Zoom Handlers
+  // Zoom & Pan Handlers
   const handleZoomIn = () => setZoomLevel((prev) => Math.min(prev + 0.25, 2.0));
   const handleZoomOut = () =>
     setZoomLevel((prev) => Math.max(prev - 0.25, 0.8));
   const handleResetZoom = () => {
     setZoomLevel(1);
+    setPanPos({ x: 0, y: 0 });
     setSelectedOutlet(null);
   };
 
@@ -969,13 +990,13 @@ export default function FranchisePage() {
       {/* ============================================================ */}
       {/* SECTION 2: INTERACTIVE PRESENCE MAP (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full pt-20 sm:pt-28 lg:pt-[125px] xl:pt-[145px] pb-28 sm:pb-36 lg:pb-44 xl:pb-52 flex flex-col justify-between bg-[#EFF2EB] overflow-x-clip select-none">
+      <section className="relative w-full pt-8 sm:pt-12 lg:pt-14 xl:pt-16 pb-24 sm:pb-32 lg:pb-36 xl:pb-40 2xl:pb-44 flex flex-col justify-between bg-[#EFF2EB] overflow-x-clip select-none">
         {/* Content Wrapper */}
-        <div className="w-full px-3.5 sm:px-8 lg:px-12 flex-1 flex flex-col justify-center relative z-30 max-w-[1850px] mx-auto">
+        <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-24 flex-1 flex flex-col justify-center relative z-30 max-w-[1800px] mx-auto">
           {/* Flexbox Layout: Left Content Container & Right Map/Image Container */}
-          <div className="flex flex-col lg:flex-row items-start justify-between gap-4 sm:gap-6 lg:gap-8 xl:gap-12 2xl:gap-16 w-full my-auto">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-10 xl:gap-14 2xl:gap-16 w-full my-auto">
             {/* LEFT CONTAINER (lg:w-[42%]): Header Title, Red Underline & Stat Cards */}
-            <div className="w-full lg:w-[42%] flex flex-col justify-start space-y-3 sm:space-y-6 lg:space-y-8 shrink-0">
+            <div className="w-full lg:w-[42%] xl:w-[40%] flex flex-col justify-start space-y-3 sm:space-y-6 lg:space-y-8 shrink-0">
               {/* Header Title + Red Underline + Subtitle */}
               <div className="space-y-1.5 sm:space-y-3">
                 {/* Real Letter-by-Letter Typewriter Animation for Heading */}
@@ -1114,22 +1135,23 @@ export default function FranchisePage() {
               </div>
             </div>
 
-            {/* RIGHT CONTAINER (lg:w-[58%]): Map Display & Right Side Elements (Fade in from Right Side) */}
+            {/* RIGHT CONTAINER (lg:w-[54%]): Map Display & Right Side Elements (Fade in from Right Side) */}
             <motion.div
               ref={mapRightColRef}
               initial={{ opacity: 0, x: 80 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, amount: 0.15 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }}
-              className="w-full lg:w-[58%] relative z-20 h-[310px] sm:h-[450px] lg:h-[430px] xl:h-[500px] 2xl:h-[560px] [@media(max-height:720px)]:lg:h-[380px] flex items-center justify-center lg:justify-start shrink-0 mt-1 sm:mt-0"
+              className="w-full lg:w-[54%] xl:w-[52%] relative z-20 h-[340px] sm:h-[460px] lg:h-[480px] xl:h-[540px] 2xl:h-[580px] [@media(max-height:720px)]:lg:h-[410px] flex items-center justify-center shrink-0 mt-1 sm:mt-0 bg-transparent overflow-hidden rounded-2xl sm:rounded-3xl"
             >
               {/* Dark Green Zoom Controls Pill (Top Right, mobile horizontal / desktop vertical) */}
-              <div className="absolute top-0 sm:top-2 lg:top-2 right-0 sm:right-12 md:right-16 lg:right-24 xl:right-28 z-40 bg-[#064823] text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-2xl shadow-xl flex flex-row sm:flex-col items-center gap-2 sm:gap-2.5 font-manrope text-[9px] sm:text-[11px]">
+              <div className="absolute top-2 sm:top-3 right-2 sm:right-4 z-40 bg-[#064823] text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-2xl shadow-xl flex flex-row sm:flex-col items-center gap-2 sm:gap-2.5 font-manrope text-[9px] sm:text-[11px]">
                 {/* Back Button (Shown ONLY when viewing Kerala District Map) */}
                 {mapMode === "kerala" && (
                   <button
                     onClick={() => {
                       setMapMode("full");
+                      setPanPos({ x: 0, y: 0 });
                       setSelectedOutlet(null);
                     }}
                     className="flex flex-col sm:flex-col items-center gap-0.5 text-[#8DC541] hover:text-white transition-colors cursor-pointer border-r sm:border-r-0 sm:border-b border-white/15 pr-2 sm:pr-0 sm:pb-2 w-auto sm:w-full"
@@ -1165,7 +1187,7 @@ export default function FranchisePage() {
                 <button
                   onClick={handleResetZoom}
                   className="flex flex-col items-center gap-0.5 hover:text-[#8DC541] transition-colors cursor-pointer"
-                  title="Reset View"
+                  title="Reset View & Position"
                 >
                   <Icon
                     icon="ph:arrow-counter-clockwise-bold"
@@ -1173,15 +1195,37 @@ export default function FranchisePage() {
                   />
                   <span>Reset</span>
                 </button>
+                <span className="text-[8px] text-[#8DC541] font-semibold text-center opacity-85 pt-1 border-t border-white/10 hidden sm:block leading-tight select-none">
+                  Ctrl + Scroll
+                </span>
               </div>
 
-              {/* Map Canvas Container with Zoom Transform (Scaled Down on Mobile) */}
-              <div
-                className="relative w-full h-full flex items-center justify-center lg:justify-start transition-transform duration-500 ease-out scale-[0.85] sm:scale-100 origin-center"
-                style={{ transform: `scale(${zoomLevel * (typeof window !== "undefined" && window.innerWidth < 640 ? 0.88 : 1.12)})` }}
+              {/* Draggable Map Canvas Container with Smooth Zoom & Pan */}
+              <motion.div
+                drag
+                dragConstraints={{
+                  left: -280 * zoomLevel,
+                  right: 280 * zoomLevel,
+                  top: -220 * zoomLevel,
+                  bottom: 220 * zoomLevel,
+                }}
+                dragElastic={0.08}
+                animate={{
+                  x: panPos.x,
+                  y: panPos.y,
+                  scale: zoomLevel * (mapMode === "kerala" ? (typeof window !== "undefined" && window.innerWidth < 640 ? 0.72 : 0.85) : (typeof window !== "undefined" && window.innerWidth < 640 ? 0.95 : 1.12)),
+                }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                onDragEnd={(_, info) => {
+                  setPanPos((prev) => ({
+                    x: prev.x + info.offset.x,
+                    y: prev.y + info.offset.y,
+                  }));
+                }}
+                className="relative w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing origin-center touch-none select-none"
               >
-                {/* 3D Map SVG Illustration with AnimatePresence Mode Toggle Animation */}
-                <div className="relative h-full w-auto aspect-[888/982] max-w-full translate-x-0 lg:translate-x-4 xl:translate-x-8 flex items-center justify-center">
+                {/* 3D Map WebP Illustration with AnimatePresence Mode Toggle Animation */}
+                <div className="relative h-full w-auto aspect-[888/982] max-w-full translate-x-0 flex items-center justify-center">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={mapMode}
@@ -1194,8 +1238,8 @@ export default function FranchisePage() {
                       <Image
                         src={
                           mapMode === "full"
-                            ? "/Franchies/fullMap.svg"
-                            : "/Franchies/KeralaMap.svg"
+                            ? "/Franchies/india-map-image.webp"
+                            : "/Franchies/kerala-map.webp"
                         }
                         alt={
                           mapMode === "full"
@@ -1204,7 +1248,8 @@ export default function FranchisePage() {
                         }
                         fill
                         priority
-                        className="object-contain drop-shadow-2xl select-none"
+                        draggable={false}
+                        className="object-contain select-none pointer-events-none"
                       />
                     </motion.div>
                   </AnimatePresence>
@@ -1284,28 +1329,15 @@ export default function FranchisePage() {
                         <span className="absolute inset-0 m-auto w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#FF3B30]/60 animate-ping pointer-events-none z-0" />
                         <span className="absolute inset-0 m-auto w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FF3B30]/30 animate-pulse pointer-events-none z-0" />
 
-                        {/* Red Location Pin Icon */}
-                        <div className="relative w-[18px] sm:w-[20px] lg:w-[24px] xl:w-[26px] h-[23px] sm:h-[26px] lg:h-[30px] xl:h-[33px] shrink-0 drop-shadow-lg z-10">
-                          <svg viewBox="0 0 38 48" fill="none" className="w-full h-full relative z-10">
-                            <path
-                              d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
-                              fill="url(#keralaPinGradient)"
-                            />
-                            <circle cx="19" cy="17" r="6.5" fill="white" />
-                            <defs>
-                              <linearGradient
-                                id="keralaPinGradient"
-                                x1="19"
-                                y1="0"
-                                x2="19"
-                                y2="48"
-                                gradientUnits="userSpaceOnUse"
-                              >
-                                <stop stopColor="#FF3B30" />
-                                <stop offset="1" stopColor="#C41C1C" />
-                              </linearGradient>
-                            </defs>
-                          </svg>
+                        {/* Location Pin WebP Icon */}
+                        <div className="relative w-[22px] sm:w-[26px] lg:w-[30px] xl:w-[34px] h-[28px] sm:h-[33px] lg:h-[38px] xl:h-[43px] shrink-0 drop-shadow-lg z-10">
+                          <Image
+                            src="/Franchies/marker-image.webp"
+                            alt="Pin Marker"
+                            fill
+                            draggable={false}
+                            className="object-contain relative z-10 pointer-events-none"
+                          />
                         </div>
                       </div>
 
@@ -1364,28 +1396,15 @@ export default function FranchisePage() {
                                 </>
                               )}
 
-                              {/* Red Location Pin SVG Icon */}
-                              <div className="relative w-[13px] sm:w-[15px] md:w-[17px] lg:w-[18px] xl:w-[20px] 2xl:w-[22px] h-[17px] sm:h-[19px] md:h-[21px] lg:h-[23px] xl:h-[25px] 2xl:h-[28px] shrink-0 drop-shadow-lg z-10">
-                                <svg viewBox="0 0 38 48" fill="none" className="w-full h-full">
-                                  <path
-                                    d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
-                                    fill={`url(#pinGrad_${outlet.id})`}
-                                  />
-                                  <circle cx="19" cy="17" r="6.5" fill="white" />
-                                  <defs>
-                                    <linearGradient
-                                      id={`pinGrad_${outlet.id}`}
-                                      x1="19"
-                                      y1="0"
-                                      x2="19"
-                                      y2="48"
-                                      gradientUnits="userSpaceOnUse"
-                                    >
-                                      <stop stopColor="#FF3B30" />
-                                      <stop offset="1" stopColor="#C41C1C" />
-                                    </linearGradient>
-                                  </defs>
-                                </svg>
+                              {/* Location Pin WebP Icon */}
+                              <div className="relative w-[16px] sm:w-[18px] md:w-[20px] lg:w-[22px] xl:w-[24px] 2xl:w-[26px] h-[20px] sm:h-[22px] md:h-[25px] lg:h-[28px] xl:h-[30px] 2xl:h-[33px] shrink-0 drop-shadow-lg z-10">
+                                <Image
+                                  src="/Franchies/marker-image.webp"
+                                  alt="Pin Marker"
+                                  fill
+                                  draggable={false}
+                                  className="object-contain relative z-10 pointer-events-none"
+                                />
                               </div>
                             </div>
 
@@ -1402,7 +1421,7 @@ export default function FranchisePage() {
                         );
                       })}
                 </div>
-              </div>
+              </motion.div>
 
               {/* POPUP INFO CARD OVERLAY (PLACED INSIDE mapRightColRef FOR 100% FULL MOBILE VISIBILITY) */}
               <AnimatePresence>
@@ -1559,7 +1578,7 @@ export default function FranchisePage() {
               delay: 0.3,
               ease: "easeOut",
             }}
-            className="absolute bottom-1 sm:bottom-2 md:bottom-3 lg:bottom-4 xl:bottom-5 left-1 sm:left-3 md:left-6 lg:left-8 xl:left-10 z-30 pointer-events-none w-[130px] min-[420px]:w-[155px] sm:w-[200px] md:w-[240px] lg:w-[215px] xl:w-[255px] [@media(min-width:1500px)]:w-[300px] 2xl:w-[350px]"
+            className="absolute bottom-0 sm:bottom-1 left-1 sm:left-3 md:left-6 lg:left-8 xl:left-14 2xl:left-20 [@media(min-width:1800px)]:left-28 z-20 pointer-events-none w-[150px] min-[420px]:w-[180px] sm:w-[220px] md:w-[260px] lg:w-[220px] xl:w-[260px] 2xl:w-[310px] [@media(min-width:1800px)]:w-[350px]"
           >
             <Image
               src="/Franchies/truck-image.webp"
@@ -1567,7 +1586,7 @@ export default function FranchisePage() {
               width={500}
               height={350}
               priority
-              className="w-full h-auto object-contain object-bottom drop-shadow-2xl"
+              className="w-full h-auto object-contain object-bottom drop-shadow-xl"
             />
           </motion.div>
 
@@ -1581,7 +1600,7 @@ export default function FranchisePage() {
               delay: 0.35,
               ease: [0.34, 1.56, 0.64, 1],
             }}
-            className="absolute bottom-1 sm:bottom-2 md:bottom-3 lg:bottom-4 xl:bottom-5 right-1 sm:right-2 md:right-4 lg:right-6 xl:right-10 z-30 pointer-events-none w-[85px] min-[420px]:w-[100px] sm:w-[125px] md:w-[145px] lg:w-[160px] xl:w-[190px]"
+            className="absolute bottom-0 sm:bottom-1 right-1 sm:right-2 md:right-4 lg:right-6 xl:right-10 z-20 pointer-events-none w-[75px] min-[420px]:w-[90px] sm:w-[110px] md:w-[130px] lg:w-[145px] xl:w-[165px]"
           >
             <Image
               src="/Franchies/chicken.webp"
@@ -1589,7 +1608,7 @@ export default function FranchisePage() {
               width={400}
               height={500}
               priority
-              className="w-full h-auto object-contain object-bottom drop-shadow-2xl"
+              className="w-full h-auto object-contain object-bottom drop-shadow-xl"
             />
           </motion.div>
         </div>
