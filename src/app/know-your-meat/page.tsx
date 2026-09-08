@@ -184,6 +184,59 @@ export default function KnowYourMeatPage() {
       let isCancelled = false;
       let rafId: number;
 
+      // Instantly dismiss flying animation if user manually scrolls on desktop or mobile
+      const handleUserScroll = () => {
+        setIsLandedInSection2(true);
+        setAnimatingPart(null);
+        if (typeof window !== "undefined" && (window as any).lenis) {
+          (window as any).lenis.scrollTo(
+            window.pageYOffset || document.documentElement.scrollTop,
+            { immediate: true }
+          );
+        }
+      };
+
+      const handleWheel = (e: WheelEvent) => {
+        if (Math.abs(e.deltaY) > 1 || Math.abs(e.deltaX) > 1) {
+          handleUserScroll();
+        }
+      };
+
+      let touchStartY = 0;
+      const handleTouchStart = (e: TouchEvent) => {
+        if (e.touches && e.touches[0]) {
+          touchStartY = e.touches[0].clientY;
+        }
+      };
+      const handleTouchMove = (e: TouchEvent) => {
+        if (e.touches && e.touches[0]) {
+          if (Math.abs(e.touches[0].clientY - touchStartY) > 4) {
+            handleUserScroll();
+          }
+        }
+      };
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (
+          [
+            "ArrowDown",
+            "ArrowUp",
+            "PageDown",
+            "PageUp",
+            "Space",
+            "Home",
+            "End",
+          ].includes(e.code)
+        ) {
+          handleUserScroll();
+        }
+      };
+
+      window.addEventListener("wheel", handleWheel, { passive: true });
+      window.addEventListener("touchstart", handleTouchStart, { passive: true });
+      window.addEventListener("touchmove", handleTouchMove, { passive: true });
+      window.addEventListener("keydown", handleKeyDown, { passive: true });
+
       const updateTarget = () => {
         if (isCancelled) return;
 
@@ -258,6 +311,10 @@ export default function KnowYourMeatPage() {
       return () => {
         isCancelled = true;
         cancelAnimationFrame(rafId);
+        window.removeEventListener("wheel", handleWheel);
+        window.removeEventListener("touchstart", handleTouchStart);
+        window.removeEventListener("touchmove", handleTouchMove);
+        window.removeEventListener("keydown", handleKeyDown);
       };
     }
   }, [animatingPart?.timestamp]);
