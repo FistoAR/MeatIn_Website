@@ -112,14 +112,22 @@ export default function KnowYourMeatPage() {
     setManuallySelectedPartIdx(0);
     setActiveStage("skin");
     if (typeof window !== "undefined") {
+      const lenis = (window as any).lenis;
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true });
+        lenis.resize();
+      }
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: "instant" as ScrollBehavior,
       });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
       if (containerRef.current) {
         containerRef.current.scrollIntoView({
           behavior: "instant" as ScrollBehavior,
+          block: "start",
         });
       }
     }
@@ -191,6 +199,12 @@ export default function KnowYourMeatPage() {
             window.pageYOffset || document.documentElement.scrollTop;
           const scrollDiff = targetY - currentScrollY;
 
+          const isWing = animatingPart.name.toLowerCase().includes("wing");
+          const targetW =
+            typeof window !== "undefined" && window.innerWidth >= 768
+              ? window.innerWidth * (isWing ? 0.35 : 0.2)
+              : cr.width;
+
           setAnimatingPart((prev) =>
             prev
               ? {
@@ -198,7 +212,7 @@ export default function KnowYourMeatPage() {
                   targetRect: {
                     top: cr.top - scrollDiff + cr.height / 2,
                     left: cr.left + cr.width / 2,
-                    width: cr.width,
+                    width: targetW,
                     height: cr.height,
                   },
                 }
@@ -259,10 +273,15 @@ export default function KnowYourMeatPage() {
     if (centerCircleRef.current) {
       const cr = centerCircleRef.current.getBoundingClientRect();
       if (cr.width > 0 && cr.height > 0) {
+        const isWing = item.name.toLowerCase().includes("wing");
+        const targetW =
+          typeof window !== "undefined" && window.innerWidth >= 768
+            ? window.innerWidth * (isWing ? 0.35 : 0.2)
+            : cr.width;
         targetRect = {
           top: cr.top - scrollDiff + cr.height / 2,
           left: cr.left + cr.width / 2,
-          width: cr.width,
+          width: targetW,
           height: cr.height,
         };
       }
@@ -1123,7 +1142,7 @@ export default function KnowYourMeatPage() {
           .viz-beef-img-wrap {
             height: 350px !important;
             max-height: 48vh !important;
-            transform: translateY(-24px) !important;
+            transform: translateY(-55px) !important;
           }
           .viz-grid-wrap {
             margin-top: 0px !important;
@@ -1274,24 +1293,19 @@ export default function KnowYourMeatPage() {
               padding-bottom: 28px !important;
             }
             .detail-top-70 .detail-showcase-box {
-              width: auto !important;
-              height: 45vh !important;
-              max-width: 100% !important;
-              max-height: 45vh !important;
               display: flex !important;
               align-items: center !important;
               justify-content: center !important;
             }
             .detail-top-70 .detail-showcase-box:not(.is-3d) {
-              width: auto !important;
-              height: 45vh !important;
-              max-width: 100% !important;
-              max-height: 45vh !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
             }
             .detail-top-70 .detail-showcase-box:not(.is-3d) img {
-              height: 45vh !important;
-              width: auto !important;
-              max-height: 45vh !important;
+              width: 100% !important;
+              height: 100% !important;
+              max-height: 100% !important;
               max-width: 100% !important;
               object-fit: contain !important;
             }
@@ -1497,7 +1511,7 @@ export default function KnowYourMeatPage() {
             gap: 16px !important;
           }
           .recipe-card-box {
-            aspect-ratio: 3 / 2.8 !important;
+            aspect-ratio: 3 / 3.3 !important;
             padding: 14px !important;
           }
           .recipe-card-badge {
@@ -3956,7 +3970,7 @@ export default function KnowYourMeatPage() {
                     delay: 0.1,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="relative w-full max-w-[780px] xl:max-w-[850px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[480px] max-h-[50vh] lg:max-h-[54vh] flex items-center justify-center -translate-y-8 lg:-translate-y-12 z-20 viz-beef-img-wrap"
+                  className="relative w-full max-w-[780px] xl:max-w-[850px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[480px] max-h-[50vh] lg:max-h-[54vh] flex items-center justify-center  z-20 viz-beef-img-wrap"
                 >
                   <Image
                     src={
@@ -4040,14 +4054,14 @@ export default function KnowYourMeatPage() {
 
       {/* 2. Categories Section */}
       <section className="bg-[#EBFFE6] rounded-t-[50px] sm:rounded-t-[60px] pt-4 sm:pt-5 pb-3 sm:pb-4 relative z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] transition-all duration-500 recipe-bottom-banner overflow-visible mt-16 md:mt-24">
-        <div className="px-4 sm:px-6 md:px-8 lg:px-10 relative flex flex-col md:flex-row gap-3 sm:gap-4 md:gap-6 items-center max-w-[1400px] mx-auto">
+        <div className="relative ">
           {/* Overlapping Mascot on the left */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, x: -40 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-[210px] h-[330px] sm:w-[250px] sm:h-[390px] md:w-[290px] md:h-[450px] lg:w-[330px] lg:h-[490px] relative -mt-36 sm:-mt-48 md:-mt-64 lg:-mt-72 -mb-8 sm:-mb-12 md:-mb-16 lg:-mb-20 shrink-0 pointer-events-none drop-shadow-2xl z-20"
+            className="w-[20vw] h-[20vw]  relative md:absolute md:left-[1vw] md:-top-[10vh] md:mt-0 shrink-0 pointer-events-none drop-shadow-2xl z-20 mx-auto md:mx-0"
           >
             <Image
               src="/Product/chicken-gif.gif"
@@ -4058,8 +4072,8 @@ export default function KnowYourMeatPage() {
           </motion.div>
 
           {/* Heading and Categories grid */}
-          <div className="flex-1 space-y-3 sm:space-y-4 flex flex-col items-center justify-center w-full md:-ml-8 lg:-ml-16">
-            <div className="space-y-2 text-center w-full">
+          <div className="w-full space-y-3 sm:space-y-4 flex flex-col items-center justify-center px-[5vw] -pl-[3vw]">
+            <div className="space-y-2 text-center w-full flex flex-col items-center justify-center">
               {/* CATEGORIES Typewriter Title */}
               <motion.h3
                 initial="hidden"
@@ -4145,7 +4159,7 @@ export default function KnowYourMeatPage() {
                   transition: { staggerChildren: 0.1 },
                 },
               }}
-              className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:items-center sm:justify-around items-center justify-items-center gap-y-6 gap-x-4 sm:gap-0 px-4 sm:px-8 w-full"
+              className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:items-center sm:justify-around items-center justify-items-center gap-y-6 gap-x-4 sm:gap-0 px-4 sm:px-8 w-full md:pl-[180px] lg:pl-[220px] xl:pl-[240px]"
             >
               {categories.map((cat, idx) => {
                 const isHighlighted = idx === highlightedCategoryIdx;
@@ -4454,10 +4468,10 @@ export default function KnowYourMeatPage() {
                   {/* 2D Image View (Raw, Platter, or Packed) */}
                   {activeViewTab !== "3d" && (
                     <div
-                      className={`relative w-full h-full flex items-center justify-center transition-all duration-300 pointer-events-none ${
+                      className={`relative w-full h-full flex items-center justify-center transition-opacity duration-300 pointer-events-none ${
                         isLandedInSection2
-                          ? "opacity-100 scale-100"
-                          : "opacity-0 scale-95"
+                          ? "opacity-100"
+                          : "opacity-0"
                       }`}
                     >
                       <img
@@ -4470,8 +4484,14 @@ export default function KnowYourMeatPage() {
                                 chickenParts[manuallySelectedPartIdx].img
                               : "/Product/details/packedProduct.webp"
                         }
-                        alt={chickenParts[manuallySelectedPartIdx].name}
-                        className="h-[45vh] w-auto max-w-full max-h-[45vh] object-contain filter drop-shadow-2xl transition-all duration-300"
+                        alt={chickenParts[manuallySelectedPartIdx]?.name || "Chicken Part"}
+                        className={`${
+                          chickenParts[manuallySelectedPartIdx]?.name
+                            .toLowerCase()
+                            .includes("wing")
+                            ? "w-[35vw]"
+                            : "w-[20vw]"
+                        } h-full object-contain filter drop-shadow-2xl transition-all duration-300`}
                       />
                     </div>
                   )}
@@ -5170,7 +5190,7 @@ export default function KnowYourMeatPage() {
                     y: -6,
                     boxShadow: "0 20px 35px -5px rgba(0, 0, 0, 0.3)",
                   }}
-                  className="relative aspect-[3/2.8] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-4 select-none recipe-card-box cursor-pointer border border-slate-200/40"
+                  className="relative aspect-[3/3.3] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-4 select-none recipe-card-box cursor-pointer border border-slate-200/40"
                 >
                   {/* Background Image */}
                   <Image
@@ -5236,7 +5256,7 @@ export default function KnowYourMeatPage() {
                     </div>
 
                     {/* Action Button */}
-                    <button className="w-full bg-[#8DC541] hover:bg-[#7db833] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
+                    <button className="w-full bg-[#F7840F] hover:bg-[#e0730b] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
                       <span>VIEW RECIPE & STEPS →</span>
                     </button>
                   </div>
@@ -5280,13 +5300,12 @@ export default function KnowYourMeatPage() {
               ? animatingPart.targetRect.width
               : typeof window !== "undefined" && window.innerWidth < 768
                 ? Math.min(280, window.innerWidth * 0.8)
-                : typeof window !== "undefined" && window.innerHeight <= 620
-                  ? 320
-                  : typeof window !== "undefined" && window.innerHeight <= 750
-                    ? 380
-                    : typeof window !== "undefined" && window.innerWidth >= 1400
-                      ? 480
-                      : 440,
+                : typeof window !== "undefined"
+                  ? window.innerWidth *
+                    (animatingPart.name.toLowerCase().includes("wing")
+                      ? 0.35
+                      : 0.2)
+                  : 440,
             height: animatingPart.targetRect
               ? animatingPart.targetRect.height
               : typeof window !== "undefined" && window.innerWidth < 768
@@ -5324,7 +5343,7 @@ export default function KnowYourMeatPage() {
               duration: 1.1,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="w-full h-full object-contain filter drop-shadow-2xl"
+            className="w-full h-full object-contain"
           />
         </motion.div>
       )}

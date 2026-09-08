@@ -23,6 +23,9 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     lenisRef.current = lenis;
+    if (typeof window !== 'undefined') {
+      (window as any).lenis = lenis;
+    }
     lenis.scrollTo(0, { immediate: true });
 
     let rafId: number;
@@ -37,6 +40,9 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
       cancelAnimationFrame(rafId);
       lenis.destroy();
       lenisRef.current = null;
+      if (typeof window !== 'undefined' && (window as any).lenis === lenis) {
+        delete (window as any).lenis;
+      }
     };
   }, []);
 
@@ -49,6 +55,12 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
       window.scrollTo(0, 0);
       if (lenisRef.current) {
         lenisRef.current.scrollTo(0, { immediate: true });
+        lenisRef.current.resize();
+        // Recalculate after DOM paint for components with dynamic/heavy layouts
+        setTimeout(() => {
+          lenisRef.current?.resize();
+          window.dispatchEvent(new Event('resize'));
+        }, 100);
       }
     }
   }, [pathname]);

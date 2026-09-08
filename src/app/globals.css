@@ -16,8 +16,7 @@
   }
 
   html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   /* Responsive typography & spacing scaling for normal laptop screens (1024px to 1535px) */
@@ -31,7 +30,7 @@
     font-family: var(--font-manrope);
     color: #1a1a1a;
     background-color: #ffffff;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 }
 
