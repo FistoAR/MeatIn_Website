@@ -1063,10 +1063,10 @@ export default function KnowYourMeatPage() {
         baseParts.right[0], // NECK
         baseParts.right[1], // BREST
         {
-          name: "BACT",
+          name: "BACK",
           desc: "Great for stocks,\nsoups & broths",
           img: "/Product/Chicken/ChickenParts/bact.webp",
-          id: "bact",
+          id: "back",
         },
         {
           name: "LIVER",
@@ -1912,8 +1912,8 @@ export default function KnowYourMeatPage() {
                     activeMeatType === "chicken"
                       ? "/Product/Chicken/green-hen.svg"
                       : activeMeatType === "beef"
-                        ? "/Product/GoatBeef/beef.svg"
-                        : "/Product/GoatBeef/goat.svg"
+                        ? "/Product/Chicken/beef.svg"
+                        : "/Product/Chicken/goat.svg"
                   }
                   alt={activeMeatType}
                   className="w-7 h-7 md:w-9 md:h-9 object-contain"
@@ -3248,16 +3248,16 @@ export default function KnowYourMeatPage() {
                           );
                         })()}
 
-                        {/* BACT (#7) → spine/back bone in cavity */}
+                        {/* BACK (#7) → spine/back bone in cavity */}
                         {(() => {
-                          const active = isPartActive("BACT");
-                          const isHovered = isPartHovered("BACT");
+                          const active = isPartActive("BACK") || isPartActive("BACT");
+                          const isHovered = isPartHovered("BACK") || isPartHovered("BACT");
                           const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 1025 : 1080;
                           const d = `M ${sx} 245 L 950 190 L 750 165`;
                           return (
-                            <g key="inside-bact">
+                            <g key="inside-back">
                               <path
                                 d={d}
                                 stroke="#222222"
@@ -3268,7 +3268,7 @@ export default function KnowYourMeatPage() {
                               />
                               {active && (
                                 <motion.path
-                                  key={`yellow-in-bact-${selectedPartIdx}-${isHovered ? "h" : "n"}`}
+                                  key={`yellow-in-back-${selectedPartIdx}-${isHovered ? "h" : "n"}`}
                                   d={d}
                                   stroke="#F2CE07"
                                   strokeWidth={2.5}
@@ -3970,7 +3970,7 @@ export default function KnowYourMeatPage() {
                     delay: 0.1,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="relative w-full max-w-[780px] xl:max-w-[850px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[480px] max-h-[50vh] lg:max-h-[54vh] flex items-center justify-center  z-20 viz-beef-img-wrap"
+                  className="relative -top-[3vh] w-full max-w-[780px] xl:max-w-[850px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[480px] max-h-[50vh] lg:max-h-[54vh] flex items-center justify-center z-20 viz-beef-img-wrap"
                 >
                   <Image
                     src={
@@ -3986,7 +3986,7 @@ export default function KnowYourMeatPage() {
 
                 {/* Bottom Grassland Bar with 4 Feature Badges (Animal stands directly on this hill - 100vw full width) */}
                 <div
-                  className="w-screen absolute bottom-[-15px] left-1/2 transform -translate-x-1/2 h-[175px] bg-no-repeat flex items-end pb-5 px-8 justify-center z-10 viz-grassland-bar"
+                  className="w-screen absolute bottom-[-2vh] left-1/2 transform -translate-x-1/2 h-[175px] bg-no-repeat flex items-end pb-5 px-8 justify-center z-10 viz-grassland-bar"
                   style={{
                     backgroundImage: 'url("/Product/GoatBeef/grassLand.webp")',
                     backgroundSize: "100% 100%",
@@ -4053,15 +4053,21 @@ export default function KnowYourMeatPage() {
       </div>
 
       {/* 2. Categories Section */}
-      <section className="bg-[#EBFFE6] rounded-t-[50px] sm:rounded-t-[60px] pt-4 sm:pt-5 pb-3 sm:pb-4 relative z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] transition-all duration-500 recipe-bottom-banner overflow-visible mt-16 md:mt-24">
-        <div className="relative ">
+      <section
+        className={`bg-[#EBFFE6] relative z-30 transition-all duration-500 recipe-bottom-banner  overflow-visible ${
+          activeMeatType === "chicken"
+            ? "rounded-t-[50px] sm:rounded-t-[60px] shadow-[0_-10px_40px_rgba(0,0,0,0.08)] pt-4 sm:pt-5 pb-3 sm:pb-4 mt-0 "
+            : "rounded-none shadow-none mt-0 pt-6 sm:pt-8 pb-3 sm:pb-4 "
+        }`}
+      >
+        <div className="relative py-[3vh] ">
           {/* Overlapping Mascot on the left */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, x: -40 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-[20vw] h-[20vw]  relative md:absolute md:left-[1vw] md:-top-[10vh] md:mt-0 shrink-0 pointer-events-none drop-shadow-2xl z-20 mx-auto md:mx-0"
+            className="w-[20vw] h-[40vh]  relative md:absolute md:left-[1vw] md:-top-[10vh] md:mt-0 shrink-0 pointer-events-none drop-shadow-2xl z-20 mx-auto md:mx-0"
           >
             <Image
               src="/Product/chicken-gif.gif"
