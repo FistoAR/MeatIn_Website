@@ -16,6 +16,7 @@ export default function KnowYourMeatPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const detailsSectionRef = useRef<HTMLDivElement>(null);
   const centerCircleRef = useRef<HTMLDivElement>(null);
+  const stationaryImgRef = useRef<HTMLImageElement>(null);
   const [activeStage, setActiveStage] = useState<
     "skin" | "skinless" | "inside"
   >("skin");
@@ -179,53 +180,144 @@ export default function KnowYourMeatPage() {
   } | null>(null);
 
   useEffect(() => {
-    if (animatingPart && !animatingPart.targetRect && centerCircleRef.current) {
-      const updateTarget = () => {
-        if (!centerCircleRef.current) return;
-        const cr = centerCircleRef.current.getBoundingClientRect();
-        if (cr.width > 0 && cr.height > 0) {
-          let targetY = 0;
-          if (
-            detailsSectionRef.current &&
-            detailsSectionRef.current.offsetTop > 0
-          ) {
-            targetY = detailsSectionRef.current.offsetTop;
-          } else if (containerRef.current) {
-            targetY =
-              containerRef.current.offsetTop +
-              containerRef.current.offsetHeight;
-          }
-          const currentScrollY =
-            window.pageYOffset || document.documentElement.scrollTop;
-          const scrollDiff = targetY - currentScrollY;
+    if (animatingPart) {
+      let isCancelled = false;
+      let rafId: number;
 
-          const isWing = animatingPart.name.toLowerCase().includes("wing");
-          const targetW =
-            typeof window !== "undefined" && window.innerWidth >= 768
-              ? window.innerWidth * (isWing ? 0.35 : 0.2)
-              : cr.width;
-
-          setAnimatingPart((prev) =>
-            prev
-              ? {
-                  ...prev,
-                  targetRect: {
-                    top: cr.top - scrollDiff + cr.height / 2,
-                    left: cr.left + cr.width / 2,
-                    width: targetW,
-                    height: cr.height,
-                  },
-                }
-              : null,
+      // Instantly dismiss flying animation if user manually scrolls on desktop or mobile
+      const handleUserScroll = () => {
+        setIsLandedInSection2(true);
+        setAnimatingPart(null);
+        if (typeof window !== "undefined" && (window as any).lenis) {
+          (window as any).lenis.scrollTo(
+            window.pageYOffset || document.documentElement.scrollTop,
+            { immediate: true }
           );
         }
       };
 
-      updateTarget();
-      const raf = requestAnimationFrame(updateTarget);
-      return () => cancelAnimationFrame(raf);
+      const handleWheel = (e: WheelEvent) => {
+        if (Math.abs(e.deltaY) > 1 || Math.abs(e.deltaX) > 1) {
+          handleUserScroll();
+        }
+      };
+
+      let touchStartY = 0;
+      const handleTouchStart = (e: TouchEvent) => {
+        if (e.touches && e.touches[0]) {
+          touchStartY = e.touches[0].clientY;
+        }
+      };
+      const handleTouchMove = (e: TouchEvent) => {
+        if (e.touches && e.touches[0]) {
+          if (Math.abs(e.touches[0].clientY - touchStartY) > 4) {
+            handleUserScroll();
+          }
+        }
+      };
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (
+          [
+            "ArrowDown",
+            "ArrowUp",
+            "PageDown",
+            "PageUp",
+            "Space",
+            "Home",
+            "End",
+          ].includes(e.code)
+        ) {
+          handleUserScroll();
+        }
+      };
+
+      window.addEventListener("wheel", handleWheel, { passive: true });
+      window.addEventListener("touchstart", handleTouchStart, { passive: true });
+      window.addEventListener("touchmove", handleTouchMove, { passive: true });
+      window.addEventListener("keydown", handleKeyDown, { passive: true });
+
+      const updateTarget = () => {
+        if (isCancelled) return;
+
+        let exactTarget:
+          | { top: number; left: number; width: number; height: number }
+          | null = null;
+
+        if (detailsSectionRef.current) {
+          const dRect = detailsSectionRef.current.getBoundingClientRect();
+
+          // Priority 1: Directly measure the actual stationary image element
+          if (stationaryImgRef.current) {
+            const imgR = stationaryImgRef.current.getBoundingClientRect();
+            if (imgR.width > 0 && imgR.height > 0) {
+              exactTarget = {
+                // When detailsSection reaches top: 0, img center is at (imgR.top - dRect.top) + imgR.height / 2
+                top: imgR.top - dRect.top + imgR.height / 2,
+                left: imgR.left - dRect.left + imgR.width / 2,
+                width: imgR.width,
+                height: imgR.height,
+              };
+            }
+          }
+
+          // Priority 2: Measure centerCircleRef container if image not yet laid out
+          if (!exactTarget && centerCircleRef.current) {
+            const cr = centerCircleRef.current.getBoundingClientRect();
+            if (cr.width > 0 && cr.height > 0) {
+              const isWing = animatingPart.name.toLowerCase().includes("wing");
+              const targetW =
+                typeof window !== "undefined"
+                  ? window.innerWidth >= 768
+                    ? window.innerWidth * (isWing ? 0.35 : 0.2)
+                    : window.innerWidth >= 640
+                      ? window.innerWidth * (isWing ? 0.65 : 0.50)
+                      : window.innerWidth * (isWing ? 0.75 : 0.60)
+                  : cr.width;
+
+              exactTarget = {
+                top: cr.top - dRect.top + cr.height / 2,
+                left: cr.left - dRect.left + cr.width / 2,
+                width: targetW,
+                height: cr.height,
+              };
+            }
+          }
+        }
+
+        if (exactTarget) {
+          setAnimatingPart((prev) => {
+            if (!prev) return null;
+            if (
+              prev.targetRect &&
+              Math.abs(prev.targetRect.top - exactTarget.top) < 0.5 &&
+              Math.abs(prev.targetRect.left - exactTarget.left) < 0.5 &&
+              Math.abs(prev.targetRect.width - exactTarget.width) < 0.5 &&
+              Math.abs(prev.targetRect.height - exactTarget.height) < 0.5
+            ) {
+              return prev;
+            }
+            return {
+              ...prev,
+              targetRect: exactTarget,
+            };
+          });
+        }
+
+        rafId = requestAnimationFrame(updateTarget);
+      };
+
+      rafId = requestAnimationFrame(updateTarget);
+      return () => {
+        isCancelled = true;
+        cancelAnimationFrame(rafId);
+        window.removeEventListener("wheel", handleWheel);
+        window.removeEventListener("touchstart", handleTouchStart);
+        window.removeEventListener("touchmove", handleTouchMove);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
     }
-  }, [animatingPart, hasSelectedAnyPart]);
+  }, [animatingPart?.timestamp]);
 
   const handlePartClick = (
     e: React.MouseEvent<HTMLElement>,
@@ -234,14 +326,53 @@ export default function KnowYourMeatPage() {
     e.preventDefault();
     e.stopPropagation();
 
+    // 1. Resolve selected part index immediately
+    const normalized = item.name.toLowerCase().trim();
+    const foundIdx = chickenParts.findIndex((part) => {
+      const partName = part.name.toLowerCase().trim();
+      if (normalized === "brest" && partName === "breast") return true;
+      if (normalized === "bact" && partName === "back") return true;
+      return (
+        partName === normalized ||
+        normalized.includes(partName) ||
+        partName.includes(normalized)
+      );
+    });
+
+    if (foundIdx !== -1) {
+      setSelectedPartIdx(foundIdx);
+      setManuallySelectedPartIdx(foundIdx);
+      setActiveViewTab("raw");
+    }
+
     setHasSelectedAnyPart(true);
     setIsLandedInSection2(false);
 
+    // 2. Immediately unhide both details section and recipe section in DOM to guarantee full scroll headroom
     if (detailsSectionRef.current) {
       detailsSectionRef.current.classList.remove("hidden");
       detailsSectionRef.current.classList.add("block");
+      void detailsSectionRef.current.offsetHeight;
+    }
+    const recipesEl = document.querySelector(
+      ".recipe-section-wrap"
+    ) as HTMLElement | null;
+    if (recipesEl) {
+      recipesEl.classList.remove("hidden");
+      recipesEl.classList.add("block");
     }
 
+    // Update stationary image preview immediately if ref is already present
+    if (stationaryImgRef.current) {
+      stationaryImgRef.current.src = item.img;
+    }
+
+    // Notify Lenis smooth scroll of new document height
+    if (typeof window !== "undefined" && (window as any).lenis) {
+      (window as any).lenis.resize();
+    }
+
+    // 3. Compute starting position from clicked circular callout
     const targetEl = e.currentTarget;
     const circleEl =
       targetEl.querySelector(".w-\\[85px\\]") ||
@@ -254,58 +385,74 @@ export default function KnowYourMeatPage() {
     const startWidth = r.width || 85;
     const startHeight = r.height || 85;
 
-    let targetY = 0;
-    if (detailsSectionRef.current && detailsSectionRef.current.offsetTop > 0) {
-      targetY = detailsSectionRef.current.offsetTop;
-    } else if (containerRef.current) {
-      targetY =
-        containerRef.current.offsetTop + containerRef.current.offsetHeight;
-    }
-
-    const currentScrollY =
-      window.pageYOffset || document.documentElement.scrollTop;
-    const scrollDiff = targetY - currentScrollY;
-
+    // 4. Compute destination position relative to detailsSection container
     let targetRect:
       | { top: number; left: number; width: number; height: number }
       | undefined;
 
-    if (centerCircleRef.current) {
-      const cr = centerCircleRef.current.getBoundingClientRect();
-      if (cr.width > 0 && cr.height > 0) {
-        const isWing = item.name.toLowerCase().includes("wing");
-        const targetW =
-          typeof window !== "undefined" && window.innerWidth >= 768
-            ? window.innerWidth * (isWing ? 0.35 : 0.2)
-            : cr.width;
-        targetRect = {
-          top: cr.top - scrollDiff + cr.height / 2,
-          left: cr.left + cr.width / 2,
-          width: targetW,
-          height: cr.height,
-        };
+    if (detailsSectionRef.current) {
+      const dRect = detailsSectionRef.current.getBoundingClientRect();
+
+      // Priority 1: Direct measurement of stationary image element
+      if (stationaryImgRef.current) {
+        const imgR = stationaryImgRef.current.getBoundingClientRect();
+        if (imgR.width > 0 && imgR.height > 0) {
+          targetRect = {
+            top: imgR.top - dRect.top + imgR.height / 2,
+            left: imgR.left - dRect.left + imgR.width / 2,
+            width: imgR.width,
+            height: imgR.height,
+          };
+        }
+      }
+
+      // Priority 2: Showcase container measurement
+      if (!targetRect && centerCircleRef.current) {
+        const cr = centerCircleRef.current.getBoundingClientRect();
+        if (cr.width > 0 && cr.height > 0) {
+          const isWing = item.name.toLowerCase().includes("wing");
+          const targetW =
+            typeof window !== "undefined"
+              ? window.innerWidth >= 768
+                ? window.innerWidth * (isWing ? 0.35 : 0.2)
+                : window.innerWidth >= 640
+                  ? window.innerWidth * (isWing ? 0.65 : 0.50)
+                  : window.innerWidth * (isWing ? 0.75 : 0.60)
+              : cr.width;
+          targetRect = {
+            top: cr.top - dRect.top + cr.height / 2,
+            left: cr.left - dRect.left + cr.width / 2,
+            width: targetW,
+            height: cr.height,
+          };
+        }
       }
     }
 
+    // Priority 3: Fallback calculation
     if (!targetRect && typeof window !== "undefined") {
       const isMob = window.innerWidth < 768;
+      const isWing = item.name.toLowerCase().includes("wing");
       const isShort = window.innerHeight <= 620;
       const isMed = window.innerHeight <= 750;
-      const boxW = isMob
-        ? Math.min(280, window.innerWidth * 0.8)
-        : isShort
-          ? 320
-          : isMed
-            ? 380
-            : window.innerWidth >= 1400
-              ? 480
-              : 440;
-      const boxH = boxW;
+      const boxW =
+        window.innerWidth >= 768
+          ? isShort
+            ? 320
+            : isMed
+              ? 380
+              : window.innerWidth >= 1400
+                ? 480
+                : 440
+          : window.innerWidth >= 640
+            ? window.innerWidth * (isWing ? 0.65 : 0.50)
+            : window.innerWidth * (isWing ? 0.75 : 0.60);
+      const boxH = isMob ? Math.min(270, window.innerHeight * 0.33) : boxW;
       const targetLeft = isMob
         ? window.innerWidth * 0.5
         : window.innerWidth * 0.25 - 40;
       const targetTop = isMob
-        ? window.innerHeight * 0.27
+        ? 74 + Math.min(270, window.innerHeight * 0.33) / 2
         : window.innerHeight * 0.46;
       targetRect = {
         top: targetTop,
@@ -328,54 +475,46 @@ export default function KnowYourMeatPage() {
       timestamp: Date.now(),
     });
 
-    const normalized = item.name.toLowerCase().trim();
-    const foundIdx = chickenParts.findIndex((part) => {
-      const partName = part.name.toLowerCase().trim();
-      if (normalized === "brest" && partName === "breast") return true;
-      if (normalized === "bact" && partName === "back") return true;
-      return (
-        partName === normalized ||
-        normalized.includes(partName) ||
-        partName.includes(normalized)
-      );
-    });
+    // 5. Smooth scroll directly to the destination details section with layout-shift auto-correction
+    const fastSmoothScrollToElement = (
+      targetEl: HTMLElement,
+      duration = 650
+    ) => {
+      if (typeof window !== "undefined" && (window as any).lenis) {
+        const lenis = (window as any).lenis;
+        lenis.resize();
+        lenis.scrollTo(targetEl, {
+          duration: duration / 1000,
+          offset: 0,
+          immediate: false,
+        });
 
-    if (foundIdx !== -1) {
-      setSelectedPartIdx(foundIdx);
-      setManuallySelectedPartIdx(foundIdx);
-      setActiveViewTab("raw");
-    }
+        // Periodic realignment checkpoints to neutralize mobile browser address bar collapse & Section 2 reflow
+        const checkPoints = [150, 300, 450, 650];
+        checkPoints.forEach((ms) => {
+          setTimeout(() => {
+            if (targetEl && targetEl.isConnected) {
+              lenis.resize();
+              const currentTop = targetEl.getBoundingClientRect().top;
+              if (Math.abs(currentTop) > 2) {
+                lenis.scrollTo(targetEl, {
+                  duration: 0.25,
+                  offset: 0,
+                  immediate: false,
+                });
+              }
+            }
+          }, ms);
+        });
+        return;
+      }
 
-    const fastSmoothScrollTo = (targetY: number, duration = 650) => {
-      const startY = window.pageYOffset || document.documentElement.scrollTop;
-      const distance = targetY - startY;
-      if (Math.abs(distance) < 5) return;
-      const startTime = performance.now();
-
-      const step = (currentTime: number) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        window.scrollTo(0, startY + distance * easeOut);
-
-        if (progress < 1) {
-          requestAnimationFrame(step);
-        }
-      };
-
-      requestAnimationFrame(step);
+      // Native fallback
+      targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
     };
 
-    let scrollTargetY = 0;
-    if (detailsSectionRef.current && detailsSectionRef.current.offsetTop > 0) {
-      scrollTargetY = detailsSectionRef.current.offsetTop;
-    } else if (containerRef.current) {
-      scrollTargetY =
-        containerRef.current.offsetTop + containerRef.current.offsetHeight;
-    }
-
-    if (scrollTargetY > 0) {
-      fastSmoothScrollTo(scrollTargetY, 650);
+    if (detailsSectionRef.current) {
+      fastSmoothScrollToElement(detailsSectionRef.current, 650);
     }
   };
 
@@ -1063,10 +1202,10 @@ export default function KnowYourMeatPage() {
         baseParts.right[0], // NECK
         baseParts.right[1], // BREST
         {
-          name: "BACT",
+          name: "BACK",
           desc: "Great for stocks,\nsoups & broths",
           img: "/Product/Chicken/ChickenParts/bact.webp",
-          id: "bact",
+          id: "back",
         },
         {
           name: "LIVER",
@@ -1681,7 +1820,7 @@ export default function KnowYourMeatPage() {
             max-height: none !important;
             overflow-y: visible !important;
             overflow-x: hidden !important;
-            padding-top: 98px !important;
+            padding-top: 74px !important;
             padding-bottom: 40px !important;
             display: flex !important;
             flex-direction: column !important;
@@ -1699,7 +1838,7 @@ export default function KnowYourMeatPage() {
           .detail-section-wrap .w-full.md\:w-1\/2:first-child {
             width: 100% !important;
             height: auto !important;
-            padding-top: 2px !important;
+            padding-top: 0px !important;
             padding-bottom: 0px !important;
             justify-content: center !important;
             align-items: center !important;
@@ -1709,14 +1848,14 @@ export default function KnowYourMeatPage() {
             display: flex !important;
             justify-content: center !important;
             align-items: center !important;
-            margin-top: -14px !important;
-            margin-bottom: 12px !important;
+            margin-top: 0px !important;
+            margin-bottom: 8px !important;
           }
           .detail-showcase-box {
-            width: min(280px, 80vw) !important;
-            height: min(280px, 80vw) !important;
-            max-width: 80vw !important;
-            max-height: 42vh !important;
+            width: min(340px, 88vw) !important;
+            height: min(270px, 33vh) !important;
+            max-width: 88vw !important;
+            max-height: 35vh !important;
             margin-left: 0px !important;
             margin-top: 0px !important;
           }
@@ -1912,8 +2051,8 @@ export default function KnowYourMeatPage() {
                     activeMeatType === "chicken"
                       ? "/Product/Chicken/green-hen.svg"
                       : activeMeatType === "beef"
-                        ? "/Product/GoatBeef/beef.svg"
-                        : "/Product/GoatBeef/goat.svg"
+                        ? "/Product/Chicken/beef.svg"
+                        : "/Product/Chicken/goat.svg"
                   }
                   alt={activeMeatType}
                   className="w-7 h-7 md:w-9 md:h-9 object-contain"
@@ -3248,16 +3387,16 @@ export default function KnowYourMeatPage() {
                           );
                         })()}
 
-                        {/* BACT (#7) → spine/back bone in cavity */}
+                        {/* BACK (#7) → spine/back bone in cavity */}
                         {(() => {
-                          const active = isPartActive("BACT");
-                          const isHovered = isPartHovered("BACT");
+                          const active = isPartActive("BACK") || isPartActive("BACT");
+                          const isHovered = isPartHovered("BACK") || isPartHovered("BACT");
                           const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 1025 : 1080;
                           const d = `M ${sx} 245 L 950 190 L 750 165`;
                           return (
-                            <g key="inside-bact">
+                            <g key="inside-back">
                               <path
                                 d={d}
                                 stroke="#222222"
@@ -3268,7 +3407,7 @@ export default function KnowYourMeatPage() {
                               />
                               {active && (
                                 <motion.path
-                                  key={`yellow-in-bact-${selectedPartIdx}-${isHovered ? "h" : "n"}`}
+                                  key={`yellow-in-back-${selectedPartIdx}-${isHovered ? "h" : "n"}`}
                                   d={d}
                                   stroke="#F2CE07"
                                   strokeWidth={2.5}
@@ -3970,7 +4109,7 @@ export default function KnowYourMeatPage() {
                     delay: 0.1,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="relative w-full max-w-[780px] xl:max-w-[850px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[480px] max-h-[50vh] lg:max-h-[54vh] flex items-center justify-center  z-20 viz-beef-img-wrap"
+                  className="relative -top-[3vh] w-full max-w-[780px] xl:max-w-[850px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[480px] max-h-[50vh] lg:max-h-[54vh] flex items-center justify-center z-20 viz-beef-img-wrap"
                 >
                   <Image
                     src={
@@ -3986,7 +4125,7 @@ export default function KnowYourMeatPage() {
 
                 {/* Bottom Grassland Bar with 4 Feature Badges (Animal stands directly on this hill - 100vw full width) */}
                 <div
-                  className="w-screen absolute bottom-[-15px] left-1/2 transform -translate-x-1/2 h-[175px] bg-no-repeat flex items-end pb-5 px-8 justify-center z-10 viz-grassland-bar"
+                  className="w-screen absolute bottom-[-2vh] left-1/2 transform -translate-x-1/2 h-[175px] bg-no-repeat flex items-end pb-5 px-8 justify-center z-10 viz-grassland-bar"
                   style={{
                     backgroundImage: 'url("/Product/GoatBeef/grassLand.webp")',
                     backgroundSize: "100% 100%",
@@ -4053,15 +4192,21 @@ export default function KnowYourMeatPage() {
       </div>
 
       {/* 2. Categories Section */}
-      <section className="bg-[#EBFFE6] rounded-t-[50px] sm:rounded-t-[60px] pt-4 sm:pt-5 pb-3 sm:pb-4 relative z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] transition-all duration-500 recipe-bottom-banner overflow-visible mt-16 md:mt-24">
-        <div className="relative ">
+      <section
+        className={`bg-[#EBFFE6] relative z-30 transition-all duration-500 recipe-bottom-banner  overflow-visible ${
+          activeMeatType === "chicken"
+            ? "rounded-t-[50px] sm:rounded-t-[60px] shadow-[0_-10px_40px_rgba(0,0,0,0.08)] pt-4 sm:pt-5 pb-3 sm:pb-4 mt-0 "
+            : "rounded-none shadow-none mt-0 pt-6 sm:pt-8 pb-3 sm:pb-4 "
+        }`}
+      >
+        <div className="relative py-[3vh] ">
           {/* Overlapping Mascot on the left */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, x: -40 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-[20vw] h-[20vw]  relative md:absolute md:left-[1vw] md:-top-[10vh] md:mt-0 shrink-0 pointer-events-none drop-shadow-2xl z-20 mx-auto md:mx-0"
+            className="w-[45vw] sm:w-[45vw] h-[35vh] sm:h-[30vh]  relative md:w-[20vw] md:h-[40vh]  md:absolute md:left-[1vw] -top-[10vh] md:-top-[10vh] md:mt-0 shrink-0 pointer-events-none drop-shadow-2xl -mb-[7vh] md:-mb-[0vh] z-20 mx-auto md:mx-0"
           >
             <Image
               src="/Product/chicken-gif.gif"
@@ -4383,7 +4528,7 @@ export default function KnowYourMeatPage() {
         {/* Mobile-only close button */}
         <button
           onClick={() => setHasSelectedAnyPart(false)}
-          className="md:hidden absolute top-3 right-3 z-50 w-8 h-8 rounded-full bg-white/90 shadow-md flex items-center justify-center text-slate-700 hover:bg-white active:scale-90 transition-all duration-200 border border-slate-200"
+          className="md:hidden absolute top-[74px] right-3 z-50 w-8 h-8 rounded-full bg-white/90 shadow-md flex items-center justify-center text-slate-700 hover:bg-white active:scale-90 transition-all duration-200 border border-slate-200"
           aria-label="Close"
         >
           <svg
@@ -4405,9 +4550,9 @@ export default function KnowYourMeatPage() {
           {/* Left Column (50% flex) - Green panel area with 70% showcase preview & 30% bottom carousel */}
           <motion.div
             key={`detail-left-${manuallySelectedPartIdx}`}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="w-full md:w-1/2 relative h-auto md:h-full flex flex-col items-center justify-between py-2 md:py-4 px-3 sm:px-6 md:px-4 lg:px-6 select-none detail-left-col"
           >
             {/* Top 70%: Showcase Area for Image and 3D Model */}
@@ -4475,6 +4620,7 @@ export default function KnowYourMeatPage() {
                       }`}
                     >
                       <img
+                        ref={stationaryImgRef}
                         src={
                           activeViewTab === "raw"
                             ? chickenParts[manuallySelectedPartIdx].img
@@ -4489,8 +4635,8 @@ export default function KnowYourMeatPage() {
                           chickenParts[manuallySelectedPartIdx]?.name
                             .toLowerCase()
                             .includes("wing")
-                            ? "w-[35vw]"
-                            : "w-[20vw]"
+                            ? "w-[75vw] sm:w-[65vw] md:w-[35vw]"
+                            : "w-[60vw] sm:w-[50vw] md:w-[20vw]"
                         } h-full object-contain filter drop-shadow-2xl transition-all duration-300`}
                       />
                     </div>
@@ -5289,7 +5435,7 @@ export default function KnowYourMeatPage() {
             top: animatingPart.targetRect
               ? animatingPart.targetRect.top
               : typeof window !== "undefined" && window.innerWidth < 768
-                ? "27vh"
+                ? 74 + Math.min(270, window.innerHeight * 0.33) / 2
                 : "46.3vh",
             left: animatingPart.targetRect
               ? animatingPart.targetRect.left
@@ -5298,18 +5444,26 @@ export default function KnowYourMeatPage() {
                 : "calc(25vw - 0.5rem)",
             width: animatingPart.targetRect
               ? animatingPart.targetRect.width
-              : typeof window !== "undefined" && window.innerWidth < 768
-                ? Math.min(280, window.innerWidth * 0.8)
-                : typeof window !== "undefined"
+              : typeof window !== "undefined"
+                ? window.innerWidth >= 768
                   ? window.innerWidth *
                     (animatingPart.name.toLowerCase().includes("wing")
                       ? 0.35
                       : 0.2)
-                  : 440,
+                  : window.innerWidth >= 640
+                    ? window.innerWidth *
+                      (animatingPart.name.toLowerCase().includes("wing")
+                        ? 0.65
+                        : 0.50)
+                    : window.innerWidth *
+                      (animatingPart.name.toLowerCase().includes("wing")
+                        ? 0.75
+                        : 0.60)
+                : 240,
             height: animatingPart.targetRect
               ? animatingPart.targetRect.height
               : typeof window !== "undefined" && window.innerWidth < 768
-                ? Math.min(280, window.innerWidth * 0.8)
+                ? Math.min(270, window.innerHeight * 0.33)
                 : typeof window !== "undefined" && window.innerHeight <= 620
                   ? 320
                   : typeof window !== "undefined" && window.innerHeight <= 750
@@ -5330,7 +5484,7 @@ export default function KnowYourMeatPage() {
             setIsLandedInSection2(true);
             setTimeout(() => {
               setAnimatingPart(null);
-            }, 450);
+            }, 900);
           }}
           className="fixed pointer-events-none flex items-center justify-center z-[99999]"
         >
@@ -5343,7 +5497,7 @@ export default function KnowYourMeatPage() {
               duration: 1.1,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain filter drop-shadow-2xl"
           />
         </motion.div>
       )}
