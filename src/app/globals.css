@@ -37,13 +37,13 @@
 
 /* Custom Text Selection Highlight */
 ::selection {
-  background-color: #8CC63F !important;
+  background-color: #8DC541 !important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
 ::-moz-selection {
-  background-color: #8CC63F !important;
+  background-color: #8DC541 !important;
   color: #ffffff !important;
 }
 
@@ -85,12 +85,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #153520;
+  background: #064823;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0B1B10;
+  background: #0a5e30;
 }
 
 .font-dm-serif {
@@ -112,7 +112,7 @@
 }
 
 /* Hide Next.js Development Toast Indicator Badge */
-nextjs-portal,
+/* nextjs-portal,
 [data-nextjs-toast],
 [data-nextjs-toast-wrapper],
 [data-nextjs-dialog-overlay] {
@@ -120,10 +120,10 @@ nextjs-portal,
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
-}
+} */
 
 /* Truck tire motion rotation rules */
 .is-moving .truck-tire,
 .is-moving svg .truck-tire {
   animation-play-state: running !important;
-}
+}

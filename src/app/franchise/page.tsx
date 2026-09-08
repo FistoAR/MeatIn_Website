@@ -20,12 +20,56 @@ export default function FranchisePage() {
   // Map View Mode: 'full' (India Map) | 'kerala' (Kerala State Map)
   const [mapMode, setMapMode] = useState<"full" | "kerala">("full");
   const [zoomLevel, setZoomLevel] = useState<number>(1);
+  const [panPos, setPanPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [selectedOutlet, setSelectedOutlet] = useState<OutletInfo | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   // Mouse hover spotlight position state for Hero Store reveal
   const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [autoPos, setAutoPos] = useState<{ xPercent: number; yPercent: number; radius: number }>({
+    xPercent: 50,
+    yPercent: 50,
+    radius: 0,
+  });
   const heroImageContainerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-demonstration animation when user is not hovering over hero image
+  useEffect(() => {
+    if (isHovered) return;
+
+    let animationFrameId: number;
+    let startTime: number | null = null;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+
+      // Smooth expansion of spotlight radius up to 125px over 900ms
+      const targetRadius = 125;
+      const radiusProgress = Math.min(elapsed / 900, 1);
+      const currentRadius = targetRadius * (1 - Math.pow(1 - radiusProgress, 3));
+
+      // Organic glide movement across the storefront image
+      const moveElapsed = Math.max(0, elapsed - 300);
+      const xPercent = 50 + Math.sin(moveElapsed * 0.0014) * 22; // moves smoothly between 28% and 72%
+      const yPercent = 50 + Math.sin(moveElapsed * 0.0022) * 12; // moves smoothly between 38% and 62%
+
+      setAutoPos({
+        xPercent,
+        yPercent,
+        radius: currentRadius,
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isHovered]);
 
   const handleHeroMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!heroImageContainerRef.current) return;
@@ -33,10 +77,16 @@ export default function FranchisePage() {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     setMousePos({ x, y });
+    if (!isHovered) setIsHovered(true);
+  };
+
+  const handleHeroMouseEnter = () => {
+    setIsHovered(true);
   };
 
   const handleHeroMouseLeave = () => {
     setMousePos(null);
+    setIsHovered(false);
   };
 
   // Ref for Map Container Column & Popup Card
@@ -72,6 +122,25 @@ export default function FranchisePage() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [selectedOutlet]);
+
+  // Ctrl + Mouse Wheel Zoom Handler (Only zooms map canvas when Ctrl/Cmd is held down)
+  useEffect(() => {
+    const mapContainer = mapRightColRef.current;
+    if (!mapContainer) return;
+
+    const handleWheelZoom = (e: WheelEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.12 : -0.12;
+        setZoomLevel((prev) => Math.min(Math.max(prev + delta, 0.8), 2.2));
+      }
+    };
+
+    mapContainer.addEventListener("wheel", handleWheelZoom, { passive: false });
+    return () => {
+      mapContainer.removeEventListener("wheel", handleWheelZoom);
+    };
+  }, []);
 
   // India Map Hotspot Outlets
   const indiaOutlets: OutletInfo[] = [
@@ -145,7 +214,7 @@ export default function FranchisePage() {
 
   // Kerala Map Hotspot Outlets
   const keralaOutlets: OutletInfo[] = [
-  
+
     {
       id: "kannur",
       city: "Kannur",
@@ -188,7 +257,7 @@ export default function FranchisePage() {
       malayalam: "എറണാകുളം",
       address: "MEATiN Prime Outlet, MG Road, Ernakulam - 682016",
       phone: "+91 99466 16162",
-       xPercent: 38.0,
+      xPercent: 38.0,
       yPercent: 37.0,
     },
     {
@@ -197,7 +266,7 @@ export default function FranchisePage() {
       malayalam: "കോട്ടയം",
       address: "MEATiN Store, KK Road, Kottayam - 686001",
       phone: "+91 99466 16162",
-       xPercent: 40.0,
+      xPercent: 40.0,
       yPercent: 44.0,
     },
     {
@@ -241,28 +310,29 @@ export default function FranchisePage() {
 
   const activeOutlets = mapMode === "full" ? [] : keralaOutlets;
 
-  // Zoom Handlers
+  // Zoom & Pan Handlers
   const handleZoomIn = () => setZoomLevel((prev) => Math.min(prev + 0.25, 2.0));
   const handleZoomOut = () =>
     setZoomLevel((prev) => Math.max(prev - 0.25, 0.8));
   const handleResetZoom = () => {
     setZoomLevel(1);
+    setPanPos({ x: 0, y: 0 });
     setSelectedOutlet(null);
   };
 
   return (
-    <div className="relative min-h-screen bg-[#FDFBF7] text-slate-800 font-manrope selection:bg-[#127431] selection:text-white overflow-x-clip pt-0">
+    <div className="relative min-h-screen bg-[#FDFBF7] text-slate-800 font-manrope selection:bg-[#8DC541] selection:text-white overflow-x-clip pt-0">
       {/* ============================================================ */}
       {/* SECTION 1: HERO & STORE SHOWCASE (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full min-h-[calc(100vh-80px)] h-auto pt-[95px] sm:pt-[105px] md:pt-[120px] lg:pt-[110px] pb-12 sm:pb-16 md:pb-20 lg:pb-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#D8E6F5] via-[#EAF2F9] to-[#FAF7F2] overflow-hidden select-none flex flex-col justify-between items-center">
+      <section className="relative w-full h-auto pt-[80px] sm:pt-[85px] lg:pt-[88px] xl:pt-[95px] pb-8 sm:pb-12 lg:pb-14 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#D8E6F5] via-[#EAF2F9] to-[#FAF7F2] overflow-hidden select-none flex flex-col items-center">
         {/* Sky Cloud Background Pattern */}
-        <div className="absolute inset-0 pointer-events-none opacity-60 mix-blend-multiply z-0">
+        <div className="absolute inset-0 pointer-events-none z-0">
           <Image
-            src="/Franchies/bg.webp"
+            src="/Franchies/franchise-hero-bg 2.webp"
             alt="Sky Background Texture"
             fill
-            className="object-cover object-top"
+            className="object-cover object-bottom"
           />
         </div>
 
@@ -302,31 +372,31 @@ export default function FranchisePage() {
           />
         </div>
 
-        <div className="w-full relative z-10 flex-1 flex flex-col justify-between items-center max-w-[1600px] mx-auto">
+        <div className="w-full relative z-10 flex-1 flex flex-col items-center max-w-[1600px] mx-auto">
           {/* Header Title Block (Tight margin on mobile, spacious clear margin on desktop) */}
-          <div className="text-center space-y-0.5 shrink-0 mt-0 lg:mt-3.5 py-0.5">
+          <div className="text-center space-y-0.5 shrink-0 mt-0 lg:mt-1 py-0.5 z-10">
             {/* Subtitle: — GROWTH WITH — (Fade in from LEFT) */}
             <motion.div
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] [@media(max-height:710px)]:lg:text-[11px] [@media(max-height:620px)]:lg:text-[10px] font-bold text-gray-800 tracking-[3px] uppercase font-manrope"
+              className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] font-extrabold text-slate-900 tracking-[3px] uppercase font-manrope bg-white/80 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/70 shadow-sm"
             >
-              <span className="w-5 md:w-7 h-[2px] bg-gradient-to-r from-transparent via-[#EAB308] to-[#82B224] rounded-full" />
+              <span className="w-5 md:w-7 h-[2px] bg-gradient-to-r from-transparent via-[#F7840F] to-[#8DC541] rounded-full" />
               GROWTH WITH
-              <span className="w-5 md:w-7 h-[2px] bg-gradient-to-l from-transparent via-[#EAB308] to-[#82B224] rounded-full" />
+              <span className="w-5 md:w-7 h-[2px] bg-gradient-to-l from-transparent via-[#F7840F] to-[#8DC541] rounded-full" />
             </motion.div>
 
             {/* Main Brand Title: MEATiN */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-[76px] [@media(max-height:710px)]:lg:text-[50px] [@media(max-height:620px)]:lg:text-[40px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none flex items-center justify-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[68px] font-extrabold font-barlow-condensed tracking-wider uppercase leading-none flex items-center justify-center">
               {/* MEAT (Fade in from RIGHT) */}
               <motion.span
                 initial={{ opacity: 0, x: 60 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
-                className="text-[#82B224] inline-block"
+                className="text-[#064823] inline-block"
               >
                 MEAT
               </motion.span>
@@ -344,17 +414,18 @@ export default function FranchisePage() {
             </h1>
           </div>
 
-          {/* Hero Store Interactive Canvas (Prominent & larger on mobile, proportional scaling on desktop) */}
-          <div className="relative w-full max-w-[1600px] h-auto lg:h-[520px] mx-auto flex items-center justify-center my-6 sm:my-10 md:my-14 lg:my-auto origin-center lg:-mt-1 px-2 sm:px-4 lg:px-6 shrink-0">
+          {/* Hero Store Interactive Canvas (Locked 1440:520 aspect-ratio canvas for 100% synchronous scaling across all screens) */}
+          <div className="relative w-full max-w-[1440px] aspect-[1440/520] mx-auto flex items-center justify-center my-2 sm:my-4 lg:my-3 shrink-0 select-none">
             {/* Center 3D Store Graphic (Desktop Spotlight Cursor-follow Reveal | Mobile/Tab Clean Display) */}
             <motion.div
               ref={heroImageContainerRef}
+              onMouseEnter={handleHeroMouseEnter}
               onMouseMove={handleHeroMouseMove}
               onMouseLeave={handleHeroMouseLeave}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative w-[88%] sm:w-[80%] md:w-[68%] lg:w-[580px] xl:w-[660px] 2xl:w-[720px] max-w-[480px] lg:max-w-none h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500 my-1 lg:my-0 cursor-default lg:cursor-crosshair overflow-hidden rounded-2xl select-none"
+              className="relative w-[88%] sm:w-[80%] md:w-[68%] lg:w-[48%] max-w-[480px] lg:max-w-[690px] h-auto z-20 mx-auto drop-shadow-2xl hover:scale-[1.01] transition-transform duration-500 my-1 lg:my-0 cursor-default lg:cursor-crosshair overflow-hidden rounded-2xl select-none"
             >
               {/* Mobile / Tablet View (Standard Single Image Display using hero-main-image.webp) */}
               <div className="block lg:hidden relative w-full h-auto">
@@ -380,16 +451,16 @@ export default function FranchisePage() {
                   className="w-full h-auto object-contain block pointer-events-none"
                 />
 
-                {/* Layer 2 (Spotlight Overlay): Main Hero Image (Revealed inside cursor circular lens) */}
+                {/* Layer 2 (Spotlight Overlay): Main Hero Image (Revealed inside cursor circular lens or auto-demo) */}
                 <div
                   className="absolute inset-0 w-full h-full pointer-events-none transition-[clip-path] duration-75 ease-out"
                   style={{
-                    clipPath: mousePos
-                      ? `circle(120px at ${mousePos.x}px ${mousePos.y}px)`
-                      : "circle(0px at 50% 50%)",
-                    WebkitClipPath: mousePos
-                      ? `circle(120px at ${mousePos.x}px ${mousePos.y}px)`
-                      : "circle(0px at 50% 50%)",
+                    clipPath: isHovered && mousePos
+                      ? `circle(125px at ${mousePos.x}px ${mousePos.y}px)`
+                      : `circle(${autoPos.radius}px at ${autoPos.xPercent}% ${autoPos.yPercent}%)`,
+                    WebkitClipPath: isHovered && mousePos
+                      ? `circle(125px at ${mousePos.x}px ${mousePos.y}px)`
+                      : `circle(${autoPos.radius}px at ${autoPos.xPercent}% ${autoPos.yPercent}%)`,
                   }}
                 >
                   <Image
@@ -400,20 +471,35 @@ export default function FranchisePage() {
                     priority
                     className="w-full h-auto object-contain block"
                   />
-                  
-                  {/* Glowing ring edge around spotlight lens */}
-                  {mousePos && (
-                    <div
-                      className="absolute pointer-events-none rounded-full border-2 border-white/60 shadow-[0_0_25px_rgba(255,255,255,0.8)] -translate-x-1/2 -translate-y-1/2"
-                      style={{
-                        left: `${mousePos.x}px`,
-                        top: `${mousePos.y}px`,
-                        width: '240px',
-                        height: '240px',
-                      }}
-                    />
-                  )}
                 </div>
+
+                {/* Glowing ring edge around spotlight lens (follows cursor or auto-demo) */}
+                <div
+                  className="absolute pointer-events-none rounded-full border-2 border-white/80 shadow-[0_0_30px_rgba(255,255,255,0.9)] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300"
+                  style={{
+                    left: isHovered && mousePos ? `${mousePos.x}px` : `${autoPos.xPercent}%`,
+                    top: isHovered && mousePos ? `${mousePos.y}px` : `${autoPos.yPercent}%`,
+                    width: isHovered ? '250px' : `${autoPos.radius * 2}px`,
+                    height: isHovered ? '250px' : `${autoPos.radius * 2}px`,
+                    opacity: (!isHovered && autoPos.radius < 5) ? 0 : 1,
+                  }}
+                />
+
+                {/* Subtle Interactive Hint Badge (Visible during auto-demo, hides on hover) */}
+                <AnimatePresence>
+                  {!isHovered && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 5 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 bg-slate-950/80 backdrop-blur-md text-white text-[11px] font-medium px-3.5 py-1.5 rounded-full flex items-center gap-2 border border-white/20 shadow-xl pointer-events-none"
+                    >
+                      <Icon icon="ph:cursor-click-duotone" className="w-3.5 h-3.5 text-[#8DC541] animate-bounce" />
+                      <span className="tracking-wide">Hover over with cursor to reveal the store</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
 
@@ -428,7 +514,7 @@ export default function FranchisePage() {
                 }
               }
               .conveyer-dotted-path {
-                stroke-dasharray: 6px 6px !important;
+                stroke-dasharray: 5px 5px !important;
                 animation: conveyerFlow 0.8s linear infinite !important;
               }
             `}</style>
@@ -447,28 +533,28 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <path
-                  d="M 250 57 L 325 57 Q 340 57 340 72 L 340 210 Q 340 225 355 225 L 420 225"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 175 57 L 340 57 Q 355 57 355 72 L 355 210 Q 355 225 370 225 L 435 225"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(420, 225)">
+                <g transform="translate(435, 225)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
 
@@ -480,28 +566,28 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
                 <path
-                  d="M 250 257 L 405 257"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 175 257 L 420 257"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(405, 257)">
+                <g transform="translate(420, 257)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
 
@@ -513,28 +599,28 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
                 <path
-                  d="M 250 457 L 325 457 Q 340 457 340 442 L 340 375 Q 340 360 355 360 L 410 360"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 175 457 L 340 457 Q 355 457 355 442 L 355 375 Q 355 360 370 360 L 425 360"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(410, 360)">
+                <g transform="translate(425, 360)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 1.1 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
 
@@ -546,28 +632,28 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.35 }}
               >
                 <path
-                  d="M 1020 215 L 1085 215 Q 1100 215 1100 200 L 1100 72 Q 1100 57 1115 57 L 1190 57"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 1005 215 L 1070 215 Q 1085 215 1085 200 L 1085 72 Q 1085 57 1100 57 L 1265 57"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1020, 215)">
+                <g transform="translate(1005, 215)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.65 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.35 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
 
@@ -579,28 +665,28 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.65 }}
               >
                 <path
-                  d="M 1030 257 L 1190 257"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 1015 257 L 1265 257"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1030, 257)">
+                <g transform="translate(1015, 257)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.95 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.65 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
 
@@ -612,60 +698,60 @@ export default function FranchisePage() {
                 transition={{ duration: 0.5, delay: 0.95 }}
               >
                 <path
-                  d="M 1020 360 L 1085 360 Q 1100 360 1100 375 L 1100 442 Q 1100 457 1115 457 L 1190 457"
-                  stroke="#82B224"
-                  strokeWidth="3.5"
+                  d="M 1005 360 L 1070 360 Q 1085 360 1085 375 L 1085 442 Q 1085 457 1100 457 L 1265 457"
+                  stroke="#8DC541"
+                  strokeWidth="2.8"
                   strokeLinecap="round"
                   className="conveyer-dotted-path"
                 />
-                <g transform="translate(1020, 360)">
+                <g transform="translate(1005, 360)">
                   {/* Outer Subtle Pulse Ring 2 */}
                   <motion.circle
                     r="10"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 2.2, 1], opacity: [0.22, 0, 0.22] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 1.25 }}
                   />
                   {/* Inner Subtle Pulse Ring 1 */}
                   <motion.circle
                     r="7"
-                    fill="#D62828"
+                    fill="#F7840F"
                     animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
                     transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.95 }}
                   />
-                  <circle r="4.5" fill="#D62828" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <circle r="4.5" fill="#F7840F" stroke="#FFFFFF" strokeWidth="1.5" />
                 </g>
               </motion.g>
             </svg>
 
             {/* LEFT 3 FEATURE BADGES (01, 02, 03) */}
-            <div className="absolute left-2 sm:left-4 lg:left-6 xl:left-10 2xl:left-14 top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[250px] xl:w-[280px]">
+            <div className="absolute left-[0.5%] xl:left-[1%] 2xl:left-[1.5%] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[195px] xl:w-[230px] 2xl:w-[285px]">
               {/* Feature 01: HYGIENIC PROCESSING */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.2, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[25px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[4%] xl:top-[4.5%] left-0 flex items-center gap-2.5 xl:gap-3 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-md flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:microscope"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-start text-left max-w-[135px] xl:max-w-[165px] 2xl:max-w-[195px] bg-white/90 hover:bg-white/95 backdrop-blur-xl border border-white/80 p-2.5 sm:p-3 xl:p-3.5 rounded-2xl shadow-xl transition-all duration-300">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     01
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     HYGIENIC
                     <br />
                     PROCESSING
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[10px] xl:text-[11px] 2xl:text-[13px] text-slate-800 leading-snug mt-0.5 font-bold font-manrope">
                     Processed under strict hygiene standards.
                   </p>
                 </div>
@@ -675,28 +761,28 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.5, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[225px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[39.5%] xl:top-[40%] -translate-y-1/2 left-0 flex items-center gap-2.5 xl:gap-3 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-md flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:shield-check"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-start text-left max-w-[135px] xl:max-w-[165px] 2xl:max-w-[195px] bg-white/90 hover:bg-white/95 backdrop-blur-xl border border-white/80 p-2.5 sm:p-3 xl:p-3.5 rounded-2xl shadow-xl transition-all duration-300">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     02
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     PREMIUM
                     <br />
                     QUALITY
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[10px] xl:text-[11px] 2xl:text-[13px] text-slate-800 leading-snug mt-0.5 font-bold font-manrope">
                     Handpicked for superior freshness.
                   </p>
                 </div>
@@ -706,26 +792,26 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.8, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[425px] left-0 flex items-center gap-3.5 group select-none origin-left cursor-default"
+                className="absolute top-[76%] xl:top-[77%] left-0 flex items-center gap-2.5 xl:gap-3 group select-none origin-left cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-md flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:plant"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-start text-left max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-start text-left max-w-[135px] xl:max-w-[165px] 2xl:max-w-[195px] bg-white/90 hover:bg-white/95 backdrop-blur-xl border border-white/80 p-2.5 sm:p-3 xl:p-3.5 rounded-2xl shadow-xl transition-all duration-300">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     03
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     FARM FRESH
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[10px] xl:text-[11px] 2xl:text-[13px] text-slate-800 leading-snug mt-0.5 font-bold font-manrope">
                     Sourced from trusted local farms.
                   </p>
                 </div>
@@ -733,33 +819,33 @@ export default function FranchisePage() {
             </div>
 
             {/* RIGHT 3 FEATURE BADGES (04, 05, 06 - REVERSED MATCHING REFERENCE IMAGE 2) */}
-            <div className="absolute right-2 sm:right-4 lg:right-6 xl:right-10 2xl:right-14 top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[250px] xl:w-[280px]">
+            <div className="absolute right-[0.5%] xl:right-[1%] 2xl:right-[1.5%] top-0 bottom-0 z-40 pointer-events-auto hidden lg:block w-[195px] xl:w-[230px] 2xl:w-[285px]">
               {/* Feature 04: NO ARTIFICIAL ADDITIVES */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.35, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[25px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[4%] xl:top-[4.5%] right-0 flex flex-row-reverse items-center gap-2.5 xl:gap-3 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-md flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:leaf"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-end text-right max-w-[135px] xl:max-w-[165px] 2xl:max-w-[195px] bg-white/90 hover:bg-white/95 backdrop-blur-xl border border-white/80 p-2.5 sm:p-3 xl:p-3.5 rounded-2xl shadow-xl transition-all duration-300">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     04
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     NO ARTIFICIAL
                     <br />
                     ADDITIVES
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[10px] xl:text-[11px] 2xl:text-[13px] text-slate-800 leading-snug mt-0.5 font-bold font-manrope">
                     Free from artificial preservatives.
                   </p>
                 </div>
@@ -769,28 +855,28 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.65, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[225px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[42.5%] xl:top-[43%] -translate-y-1/2 right-0 flex flex-row-reverse items-center gap-2.5 xl:gap-3 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-md flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:package"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-end text-right max-w-[135px] xl:max-w-[165px] 2xl:max-w-[195px] bg-white/90 hover:bg-white/95 backdrop-blur-xl border border-white/80 p-2.5 sm:p-3 xl:p-3.5 rounded-2xl shadow-xl transition-all duration-300">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     05
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     FRESHNESS
                     <br />
                     GUARANTEED
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[10px] xl:text-[11px] 2xl:text-[13px] text-slate-800 leading-snug mt-0.5 font-bold font-manrope">
                     Packed to lock in freshness.
                   </p>
                 </div>
@@ -800,28 +886,28 @@ export default function FranchisePage() {
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.06 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: 0.95, scale: { duration: 0.25, ease: "easeOut" } }}
-                className="absolute top-[425px] right-0 flex flex-row-reverse items-center gap-3.5 group select-none origin-right cursor-default"
+                className="absolute top-[76%] xl:top-[77%] right-0 flex flex-row-reverse items-center gap-2.5 xl:gap-3 group select-none origin-right cursor-default"
               >
-                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full bg-white border border-slate-300 shadow-xs flex items-center justify-center shrink-0 group-hover:border-[#82B224] transition-colors duration-300">
+                <div className="w-11 h-11 xl:w-12 xl:h-12 2xl:w-[64px] 2xl:h-[64px] rounded-full bg-white border border-slate-300 shadow-md flex items-center justify-center shrink-0 group-hover:border-[#8DC541] transition-colors duration-300">
                   <Icon
                     icon="ph:truck"
-                    className="w-9 h-9 sm:w-[34px] sm:h-[34px] text-[#127431] group-hover:text-[#82B224] transition-colors duration-300"
+                    className="w-5.5 h-5.5 xl:w-6 xl:h-6 2xl:w-[34px] 2xl:h-[34px] text-[#064823] group-hover:text-[#8DC541] transition-colors duration-300"
                   />
                 </div>
-                <div className="flex flex-col items-end text-right max-w-[170px]">
-                  <span className="text-xl sm:text-2xl font-bold text-[#D62828] font-manrope leading-none block">
+                <div className="flex flex-col items-end text-right max-w-[135px] xl:max-w-[165px] 2xl:max-w-[195px] bg-white/90 hover:bg-white/95 backdrop-blur-xl border border-white/80 p-2.5 sm:p-3 xl:p-3.5 rounded-2xl shadow-xl transition-all duration-300">
+                  <span className="text-base xl:text-lg 2xl:text-2xl font-black text-[#F7840F] font-manrope leading-none block">
                     06
                   </span>
-                  <div className="w-6 h-[2px] bg-[#D62828] mb-1 ml-auto" />
-                  <h3 className="text-[13px] sm:text-[15px] font-extrabold text-[#153520] uppercase tracking-wider font-manrope leading-tight">
+                  <div className="w-4 xl:w-5 2xl:w-6 h-[1.5px] 2xl:h-[2px] bg-[#F7840F] mb-0.5 2xl:mb-1 ml-auto" />
+                  <h3 className="text-[12px] xl:text-[13.5px] 2xl:text-[15.5px] font-extrabold text-[#064823] uppercase tracking-wider font-manrope leading-tight">
                     FAST
                     <br />
                     DELIVERY
                   </h3>
-                  <p className="text-[11px] sm:text-[13px] text-slate-700 leading-tight mt-0.5 font-semibold font-manrope">
+                  <p className="text-[9px] xl:text-[11px] 2xl:text-[13px] text-slate-800 leading-snug mt-0.5 font-bold font-manrope">
                     Fresh meat delivered to your doorstep.
                   </p>
                 </div>
@@ -876,18 +962,18 @@ export default function FranchisePage() {
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: i * 0.08 }}
-                  className="group relative bg-white/80 backdrop-blur-md border border-white/90 p-3 sm:p-4 rounded-2xl shadow-[0_8px_25px_rgba(18,116,49,0.05)] hover:shadow-[0_12px_30px_rgba(214,40,40,0.12)] flex flex-col justify-between items-start gap-2.5 transition-all duration-300 overflow-hidden active:scale-[0.98]"
+                  className="group relative bg-white/80 backdrop-blur-md border border-white/90 p-3 sm:p-4 rounded-2xl shadow-[0_8px_25px_rgba(18,116,49,0.05)] hover:shadow-[0_12px_30px_rgba(6,72,35,0.12)] flex flex-col justify-between items-start gap-2.5 transition-all duration-300 overflow-hidden active:scale-[0.98]"
                 >
                   <div className="w-full flex items-center justify-between">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#127431]/10 to-[#82B224]/20 border border-[#82B224]/30 flex items-center justify-center text-[#127431] group-hover:bg-[#127431] group-hover:text-white transition-all duration-300 shadow-sm">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#064823]/10 to-[#8DC541]/20 border border-[#8DC541]/30 flex items-center justify-center text-[#064823] group-hover:bg-[#064823] group-hover:text-white transition-all duration-300 shadow-sm">
                       <Icon icon={feat.icon} className="w-5 h-5" />
                     </div>
-                    <span className="px-2 py-0.5 text-[11px] font-black text-[#D62828] bg-[#D62828]/10 rounded-full border border-[#D62828]/20 font-manrope">
+                    <span className="px-2 py-0.5 text-[11px] font-black text-[#F7840F] bg-[#F7840F]/10 rounded-full border border-[#F7840F]/20 font-manrope">
                       {feat.num}
                     </span>
                   </div>
                   <div>
-                    <h4 className="text-[12px] sm:text-[13px] font-extrabold text-[#153520] uppercase font-manrope tracking-wider leading-tight mt-0.5 group-hover:text-[#127431] transition-colors">
+                    <h4 className="text-[12px] sm:text-[13px] font-extrabold text-[#064823] uppercase font-manrope tracking-wider leading-tight mt-0.5 group-hover:text-[#064823] transition-colors">
                       {feat.title}
                     </h4>
                     <p className="text-[10px] sm:text-[11px] text-slate-600 leading-snug mt-1 font-semibold font-manrope">
@@ -904,18 +990,18 @@ export default function FranchisePage() {
       {/* ============================================================ */}
       {/* SECTION 2: INTERACTIVE PRESENCE MAP (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full pt-20 sm:pt-28 lg:pt-[125px] xl:pt-[145px] pb-28 sm:pb-36 lg:pb-44 xl:pb-52 flex flex-col justify-between bg-[#EFF2EB] overflow-x-clip select-none">
+      <section className="relative w-full pt-8 sm:pt-12 lg:pt-14 xl:pt-16 pb-24 sm:pb-32 lg:pb-36 xl:pb-40 2xl:pb-44 flex flex-col justify-between bg-[#EFF2EB] overflow-x-clip select-none">
         {/* Content Wrapper */}
-        <div className="w-full px-3.5 sm:px-8 lg:px-12 flex-1 flex flex-col justify-center relative z-30 max-w-[1850px] mx-auto">
+        <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-24 flex-1 flex flex-col justify-center relative z-30 max-w-[1800px] mx-auto">
           {/* Flexbox Layout: Left Content Container & Right Map/Image Container */}
-          <div className="flex flex-col lg:flex-row items-start justify-between gap-4 sm:gap-6 lg:gap-8 xl:gap-12 2xl:gap-16 w-full my-auto">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-10 xl:gap-14 2xl:gap-16 w-full my-auto">
             {/* LEFT CONTAINER (lg:w-[42%]): Header Title, Red Underline & Stat Cards */}
-            <div className="w-full lg:w-[42%] flex flex-col justify-start space-y-3 sm:space-y-6 lg:space-y-8 shrink-0">
+            <div className="w-full lg:w-[42%] xl:w-[40%] flex flex-col justify-start space-y-3 sm:space-y-6 lg:space-y-8 shrink-0">
               {/* Header Title + Red Underline + Subtitle */}
               <div className="space-y-1.5 sm:space-y-3">
                 {/* Real Letter-by-Letter Typewriter Animation for Heading */}
                 <div>
-                  <h2 className="text-2xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#1F5A3C]">
+                  <h2 className="text-2xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-[68px] font-bold font-barlow-condensed tracking-wide uppercase leading-none text-[#064823]">
                     <div className="block">
                       {Array.from("OUR PRESENCE ACROSS").map((char, index) => (
                         <motion.span
@@ -930,10 +1016,10 @@ export default function FranchisePage() {
                         </motion.span>
                       ))}
                     </div>
-                    <div className="block text-[#D62828] mt-0.5 sm:mt-1">
+                    <div className="block text-[#F7840F] mt-0.5 sm:mt-1">
                       {Array.from("KERALA").map((char, index) => (
                         <motion.span
-                          key={`red-${index}`}
+                          key={`kerala-${index}`}
                           initial={{ opacity: 0 }}
                           whileInView={{ opacity: 1 }}
                           viewport={{ once: false, amount: 0.2 }}
@@ -952,7 +1038,7 @@ export default function FranchisePage() {
                   whileInView={{ opacity: 1, scaleX: 1 }}
                   viewport={{ once: false, amount: 0.2 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
-                  className="w-12 sm:w-16 h-[2.5px] sm:h-[3px] bg-[#D62828] rounded-full origin-left"
+                  className="w-12 sm:w-16 h-[2.5px] sm:h-[3px] bg-[#F7840F] rounded-full origin-left"
                 />
 
                 <motion.p
@@ -980,10 +1066,10 @@ export default function FranchisePage() {
                 >
                   <Icon
                     icon="proicons:location"
-                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#D62828] mb-0.5"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#F7840F] mb-0.5"
                   />
                   <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
-                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
+                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#F7840F] font-barlow-condensed leading-none block">
                       100+
                     </span>
                     <span className="text-[9px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5">
@@ -1006,10 +1092,10 @@ export default function FranchisePage() {
                 >
                   <Icon
                     icon="griddy-icons:building"
-                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#D62828] mb-0.5"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#F7840F] mb-0.5"
                   />
                   <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
-                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
+                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#F7840F] font-barlow-condensed leading-none block">
                       14
                     </span>
                     <span className="text-[9px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5">
@@ -1032,10 +1118,10 @@ export default function FranchisePage() {
                 >
                   <Icon
                     icon="ion:people-outline"
-                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#D62828] mb-0.5"
+                    className="w-4 h-4 sm:w-7 sm:h-7 text-[#F7840F] mb-0.5"
                   />
                   <div className="flex flex-col gap-0.5 sm:gap-1 items-center w-full">
-                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#D62828] font-barlow-condensed leading-none block">
+                    <span className="text-xl sm:text-3xl lg:text-4xl 2xl:text-[44px] font-bold text-[#F7840F] font-barlow-condensed leading-none block">
                       500+
                     </span>
                     <span className="text-[9px] sm:text-[11px] lg:text-[13px] xl:text-[15px] font-bold text-slate-900 uppercase tracking-wider font-inter block whitespace-nowrap mt-0.5">
@@ -1049,25 +1135,26 @@ export default function FranchisePage() {
               </div>
             </div>
 
-            {/* RIGHT CONTAINER (lg:w-[58%]): Map Display & Right Side Elements (Fade in from Right Side) */}
+            {/* RIGHT CONTAINER (lg:w-[54%]): Map Display & Right Side Elements (Fade in from Right Side) */}
             <motion.div
               ref={mapRightColRef}
               initial={{ opacity: 0, x: 80 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: false, amount: 0.15 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }}
-              className="w-full lg:w-[58%] relative z-20 h-[310px] sm:h-[450px] lg:h-[430px] xl:h-[500px] 2xl:h-[560px] [@media(max-height:720px)]:lg:h-[380px] flex items-center justify-center lg:justify-start shrink-0 mt-1 sm:mt-0"
+              className="w-full lg:w-[54%] xl:w-[52%] relative z-20 h-[340px] sm:h-[460px] lg:h-[480px] xl:h-[540px] 2xl:h-[580px] [@media(max-height:720px)]:lg:h-[410px] flex items-center justify-center shrink-0 mt-1 sm:mt-0 bg-transparent overflow-hidden rounded-2xl sm:rounded-3xl"
             >
               {/* Dark Green Zoom Controls Pill (Top Right, mobile horizontal / desktop vertical) */}
-              <div className="absolute top-0 sm:top-2 lg:top-2 right-0 sm:right-12 md:right-16 lg:right-24 xl:right-28 z-40 bg-[#153520] text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-2xl shadow-xl flex flex-row sm:flex-col items-center gap-2 sm:gap-2.5 font-manrope text-[9px] sm:text-[11px]">
+              <div className="absolute top-2 sm:top-3 right-2 sm:right-4 z-40 bg-[#064823] text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-2xl shadow-xl flex flex-row sm:flex-col items-center gap-2 sm:gap-2.5 font-manrope text-[9px] sm:text-[11px]">
                 {/* Back Button (Shown ONLY when viewing Kerala District Map) */}
                 {mapMode === "kerala" && (
                   <button
                     onClick={() => {
                       setMapMode("full");
+                      setPanPos({ x: 0, y: 0 });
                       setSelectedOutlet(null);
                     }}
-                    className="flex flex-col sm:flex-col items-center gap-0.5 text-[#82B224] hover:text-white transition-colors cursor-pointer border-r sm:border-r-0 sm:border-b border-white/15 pr-2 sm:pr-0 sm:pb-2 w-auto sm:w-full"
+                    className="flex flex-col sm:flex-col items-center gap-0.5 text-[#8DC541] hover:text-white transition-colors cursor-pointer border-r sm:border-r-0 sm:border-b border-white/15 pr-2 sm:pr-0 sm:pb-2 w-auto sm:w-full"
                     title="Back to India Map"
                   >
                     <Icon icon="ph:arrow-left-bold" className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -1077,7 +1164,7 @@ export default function FranchisePage() {
 
                 <button
                   onClick={handleZoomIn}
-                  className="flex flex-col items-center gap-0.5 hover:text-[#82B224] transition-colors cursor-pointer"
+                  className="flex flex-col items-center gap-0.5 hover:text-[#8DC541] transition-colors cursor-pointer"
                   title="Zoom In"
                 >
                   <Icon
@@ -1088,7 +1175,7 @@ export default function FranchisePage() {
                 </button>
                 <button
                   onClick={handleZoomOut}
-                  className="flex flex-col items-center gap-0.5 hover:text-[#82B224] transition-colors cursor-pointer"
+                  className="flex flex-col items-center gap-0.5 hover:text-[#8DC541] transition-colors cursor-pointer"
                   title="Zoom Out"
                 >
                   <Icon
@@ -1099,8 +1186,8 @@ export default function FranchisePage() {
                 </button>
                 <button
                   onClick={handleResetZoom}
-                  className="flex flex-col items-center gap-0.5 hover:text-[#82B224] transition-colors cursor-pointer"
-                  title="Reset View"
+                  className="flex flex-col items-center gap-0.5 hover:text-[#8DC541] transition-colors cursor-pointer"
+                  title="Reset View & Position"
                 >
                   <Icon
                     icon="ph:arrow-counter-clockwise-bold"
@@ -1108,15 +1195,37 @@ export default function FranchisePage() {
                   />
                   <span>Reset</span>
                 </button>
+                <span className="text-[8px] text-[#8DC541] font-semibold text-center opacity-85 pt-1 border-t border-white/10 hidden sm:block leading-tight select-none">
+                  Ctrl + Scroll
+                </span>
               </div>
 
-              {/* Map Canvas Container with Zoom Transform (Scaled Down on Mobile) */}
-              <div
-                className="relative w-full h-full flex items-center justify-center lg:justify-start transition-transform duration-500 ease-out scale-[0.85] sm:scale-100 origin-center"
-                style={{ transform: `scale(${zoomLevel * (typeof window !== "undefined" && window.innerWidth < 640 ? 0.88 : 1.12)})` }}
+              {/* Draggable Map Canvas Container with Smooth Zoom & Pan */}
+              <motion.div
+                drag
+                dragConstraints={{
+                  left: -280 * zoomLevel,
+                  right: 280 * zoomLevel,
+                  top: -220 * zoomLevel,
+                  bottom: 220 * zoomLevel,
+                }}
+                dragElastic={0.08}
+                animate={{
+                  x: panPos.x,
+                  y: panPos.y,
+                  scale: zoomLevel * (mapMode === "kerala" ? (typeof window !== "undefined" && window.innerWidth < 640 ? 0.72 : 0.85) : (typeof window !== "undefined" && window.innerWidth < 640 ? 0.95 : 1.12)),
+                }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                onDragEnd={(_, info) => {
+                  setPanPos((prev) => ({
+                    x: prev.x + info.offset.x,
+                    y: prev.y + info.offset.y,
+                  }));
+                }}
+                className="relative w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing origin-center touch-none select-none"
               >
-                {/* 3D Map SVG Illustration with AnimatePresence Mode Toggle Animation */}
-                <div className="relative h-full w-auto aspect-[888/982] max-w-full translate-x-0 lg:translate-x-4 xl:translate-x-8 flex items-center justify-center">
+                {/* 3D Map WebP Illustration with AnimatePresence Mode Toggle Animation */}
+                <div className="relative h-full w-auto aspect-[888/982] max-w-full translate-x-0 flex items-center justify-center">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={mapMode}
@@ -1129,8 +1238,8 @@ export default function FranchisePage() {
                       <Image
                         src={
                           mapMode === "full"
-                            ? "/Franchies/fullMap.svg"
-                            : "/Franchies/KeralaMap.svg"
+                            ? "/Franchies/india-map-image.webp"
+                            : "/Franchies/kerala-map.webp"
                         }
                         alt={
                           mapMode === "full"
@@ -1139,7 +1248,8 @@ export default function FranchisePage() {
                         }
                         fill
                         priority
-                        className="object-contain drop-shadow-2xl select-none"
+                        draggable={false}
+                        className="object-contain select-none pointer-events-none"
                       />
                     </motion.div>
                   </AnimatePresence>
@@ -1219,28 +1329,15 @@ export default function FranchisePage() {
                         <span className="absolute inset-0 m-auto w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#FF3B30]/60 animate-ping pointer-events-none z-0" />
                         <span className="absolute inset-0 m-auto w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FF3B30]/30 animate-pulse pointer-events-none z-0" />
 
-                        {/* Red Location Pin Icon */}
-                        <div className="relative w-[18px] sm:w-[20px] lg:w-[24px] xl:w-[26px] h-[23px] sm:h-[26px] lg:h-[30px] xl:h-[33px] shrink-0 drop-shadow-lg z-10">
-                          <svg viewBox="0 0 38 48" fill="none" className="w-full h-full relative z-10">
-                            <path
-                              d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
-                              fill="url(#keralaPinGradient)"
-                            />
-                            <circle cx="19" cy="17" r="6.5" fill="white" />
-                            <defs>
-                              <linearGradient
-                                id="keralaPinGradient"
-                                x1="19"
-                                y1="0"
-                                x2="19"
-                                y2="48"
-                                gradientUnits="userSpaceOnUse"
-                              >
-                                <stop stopColor="#FF3B30" />
-                                <stop offset="1" stopColor="#C41C1C" />
-                              </linearGradient>
-                            </defs>
-                          </svg>
+                        {/* Location Pin WebP Icon */}
+                        <div className="relative w-[22px] sm:w-[26px] lg:w-[30px] xl:w-[34px] h-[28px] sm:h-[33px] lg:h-[38px] xl:h-[43px] shrink-0 drop-shadow-lg z-10">
+                          <Image
+                            src="/Franchies/marker-image.webp"
+                            alt="Pin Marker"
+                            fill
+                            draggable={false}
+                            className="object-contain relative z-10 pointer-events-none"
+                          />
                         </div>
                       </div>
 
@@ -1290,55 +1387,41 @@ export default function FranchisePage() {
                             onClick={() => setSelectedOutlet(outlet)}
                             title={`Click to view ${outlet.city} details`}
                           >
-                          {/* Red Location Pin with Centered Glow Ring when Selected */}
-                          <div className="relative flex items-center justify-center shrink-0">
-                            {isSelected && (
-                              <>
-                                <span className="absolute inset-0 m-auto w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#FF3B30]/60 animate-ping pointer-events-none z-0" />
-                                <span className="absolute inset-0 m-auto w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FF3B30]/35 animate-pulse pointer-events-none z-0" />
-                              </>
-                            )}
+                            {/* Red Location Pin with Centered Glow Ring when Selected */}
+                            <div className="relative flex items-center justify-center shrink-0">
+                              {isSelected && (
+                                <>
+                                  <span className="absolute inset-0 m-auto w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#FF3B30]/60 animate-ping pointer-events-none z-0" />
+                                  <span className="absolute inset-0 m-auto w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FF3B30]/35 animate-pulse pointer-events-none z-0" />
+                                </>
+                              )}
 
-                            {/* Red Location Pin SVG Icon */}
-                            <div className="relative w-[13px] sm:w-[15px] md:w-[17px] lg:w-[18px] xl:w-[20px] 2xl:w-[22px] h-[17px] sm:h-[19px] md:h-[21px] lg:h-[23px] xl:h-[25px] 2xl:h-[28px] shrink-0 drop-shadow-lg z-10">
-                              <svg viewBox="0 0 38 48" fill="none" className="w-full h-full">
-                                <path
-                                  d="M19 0C8.5 0 0 8.5 0 19C0 33.25 19 48 19 48C19 48 38 33.25 38 19C38 8.5 29.5 0 19 0Z"
-                                  fill={`url(#pinGrad_${outlet.id})`}
+                              {/* Location Pin WebP Icon */}
+                              <div className="relative w-[16px] sm:w-[18px] md:w-[20px] lg:w-[22px] xl:w-[24px] 2xl:w-[26px] h-[20px] sm:h-[22px] md:h-[25px] lg:h-[28px] xl:h-[30px] 2xl:h-[33px] shrink-0 drop-shadow-lg z-10">
+                                <Image
+                                  src="/Franchies/marker-image.webp"
+                                  alt="Pin Marker"
+                                  fill
+                                  draggable={false}
+                                  className="object-contain relative z-10 pointer-events-none"
                                 />
-                                <circle cx="19" cy="17" r="6.5" fill="white" />
-                                <defs>
-                                  <linearGradient
-                                    id={`pinGrad_${outlet.id}`}
-                                    x1="19"
-                                    y1="0"
-                                    x2="19"
-                                    y2="48"
-                                    gradientUnits="userSpaceOnUse"
-                                  >
-                                    <stop stopColor="#FF3B30" />
-                                    <stop offset="1" stopColor="#C41C1C" />
-                                  </linearGradient>
-                                </defs>
-                              </svg>
+                              </div>
                             </div>
-                          </div>
 
-                          {/* Dark Green Tag Label Pill */}
-                          <div
-                            className={`-ml-1 bg-gradient-to-r from-[#043312] via-[#0B4D1E] to-[#125D25] text-white px-1.5 sm:px-2 py-[1px] rounded-r-lg sm:rounded-r-xl rounded-l-sm border-[1px] sm:border-[1.5px] border-white shadow-lg flex items-center justify-center font-bold font-manrope text-[8px] sm:text-[8.5px] md:text-[9px] lg:text-[9.5px] xl:text-[10px] 2xl:text-[11px] tracking-wide whitespace-nowrap transition-transform duration-300 ${
-                              isSelected
-                                ? "scale-110 border-yellow-300 ring-2 ring-yellow-400/50"
-                                : ""
-                            }`}
-                          >
-                            <span>{outlet.city}</span>
-                          </div>
-                        </motion.div>
-                      );
-                    })}
+                            {/* Dark Green Tag Label Pill */}
+                            <div
+                              className={`-ml-1 bg-gradient-to-r from-[#043312] via-[#0B4D1E] to-[#125D25] text-white px-1.5 sm:px-2 py-[1px] rounded-r-lg sm:rounded-r-xl rounded-l-sm border-[1px] sm:border-[1.5px] border-white shadow-lg flex items-center justify-center font-bold font-manrope text-[8px] sm:text-[8.5px] md:text-[9px] lg:text-[9.5px] xl:text-[10px] 2xl:text-[11px] tracking-wide whitespace-nowrap transition-transform duration-300 ${isSelected
+                                  ? "scale-110 border-yellow-300 ring-2 ring-yellow-400/50"
+                                  : ""
+                                }`}
+                            >
+                              <span>{outlet.city}</span>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
                 </div>
-              </div>
+              </motion.div>
 
               {/* POPUP INFO CARD OVERLAY (PLACED INSIDE mapRightColRef FOR 100% FULL MOBILE VISIBILITY) */}
               <AnimatePresence>
@@ -1367,7 +1450,7 @@ export default function FranchisePage() {
                     >
                       <path
                         d="M12 0 L12 28"
-                        stroke="#D62828"
+                        stroke="#F7840F"
                         strokeWidth="2"
                         strokeDasharray="3 3"
                       />
@@ -1395,10 +1478,10 @@ export default function FranchisePage() {
                     {/* Popup Content: Address & Phone */}
                     <div className="space-y-3 text-[12px] lg:text-[13px] text-slate-700 font-manrope">
                       <div className="flex items-start gap-2.5">
-                        <div className="w-6 h-6 rounded-full bg-[#FEF2F2] flex items-center justify-center shrink-0 mt-0.5">
+                        <div className="w-6 h-6 rounded-full bg-[#FFF7ED] flex items-center justify-center shrink-0 mt-0.5">
                           <Icon
                             icon="ph:map-pin-fill"
-                            className="w-4 h-4 text-[#D62828]"
+                            className="w-4 h-4 text-[#F7840F]"
                           />
                         </div>
                         <p className="leading-snug text-slate-700 font-medium">
@@ -1409,7 +1492,7 @@ export default function FranchisePage() {
                       <div className="flex items-center gap-2.5 pt-1">
                         <div className="w-5 h-5 rounded-full bg-[#EBF3EC] flex items-center justify-center shrink-0">
                           <svg
-                            className="w-3.5 h-3.5 text-[#127431]"
+                            className="w-3.5 h-3.5 text-[#064823]"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -1436,16 +1519,53 @@ export default function FranchisePage() {
 
         {/* UNIFIED BOTTOM GRAPHICS ASSEMBLY: Bottom Slope Wave + Truck + Mascot Character (Flush to bottom-0) */}
         <div className="absolute bottom-0 left-0 right-0 w-full h-[90px] sm:h-[120px] md:h-[140px] lg:h-[160px] xl:h-[185px] pointer-events-none select-none shrink-0 z-30">
-          
-          {/* 1. Bottom Slope Wave Background Transition */}
+
+          {/* 1. Bottom Slope Wave Background Transition (#064823 & #488E40 Brand Green Variant) */}
           <div className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-hidden">
-            <Image
-              src="/Franchies/bottomSlope.webp"
-              alt="Green Slope Transition"
-              fill
-              priority
-              className="object-cover object-bottom w-full h-full"
-            />
+            <svg
+              className="w-full h-full object-cover object-bottom"
+              viewBox="0 0 1440 185"
+              preserveAspectRatio="none"
+              fill="none"
+            >
+              <defs>
+                <linearGradient id="slopeGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#488E40" />
+                  <stop offset="45%" stopColor="#327A33" />
+                  <stop offset="100%" stopColor="#488E40" />
+                </linearGradient>
+                <linearGradient id="slopeGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#287435" />
+                  <stop offset="50%" stopColor="#1B602A" />
+                  <stop offset="100%" stopColor="#0D5028" />
+                </linearGradient>
+                <linearGradient id="slopeGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#064823" />
+                  <stop offset="50%" stopColor="#0B562B" />
+                  <stop offset="100%" stopColor="#064823" />
+                </linearGradient>
+              </defs>
+
+              {/* Wave 1: Topmost lighter green curve (#488E40 variant) */}
+              <path
+                d="M 0 55 Q 380 135 740 105 Q 1100 75 1440 25 L 1440 185 L 0 185 Z"
+                fill="url(#slopeGrad1)"
+                opacity="0.9"
+              />
+
+              {/* Wave 2: Middle green curve */}
+              <path
+                d="M 0 88 Q 390 152 770 122 Q 1130 92 1440 48 L 1440 185 L 0 185 Z"
+                fill="url(#slopeGrad2)"
+                opacity="0.95"
+              />
+
+              {/* Wave 3: Dark green base (#064823 variant) */}
+              <path
+                d="M 0 120 Q 400 170 800 140 Q 1160 110 1440 72 L 1440 185 L 0 185 Z"
+                fill="url(#slopeGrad3)"
+              />
+            </svg>
           </div>
 
           {/* 2. 3D Green Delivery Truck (Positioned flush on bottom slope wave) */}
@@ -1458,7 +1578,7 @@ export default function FranchisePage() {
               delay: 0.3,
               ease: "easeOut",
             }}
-            className="absolute bottom-1 sm:bottom-2 md:bottom-3 lg:bottom-4 xl:bottom-5 left-1 sm:left-3 md:left-6 lg:left-8 xl:left-10 z-30 pointer-events-none w-[130px] min-[420px]:w-[155px] sm:w-[200px] md:w-[240px] lg:w-[215px] xl:w-[255px] [@media(min-width:1500px)]:w-[300px] 2xl:w-[350px]"
+            className="absolute bottom-0 sm:bottom-1 left-1 sm:left-3 md:left-6 lg:left-8 xl:left-14 2xl:left-20 [@media(min-width:1800px)]:left-28 z-20 pointer-events-none w-[150px] min-[420px]:w-[180px] sm:w-[220px] md:w-[260px] lg:w-[220px] xl:w-[260px] 2xl:w-[310px] [@media(min-width:1800px)]:w-[350px]"
           >
             <Image
               src="/Franchies/truck-image.webp"
@@ -1466,7 +1586,7 @@ export default function FranchisePage() {
               width={500}
               height={350}
               priority
-              className="w-full h-auto object-contain object-bottom drop-shadow-2xl"
+              className="w-full h-auto object-contain object-bottom drop-shadow-xl"
             />
           </motion.div>
 
@@ -1480,7 +1600,7 @@ export default function FranchisePage() {
               delay: 0.35,
               ease: [0.34, 1.56, 0.64, 1],
             }}
-            className="absolute bottom-1 sm:bottom-2 md:bottom-3 lg:bottom-4 xl:bottom-5 right-1 sm:right-2 md:right-4 lg:right-6 xl:right-10 z-30 pointer-events-none w-[85px] min-[420px]:w-[100px] sm:w-[125px] md:w-[145px] lg:w-[160px] xl:w-[190px]"
+            className="absolute bottom-0 sm:bottom-1 right-1 sm:right-2 md:right-4 lg:right-6 xl:right-10 z-20 pointer-events-none w-[75px] min-[420px]:w-[90px] sm:w-[110px] md:w-[130px] lg:w-[145px] xl:w-[165px]"
           >
             <Image
               src="/Franchies/chicken.webp"
@@ -1488,7 +1608,7 @@ export default function FranchisePage() {
               width={400}
               height={500}
               priority
-              className="w-full h-auto object-contain object-bottom drop-shadow-2xl"
+              className="w-full h-auto object-contain object-bottom drop-shadow-xl"
             />
           </motion.div>
         </div>

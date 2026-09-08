@@ -1837,13 +1837,13 @@ export default function KnowYourMeatPage() {
                 onClick={() => handleMeatTabChange("chicken")}
                 className={`px-6 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${
                   activeMeatType === "chicken"
-                    ? "bg-[#D62828] text-white"
+                    ? "bg-[#064823] text-white"
                     : "text-slate-700 hover:bg-slate-50 border-r border-[#CCCCCC]"
                 }`}
               >
                 CHICKEN
                 {activeMeatType === "chicken" && (
-                  <div className="absolute bottom-[-7.5px] left-1/2 transform -translate-x-1/2 w-[14px] h-[14px] bg-[#D62828] rotate-45 border-r border-b border-[#CCCCCC] z-10" />
+                  <div className="absolute bottom-[-7.5px] left-1/2 transform -translate-x-1/2 w-[14px] h-[14px] bg-[#064823] rotate-45 border-r border-b border-[#CCCCCC] z-10" />
                 )}
               </motion.button>
               <motion.button
@@ -1853,13 +1853,13 @@ export default function KnowYourMeatPage() {
                 onClick={() => handleMeatTabChange("beef")}
                 className={`px-8 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${
                   activeMeatType === "beef"
-                    ? "bg-[#D62828] text-white"
+                    ? "bg-[#064823] text-white"
                     : "text-slate-700 hover:bg-slate-50 border-r border-[#CCCCCC]"
                 }`}
               >
                 BEEF
                 {activeMeatType === "beef" && (
-                  <div className="absolute bottom-[-7.5px] left-1/2 transform -translate-x-1/2 w-[14px] h-[14px] bg-[#D62828] rotate-45 border-r border-b border-[#CCCCCC] z-10" />
+                  <div className="absolute bottom-[-7.5px] left-1/2 transform -translate-x-1/2 w-[14px] h-[14px] bg-[#064823] rotate-45 border-r border-b border-[#CCCCCC] z-10" />
                 )}
               </motion.button>
               <motion.button
@@ -1867,15 +1867,14 @@ export default function KnowYourMeatPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.34, ease: "easeOut" }}
                 onClick={() => handleMeatTabChange("goat")}
-                className={`px-8 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${
-                  activeMeatType === "goat"
-                    ? "bg-[#D62828] text-white"
-                    : "text-slate-700 hover:bg-slate-50"
-                }`}
+                className={`px-8 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${activeMeatType === "goat"
+                  ? "bg-[#064823] text-white"
+                  : "text-slate-700 hover:bg-slate-50"
+                  }`}
               >
                 GOAT
                 {activeMeatType === "goat" && (
-                  <div className="absolute bottom-[-7.5px] left-1/2 transform -translate-x-1/2 w-[14px] h-[14px] bg-[#D62828] rotate-45 border-r border-b border-[#CCCCCC] z-10" />
+                  <div className="absolute bottom-[-7.5px] left-1/2 transform -translate-x-1/2 w-[14px] h-[14px] bg-[#064823] rotate-45 border-r border-b border-[#CCCCCC] z-10" />
                 )}
               </motion.button>
             </div>
@@ -1923,20 +1922,20 @@ export default function KnowYourMeatPage() {
                 {activeMeatType === "chicken" ? (
                   activeStage === "skin" ? (
                     <>
-                      WITH <span className="text-[#608D12]">SKIN</span>
+                      WITH <span className="text-[#8DC541]">SKIN</span>
                     </>
                   ) : activeStage === "skinless" ? (
                     <>
-                      WITHOUT <span className="text-[#608D12]">SKIN</span>
+                      WITHOUT <span className="text-[#8DC541]">SKIN</span>
                     </>
                   ) : (
                     <>
-                      WHOLE <span className="text-[#608D12]">CHICKEN</span>
+                      WHOLE <span className="text-[#8DC541]">CHICKEN</span>
                     </>
                   )
                 ) : (
                   <>
-                    WITH <span className="text-[#608D12]">SKIN</span>
+                    WITH <span className="text-[#8DC541]">SKIN</span>
                   </>
                 )}
               </motion.h2>
@@ -3825,7 +3824,7 @@ export default function KnowYourMeatPage() {
                         </div>
                         {/* CTA */}
                         <div className="w-8 h-8 rounded-full bg-[#F2CE07] flex items-center justify-center shrink-0 shadow-sm">
-                          <span className="text-[#153520] font-black text-[14px] leading-none">
+                          <span className="text-[#064823] font-black text-[14px] leading-none">
                             →
                           </span>
                         </div>
@@ -4040,18 +4039,18 @@ export default function KnowYourMeatPage() {
       </div>
 
       {/* 2. Categories Section */}
-      <section className="bg-[#EBFFE6] rounded-t-[60px] pt-10 pb-6 relative z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] transition-all duration-500 recipe-bottom-banner overflow-visible mt-12 md:mt-16">
-        <div className="px-6 md:px-16 relative flex flex-col md:flex-row gap-6 md:gap-8 items-center max-w-[1400px] mx-auto">
+      <section className="bg-[#EBFFE6] rounded-t-[50px] sm:rounded-t-[60px] pt-4 sm:pt-5 pb-3 sm:pb-4 relative z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] transition-all duration-500 recipe-bottom-banner overflow-visible mt-16 md:mt-24">
+        <div className="px-4 sm:px-6 md:px-8 lg:px-10 relative flex flex-col md:flex-row gap-3 sm:gap-4 md:gap-6 items-center max-w-[1400px] mx-auto">
           {/* Overlapping Mascot on the left */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, x: -40 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-[180px] h-[270px] md:w-[220px] md:h-[330px] relative -mt-20 md:-mt-28 shrink-0 pointer-events-none drop-shadow-lg"
+            className="w-[210px] h-[330px] sm:w-[250px] sm:h-[390px] md:w-[290px] md:h-[450px] lg:w-[330px] lg:h-[490px] relative -mt-36 sm:-mt-48 md:-mt-64 lg:-mt-72 -mb-8 sm:-mb-12 md:-mb-16 lg:-mb-20 shrink-0 pointer-events-none drop-shadow-2xl z-20"
           >
             <Image
-              src="/Product/Chicken/Banner/image 282.webp"
+              src="/Product/chicken-gif.gif"
               alt="Chicken Mascot"
               fill
               className="object-contain"
@@ -4059,7 +4058,7 @@ export default function KnowYourMeatPage() {
           </motion.div>
 
           {/* Heading and Categories grid */}
-          <div className="flex-1 space-y-6 flex flex-col items-center w-full">
+          <div className="flex-1 space-y-3 sm:space-y-4 flex flex-col items-center justify-center w-full md:-ml-8 lg:-ml-16">
             <div className="space-y-2 text-center w-full">
               {/* CATEGORIES Typewriter Title */}
               <motion.h3
@@ -4075,7 +4074,7 @@ export default function KnowYourMeatPage() {
                     },
                   },
                 }}
-                className="text-4xl md:text-5xl font-bold text-[#127431] font-barlow-condensed tracking-widest uppercase inline-flex justify-center select-none"
+                className="text-4xl md:text-5xl font-bold text-[#064823] font-barlow-condensed tracking-widest uppercase inline-flex justify-center select-none"
               >
                 {"CATEGORIES".split("").map((char, charIdx) => (
                   <motion.span
@@ -4097,7 +4096,7 @@ export default function KnowYourMeatPage() {
                 whileInView={{ scaleX: 1, opacity: 1 }}
                 viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
-                className="w-32 h-[2.5px] bg-[#D62828] mx-auto mt-3 mb-1 origin-center"
+                className="w-32 h-[2.5px] bg-[#F7840F] mx-auto mt-3 mb-1 origin-center"
               />
 
               {/* Subtitle Typewriter Text */}
@@ -4306,7 +4305,7 @@ export default function KnowYourMeatPage() {
           </svg>
 
           {/* Desktop Right Side Bright Green Panel */}
-          <div className="hidden md:block absolute top-0 bottom-0 right-0 left-[46%] lg:left-[48%] xl:left-[50%] z-0 bg-[#7CB324] overflow-hidden">
+          <div className="hidden md:block absolute top-0 bottom-0 right-0 left-[46%] lg:left-[48%] xl:left-[50%] z-0 bg-[#8DC541] overflow-hidden">
             {/* Doodle Pattern Overlay on Green Right Background */}
             <div
               className="absolute inset-0 opacity-[0.55] bg-repeat pointer-events-none mix-blend-multiply"
@@ -4361,7 +4360,7 @@ export default function KnowYourMeatPage() {
               {/* Main Green Paper Sheet Path */}
               <path
                 d="M 50 0 L 31.8 0.0 L 31.3 6.2 L 32.2 12.5 L 30.9 18.8 L 33.2 25.0 L 32.5 31.2 L 33.3 37.5 L 32.4 43.8 L 32.7 50.0 L 32.7 56.2 L 34.6 62.5 L 35.0 68.8 L 33.5 75.0 L 35.1 81.2 L 35.2 87.5 L 35.0 93.8 L 34.7 100.0 L 34.3 106.2 L 35.3 112.5 L 36.3 118.8 L 35.0 125.0 L 34.8 131.2 L 36.2 137.5 L 34.8 143.8 L 35.2 150.0 L 34.3 156.2 L 36.1 162.5 L 34.0 168.8 L 35.0 175.0 L 34.7 181.2 L 33.9 187.5 L 31.9 193.8 L 30.7 200.0 L 30.3 206.2 L 28.0 212.5 L 27.6 218.8 L 29.3 225.0 L 28.7 231.2 L 29.4 237.5 L 29.7 243.8 L 31.5 250.0 L 32.2 256.2 L 32.2 262.5 L 33.6 268.8 L 32.6 275.0 L 32.4 281.2 L 31.3 287.5 L 31.1 293.8 L 32.8 300.0 L 31.0 306.2 L 32.4 312.5 L 31.2 318.8 L 30.7 325.0 L 32.6 331.2 L 32.5 337.5 L 32.6 343.8 L 31.0 350.0 L 31.0 356.2 L 30.4 362.5 L 31.4 368.8 L 31.9 375.0 L 30.9 381.2 L 32.8 387.5 L 32.1 393.8 L 30.5 400.0 L 32.5 406.2 L 32.3 412.5 L 31.3 418.8 L 32.1 425.0 L 32.2 431.2 L 30.6 437.5 L 31.0 443.8 L 30.9 450.0 L 32.1 456.2 L 32.6 462.5 L 30.3 468.8 L 32.2 475.0 L 31.5 481.2 L 31.8 487.5 L 30.5 493.8 L 31.3 500.0 L 30.3 506.2 L 31.2 512.5 L 30.1 518.8 L 29.7 525.0 L 26.8 531.2 L 25.7 537.5 L 24.5 543.8 L 24.2 550.0 L 23.5 556.2 L 24.0 562.5 L 24.5 568.8 L 23.1 575.0 L 24.5 581.2 L 24.4 587.5 L 25.4 593.8 L 27.9 600.0 L 27.1 606.2 L 26.3 612.5 L 27.3 618.8 L 25.4 625.0 L 26.0 631.2 L 26.9 637.5 L 26.5 643.8 L 25.3 650.0 L 26.0 656.2 L 26.8 662.5 L 26.3 668.8 L 24.9 675.0 L 25.5 681.2 L 26.4 687.5 L 27.3 693.8 L 26.2 700.0 L 26.8 706.2 L 27.4 712.5 L 27.4 718.8 L 27.5 725.0 L 27.2 731.2 L 26.4 737.5 L 27.5 743.8 L 27.5 750.0 L 27.3 756.2 L 28.4 762.5 L 29.7 768.8 L 29.0 775.0 L 29.6 781.2 L 27.6 787.5 L 27.9 793.8 L 27.8 800.0 L 26.9 806.2 L 25.7 812.5 L 25.4 818.8 L 26.5 825.0 L 27.6 831.2 L 28.7 837.5 L 28.5 843.8 L 31.2 850.0 L 32.1 856.2 L 32.8 862.5 L 33.0 868.8 L 33.5 875.0 L 33.8 881.2 L 33.3 887.5 L 35.1 893.8 L 35.6 900.0 L 35.1 906.2 L 35.0 912.5 L 35.1 918.8 L 33.5 925.0 L 33.7 931.2 L 34.1 937.5 L 34.3 943.8 L 35.2 950.0 L 33.8 956.2 L 34.9 962.5 L 34.8 968.8 L 35.0 975.0 L 33.5 981.2 L 34.4 987.5 L 33.8 993.8 L 32.9 1000.0 L 50 1000 Z"
-                className="fill-[#7CB324]"
+                className="fill-[#8DC541]"
               />
             </svg>
           </div>
@@ -4949,8 +4948,8 @@ export default function KnowYourMeatPage() {
                     <motion.button
                       whileHover={{
                         scale: 1.02,
-                        backgroundColor: "#b52020",
-                        boxShadow: "0 6px 16px rgba(214, 40, 40, 0.35)",
+                        backgroundColor: "#0a5e30",
+                        boxShadow: "0 6px 16px rgba(6, 72, 35, 0.35)",
                       }}
                       whileTap={{ scale: 0.97 }}
                       className="w-auto inline-flex items-center justify-center self-start bg-[#D62828] text-white text-[10px] sm:text-[11px] md:text-[0.62vw] font-extrabold py-1.5 md:py-[0.3vw] px-3.5 md:px-[0.8vw] rounded-xl md:rounded-[0.5vw] whitespace-nowrap gap-1 md:gap-[0.3vw] uppercase tracking-wider font-manrope cursor-pointer transition-colors shadow-sm mt-0.5"
@@ -5009,7 +5008,7 @@ export default function KnowYourMeatPage() {
                     visible: { scaleX: 1, opacity: 1 },
                   }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="w-5 h-[2px] bg-[#87B71D] origin-left"
+                  className="w-5 h-[2px] bg-[#8DC541] origin-left"
                 />
                 <span className="text-[13px] font-bold text-slate-700 tracking-widest uppercase font-manrope inline-flex">
                   {"RECIPES".split("").map((char, charIdx) => (
@@ -5044,7 +5043,7 @@ export default function KnowYourMeatPage() {
                 }}
                 className="text-5xl md:text-6xl font-bold font-barlow-condensed tracking-wide uppercase leading-[0.95] recipe-title-text"
               >
-                <span className="text-[#127431] block">
+                <span className="text-[#064823] block">
                   {`${chickenParts[manuallySelectedPartIdx]?.name || "CHICKEN"} RECIPES`
                     .split("")
                     .map((char, charIdx) => (
@@ -5060,7 +5059,7 @@ export default function KnowYourMeatPage() {
                       </motion.span>
                     ))}
                 </span>
-                <span className="text-[#D62828] block">
+                <span className="text-[#F7840F] block">
                   {"DELICIOUS.".split("").map((char, charIdx) => (
                     <motion.span
                       key={charIdx}
@@ -5083,7 +5082,7 @@ export default function KnowYourMeatPage() {
               whileInView={{ opacity: 1, scaleY: 1 }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="hidden md:block w-[2px] h-[70px] bg-[#D62828]  rounded-full shrink-0"
+              className="hidden md:block w-[2px] h-[70px] bg-[#F7840F] rounded-full shrink-0"
             />
 
             {/* Right Column: Paragraph + Filter buttons directly below paragraph */}
@@ -5106,7 +5105,7 @@ export default function KnowYourMeatPage() {
                 <motion.button
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
-                  className="bg-[#D62828] text-white text-[13px] font-bold py-2.5 px-6 rounded-lg uppercase tracking-wider font-inter cursor-pointer transition-colors shadow-sm"
+                  className="bg-[#064823] hover:bg-[#0a5e30] text-white text-[13px] font-bold py-2.5 px-6 rounded-lg uppercase tracking-wider font-inter cursor-pointer transition-colors shadow-sm"
                 >
                   Most Popular
                 </motion.button>
@@ -5185,7 +5184,7 @@ export default function KnowYourMeatPage() {
                   <div className="absolute bottom-0 left-0 right-0 h-[80%] z-10 bg-gradient-to-t from-black/95 via-black/80 to-transparent pointer-events-none" />
 
                   {/* Top-Left Red Badge Pill */}
-                  <span className="absolute top-4 left-4 z-20 bg-[#D62828] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
+                  <span className="absolute top-4 left-4 z-20 bg-[#064823] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
                     {recipe.label}
                   </span>
 
@@ -5237,7 +5236,7 @@ export default function KnowYourMeatPage() {
                     </div>
 
                     {/* Action Button */}
-                    <button className="w-full bg-[#82B224] hover:bg-[#6C971B] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
+                    <button className="w-full bg-[#8DC541] hover:bg-[#7db833] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
                       <span>VIEW RECIPE & STEPS →</span>
                     </button>
                   </div>

@@ -1816,8 +1816,13 @@ export default function RecipesPage() {
       : chickenPartsList.filter((p) => p.id === activeFilter);
 
   return (
-    <div className="relative min-h-screen bg-gray-50 antialiased flex flex-col selection:bg-[#87B71D] selection:text-white overflow-x-clip pt-0">
-      <section className="relative w-full bg-[#638913] text-white pt-20 sm:pt-22 md:pt-24 pb-2 sm:pb-3 px-4 sm:px-8 lg:px-12 rounded-b-[30px] md:rounded-b-[40px] overflow-hidden select-none shadow-xl min-h-[280px] sm:min-h-[320px] md:min-h-[350px] flex flex-col justify-between">
+    <div className="relative min-h-screen bg-gray-50 antialiased flex flex-col selection:bg-[#8DC541] selection:text-white overflow-x-clip pt-0">
+      <section
+        style={{
+          background: "radial-gradient(circle at center, #488E40 0%, #064823 100%)",
+        }}
+        className="relative w-full text-white pt-20 sm:pt-22 md:pt-24 pb-2 sm:pb-3 px-4 sm:px-8 lg:px-12 rounded-b-[30px] md:rounded-b-[40px] overflow-hidden select-none shadow-xl min-h-[280px] sm:min-h-[320px] md:min-h-[350px] flex flex-col justify-between"
+      >
         <div
           className="absolute inset-0 pointer-events-none bg-repeat z-0 opacity-80"
           style={{
@@ -1901,8 +1906,8 @@ export default function RecipesPage() {
                 />
               </motion.div>
             </div>
-            <div className="w-full flex items-center justify-between gap-3 sm:gap-4 overflow-hidden pt-1 pb-0.5">
-              <div className="flex-1 min-w-0 overflow-x-auto scrollbar-none [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-1 pl-1 pr-2">
+            <div className="w-full flex items-center justify-between gap-3 sm:gap-4 pt-1 pb-1">
+              <div className="flex-1 min-w-0 overflow-x-auto scrollbar-none [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-3.5 sm:py-4 px-2 sm:px-3">
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-5 lg:gap-5 xl:gap-6 2xl:gap-7 select-none flex-nowrap">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.5, y: 20 }}
@@ -1916,27 +1921,43 @@ export default function RecipesPage() {
                       }
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0"
+                    className="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0 relative"
                   >
                     <motion.button
-                      whileHover={{ scale: 1.08 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] xl:w-[64px] xl:h-[64px] 2xl:w-[76px] 2xl:h-[76px] rounded-full flex items-center justify-center font-extrabold text-[11px] sm:text-xs lg:text-xs xl:text-xs 2xl:text-sm tracking-wider transition-all shrink-0 cursor-pointer text-white shadow-md ${
+                      whileHover={{ scale: 1.06 }}
+                      whileTap={{ scale: 0.94 }}
+                      animate={{ scale: activeFilter === "all" && !selectedRecipe ? 1.05 : 1 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      className={`relative z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] xl:w-[64px] xl:h-[64px] 2xl:w-[76px] 2xl:h-[76px] rounded-full flex items-center justify-center font-extrabold text-[11px] sm:text-xs lg:text-xs xl:text-xs 2xl:text-sm tracking-wider shrink-0 cursor-pointer text-white transition-all duration-300 ${
                         activeFilter === "all" && !selectedRecipe
-                          ? "bg-white/35 backdrop-blur-xl border-2 border-white ring-4 ring-[#F2CE07] scale-105 shadow-xl"
-                          : "bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30"
+                          ? "bg-white/35 backdrop-blur-xl border-2 border-[#F2CE07] ring-4 ring-[#F2CE07]/30 shadow-[0_4px_18px_rgba(242,206,7,0.45)]"
+                          : "bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 shadow-md"
                       }`}
                     >
-                      ALL
+                      {activeFilter === "all" && !selectedRecipe && (
+                        <motion.div
+                          layoutId="activeCategoryHighlight"
+                          className="absolute -inset-1 rounded-full border-2 border-[#F2CE07] bg-[#F2CE07]/15 pointer-events-none z-0"
+                          transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                        />
+                      )}
+                      <span className="relative z-10">ALL</span>
                     </motion.button>
                     <span
-                      className={`text-[10px] sm:text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-extrabold tracking-wider uppercase font-manrope transition-colors ${
+                      className={`text-[10px] sm:text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-extrabold tracking-wider uppercase font-manrope transition-colors flex flex-col items-center gap-1 ${
                         activeFilter === "all" && !selectedRecipe
                           ? "text-[#F2CE07] font-black drop-shadow-sm"
                           : "text-white/90 group-hover:text-[#F2CE07]"
                       }`}
                     >
                       ALL
+                      {activeFilter === "all" && !selectedRecipe && (
+                        <motion.span
+                          layoutId="activeCategoryDot"
+                          className="w-1.5 h-1.5 rounded-full bg-[#F2CE07] shadow-sm"
+                          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                        />
+                      )}
                     </span>
                   </motion.div>
 
@@ -1945,6 +1966,7 @@ export default function RecipesPage() {
                     const isSelected = selectedRecipe
                       ? selectedRecipe.part.toLowerCase() === part.id.toLowerCase()
                       : activeFilter.toLowerCase() === part.id.toLowerCase();
+                    const isHighlighted = isSelected || isAutoHighlighted;
 
                     return (
                       <motion.div
@@ -1960,19 +1982,28 @@ export default function RecipesPage() {
                           setHighlightedPartIdx(index);
                           handlePartClick(part.id);
                         }}
-                        className="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0"
+                        className="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0 relative"
                       >
                         <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.92 }}
-                          className={`relative w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] xl:w-[64px] xl:h-[64px] 2xl:w-[76px] 2xl:h-[76px] rounded-full bg-white flex items-center justify-center p-1 sm:p-1.5 shrink-0 cursor-pointer transition-all duration-300 shadow-md ${
-                            isSelected || isAutoHighlighted
-                              ? "ring-4 ring-[#F2CE07] bg-[#FFFDE7] scale-105 shadow-[0_0_14px_rgba(225,198,9,0.75)]"
-                              : "border border-white/60 hover:scale-105"
+                          whileHover={{ scale: 1.06 }}
+                          whileTap={{ scale: 0.94 }}
+                          animate={{ scale: isHighlighted ? 1.06 : 1 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                          className={`relative z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] xl:w-[64px] xl:h-[64px] 2xl:w-[76px] 2xl:h-[76px] rounded-full bg-white flex items-center justify-center p-1 sm:p-1.5 shrink-0 cursor-pointer transition-all duration-300 ${
+                            isHighlighted
+                              ? "ring-4 ring-[#F2CE07]/40 bg-[#FFFDE7] shadow-[0_4px_20px_rgba(242,206,7,0.45)] border-2 border-[#F2CE07]"
+                              : "border border-white/60 hover:scale-105 shadow-md"
                           }`}
                           title={part.name}
                         >
-                          <div className="relative w-full h-full">
+                          {isHighlighted && (
+                            <motion.div
+                              layoutId="activeCategoryHighlight"
+                              className="absolute -inset-1 rounded-full border-2 border-[#F2CE07] bg-[#F2CE07]/15 pointer-events-none z-0"
+                              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                            />
+                          )}
+                          <div className="relative w-full h-full z-10">
                             <Image
                               src={part.img}
                               alt={part.name}
@@ -1982,13 +2013,20 @@ export default function RecipesPage() {
                           </div>
                         </motion.button>
                         <span
-                          className={`text-[10px] sm:text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-extrabold tracking-wider uppercase font-manrope transition-colors ${
-                            isSelected || isAutoHighlighted
+                          className={`text-[10px] sm:text-[11px] lg:text-xs xl:text-xs 2xl:text-sm font-extrabold tracking-wider uppercase font-manrope transition-colors flex flex-col items-center gap-1 ${
+                            isHighlighted
                               ? "text-[#F2CE07] drop-shadow-sm font-black"
                               : "text-white/90 group-hover:text-[#F2CE07]"
                           }`}
                         >
                           {part.name}
+                          {isHighlighted && (
+                            <motion.span
+                              layoutId="activeCategoryDot"
+                              className="w-1.5 h-1.5 rounded-full bg-[#F2CE07] shadow-sm"
+                              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                            />
+                          )}
                         </span>
                       </motion.div>
                     );
@@ -2081,7 +2119,7 @@ export default function RecipesPage() {
                         />
                       </div>
                       <div>
-                        <h2 className="text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-bold font-barlow-condensed uppercase text-[#127431] tracking-wide">
+                        <h2 className="text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-bold font-barlow-condensed uppercase text-[#064823] tracking-wide">
                           {part.name} RECIPES
                         </h2>
                         <p className="text-[11px] sm:text-sm lg:text-xs xl:text-sm font-medium text-slate-600 font-manrope">
@@ -2118,7 +2156,7 @@ export default function RecipesPage() {
                         className="relative aspect-[3/2.8] w-full rounded-2xl overflow-hidden shadow-xl group flex flex-col justify-end p-4 select-none recipe-card-box cursor-pointer border border-slate-200/40"
                       >
                         {/* Top Left Red Category Tag */}
-                        <span className="absolute top-4 left-4 z-20 bg-[#D62828] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
+                        <span className="absolute top-4 left-4 z-20 bg-[#064823] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
                           {recipe.label}
                         </span>
 
@@ -2180,7 +2218,7 @@ export default function RecipesPage() {
                           </div>
 
                           {/* Action Button */}
-                          <button className="w-full bg-[#82B224] hover:bg-[#6C971B] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
+                          <button className="w-full bg-[#F7840F] hover:bg-[#e0730b] text-white text-[12px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors cursor-pointer font-inter shadow-md mt-1 recipe-card-btn">
                             <span>VIEW RECIPE & STEPS →</span>
                           </button>
                         </div>
@@ -2202,7 +2240,7 @@ export default function RecipesPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
-            className="space-y-12 relative scroll-mt-24"
+            className="space-y-12 relative scroll-mt-24 w-full"
           >
             {/* Decorative Left Bottom Chicken & Herbs Bowl Graphic (Shifted left to clear ingredients text) */}
             <div className="absolute left-[-140px] sm:left-[-120px] lg:left-[-180px] xl:left-[-130px] 2xl:left-[-70px] bottom-[-20px] sm:bottom-[-30px] lg:bottom-[-50px] z-0 pointer-events-none w-[160px] sm:w-[220px] lg:w-[230px] xl:w-[290px] 2xl:w-[360px] opacity-70 lg:opacity-80 xl:opacity-100">
@@ -2233,14 +2271,14 @@ export default function RecipesPage() {
               />
             </div>
 
-            {/* Top Hero Section: Recipe Image (Left) + Overview & Stats (Right) */}
-            <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
-              {/* Left: Recipe Hero Image Card */}
+            {/* Top Hero Section: Recipe Image (Docked Left & Top) + Overview & Stats (Right) */}
+            <section className="-mx-[2vw] -mt-1 sm:-mt-2 lg:-mt-3 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-stretch relative z-10">
+              {/* Left: Recipe Hero Image Card (Docked Flush to Left & Top Edge, Proportional Height) */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                className="lg:col-span-6 relative w-full min-h-[280px] sm:min-h-[340px] lg:min-h-[380px] rounded-xl overflow-hidden shadow-2xl group flex flex-col justify-end select-none border border-slate-300/60"
+                className="lg:col-span-5 xl:col-span-5 relative w-full h-full min-h-[260px] sm:min-h-[300px] lg:min-h-0 rounded-r-3xl rounded-l-none overflow-hidden shadow-xl group flex flex-col justify-end select-none border-y border-r border-slate-300/60"
               >
                 <Image
                   src={selectedRecipe.img}
@@ -2249,16 +2287,16 @@ export default function RecipesPage() {
                   priority
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent z-0" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-0" />
 
-                <div className="relative z-10 p-6 sm:p-8 space-y-3 font-inter">
-                  <span className="bg-[#D62828] text-white text-xs font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-md inline-block">
+                <div className="relative z-10 p-4 sm:p-6 lg:pl-8 xl:pl-12 space-y-2 font-inter">
+                  <span className="bg-[#064823] text-white text-[11px] font-extrabold px-3 py-1 rounded-md uppercase tracking-wider shadow-md inline-block">
                     {selectedRecipe.label}
                   </span>
-                  <h1 className="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl 2xl:text-[46px] font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight">
+                  <h1 className="text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight">
                     {selectedRecipe.title}
                   </h1>
-                  <p className="text-xs sm:text-base lg:text-sm xl:text-base font-medium text-slate-200 font-manrope max-w-[480px] leading-relaxed">
+                  <p className="text-xs sm:text-sm font-medium text-slate-200 font-manrope max-w-[420px] leading-relaxed line-clamp-2">
                     {selectedRecipe.desc}
                   </p>
                 </div>
@@ -2269,13 +2307,13 @@ export default function RecipesPage() {
                 initial={{ opacity: 0, x: 25 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="lg:col-span-6 flex flex-col justify-between space-y-6 font-inter py-1"
+                className="lg:col-span-7 xl:col-span-7 flex flex-col justify-between space-y-4 font-inter py-1 px-4 sm:px-6 lg:px-0 lg:pr-8 xl:pr-12"
               >
                 <div className="space-y-6">
                   {/* ABOUT THIS RECIPE */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xs sm:text-sm lg:text-base xl:text-lg font-semibold text-[#1F5807] tracking-wider uppercase font-barlow-condensed">
+                      <h3 className="text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-extrabold text-[#064823] tracking-wide uppercase font-barlow-condensed">
                         ABOUT THIS RECIPE
                       </h3>
                       <div className="flex items-center gap-3">
@@ -2287,7 +2325,7 @@ export default function RecipesPage() {
                               window.history.replaceState({}, "", "/recipes");
                             }
                           }}
-                          className="bg-[#D62828] hover:bg-red-700 text-white font-bold text-sm uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+                          className="bg-[#064823] hover:bg-[#0a5e30] text-white font-bold text-xs sm:text-sm uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                         >
                           <span>←</span>
                           <span>BACK TO ALL RECIPES</span>
@@ -2304,21 +2342,24 @@ export default function RecipesPage() {
                       </div>
                     </div>
                     <div className="w-full border-b border-dashed border-slate-300" />
-                    <p className="text-xs sm:text-[14px] lg:text-[14px] xl:text-[15px] font-medium text-slate-700 leading-relaxed font-manrope">
+                    <p className="text-sm sm:text-base lg:text-base xl:text-[17px] font-medium text-slate-700 leading-relaxed font-manrope">
                       {selectedRecipe.about}
                     </p>
                   </div>
 
                   {/* TIPS */}
-                  <div className="space-y-3">
+                  <div className="space-y-3.5 pt-1">
                     <div className="w-full border-b border-dashed border-slate-300" />
-                    <h4 className="text-base sm:text-lg lg:text-base xl:text-lg font-bold text-[#127431] tracking-wider uppercase font-barlow-condensed">
-                      COOKING TIPS & TRICKS
-                    </h4>
-                    <ul className="space-y-2.5 text-xs sm:text-sm lg:text-xs xl:text-sm font-medium text-slate-700 font-manrope">
+                    <div className="flex items-center gap-2.5">
+                      <span className="w-1.5 h-6 bg-[#8DC541] rounded-full inline-block shrink-0" />
+                      <h4 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-extrabold text-[#064823] tracking-wider uppercase font-barlow-condensed">
+                        COOKING TIPS & TRICKS
+                      </h4>
+                    </div>
+                    <ul className="space-y-3 pt-1">
                       {selectedRecipe.tips.map((tip, idx) => (
-                        <li key={idx} className="flex items-start gap-2.5">
-                          <span className="w-2 h-2 rounded-full bg-[#87B71D] shrink-0 mt-1.5" />
+                        <li key={idx} className="flex items-start gap-3 text-sm sm:text-base lg:text-sm xl:text-base font-medium text-slate-800 leading-relaxed font-manrope">
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#8DC541] shrink-0 mt-1.5 shadow-2xs" />
                           <span>{tip}</span>
                         </li>
                       ))}
@@ -2411,7 +2452,7 @@ export default function RecipesPage() {
                         className="object-contain"
                       />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-[#127431] tracking-wider uppercase font-barlow-condensed">
+                    <h3 className="text-xl sm:text-2xl font-bold text-[#064823] tracking-wider uppercase font-barlow-condensed">
                       INGREDIENTS
                     </h3>
                   </div>
@@ -2425,7 +2466,7 @@ export default function RecipesPage() {
                           key={idx}
                           className="flex items-start gap-2.5 text-xs sm:text-sm font-semibold text-slate-800 font-inter"
                         >
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#87B71D] shrink-0 mt-1 shadow-sm" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#8DC541] shrink-0 mt-1 shadow-sm" />
                           <span>{item}</span>
                         </div>
                       ))}
@@ -2437,7 +2478,7 @@ export default function RecipesPage() {
                           key={idx}
                           className="flex items-start gap-2.5 text-xs sm:text-sm font-semibold text-slate-800 font-inter"
                         >
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#87B71D] shrink-0 mt-1 shadow-sm" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#8DC541] shrink-0 mt-1 shadow-sm" />
                           <span>{item}</span>
                         </div>
                       ))}
@@ -2462,7 +2503,7 @@ export default function RecipesPage() {
                         className="object-contain"
                       />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-[#127431] tracking-wider uppercase font-barlow-condensed">
+                    <h3 className="text-xl sm:text-2xl font-bold text-[#064823] tracking-wider uppercase font-barlow-condensed">
                       COOKING STEPS
                     </h3>
                   </div>
@@ -2475,7 +2516,7 @@ export default function RecipesPage() {
                         key={idx}
                         className="flex items-start gap-3.5 text-xs sm:text-sm font-semibold text-slate-800 font-inter leading-relaxed"
                       >
-                        <span className="w-6 h-6 rounded-full bg-[#638913] text-white text-xs font-bold flex items-center justify-center shrink-0 shadow-md font-inter mt-0.5">
+                        <span className="w-6 h-6 rounded-full bg-[#064823] text-white text-xs font-bold flex items-center justify-center shrink-0 shadow-md font-inter mt-0.5">
                           {idx + 1}
                         </span>
                         <span className="pt-0.5">{stepText}</span>

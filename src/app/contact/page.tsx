@@ -150,7 +150,7 @@ export default function ContactPage() {
       />
 
       {/* 1. HERO HEADER BANNER SECTION */}
-      <section className="relative z-10 w-full bg-[#153520] pt-[120px] pb-24 md:pt-[150px] md:pb-36 overflow-hidden">
+      <section className="relative z-10 w-full bg-[#064823] pt-[120px] pb-24 md:pt-[150px] md:pb-36 overflow-hidden">
         {/* Background Image Overlay with full opacity from public folder */}
         <div className="absolute inset-0 pointer-events-none">
           <Image
@@ -172,7 +172,7 @@ export default function ContactPage() {
             className="space-y-3"
           >
             <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7.5xl font-extrabold font-barlow tracking-normal uppercase">
-              <span className="text-[#7CB325] mr-4">CONTACT</span>
+              <span className="text-[#8DC541] mr-4">CONTACT</span>
               <span className="text-white">US</span>
             </h1>
             <p className="text-slate-200 text-sm sm:text-base md:text-lg font-medium max-w-xl leading-relaxed">
@@ -206,7 +206,7 @@ export default function ContactPage() {
                   rel={idx === 2 ? "noopener noreferrer" : undefined}
                   className={`group flex items-center text-left py-2 px-3 md:py-2.5 lg:px-4 transition-transform hover:-translate-y-0.5 duration-300 gap-4 ${borderClass}`}
                 >
-                <div className="w-14 h-14 shrink-0 rounded-full bg-[#EEF6E8] flex items-center justify-center transition-colors group-hover:bg-[#395B20] duration-300">
+                <div className="w-14 h-14 shrink-0 rounded-full bg-[#EEF6E8] flex items-center justify-center transition-colors group-hover:bg-[#064823] duration-300">
                   <div className="relative w-6 h-6 group-hover:brightness-0 group-hover:invert transition-all duration-300">
                     <Image
                       src={item.icon}
@@ -217,10 +217,10 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm sm:text-base font-extrabold text-[#f58309] tracking-wide mb-0.5">
+                  <h3 className="text-sm sm:text-base font-extrabold text-[#F7840F] tracking-wide mb-0.5">
                     {item.label}
                   </h3>
-                  <p className="text-xs sm:text-sm font-bold text-[#395B20] transition-colors break-words leading-relaxed font-manrope">
+                  <p className="text-xs sm:text-sm font-bold text-[#064823] transition-colors break-words leading-relaxed font-manrope">
                     {item.value}
                   </p>
                 </div>
@@ -244,7 +244,7 @@ export default function ContactPage() {
             
             {/* Form Side (Left Column) */}
             <div className="lg:col-span-2 flex flex-col justify-between h-full">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#153520] font-manrope mb-6">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#064823] font-manrope mb-6">
                 Send Us a Message
               </h2>
 
@@ -279,7 +279,7 @@ export default function ContactPage() {
                             });
                           }
                         }}
-                        className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 ${errors.fullName ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                        className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 ${errors.fullName ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#064823] focus:ring-1 focus:ring-[#064823]/20'}`}
                       />
                       {errors.fullName && <p className="text-xs text-[#D62828]">{errors.fullName}</p>}
                     </div>
@@ -301,12 +301,12 @@ export default function ContactPage() {
                         <button
                           type="button"
                           onClick={() => setShowDropdown(!showDropdown)}
-                          className={`w-full px-4 py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all bg-white ${errors.enquiryType ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20]'}`}
+                          className={`w-full px-4 py-3 border rounded-xl text-sm flex items-center justify-between text-left outline-none transition-all bg-white ${errors.enquiryType ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#064823]'}`}
                         >
                           <span className={enquiryType ? 'text-slate-800 font-medium' : 'text-slate-400'}>
                             {enquiryType || 'Select enquiry type'}
                           </span>
-                          <ChevronDown className="w-4 h-4 text-[#395B20] shrink-0" />
+                          <ChevronDown className="w-4 h-4 text-[#064823] shrink-0" />
                         </button>
 
                         {showDropdown && (
@@ -319,7 +319,7 @@ export default function ContactPage() {
                                 key={idx}
                                 type="button"
                                 onClick={() => {
-                                  setEnquiryType(type);
+                                   setEnquiryType(type);
                                   setShowDropdown(false);
                                   setErrors(prev => {
                                     const next = { ...prev };
@@ -327,7 +327,7 @@ export default function ContactPage() {
                                     return next;
                                   });
                                 }}
-                                className={`w-full text-left px-4 py-2.5 transition-colors ${enquiryType === type ? 'bg-[#EEF6E8] text-[#395B20] font-semibold' : 'hover:bg-[#EEF6E8] text-[#153520] hover:text-[#395B20]'}`}
+                                className={`w-full text-left px-4 py-2.5 transition-colors ${enquiryType === type ? 'bg-[#EEF6E8] text-[#064823] font-semibold' : 'hover:bg-[#EEF6E8] text-[#064823] hover:text-[#064823]'}`}
                               >
                                 {type}
                               </button>
@@ -365,7 +365,7 @@ export default function ContactPage() {
                               });
                             }
                           }}
-                          className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 ${errors.customEnquiryType ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                          className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 ${errors.customEnquiryType ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#064823] focus:ring-1 focus:ring-[#064823]/20'}`}
                         />
                         {errors.customEnquiryType && <p className="text-xs text-[#D62828]">{errors.customEnquiryType}</p>}
                       </motion.div>
@@ -399,7 +399,7 @@ export default function ContactPage() {
                           });
                         }
                       }}
-                      className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 resize-none ${errors.message ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#395B20] focus:ring-1 focus:ring-[#395B20]/20'}`}
+                      className={`w-full px-4 py-3 border rounded-xl text-sm outline-none transition-all placeholder:text-slate-455/80 resize-none ${errors.message ? 'border-[#D62828]' : 'border-slate-300 focus:border-[#064823] focus:ring-1 focus:ring-[#064823]/20'}`}
                     />
                     {errors.message && <p className="text-xs text-[#D62828]">{errors.message}</p>}
                   </div>
@@ -409,7 +409,7 @@ export default function ContactPage() {
 
                     <button
                       type="submit"
-                      className="bg-[#7CB325] hover:bg-[#68941E] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl uppercase transition-all duration-300 flex items-center justify-center gap-2.5 shadow-md active:scale-95 hover:shadow-lg self-end md:self-auto"
+                      className="bg-[#064823] hover:bg-[#0a5e30] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl uppercase transition-all duration-300 flex items-center justify-center gap-2.5 shadow-md active:scale-95 hover:shadow-lg self-end md:self-auto"
                     >
                       <div className="relative w-6 h-6">
                         <Image
@@ -430,10 +430,10 @@ export default function ContactPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-4"
                 >
-                  <div className="w-16 h-16 rounded-full bg-[#7CB325]/10 flex items-center justify-center text-[#7CB325] mb-2">
+                  <div className="w-16 h-16 rounded-full bg-[#8DC541]/10 flex items-center justify-center text-[#8DC541] mb-2">
                     <CheckCircle className="w-10 h-10" />
                   </div>
-                  <h2 className="text-2xl sm:text-2xl font-extrabold text-[#153520] uppercase font-manrope">
+                  <h2 className="text-2xl sm:text-2xl font-extrabold text-[#064823] uppercase font-manrope">
                     Enquiry Submitted!
                   </h2>
                   <p className="text-slate-600 font-medium text-sm sm:text-base max-w-md leading-relaxed">
@@ -441,7 +441,7 @@ export default function ContactPage() {
                   </p>
                   <button
                     onClick={resetForm}
-                    className="!mt-6 bg-[#395B20] hover:bg-[#1E3C11] text-white font-bold text-xs sm:text-sm px-8 py-3.5 rounded-xl uppercase transition-all shadow-md active:scale-95"
+                    className="!mt-6 bg-[#064823] hover:bg-[#0a5e30] text-white font-bold text-xs sm:text-sm px-8 py-3.5 rounded-xl uppercase transition-all shadow-md active:scale-95"
                   >
                     Send another message
                   </button>
@@ -463,7 +463,7 @@ export default function ContactPage() {
               </div>
               
               <div className="space-y-2">
-                <h3 className="text-xl sm:text-2xl font-extrabold text-[#1F5A3C] font-manrope">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-[#064823] font-manrope">
                   We value your time
                 </h3>
                 <p className="text-xs sm:text-sm text-[#535353] font-medium leading-relaxed max-w-xs">
@@ -560,10 +560,10 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="flex-1 min-w-0">
-                <h2 className="text-2xl md:text-3xl font-extrabold text-[#153520] font-manrope">
+                <h2 className="text-2xl md:text-3xl font-extrabold text-[#064823] font-manrope">
                   Frequently Asked Questions
                 </h2>
-                <div className="h-[3px] w-14 bg-[#7CB325] mt-2 mb-3 mx-auto sm:mx-0 rounded-full" />
+                <div className="h-[3px] w-14 bg-[#8DC541] mt-2 mb-3 mx-auto sm:mx-0 rounded-full" />
                 <p className="text-sm text-[#535353] font-medium leading-relaxed">
                   Find quick answers to common questions about working and partnering with MEATiN.
                 </p>
@@ -579,17 +579,17 @@ export default function ContactPage() {
                     key={idx}
                     className={`border rounded-2xl overflow-hidden transition-all duration-300 ${
                       isOpen 
-                        ? 'border-[#395B20] bg-[#EEF6E8]/30 shadow-sm ring-1 ring-[#395B20]/20' 
-                        : 'border-slate-200/90 bg-white hover:border-[#395B20]/40 hover:bg-[#F8FAF7]'
+                        ? 'border-[#064823] bg-[#EEF6E8]/30 shadow-sm ring-1 ring-[#064823]/20' 
+                        : 'border-slate-200/90 bg-white hover:border-[#064823]/40 hover:bg-[#F8FAF7]'
                     }`}
                   >
                     <button
                       onClick={() => toggleFaq(idx)}
-                      className="w-full flex items-center justify-between text-left p-4 sm:p-5 font-bold text-sm sm:text-base text-[#153520] outline-none"
+                      className="w-full flex items-center justify-between text-left p-4 sm:p-5 font-bold text-sm sm:text-base text-[#064823] outline-none"
                     >
                       <span>{faq.question}</span>
                       {isOpen ? (
-                        <ChevronUp className="w-4 h-4 text-[#395B20] shrink-0 ml-4" />
+                        <ChevronUp className="w-4 h-4 text-[#064823] shrink-0 ml-4" />
                       ) : (
                         <ChevronDown className="w-4 h-4 text-slate-400 shrink-0 ml-4" />
                       )}

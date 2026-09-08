@@ -10,6 +10,7 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import TrustedQualityBanner from "@/components/layout/TrustedQualityBanner";
+import TruckSvg from "@/components/TruckSvg";
 
 // Animation variants
 const fadeInUp = {
@@ -50,16 +51,16 @@ export default function HomePage() {
     target: certSectionRef,
     offset: ["start end", "end start"],
   });
-  const rawTruckY = useTransform(certScrollProgress, [0, 1], [-150, 1600]);
+  const rawTruckY = useTransform(certScrollProgress, [0, 1], [-120, 1250]);
   const truckY = useSpring(rawTruckY, {
     stiffness: 250,
-    damping: 30,
-    mass: 0.2,
+    damping: 28,
+    mass: 0.15,
     restDelta: 0.0001,
   });
   const certTruckOpacity = useTransform(
     certScrollProgress,
-    [0, 0.15, 0.85, 1],
+    [0, 0.08, 0.82, 0.95],
     [0, 1, 1, 0],
   );
 
@@ -72,7 +73,7 @@ export default function HomePage() {
   const truckScrollX = useTransform(
     section2ScrollProgress,
     [0, 1],
-    ["48vw", "-18vw"],
+    ["36vw", "-26vw"],
   );
   const truckScrollOpacity = useTransform(
     section2ScrollProgress,
@@ -91,11 +92,13 @@ export default function HomePage() {
     restDelta: 0.0001,
   });
 
+
+
   const [isTruckMoving, setIsTruckMoving] = React.useState(false);
   const stopTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   React.useEffect(() => {
-    const triggerMove = (duration = 200) => {
+    const triggerMove = (duration = 400) => {
       setIsTruckMoving(true);
       if (stopTimeoutRef.current) clearTimeout(stopTimeoutRef.current);
       stopTimeoutRef.current = setTimeout(() => {
@@ -104,26 +107,26 @@ export default function HomePage() {
     };
 
     let lastY = typeof window !== "undefined" ? window.scrollY : 0;
-    
+
     const handleScroll = () => {
       const currentY = window.scrollY;
       if (Math.abs(currentY - lastY) > 0.05) {
-        triggerMove(200);
+        triggerMove(400);
       }
       lastY = currentY;
     };
 
-    const handleWheel = () => triggerMove(200);
-    const handleTouchMove = () => triggerMove(200);
+    const handleWheel = () => triggerMove(400);
+    const handleTouchMove = () => triggerMove(400);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("wheel", handleWheel, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: true });
-    
+
     const unsubscribeX = smoothTruckX.on("change", () => {
       const velocity = Math.abs(smoothTruckX.getVelocity());
       if (velocity > 0.01) {
-        triggerMove(200);
+        triggerMove(400);
       }
     });
 
@@ -179,7 +182,7 @@ export default function HomePage() {
 
   React.useEffect(() => {
     // Preload all frames to avoid flickering
-    const totalFrames = 240;
+    const totalFrames = 404;
     (window as any).__HERO_FRAMES__ = (window as any).__HERO_FRAMES__ || {};
     for (let i = 1; i <= totalFrames; i++) {
       const frameStr = String(i).padStart(5, "0");
@@ -220,6 +223,16 @@ export default function HomePage() {
     }
 
     const draw = () => {
+      // Guard against broken or uninitialized images
+      if (
+        !img ||
+        !img.complete ||
+        img.naturalWidth === 0 ||
+        img.naturalHeight === 0
+      ) {
+        return;
+      }
+
       const containerWidth = canvas.clientWidth || window.innerWidth;
       const containerHeight = canvas.clientHeight || window.innerHeight;
 
@@ -241,28 +254,41 @@ export default function HomePage() {
       const shiftY = (canvas.height - imgHeight * ratio) / 2;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(
-        img,
-        0,
-        0,
-        imgWidth,
-        imgHeight,
-        shiftX,
-        shiftY,
-        imgWidth * ratio,
-        imgHeight * ratio,
-      );
+      try {
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          imgWidth,
+          imgHeight,
+          shiftX,
+          shiftY,
+          imgWidth * ratio,
+          imgHeight * ratio,
+        );
+      } catch (err) {
+        // Silently skip if image state changes mid-render
+      }
     };
 
     if (img.complete) {
-      draw();
+      if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+        draw();
+      }
     } else {
-      img.onload = draw;
+      img.onload = () => {
+        if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+          draw();
+        }
+      };
+      img.onerror = () => {
+        // Silently ignore broken frame load to prevent canvas crash
+      };
     }
   }, [currentFrame]);
 
   useMotionValueEvent(smoothProgress, "change", (latest) => {
-    const totalFrames = 240;
+    const totalFrames = 404;
     const frame = Math.min(
       totalFrames,
       Math.max(1, Math.floor(latest * totalFrames)),
@@ -376,10 +402,10 @@ export default function HomePage() {
                   transition={{ duration: 0.8 }}
                   className="space-y-3"
                 >
-                  <h1 className="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-[6.5vw] font-bold font-barlow tracking-tight uppercase leading-[0.9] space-y-1">
-                    <span className="block text-[#87B71D] normal-case">MEATiN:</span>
+                  <h1 className="text-4xl sm:text-6xl lg:text-6xl xl:text-7xl 2xl:text-[6vw] font-bold font-barlow tracking-tight uppercase leading-[0.92] space-y-1.5">
+                    <span className="block text-[#8DC541] normal-case">MEATiN:</span>
                     <span className="block text-white">PURE QUALITY.</span>
-                    <span className="block text-white">TRUSTED MEAT.</span>
+                    <span className="block text-[#F7840F]">TRUSTED MEAT.</span>
                   </h1>
                 </motion.div>
 
@@ -388,11 +414,9 @@ export default function HomePage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
-                  <p className="text-white text-base sm:text-lg md:text-xl font-normal leading-relaxed font-inter max-w-xl">
-                    South India&apos;s{" "}
-                    <span className="text-[#87B71D] font-bold">Largest</span>{" "}
-                    Multi Species{" "}
-                    <span className="text-[#87B71D] font-bold">Meat</span>{" "}
+                  <p className="text-white/90 text-sm sm:text-base lg:text-base xl:text-lg font-medium leading-relaxed font-inter max-w-xl">
+                    South India&apos;s{" "} Multi Species{" "} <br/>
+                    <span className="text-[#8DC541] font-bold">Meat</span>{" "}
                     Processing Plant
                   </p>
                 </motion.div>
@@ -404,7 +428,7 @@ export default function HomePage() {
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
-                  className="relative w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden sm:block lg:hidden"
+                  className="relative w-44 h-22 sm:w-48 sm:h-24 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden sm:block lg:hidden"
                 >
                   <Image
                     src="/AboutUs/keralas-original.webp"
@@ -422,7 +446,7 @@ export default function HomePage() {
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
-            className="absolute bottom-6 right-6 lg:bottom-8 lg:right-10 w-64 h-32 sm:w-72 sm:h-36 lg:w-80 lg:h-40 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden lg:block z-20"
+            className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 lg:bottom-6 lg:right-8 xl:bottom-8 xl:right-10 w-44 h-22 sm:w-48 sm:h-24 lg:w-48 lg:h-24 xl:w-56 xl:h-28 2xl:w-64 2xl:h-32 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] hidden lg:block z-20"
           >
             <Image
               src="/AboutUs/keralas-original.webp"
@@ -446,12 +470,12 @@ export default function HomePage() {
         <div className="w-full max-w-[95%] px-4 sm:px-8 relative z-10 flex justify-start items-center my-auto">
           <motion.div
             style={{ x: smoothTruckX, opacity: smoothTruckOpacity }}
-            className="relative w-full aspect-[4096/1339] max-w-[320px] sm:max-w-[420px] md:max-w-[520px] lg:max-w-[620px] xl:max-w-[740px] 2xl:max-w-[850px]"
+            className="relative w-full aspect-[4096/1339] max-w-[300px] sm:max-w-[380px] md:max-w-[460px] lg:max-w-[520px] xl:max-w-[640px] 2xl:max-w-[850px]"
           >
             {/* Ground Soft Shadow */}
             <div className="absolute -bottom-[4%] left-[4%] right-[4%] h-[12%] bg-black/20 blur-lg rounded-full z-0" />
 
-            {/* Vector Truck SVG Body & Rotating Tire Layer */}
+            {/* Cold Chain Logistics Truck SVG with Dynamic Wheel Speed */}
             <motion.div
               animate={{ y: [-1.5, 1.5, -1.5] }}
               transition={{
@@ -461,54 +485,7 @@ export default function HomePage() {
               }}
               className="absolute inset-0 w-full h-full z-20 pointer-events-none"
             >
-              <svg
-                width="4096"
-                height="1339"
-                viewBox="0 0 4096 1339"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlnsXlink="http://www.w3.org/1999/xlink"
-                className="w-full h-full object-contain"
-              >
-                <style>{`
-                  @keyframes rotateTireWheel {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(-360deg); }
-                  }
-                  .spinning-wheel {
-                    transform-box: fill-box;
-                    transform-origin: center;
-                    animation: rotateTireWheel 0.4s linear infinite;
-                  }
-                `}</style>
-                <rect width="4096" height="1339" fill="url(#pattern0_1246_36)"/>
-                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="280" y="921" width="365" height="365" fill="url(#pattern1_1246_36)"/>
-                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="1239" y="941" width="390" height="390" fill="url(#pattern2_1246_36)"/>
-                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="3446" y="949" width="365" height="365" fill="url(#pattern3_1246_36)"/>
-                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="3044" y="949" width="365" height="365" fill="url(#pattern4_1246_36)"/>
-                <rect className={`truck-tire ${isTruckMoving ? "spinning-wheel" : ""}`} x="2642" y="949" width="365" height="365" fill="url(#pattern5_1246_36)"/>
-                <defs>
-                  <pattern id="pattern0_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image0_1246_36" transform="scale(0.000244141 0.000746826)"/>
-                  </pattern>
-                  <pattern id="pattern1_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
-                  </pattern>
-                  <pattern id="pattern2_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
-                  </pattern>
-                  <pattern id="pattern3_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
-                  </pattern>
-                  <pattern id="pattern4_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
-                  </pattern>
-                  <pattern id="pattern5_1246_36" patternContentUnits="objectBoundingBox" width="1" height="1">
-                    <use xlinkHref="#image1_1246_36" transform="translate(-0.0201484 -0.0180328) scale(0.000832091)"/>
-                  </pattern>
-                  <image id="image0_1246_36" width="4096" height="1339" preserveAspectRatio="none" xlinkHref="/Home/truck-section/truckWithTire.svg"/>
-                </defs>
-              </svg>
+              <TruckSvg isMoving={isTruckMoving} />
             </motion.div>
 
             {/* Trailing Rope Hook attached vertically centered to the back of truck trailer */}
@@ -567,9 +544,23 @@ export default function HomePage() {
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="none"
           >
+            <defs>
+              <radialGradient
+                id="truckBottomWaveGradient"
+                cx="50%"
+                cy="50%"
+                r="50%"
+                fx="50%"
+                fy="50%"
+              >
+                <stop offset="0%" stopColor="#67BE47" />
+                <stop offset="39.42%" stopColor="#094824" />
+                <stop offset="100%" stopColor="#094824" />
+              </radialGradient>
+            </defs>
             <path
               d="M0 0C755.182 107.73 1158.5 130.5 1920 0V130.5H0V0Z"
-              fill="#064823"
+              fill="url(#truckBottomWaveGradient)"
             />
           </svg>
         </div>
@@ -579,7 +570,8 @@ export default function HomePage() {
       <section
         className="relative w-full pt-6 pb-6 lg:pt-8 lg:pb-8 2xl:pt-10 2xl:pb-10 text-white overflow-hidden"
         style={{
-          background: "radial-gradient(circle at center, #458A3F 0%, #064823 100%)",
+          background:
+            "radial-gradient(50% 50% at 50% 50%, rgba(103, 190, 71, 0.68) 0%, #094824 100%)",
         }}
       >
         {/* Absolute Background Image Layer */}
@@ -609,7 +601,7 @@ export default function HomePage() {
             </div>
             <h2 className="text-2xl sm:text-4xl lg:text-3xl xl:text-4xl 2xl:text-[3.5vw] font-normal font-chau tracking-tight leading-none mb-2">
               More Than Meat. It&apos;s{" "}
-              <span className="text-[#FFC72C]">Our</span> Promise.
+              <span className="text-[#F7840F]">Our</span> Promise.
             </h2>
             <p className="text-[#F6F5F0]/90 text-xs sm:text-sm xl:text-sm 2xl:text-base max-w-2xl mx-auto font-manrope font-semibold leading-relaxed">
               From farm to fork, every step we take is guided by science, driven
@@ -632,10 +624,10 @@ export default function HomePage() {
                   variants={fadeInUp}
                   whileHover={{ scale: 1.05, zIndex: 30 }}
                   transition={{ duration: 0.3 }}
-                  className={`bg-white rounded-[18px] 2xl:rounded-[20px] border border-white/80 shadow-lg hover:shadow-2xl flex flex-col justify-between h-max overflow-hidden group min-h-[250px] xl:min-h-[250px] 2xl:min-h-[310px] relative ${idx % 2 === 0 ? 'xl:-mt-4 2xl:-mt-8' : 'xl:mt-4 2xl:mt-8'}`}
+                  className={`bg-white rounded-[18px] 2xl:rounded-[20px] border border-white/80 shadow-lg hover:shadow-2xl flex flex-col justify-between h-max overflow-hidden group min-h-[270px] xl:min-h-[270px] 2xl:min-h-[335px] relative ${idx % 2 === 0 ? 'xl:-mt-4 2xl:-mt-8' : 'xl:mt-4 2xl:mt-8'}`}
                 >
                   {/* Top Image Frame (with icon and title inside) */}
-                  <div className="relative w-full h-[195px] xl:h-[195px] 2xl:h-[245px] overflow-hidden flex flex-col justify-end pb-3 2xl:pb-4 items-center">
+                  <div className="relative w-full h-[210px] xl:h-[210px] 2xl:h-[265px] overflow-hidden flex flex-col justify-end pb-3.5 2xl:pb-4 items-center">
                     <Image
                       src={step.image}
                       alt={step.title}
@@ -643,7 +635,7 @@ export default function HomePage() {
                       className="object-cover object-top"
                     />
                     {/* Bottom gradient fade to white */}
-                    <div className="absolute -bottom-1 left-0 right-0 h-20 xl:h-20 2xl:h-28 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
+                    <div className="absolute -bottom-1 left-0 right-0 h-[88px] xl:h-[88px] 2xl:h-[120px] bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
 
                     {/* Icon */}
                     <div className="relative z-20 w-10 h-10 xl:w-10 xl:h-10 2xl:w-14 2xl:h-14 drop-shadow-md mb-2">
@@ -656,13 +648,13 @@ export default function HomePage() {
                     </div>
 
                     {/* Title */}
-                    <h4 className="relative z-20 text-[#153520] font-extrabold text-[0.82rem] xl:text-[0.82rem] 2xl:text-[1.05rem] tracking-wide uppercase font-manrope leading-[1.3] text-center px-1.5 max-w-[95%]">
+                    <h4 className="relative z-20 text-[#064823] font-extrabold text-[0.82rem] xl:text-[0.82rem] 2xl:text-[1.05rem] tracking-wide uppercase font-manrope leading-[1.3] text-center px-1.5 max-w-[95%]">
                       {step.title}
                     </h4>
                   </div>
 
                   {/* Bottom Text Panel */}
-                  <div className="bg-white pb-3 xl:pb-3 2xl:pb-6 px-3 flex-1 flex flex-col items-center justify-start text-center relative z-20 -mt-px">
+                  <div className="bg-white pb-3.5 xl:pb-3.5 2xl:pb-6 px-3 flex-1 flex flex-col items-center justify-start text-center relative z-20 -mt-px">
                     <p className="text-[#3A3A3A] text-[0.72rem] xl:text-[0.72rem] 2xl:text-[0.83rem] font-semibold leading-snug font-manrope max-w-[170px] 2xl:max-w-[195px] mx-auto">
                       {step.desc}
                     </p>
@@ -691,7 +683,7 @@ export default function HomePage() {
           {/* Creative vertical green truck graphics on left side gutter */}
           <motion.div
             style={{ y: truckY, opacity: truckOpacity }}
-            className="absolute left-[-85px] xl:left-[-100px] top-[-100px] w-40 xl:w-44 h-[700px] hidden lg:block pointer-events-none z-0"
+            className="absolute left-0 sm:left-1 lg:left-1 xl:left-2 2xl:left-[-40px] [@media(min-width:1800px)]:left-[-75px] top-2 lg:top-6 w-28 sm:w-30 lg:w-[130px] xl:w-[145px] 2xl:w-44 aspect-[1/2.35] hidden lg:block pointer-events-none z-0"
           >
             <div className="relative w-full h-full">
               <Image
@@ -713,14 +705,14 @@ export default function HomePage() {
           >
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="h-[1.5px] w-8 sm:w-12 bg-[#D4A437]" />
-              <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#153520] font-manrope">
+              <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#064823] font-manrope">
                 OUR PROMISE
               </h4>
               <div className="h-[1.5px] w-8 sm:w-12 bg-[#D4A437]" />
             </div>
             <h2 className="text-3xl sm:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[4vw] font-normal font-chau tracking-tight leading-none mb-4">
-              <span className="text-[#D62828]">Certified</span>{" "}
-              <span className="text-[#153520]">Excellence</span>
+              <span className="text-[#F7840F]">Certified</span>{" "}
+              <span className="text-[#064823]">Excellence</span>
             </h2>
             <p className="text-slate-700 text-sm sm:text-base max-w-xl mx-auto font-manrope font-semibold leading-relaxed">
               Our commitment to international food safety and quality standards.
@@ -738,14 +730,14 @@ export default function HomePage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, margin: "-50px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-y-16 md:gap-y-12 gap-x-6 lg:gap-x-8 lg:pl-12 xl:pl-24 items-stretch"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-y-16 md:gap-y-12 gap-x-6 lg:gap-x-6 xl:gap-x-6 2xl:gap-x-8 lg:pl-24 xl:pl-28 2xl:pl-24 [@media(min-width:1800px)]:pl-20 items-stretch"
           >
             {certificates.map((cert, idx) => {
               return (
                 <motion.div
                   key={idx}
                   variants={fadeInUp}
-                  className="bg-white rounded-[28px] border border-slate-200/80 shadow-[0_12px_36px_rgba(0,0,0,0.035)] px-3.5 py-4 pt-12 flex flex-col justify-between items-center text-center relative hover:scale-[1.03] hover:shadow-[0_20px_48px_rgba(0,0,0,0.08)] hover:border-[#1F5A3C]/20 transition-all duration-300 ease-out min-h-[380px] certificate-parent-card"
+                  className="bg-white rounded-[28px] border border-slate-200/80 shadow-[0_12px_36px_rgba(0,0,0,0.035)] px-3.5 py-4 pt-12 flex flex-col justify-between items-center text-center relative hover:scale-[1.03] hover:shadow-[0_20px_48px_rgba(0,0,0,0.08)] hover:border-[#064823]/20 transition-all duration-300 ease-out min-h-[380px] certificate-parent-card"
                 >
                   {/* Top Circle logo overlay badge */}
                   <div className="w-20 h-20 bg-white border border-slate-100 rounded-full flex items-center justify-center p-2 shadow-lg shadow-slate-200/60 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
@@ -761,8 +753,8 @@ export default function HomePage() {
 
                   {/* Card Header Content */}
                   <div className="flex flex-col items-center w-full">
-                    <h4 className="text-xl sm:text-2xl font-extrabold text-[#1F5A3C] font-barlow tracking-wide uppercase leading-none mb-1">{cert.name}</h4>
-                    <span className="inline-block bg-[#7CB325] text-white px-3 py-0.5 rounded text-[10px] font-black uppercase tracking-wider mb-2 leading-none">
+                    <h4 className="text-xl sm:text-2xl font-extrabold text-[#064823] font-barlow tracking-wide uppercase leading-none mb-1">{cert.name}</h4>
+                    <span className="inline-block bg-[#8DC541] text-white px-3 py-0.5 rounded text-[10px] font-black uppercase tracking-wider mb-2 leading-none">
                       {cert.sub}
                     </span>
                     <p className="text-[11px] text-slate-500 font-bold sm:max-w-none  mb-2 leading-normal flex items-center justify-center min-h-[32px]">
@@ -792,7 +784,7 @@ export default function HomePage() {
                           );
                         }
                       }}
-                      className="bg-[#153520] hover:bg-[#1c452b] text-white text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
+                      className="bg-[#064823] hover:bg-[#0a5e30] text-white text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
                     >
                       <svg className="w-3.5 h-3.5 text-[#D4A437] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -816,9 +808,9 @@ export default function HomePage() {
                           );
                         }
                       }}
-                      className="bg-white hover:bg-slate-50 border border-[#153520] text-[#153520] text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 hover:shadow-md flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
+                      className="bg-white hover:bg-slate-50 border border-[#064823] text-[#064823] text-[11px] font-extrabold h-9 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-[1.02] active:scale-95 hover:shadow-md flex items-center justify-center gap-1.5 uppercase tracking-wider shadow-sm w-full whitespace-nowrap cursor-pointer"
                     >
-                      <svg className="w-3.5 h-3.5 text-[#153520] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <svg className="w-3.5 h-3.5 text-[#064823] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
                       <span>DOWNLOAD PDF</span>
