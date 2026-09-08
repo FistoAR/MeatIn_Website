@@ -11,7 +11,6 @@ import {
   useMotionValueEvent,
   AnimatePresence,
 } from "framer-motion";
-import Product3DViewer from "@/components/Product3DViewer";
 
 export default function KnowYourMeatPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -90,6 +89,18 @@ export default function KnowYourMeatPage() {
     };
     handleResize();
     window.addEventListener("resize", handleResize);
+
+    // Dynamically load Google <model-viewer> web component script for 360 GLB models
+    if (
+      typeof window !== "undefined" &&
+      !document.querySelector('script[src*="model-viewer"]')
+    ) {
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src =
+        "https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js";
+      document.body.appendChild(script);
+    }
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -4397,17 +4408,46 @@ export default function KnowYourMeatPage() {
                   ref={centerCircleRef}
                   className="relative w-full h-full flex items-center justify-center z-30 overflow-visible"
                 >
-                  {/* INTERACTIVE 3D 360° TURNTABLE VIEWER */}
+                  {/* CLEAN INTERACTIVE 360° 3D GLB MODEL VIEWER (Rendered only when 3D tab is active) */}
                   {activeViewTab === "3d" && (
-                    <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-auto z-40 overflow-visible">
-                      <Product3DViewer
-                        frontImg={chickenParts[manuallySelectedPartIdx].img}
-                        backImg={
-                          chickenParts[manuallySelectedPartIdx].platterImg ||
-                          chickenParts[manuallySelectedPartIdx].img
-                        }
-                        title={chickenParts[manuallySelectedPartIdx].name}
-                      />
+                    <div
+                      onWheel={(e) => {
+                        e.stopPropagation();
+                      }}
+                      className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-auto z-40 overflow-visible"
+                    >
+                      <div className="w-full h-full relative flex items-center justify-center overflow-visible">
+                        {/* @ts-ignore */}
+                        <model-viewer
+                          src={
+                            partGlbMap[
+                              chickenParts[manuallySelectedPartIdx].name
+                            ] || "/Product/details/glb/drumsticks.glb"
+                          }
+                          alt={`360 3D Model of ${chickenParts[manuallySelectedPartIdx].name}`}
+                          auto-rotate
+                          camera-controls
+                          bounds="tight"
+                          field-of-view="35deg"
+                          min-field-of-view="10deg"
+                          max-field-of-view="75deg"
+                          shadow-intensity="1.5"
+                          shadow-softness="0.8"
+                          exposure="1.25"
+                          camera-orbit="0deg 75deg 105%"
+                          rotation-per-second="30deg"
+                          interaction-prompt="none"
+                          loading="eager"
+                          reveal="auto"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "transparent",
+                            filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.35))",
+                            overflow: "visible",
+                          }}
+                        />
+                      </div>
                     </div>
                   )}
 

@@ -359,8 +359,8 @@ export default function HomePage() {
     };
   }, [renderFrame]);
 
-  const heroContentOpacity = useTransform(smoothProgress, [0, 0.35], [1, 0]);
-  const heroContentY = useTransform(smoothProgress, [0, 0.35], [0, -40]);
+  const heroContentOpacity = useTransform(smoothProgress, [0.85, 0.98], [1, 0]);
+  const heroContentY = useTransform(smoothProgress, [0.85, 0.98], [0, -30]);
 
   const storySteps = [
     {
