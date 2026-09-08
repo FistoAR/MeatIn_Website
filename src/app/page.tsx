@@ -174,132 +174,190 @@ export default function HomePage() {
   const truckX = smoothTruckX;
   const truckOpacity = certTruckOpacity;
 
-  const [currentFrame, setCurrentFrame] = React.useState(1);
   const [pointerEvents, setPointerEvents] = React.useState<"auto" | "none">(
     "auto",
   );
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+  const lastDrawnFrameRef = React.useRef<number>(1);
+  const imagesMapRef = React.useRef<Map<number, HTMLImageElement>>(new Map());
 
-  React.useEffect(() => {
-    // Preload all frames to avoid flickering
-    const totalFrames = 404;
-    (window as any).__HERO_FRAMES__ = (window as any).__HERO_FRAMES__ || {};
-    for (let i = 1; i <= totalFrames; i++) {
-      const frameStr = String(i).padStart(5, "0");
-      const url = `/Home/Hero/video-frames/${frameStr}.webp`;
-      if (!(window as any).__HERO_FRAMES__[url]) {
-        const img = new window.Image();
-        img.src = url;
-        (window as any).__HERO_FRAMES__[url] = img;
-      }
-    }
-
-    // Trigger scroll bounds re-measurement once preloader reveals DOM
-    const t1 = setTimeout(() => window.dispatchEvent(new Event("resize")), 100);
-    const t2 = setTimeout(() => window.dispatchEvent(new Event("resize")), 600);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, []);
-
-  // GPU-accelerated canvas drawing loop for smooth 60FPS video sequence
-  React.useEffect(() => {
+  // Guaranteed Canvas Render Engine with Nearest-Frame Fallback
+  const renderFrame = React.useCallback((targetFrame: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const frameStr = String(currentFrame).padStart(5, "0");
-    const frameUrl = `/Home/Hero/video-frames/${frameStr}.webp`;
+    const totalFrames = 404;
+    const safeTarget = Math.max(1, Math.min(totalFrames, Math.round(targetFrame)));
+    const map = imagesMapRef.current;
 
-    let img =
-      typeof window !== "undefined"
-        ? (window as any).__HERO_FRAMES__?.[frameUrl]
-        : null;
-    if (!img) {
-      img = new window.Image();
-      img.src = frameUrl;
-    }
-
-    const draw = () => {
-      // Guard against broken or uninitialized images
-      if (
-        !img ||
-        !img.complete ||
-        img.naturalWidth === 0 ||
-        img.naturalHeight === 0
-      ) {
-        return;
+    // Helper to check if an image is completely loaded and ready to draw
+    const getReadyImg = (num: number): HTMLImageElement | null => {
+      const img = map.get(num);
+      if (img && img.complete && img.naturalWidth > 0 && img.naturalHeight > 0) {
+        return img;
       }
-
-      const containerWidth = canvas.clientWidth || window.innerWidth;
-      const containerHeight = canvas.clientHeight || window.innerHeight;
-
-      if (
-        canvas.width !== containerWidth ||
-        canvas.height !== containerHeight
-      ) {
-        canvas.width = containerWidth;
-        canvas.height = containerHeight;
-      }
-
-      const imgWidth = img.naturalWidth || img.width || 1920;
-      const imgHeight = img.naturalHeight || img.height || 1080;
-
-      const hRatio = canvas.width / imgWidth;
-      const vRatio = canvas.height / imgHeight;
-      const ratio = Math.max(hRatio, vRatio);
-      const shiftX = (canvas.width - imgWidth * ratio) / 2;
-      const shiftY = (canvas.height - imgHeight * ratio) / 2;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      try {
-        ctx.drawImage(
-          img,
-          0,
-          0,
-          imgWidth,
-          imgHeight,
-          shiftX,
-          shiftY,
-          imgWidth * ratio,
-          imgHeight * ratio,
-        );
-      } catch (err) {
-        // Silently skip if image state changes mid-render
-      }
+      return null;
     };
 
-    if (img.complete) {
-      if (img.naturalWidth > 0 && img.naturalHeight > 0) {
-        draw();
-      }
-    } else {
-      img.onload = () => {
-        if (img.naturalWidth > 0 && img.naturalHeight > 0) {
-          draw();
+    // 1. Try target frame
+    let imgToDraw = getReadyImg(safeTarget);
+    let frameUsed = safeTarget;
+
+    // 2. Fallback to last successfully drawn frame if target frame isn't loaded yet
+    if (!imgToDraw) {
+      imgToDraw = getReadyImg(lastDrawnFrameRef.current);
+      frameUsed = lastDrawnFrameRef.current;
+    }
+
+    // 3. Fallback outwards to nearest loaded frame in memory
+    if (!imgToDraw) {
+      for (let offset = 1; offset < totalFrames; offset++) {
+        if (safeTarget - offset >= 1) {
+          imgToDraw = getReadyImg(safeTarget - offset);
+          if (imgToDraw) {
+            frameUsed = safeTarget - offset;
+            break;
+          }
         }
-      };
-      img.onerror = () => {
-        // Silently ignore broken frame load to prevent canvas crash
+        if (safeTarget + offset <= totalFrames) {
+          imgToDraw = getReadyImg(safeTarget + offset);
+          if (imgToDraw) {
+            frameUsed = safeTarget + offset;
+            break;
+          }
+        }
+      }
+    }
+
+    if (!imgToDraw) return; // Unlikely fallback state
+
+    const containerWidth = canvas.clientWidth || window.innerWidth;
+    const containerHeight = canvas.clientHeight || window.innerHeight;
+
+    if (canvas.width !== containerWidth || canvas.height !== containerHeight) {
+      canvas.width = containerWidth;
+      canvas.height = containerHeight;
+    }
+
+    const imgWidth = imgToDraw.naturalWidth || 1920;
+    const imgHeight = imgToDraw.naturalHeight || 1080;
+
+    const hRatio = canvas.width / imgWidth;
+    const vRatio = canvas.height / imgHeight;
+    const ratio = Math.max(hRatio, vRatio);
+    const shiftX = (canvas.width - imgWidth * ratio) / 2;
+    const shiftY = (canvas.height - imgHeight * ratio) / 2;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    try {
+      ctx.drawImage(
+        imgToDraw,
+        0,
+        0,
+        imgWidth,
+        imgHeight,
+        shiftX,
+        shiftY,
+        imgWidth * ratio,
+        imgHeight * ratio,
+      );
+      lastDrawnFrameRef.current = frameUsed;
+    } catch (err) {
+      // Silently skip if image state changes mid-render
+    }
+
+    // If target frame is still downloading, render it automatically when ready
+    const targetImg = map.get(safeTarget);
+    if (targetImg && !targetImg.complete) {
+      targetImg.onload = () => {
+        renderFrame(safeTarget);
       };
     }
-  }, [currentFrame]);
+  }, []);
 
+  // Priority-based frame preloading system to avoid network queue starvation
+  React.useEffect(() => {
+    const totalFrames = 404;
+    const map = imagesMapRef.current;
+
+    const loadFrame = (frameNum: number): HTMLImageElement => {
+      let img = map.get(frameNum);
+      if (img) return img;
+      img = new window.Image();
+      const frameStr = String(frameNum).padStart(5, "0");
+      img.src = `/Home/Hero/video-frames/${frameStr}.webp`;
+      map.set(frameNum, img);
+      return img;
+    };
+
+    // P1: Frame 1 immediately
+    const firstImg = loadFrame(1);
+    firstImg.onload = () => renderFrame(1);
+
+    // P2: Keyframes (every 5th frame)
+    const timerId = setTimeout(() => {
+      for (let i = 1; i <= totalFrames; i += 5) {
+        loadFrame(i);
+      }
+      loadFrame(totalFrames);
+
+      // P3: Remaining frames in micro-batches
+      let currentIdx = 1;
+      const batchNext = () => {
+        if (currentIdx > totalFrames) return;
+        const batchEnd = Math.min(totalFrames, currentIdx + 15);
+        for (let i = currentIdx; i <= batchEnd; i++) {
+          loadFrame(i);
+        }
+        currentIdx = batchEnd + 1;
+        if (currentIdx <= totalFrames) {
+          setTimeout(batchNext, 40);
+        }
+      };
+      setTimeout(batchNext, 80);
+    }, 30);
+
+    const t1 = setTimeout(() => window.dispatchEvent(new Event("resize")), 100);
+    const t2 = setTimeout(() => window.dispatchEvent(new Event("resize")), 600);
+
+    return () => {
+      clearTimeout(timerId);
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [renderFrame]);
+
+  // Connect scroll progress directly to canvas drawing (60FPS without React re-renders)
   useMotionValueEvent(smoothProgress, "change", (latest) => {
     const totalFrames = 404;
     const frame = Math.min(
       totalFrames,
       Math.max(1, Math.floor(latest * totalFrames)),
     );
-    setCurrentFrame(frame);
+    renderFrame(frame);
+
     if (latest > 0.4) {
       setPointerEvents("none");
     } else {
       setPointerEvents("auto");
     }
   });
+
+  // Handle window resize and initial canvas paint
+  React.useEffect(() => {
+    renderFrame(1);
+
+    const handleResize = () => {
+      renderFrame(lastDrawnFrameRef.current);
+    };
+
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [renderFrame]);
 
   const heroContentOpacity = useTransform(smoothProgress, [0, 0.35], [1, 0]);
   const heroContentY = useTransform(smoothProgress, [0, 0.35], [0, -40]);
@@ -392,7 +450,10 @@ export default function HomePage() {
             <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black/60 to-transparent" />
           </div>
 
-          <div className="w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-6 sm:px-8 lg:px-[2.5vw] relative z-10 pt-[6rem]">
+          <motion.div
+            style={{ opacity: heroContentOpacity, y: heroContentY }}
+            className="w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-6 sm:px-8 lg:px-[2.5vw] relative z-10 pt-[6rem]"
+          >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Left Header content */}
               <div className="lg:col-span-8 space-y-6">
@@ -439,10 +500,11 @@ export default function HomePage() {
                 </motion.div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Fixed bottom-right badge attached to the sticky hero container */}
           <motion.div
+            style={{ opacity: heroContentOpacity }}
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
@@ -470,7 +532,7 @@ export default function HomePage() {
         <div className="w-full max-w-[95%] px-4 sm:px-8 relative z-10 flex justify-start items-center my-auto">
           <motion.div
             style={{ x: smoothTruckX, opacity: smoothTruckOpacity }}
-            className="relative w-full aspect-[4096/1339] max-w-[300px] sm:max-w-[380px] md:max-w-[460px] lg:max-w-[520px] xl:max-w-[640px] 2xl:max-w-[850px]"
+            className="relative w-full aspect-[4096/1339] max-w-[280px] sm:max-w-[340px] md:max-w-[400px] lg:max-w-[460px] min-[1375px]:max-w-[490px] min-[1531px]:max-w-[780px]"
           >
             {/* Ground Soft Shadow */}
             <div className="absolute -bottom-[4%] left-[4%] right-[4%] h-[12%] bg-black/20 blur-lg rounded-full z-0" />

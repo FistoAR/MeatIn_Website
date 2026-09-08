@@ -503,10 +503,10 @@ export default function AboutUsPage() {
             className="relative px-6 pt-11 pb-32 sm:px-10 lg:px-14 xl:px-16 sm:pt-14 lg:pt-16 xl:pt-18 flex flex-col justify-start text-white lg:overflow-hidden min-h-auto lg:min-h-[580px] xl:min-h-[635px]"
           >
             <Image
-              src="/AboutUs/mission-bg.webp"
+              src="/AboutUs/mission-image.webp"
               alt="Our Mission background"
               fill
-              className="object-cover object-bottom z-0"
+              className="object-cover object-[50%_80%]  z-0"
               sizes="50vw"
             />
             {/* Full-height yellow-green overlay on mobile/tablet (1024px and below) for text contrast, and top-only (h-[65%]) overlay on desktop */}
@@ -533,7 +533,7 @@ export default function AboutUsPage() {
                 style={{ lineHeight: '1.45' }}
                 className="text-sm sm:text-base lg:text-base xl:text-lg 2xl:text-xl text-black font-normal max-w-xl lg:max-w-[420px] xl:max-w-[460px] relative z-10 font-manrope tracking-tight"
               >
-                Build value-added meat products, farming<br className="hidden sm:inline" /> and food supply chains while delivering<br className="hidden sm:inline" /> <span className="text-[#F7840F] font-semibold">quality, service</span> and a <span className="text-[#F7840F] font-semibold">sustainable</span> food system.
+                Build value-added meat products, farming<br className="hidden sm:inline" /> and food supply chains while delivering<br className="hidden sm:inline" /> <span className="text-[#d62828] font-semibold">quality, service</span> and a <span className="text-[#d62828] font-semibold">sustainable</span> food system.
               </motion.p>
             </motion.div>
           </motion.div>
