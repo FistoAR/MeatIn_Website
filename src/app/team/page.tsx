@@ -119,7 +119,7 @@ export default function TeamPage() {
       {/* Hero Section */}
       <section className="relative w-full pt-[85px] sm:pt-[95px] lg:pt-[95px] bg-white flex items-center overflow-hidden">
         {/* Full Edge-to-Edge Hero Image Container */}
-        <div className="relative w-full h-[280px] sm:h-[340px] lg:h-[390px] flex items-center overflow-hidden">
+        <div className="relative w-full min-h-[310px] sm:min-h-[370px] lg:h-[390px] py-4 sm:py-6 lg:py-0 flex items-center overflow-hidden">
           {/* Edge to Edge Image */}
           <div className="absolute inset-0 w-full h-full z-0">
             <Image
@@ -127,7 +127,7 @@ export default function TeamPage() {
               alt="MEATiN Boardroom"
               fill
               priority
-              className="object-cover object-center"
+              className="object-cover object-[55%_50%] sm:object-[60%_50%] lg:object-[40%_50%]"
               sizes="100vw"
             />
           </div>
@@ -138,8 +138,21 @@ export default function TeamPage() {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="max-w-[340px] sm:max-w-[460px] lg:max-w-[500px] bg-white/70 backdrop-blur-md border border-white/70 rounded-3xl p-5 sm:p-8 shadow-xl"
+              className="max-w-[340px] sm:max-w-[460px] lg:max-w-[500px] bg-white/75 backdrop-blur-md border border-white/70 rounded-3xl p-5 sm:p-8 shadow-xl"
             >
+              {/* MEATiN Logo for Mobile and Tablet view alone */}
+              {/* <div className="block lg:hidden mb-2.5 sm:mb-3.5 mx-auto">
+                <div className="relative w-[150px] sm:w-[200px] h-[75px] mx-auto">
+                  <Image
+                    src="/meatin-logo.webp"
+                    alt="MEATiN Logo"
+                    fill
+                    priority
+                    className="object-contain object-center"
+                  />
+                </div>
+              </div> */}
+
               <h2 className="text-[#1E3B2B] font-extrabold font-manrope tracking-widest text-[10px] sm:text-xs uppercase mb-1.5">
                 OUR PEOPLE. OUR STRENGTH.
               </h2>

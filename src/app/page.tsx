@@ -67,7 +67,7 @@ export default function HomePage() {
   const section2Ref = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress: section2ScrollProgress } = useScroll({
     target: section2Ref,
-    offset: ["start 90%", "end 10%"],
+    offset: ["start 60%", "end 10%"],
   });
 
   const truckScrollX = useTransform(
@@ -532,7 +532,7 @@ export default function HomePage() {
         <div className="w-full max-w-[95%] px-4 sm:px-8 relative z-10 flex justify-start items-center my-auto">
           <motion.div
             style={{ x: smoothTruckX, opacity: smoothTruckOpacity }}
-            className="relative w-full aspect-[4096/1339] max-w-[280px] sm:max-w-[340px] md:max-w-[400px] lg:max-w-[460px] min-[1375px]:max-w-[490px] min-[1531px]:max-w-[780px]"
+            className="relative w-full aspect-[4096/1339] max-w-[280px] sm:max-w-[340px] md:max-w-[400px] lg:max-w-[615px] min-[1375px]:max-w-[675px] min-[1531px]:max-w-[780px]"
           >
             {/* Ground Soft Shadow */}
             <div className="absolute -bottom-[4%] left-[4%] right-[4%] h-[12%] bg-black/20 blur-lg rounded-full z-0" />
@@ -550,50 +550,7 @@ export default function HomePage() {
               <TruckSvg isMoving={isTruckMoving} />
             </motion.div>
 
-            {/* Trailing Rope Hook attached vertically centered to the back of truck trailer */}
-            <motion.div
-              animate={{ rotate: [-14, -6, -14], y: [-2, 3, -2] }}
-              transition={{
-                repeat: Infinity,
-                duration: 4.5,
-                ease: "easeInOut",
-              }}
-              style={{ transformOrigin: "left center" }}
-              className="absolute left-[97%] top-[16%] w-[22%] aspect-[317/194] z-10 pointer-events-none filter drop-shadow-md "
-            >
-              <Image
-                src="/Home/truck-section/hoock.webp"
-                alt="Truck Rope Hook"
-                fill
-                className="object-contain rotate-[12deg]"
-              />
-
-              {/* Delivered Fresh Vector Banner attached to the end of the rope hook */}
-              <motion.div
-                animate={{
-                  rotate: [-4, 4, -4],
-                  y: [-4, 5, -4],
-                  scale: [0.98, 1.02, 0.98],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 4.5,
-                  ease: "easeInOut",
-                  delay: 0.3,
-                }}
-                style={{ transformOrigin: "left center" }}
-                className="absolute left-[85%] top-[18%] w-[270%] aspect-[499/157] filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.15)]"
-              >
-                <Image
-                  src="/Home/truck-section/delivered-fresh-text.svg"
-                  alt="Delivered Fresh"
-                  fill
-                  unoptimized
-                  className="object-contain"
-                  priority
-                />
-              </motion.div>
-            </motion.div>
+            
           </motion.div>
         </div>
 
@@ -830,7 +787,7 @@ export default function HomePage() {
                       src={cert.certificateImage}
                       alt={`${cert.name} Certificate`}
                       fill
-                      className="object-contain"
+                      className="object-contain blur-[2px] hover:blur-[0px] group-hover:blur-[0px]"
                     />
                   </div>
 

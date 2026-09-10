@@ -326,23 +326,21 @@ export default function FranchisePage() {
       {/* ============================================================ */}
       {/* SECTION 1: HERO & STORE SHOWCASE (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full min-h-[85vh] lg:min-h-[calc(100vh-50px)] pt-[96px] sm:pt-[102px] lg:pt-[108px] xl:pt-[115px] pb-4 sm:pb-6 lg:pb-8 px-2 sm:px-4 lg:px-6 xl:px-8 bg-slate-900 overflow-x-hidden overflow-y-visible select-none flex flex-col items-center justify-between">
+      <section className="relative w-full min-h-[auto] lg:min-h-[calc(100vh-50px)] pt-[88px] sm:pt-[94px] lg:pt-[108px] xl:pt-[115px] pb-4 sm:pb-6 lg:pb-8 px-2 sm:px-4 lg:px-6 xl:px-8 bg-slate-900 overflow-x-hidden overflow-y-visible select-none flex flex-col items-center justify-between">
         {/* Background Image: franchise-bg-new.webp */}
         <div className="absolute inset-0 pointer-events-none z-0">
           <Image
             src="/Franchies/franchise-bg-new.webp"
             alt="Franchise Hero Background"
             fill
-            className="object-cover object-top sm:object-center opacity-95"
+            className="object-cover object-center"
             priority
           />
-          {/* Subtle gradient vignette overlay for mobile readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-transparent to-slate-900/60 pointer-events-none block lg:hidden" />
         </div>
 
         <div className="w-full relative z-10 flex-1 flex flex-col items-center justify-between max-w-[1780px] mx-auto">
           {/* Header Title Block (Matching Reference Image) */}
-          <div className="text-center shrink-0 mt-1 lg:mt-2 py-0 z-20 relative w-full">
+          <div className="text-center shrink-0 mt-0.5 lg:mt-2 py-0 z-20 relative w-full">
             {/* Top Right Script Slogan: Good Meat Brighter Communities */}
             <div className="absolute right-4 sm:right-12 lg:right-20 xl:right-28 2xl:right-36 top-0 -rotate-6 hidden sm:block">
               <span className="block text-[#0B3C2A] font-extrabold text-xs lg:text-sm xl:text-base 2xl:text-lg font-serif italic leading-tight text-right drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
@@ -382,7 +380,7 @@ export default function FranchisePage() {
           </div>
 
           {/* Feature Showcase Container */}
-          <div className="relative w-full flex-1 max-w-[1720px] mx-auto flex items-end justify-center z-20 mb-0 mt-1 lg:mt-2">
+          <div className="relative w-full flex-1 max-w-[1720px] mx-auto flex items-end justify-center z-20 mb-1 lg:mb-0 mt-1 lg:mt-2">
 
             {/* Center Interactive Storefront Spotlight Showcase */}
             <motion.div
@@ -393,24 +391,18 @@ export default function FranchisePage() {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative w-[92%] sm:w-[85%] md:w-[78%] lg:w-[48%] xl:w-[56%] 2xl:w-[60%] max-w-[480px] sm:max-w-[580px] lg:max-w-[680px] xl:max-w-[1040px] 2xl:max-w-[1220px] h-auto z-20 mx-auto cursor-default lg:cursor-crosshair rounded-2xl select-none flex items-end justify-center"
+              className="relative w-[95%] sm:w-[88%] md:w-[80%] lg:w-[48%] xl:w-[56%] 2xl:w-[60%] max-w-[500px] sm:max-w-[600px] lg:max-w-[680px] xl:max-w-[1040px] 2xl:max-w-[1220px] h-auto z-20 mx-auto cursor-default lg:cursor-crosshair rounded-2xl select-none flex items-end justify-center"
             >
-              {/* Mobile / Tablet View (Grounded Display with Stage Platform & Shadow) */}
+              {/* Mobile / Tablet View (Clean Display) */}
               <div className="block lg:hidden relative w-full h-auto">
-                <div className="relative w-full h-auto rounded-2xl overflow-hidden shadow-[0_14px_40px_rgba(0,0,0,0.4)] border border-white/30 bg-slate-950/40 backdrop-blur-md p-1 sm:p-1.5">
-                  <Image
-                    src="/Franchies/hero-main-image.webp"
-                    alt="MEATiN Outlet Storefront"
-                    width={1120}
-                    height={880}
-                    priority
-                    className="w-full h-auto object-contain block rounded-xl relative z-10"
-                  />
-                  {/* Ground Pavement Base Platform Line */}
-                  <div className="w-full h-1.5 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-700 border-t border-white/30 rounded-b-xl" />
-                </div>
-                {/* Soft Contact Ambient Drop Shadow */}
-                <div className="w-[90%] h-3.5 mx-auto rounded-[100%] bg-slate-950/80 blur-md -mt-2 relative z-0 pointer-events-none" />
+                <Image
+                  src="/Franchies/hero-main-image.webp"
+                  alt="MEATiN Outlet Storefront"
+                  width={1120}
+                  height={880}
+                  priority
+                  className="w-full h-auto object-contain block drop-shadow-xl"
+                />
               </div>
 
               {/* Desktop View (Interactive Spotlight Lens Cursor Reveal) */}
