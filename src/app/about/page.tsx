@@ -337,7 +337,7 @@ export default function AboutUsPage() {
             >
               <video
                 ref={videoRef}
-                src="/AboutUs/who-is-meatin-video.webm"
+                src="/AboutUs/who-is-meatin-video.mp4"
                 muted
                 playsInline
                 className="w-full h-full object-cover"

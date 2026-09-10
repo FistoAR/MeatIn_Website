@@ -178,7 +178,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
           </motion.div>
 
           {/* Visual Graphics Area (2nd Partition): Wrapped below (100% width) on screens <= 990px (below lg), 68% on desktop */}
-          <div className="relative z-20 w-full lg:w-[68%] flex-1 h-[130px] sm:h-[160px] lg:h-auto min-h-[130px] sm:min-h-[160px] lg:min-h-full flex flex-col justify-end overflow-hidden">
+          <div className="relative z-20 w-full lg:w-[68%] flex-1 h-[140px] sm:h-[170px] md:h-[210px] lg:h-auto min-h-[140px] sm:min-h-[170px] md:min-h-[210px] lg:min-h-full flex flex-col justify-end overflow-hidden">
             
             {/* Kerala's Original Meat Badge */}
             <motion.div
@@ -217,7 +217,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
               viewport={{ once: false }}
               style={{ x: personParallaxX, y: personParallaxY }}
               transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
-              className="absolute right-[2%] sm:right-[6%] md:right-[10%] lg:left-1/2 lg:-translate-x-1/2 bottom-0 z-10 w-[125px] sm:w-[165px] md:w-[195px] lg:w-[285px] xl:w-[320px] h-[85%] sm:h-[90%] lg:h-[95%] pointer-events-none"
+              className="absolute right-[10%] min-[390px]:right-[12%] sm:right-[16%] md:right-[18%] lg:left-1/2 lg:-translate-x-1/2 bottom-0 z-10 w-[115px] min-[390px]:w-[125px] sm:w-[165px] md:w-[195px] lg:w-[285px] xl:w-[320px] h-[88%] sm:h-[92%] lg:h-[95%] pointer-events-none"
             >
               <motion.div
                 animate={{
@@ -236,6 +236,43 @@ export default function TrustedQualityBanner({ className }: { className?: string
                   fill
                   className="object-contain object-bottom filter drop-shadow-2xl"
                   priority
+                />
+              </motion.div>
+            </motion.div>
+
+            {/* Chicken Popup */}
+            <motion.div
+              initial={{ opacity: 0, y: 45, scale: 0.8 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false }}
+              transition={{
+                type: "spring",
+                stiffness: 240,
+                damping: 15,
+                mass: 0.85,
+                delay: 0.2,
+              }}
+              className="absolute right-[-1%] min-[390px]:right-[1%] sm:right-[3%] md:right-[5%] lg:right-auto lg:left-[65%] lg:-translate-x-1/2 bottom-0 z-[9] w-[85px] min-[390px]:w-[98px] sm:w-[135px] md:w-[165px] lg:w-[285px] xl:w-[320px] h-[82%] sm:h-[88%] lg:h-[95%] pointer-events-none origin-bottom"
+            >
+              <motion.div
+                animate={{
+                  y: [0, -6, 0],
+                  rotate: [0, 2, -1.5, 0],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 3.6,
+                  ease: "easeInOut",
+                }}
+                className="relative w-full h-full origin-bottom" 
+              >
+                <Image
+                  src="/TrustedQualityBanner/character-popup.webp"
+                  alt="Character Popup"
+                  fill
+                  className="object-contain object-bottom filter drop-shadow-2xl"
+                  priority
+                  style={{ rotate: "18deg", scale: "0.92" }}
                 />
               </motion.div>
             </motion.div>
