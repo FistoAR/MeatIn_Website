@@ -342,12 +342,14 @@ export default function FranchisePage() {
           {/* Header Title Block (Matching Reference Image) */}
           <div className="text-center shrink-0 mt-0.5 lg:mt-2 py-0 z-20 relative w-full">
             {/* Top Right Script Slogan: Good Meat Brighter Communities */}
-            <div className="absolute right-4 sm:right-12 lg:right-20 xl:right-28 2xl:right-36 top-0 -rotate-6 hidden sm:block">
-              <span className="block text-[#0B3C2A] font-extrabold text-xs lg:text-sm xl:text-base 2xl:text-lg font-serif italic leading-tight text-right drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
-                Good Meat<br />
-                Brighter<br />
-                Communities
-              </span>
+            <div className="absolute right-2 sm:right-6 lg:right-10 xl:right-14 2xl:right-16 top-0 hidden sm:block w-16 sm:w-20 md:w-28 lg:w-32 xl:w-36 h-auto">
+              <Image
+                src="/Franchies/good-meat-brigher-communities.webp"
+                alt="Good Meat Brighter Communities"
+                width={200}
+                height={150}
+                className="w-full h-auto object-contain drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]"
+              />
             </div>
 
             {/* Subtitle: — GROWTH WITH — */}
@@ -364,13 +366,15 @@ export default function FranchisePage() {
             </motion.div>
 
             {/* Main Brand Title: MEATiN */}
-            <h1 className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black font-barlow-condensed tracking-wider uppercase leading-none flex items-center justify-center drop-shadow-[0_2px_12px_rgba(255,255,255,0.9)] mt-0.5">
-              <span className="text-[#0B3C2A] inline-block">MEAT</span>
-              <span className="text-[#8DC541] inline-block relative">
-                i
-                <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-2 h-2 xl:w-2.5 xl:h-2.5 bg-[#D93829] rounded-sm" />
-              </span>
-              <span className="text-[#D93829] inline-block">N</span>
+            <h1 className="flex items-center justify-center mt-1 mb-0.5">
+              <Image
+                src="/Franchies/meatin-logo-text.webp"
+                alt="MEATiN"
+                width={300}
+                height={90}
+                className="w-auto h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 2xl:h-20 object-contain"
+                priority
+              />
             </h1>
 
             {/* Subtitle below MEATiN: A HEALTHIER TOMORROW TOGETHER */}
@@ -797,7 +801,16 @@ export default function FranchisePage() {
       {/* ============================================================ */}
       {/* SECTION 2: INTERACTIVE PRESENCE MAP (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
-      <section className="relative w-full pt-8 sm:pt-12 lg:pt-14 xl:pt-16 pb-24 sm:pb-32 lg:pb-36 xl:pb-40 2xl:pb-44 flex flex-col justify-between bg-[#EFF2EB] overflow-x-clip select-none">
+      <section className="relative w-full pt-8 sm:pt-12 lg:pt-14 xl:pt-16 pb-24 sm:pb-32 lg:pb-36 xl:pb-40 2xl:pb-44 flex flex-col justify-between bg-[#EFF2EB] overflow-x-clip select-none" >
+            {/* background image layer absolute */}
+            <div className="absolute top-0 left-0 w-full h-full z-10 opacity-[0.5]">
+              <Image
+                src="/Franchies/bg-pattern-layer.webp"
+                alt="bg-pattern-layer"
+                fill
+                className="object-cover"
+              />
+            </div>
         {/* Content Wrapper */}
         <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-24 flex-1 flex flex-col justify-center relative z-30 max-w-[1800px] mx-auto">
           {/* Flexbox Layout: Left Content Container & Right Map/Image Container */}
@@ -1120,8 +1133,8 @@ export default function FranchisePage() {
                       }}
                       className="absolute z-40 cursor-pointer flex items-center select-none pointer-events-auto"
                       style={{
-                        left: "26.2%",
-                        top: "70%",
+                        left: "20.2%",
+                        top: "75%",
                         transform: "translate(-45%, -95%)",
                       }}
                       onClick={() => {
@@ -1218,8 +1231,8 @@ export default function FranchisePage() {
                             {/* Dark Green Tag Label Pill */}
                             <div
                               className={`-ml-1 bg-gradient-to-r from-[#043312] via-[#0B4D1E] to-[#125D25] text-white px-1.5 sm:px-2 py-[1px] rounded-r-lg sm:rounded-r-xl rounded-l-sm border-[1px] sm:border-[1.5px] border-white shadow-lg flex items-center justify-center font-bold font-manrope text-[8px] sm:text-[8.5px] md:text-[9px] lg:text-[9.5px] xl:text-[10px] 2xl:text-[11px] tracking-wide whitespace-nowrap transition-transform duration-300 ${isSelected
-                                  ? "scale-110 border-yellow-300 ring-2 ring-yellow-400/50"
-                                  : ""
+                                ? "scale-110 border-yellow-300 ring-2 ring-yellow-400/50"
+                                : ""
                                 }`}
                             >
                               <span>{outlet.city}</span>
@@ -1385,12 +1398,12 @@ export default function FranchisePage() {
               delay: 0.3,
               ease: "easeOut",
             }}
-            className="absolute bottom-0 sm:bottom-1 left-1 sm:left-3 md:left-6 lg:left-8 xl:left-14 2xl:left-20 [@media(min-width:1800px)]:left-28 z-20 pointer-events-none w-[150px] min-[420px]:w-[180px] sm:w-[220px] md:w-[260px] lg:w-[220px] xl:w-[260px] 2xl:w-[310px] [@media(min-width:1800px)]:w-[350px]"
+            className="absolute bottom-0 sm:bottom-1 left-0 z-20 pointer-events-none w-[185px] min-[420px]:w-[220px] sm:w-[270px] md:w-[320px] lg:w-[305px] xl:w-[355px] 2xl:w-[425px] [@media(min-width:1800px)]:w-[475px]"
           >
             <Image
-              src="/Franchies/truck-image.webp"
+              src="/Franchies/franchise-truck-image.webp"
               alt="MEATiN Delivery Truck"
-              width={500}
+              width={520}
               height={350}
               priority
               className="w-full h-auto object-contain object-bottom drop-shadow-xl"
