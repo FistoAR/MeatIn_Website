@@ -250,7 +250,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
                 stiffness: 240,
                 damping: 15,
                 mass: 0.85,
-                delay: 0.2,
+                delay: 0.5,
               }}
               className="absolute right-[-1%] min-[390px]:right-[1%] sm:right-[3%] md:right-[5%] lg:right-auto lg:left-[65%] lg:-translate-x-1/2 bottom-0 z-[9] w-[85px] min-[390px]:w-[98px] sm:w-[135px] md:w-[165px] lg:w-[285px] xl:w-[320px] h-[82%] sm:h-[88%] lg:h-[95%] pointer-events-none origin-bottom"
             >

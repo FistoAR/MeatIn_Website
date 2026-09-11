@@ -221,84 +221,88 @@ export default function AboutUsPage() {
     <div className="min-h-screen bg-[#F3F3F3] font-manrope overflow-x-clip">
 
       {/* 1. HERO HEADER BANNER SECTION WITH INTEGRATED STATS */}
-      <section className="relative w-full bg-black pt-[6rem] sm:pt-[6.5rem] lg:pt-[7rem] xl:pt-[7.5rem] pb-10 md:pb-16 lg:pb-8 xl:pb-10 2xl:pb-12 overflow-hidden flex flex-col justify-between">
-        {/* Background Image Overlay with full opacity from public folder */}
-        <div className="absolute inset-0 pointer-events-none z-0 bg-black">
-          {/* On desktop: image covers 70% right width with full vertical framing */}
-          <div className="absolute top-0 bottom-0 right-0 left-0 lg:left-[30%] w-full lg:w-[70%] overflow-hidden">
-            <Image
-              src="/AboutUs/about-hero-img.webp"
-              alt="MEATiN Integrated Farming"
-              fill
-              priority
-              className="object-cover object-top lg:object-[center_15%]"
-            />
-            {/* Linear gradient overlay matching Figma design */}
-            <div
-              className="absolute inset-0 pointer-events-none z-10"
-              style={{
-                background:
-                  "linear-gradient(0.65deg, #000000 3.08%, rgba(0, 0, 0, 0.595944) 18.93%, rgba(0, 0, 0, 0) 30.13%), linear-gradient(90deg, #000000 3.22%, rgba(0, 0, 0, 0) 27.74%)",
-              }}
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent lg:hidden pointer-events-none" />
+      <section className="relative w-full min-h-[85vh] lg:min-h-[90vh] xl:min-h-[820px] bg-slate-900 pt-[6.5rem] sm:pt-[7rem] lg:pt-[7.5rem] pb-8 lg:pb-12 overflow-hidden flex flex-col justify-between">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/AboutUs/about-hero-img.webp"
+            alt="MEATiN Facility"
+            fill
+            priority
+            className="object-cover object-center"
+          />
         </div>
 
-        {/* Top/Middle Heading Content */}
-        <div className="w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-6 sm:px-8 lg:px-[2.5vw] relative z-10 flex-1 flex flex-col justify-center my-6 lg:my-8 xl:my-10 2xl:my-12">
+        {/* Top/Middle Content Area: Left Glass Card */}
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 flex-1 flex items-center pt-4 lg:pt-8 pb-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-4 max-w-4xl"
+            className="w-full sm:w-[540px] lg:w-[560px] bg-[#1d3d2e]/70 backdrop-blur-md rounded-[20px] p-6 sm:p-8 lg:p-10 border border-white/20 shadow-2xl"
           >
-            <h2 className="text-[#D4A437] font-extrabold font-manrope tracking-widest text-sm sm:text-md uppercase flex items-center gap-2">
-              <span className="w-6 h-[2px] bg-[#D4A437]" /> WHAT IS <span className="normal-case">MEATiN</span>?
-            </h2>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[54px] xl:text-[68px] 2xl:text-[5.8vw] font-bold font-barlow-condensed tracking-relaxed uppercase leading-[0.92] !mt-0.5">
-              <span className="text-white block">WE ENGINEER</span>
-              <span className="text-[#8DC541] block">QUALITY INTO</span>
-              <span className="text-white block">EVERY CUT.</span>
+            {/* Tagline */}
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-5 h-[2px] bg-[#8DC541]" />
+              <span className="text-[#8DC541] font-bold text-xs sm:text-sm tracking-[0.18em] uppercase font-manrope">
+                WHAT IS MEATiN?
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[56px] xl:text-[62px] font-bold font-barlow-condensed tracking-normal uppercase leading-[0.95] text-white">
+              WE ENGINEER <br />
+              <span className="text-[#8DC541]">QUALITY INTO</span> <br />
+              EVERY CUT<span className="text-[#E31E24]">.</span>
             </h1>
-            <p className="text-slate-100 text-xs sm:text-sm md:text-base font-semibold max-w-xl leading-relaxed mt-4">
+
+            {/* Subtext */}
+            <p className="text-white/90 text-sm sm:text-base font-normal leading-relaxed mt-5 font-manrope max-w-md">
               Integrated farming, scientific processing, and cold-chain distribution.
             </p>
           </motion.div>
         </div>
 
-        {/* Bottom Stats Row */}
-        <div className="w-full max-w-[1400px] lg:max-w-[95vw] mx-auto px-6 sm:px-8 lg:px-[2.5vw] relative z-10 pb-8">
+        {/* Bottom Glassmorphism Stats Bar */}
+        <div className="w-full px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, margin: "-50px" }}
-            className="w-full pt-4"
+            viewport={{ once: true }}
+            className="w-full max-w-fit bg-white/75 backdrop-blur-md rounded-[22px] p-4 sm:p-5 lg:py-5 lg:px-8 border border-white/80 shadow-2xl"
           >
-            <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8 lg:gap-y-0 lg:divide-x lg:divide-white/20 items-start">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-y-5 gap-x-6 lg:gap-x-0 lg:divide-x lg:divide-black/20 items-center">
               {stats.map((stat, idx) => {
                 return (
-                  <motion.div key={idx} variants={springScale} className="flex flex-col items-start lg:items-center text-left lg:text-center px-2 sm:px-4 lg:px-4 col-span-1 last:col-span-2 lg:last:col-span-1">
-                    {/* Big Value Number */}
-                    <div className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl 2xl:text-[2.4rem] font-medium text-[#8DC541] font-chau tracking-tight leading-none text-left lg:text-center">
+                  <motion.div
+                    key={idx}
+                    variants={springScale}
+                    className="flex flex-col items-start px-2 sm:px-4 lg:px-6 shrink-0"
+                  >
+                    {/* Big Counter Number */}
+                    <div className="text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px] font-bold text-[#064823] font-barlow-condensed tracking-tight leading-none">
                       <Counter value={stat.value} />
                     </div>
-                    {/* Red underline bar under the number */}
-                    <div className="w-10 sm:w-12 lg:w-10 h-[2px] bg-[#F7840F] mt-1.5 mb-3" />
-                    {/* Icon + Stacked Labels */}
-                    <div className="flex items-center lg:justify-center gap-2 sm:gap-2.5 w-full">
-                      <div className="w-8 h-8 sm:w-9 sm:h-9 lg:w-8 lg:h-8 shrink-0 relative">
+
+                    {/* Icon + Label Row */}
+                    <div className="flex items-center gap-2 mt-2">
+                      <div className="w-6 h-6 sm:w-7 sm:h-7 shrink-0 relative flex items-center justify-center">
                         <Image
                           src={stat.icon}
                           alt={stat.label}
-                          fill
-                          className="object-contain"
+                          width={28}
+                          height={28}
+                          className="w-full h-full object-contain [filter:invert(22%)_sepia(45%)_saturate(1480%)_hue-rotate(114deg)_brightness(92%)_contrast(95%)]"
                         />
                       </div>
-                      <div className="text-left">
-                        <h4 className="text-[10px] sm:text-xs lg:text-xs xl:text-sm font-bold text-[#D4A437] tracking-wider leading-tight uppercase font-barlow-condensed">{stat.label}</h4>
-                        <p className="text-[9px] sm:text-[10px] lg:text-[10px] xl:text-xs text-slate-300 font-semibold tracking-wide uppercase leading-tight mt-0.5 font-manrope">{stat.desc}</p>
+                      <div className="flex flex-col leading-tight">
+                        <span className="text-[10px] sm:text-[11px] font-bold text-[#E31E24] tracking-wider uppercase font-barlow-condensed whitespace-nowrap">
+                          {stat.label}
+                        </span>
+                        <span className="text-[9px] sm:text-[10px] font-medium text-slate-900 uppercase tracking-tight font-manrope whitespace-nowrap">
+                          {stat.desc}
+                        </span>
                       </div>
                     </div>
                   </motion.div>
