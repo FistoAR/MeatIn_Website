@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Clock, Sparkles } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 
 export default function VlogComingSoonPage() {
   return (
@@ -12,7 +13,7 @@ export default function VlogComingSoonPage() {
       <div className="absolute top-1/3 left-1/4 w-[250px] h-[250px] bg-[#D4A437]/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-1/3 right-1/4 w-[250px] h-[250px] bg-[#064823]/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="text-center max-w-2xl mx-auto space-y-6 relative z-10">
+      <div className="text-center max-w-2xl mx-auto space-y-6 relative z-10 flex flex-col items-center">
         {/* Top Decorative Tri-Color Dots */}
         <div className="flex items-center justify-center gap-2 mb-2">
           <span className="w-3 h-3 rounded-full bg-[#F7840F] shadow-sm animate-pulse" />
@@ -24,6 +25,19 @@ export default function VlogComingSoonPage() {
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F7840F]/10 text-[#F7840F] border border-[#F7840F]/20 font-black text-xs uppercase tracking-widest">
           <Sparkles className="w-3.5 h-3.5" />
           <span><span className="normal-case">MEATiN</span> VLOG</span>
+        </div>
+
+        {/* Chicken GIF Animation */}
+        <div className="relative w-48 h-48 sm:w-64 sm:h-64 my-2 flex items-center justify-center">
+          <Image
+            src="/Product/chicken-gif.gif"
+            alt="MEATiN Chicken Animation"
+            width={256}
+            height={256}
+            className="w-full h-full object-contain"
+            priority
+            unoptimized
+          />
         </div>
 
         {/* Main Heading */}

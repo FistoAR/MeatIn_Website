@@ -8,7 +8,7 @@ export default function MeetOurTeamBanner() {
       {/* Desktop Banner View */}
       <div className="hidden md:block w-full relative">
         <img
-          src="/MeetOurTeam/banner/meet-our-team-banner.svg"
+          src="/MeetOurTeam/banner/banner.svg"
           alt="Meet Our Team Banner"
           className="w-full h-auto block select-none pointer-events-none"
         />

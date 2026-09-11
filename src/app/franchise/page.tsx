@@ -1133,7 +1133,7 @@ export default function FranchisePage() {
                       }}
                       className="absolute z-40 cursor-pointer flex items-center select-none pointer-events-auto"
                       style={{
-                        left: "20.2%",
+                        left: "23.2%",
                         top: "75%",
                         transform: "translate(-45%, -95%)",
                       }}
