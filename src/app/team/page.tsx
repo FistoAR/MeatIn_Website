@@ -13,7 +13,7 @@ interface TeamMember {
   image: string;
   linkedin?: string;
   email?: string;
-  shiftImage?: boolean;
+  shiftImage?: boolean; 
 }
 
 const ledByMembers: TeamMember[] = [

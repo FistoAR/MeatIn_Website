@@ -4181,6 +4181,7 @@ export default function KnowYourMeatPage() {
                       </div>
                       <span className="font-medium">
                         PERFECT FOR EVERY RECIPE
+
                       </span>
                     </div>
                   </div>
@@ -4327,7 +4328,7 @@ export default function KnowYourMeatPage() {
                       }
                       transition={{ duration: 0.5, ease: "easeOut" }}
                     >
-                      <div className="flex flex-col items-center gap-3 cursor-pointer group">
+                      <div className="group flex flex-col items-center gap-2 cursor-pointer">
                         <div
                           className={`w-20 h-20 rounded-full border-[5px] bg-white flex items-center justify-center transition-all duration-500 ${
                             isHighlighted
@@ -4374,770 +4375,423 @@ export default function KnowYourMeatPage() {
         </div>
       </section>
 
-      {/* 3. Interactive Details Section - Only shown when activeMeatType === "chicken" */}
+      {/* 3. Interactive Details Section - 1:1 Match with Reference Layout */}
       <section
         ref={detailsSectionRef}
-        className={`relative z-30 w-full h-screen min-h-screen max-h-screen pt-[85px] md:pt-[95px] lg:pt-[105px] pb-4 flex items-center justify-center m-0 overflow-y-auto md:overflow-hidden transition-all duration-700 detail-section-wrap ${
+        className={`relative z-30 w-full min-h-screen pt-8 lg:pt-[2.5vw] pb-6 sm:pb-8 lg:pb-0 flex flex-col justify-between m-0 overflow-x-hidden bg-[#8DC541] transition-all duration-700 detail-section-wrap ${
           hasSelectedAnyPart && activeMeatType === "chicken"
             ? "block opacity-100 pointer-events-auto"
             : "hidden opacity-0 pointer-events-none"
         }`}
       >
-        {/* Pure Code Background: Darker Green (#46660E) + Doodle Pattern + Cream Paper Right Panel with Layered Ripped Edge */}
+        {/* Background Image Container */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          {/* Base Section 2 Off-White Cream Background (Left side behind product image) */}
-          <div className="absolute inset-0 bg-[#FAF7F2]" />
-
-          {/* Doodle Pattern Overlay across Left Cream Background */}
-          <div
-            className="absolute inset-0 opacity-[0.6] bg-repeat pointer-events-none"
-            style={{
-              backgroundImage: 'url("/Product/know-your-meat-bg.webp")',
-              backgroundSize: "800px",
-            }}
+          <Image
+            src="/Product/details/section-images/product-details-bg.webp"
+            alt="Section Background"
+            fill
+            priority
+            className="object-cover object-center w-full h-full"
           />
 
-          {/* Procedural Paper Tear SVG Filter Definition */}
-          <svg
-            className="absolute w-0 h-0 pointer-events-none"
-            aria-hidden="true"
-          >
-            <defs>
-              <filter
-                id="real-paper-tear"
-                x="-30%"
-                y="-30%"
-                width="160%"
-                height="160%"
-              >
-                <feTurbulence
-                  type="fractalNoise"
-                  baseFrequency="0.015 0.035"
-                  numOctaves="3"
-                  result="noise"
-                />
-                <feDisplacementMap
-                  in="SourceGraphic"
-                  in2="noise"
-                  scale="4.0"
-                  xChannelSelector="R"
-                  yChannelSelector="G"
-                  result="displaced"
-                />
-
-                <feTurbulence
-                  type="turbulence"
-                  baseFrequency="0.002 0.02"
-                  numOctaves="2"
-                  result="spotNoise"
-                />
-                <feColorMatrix
-                  in="spotNoise"
-                  type="matrix"
-                  values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 4 -1.8"
-                  result="spotMask"
-                />
-
-                <feDropShadow
-                  in="displaced"
-                  dx="-3"
-                  dy="1.5"
-                  stdDeviation="2"
-                  floodColor="#061208"
-                  floodOpacity="0.3"
-                  result="fullShadow"
-                />
-
-                <feComposite
-                  in="fullShadow"
-                  in2="spotMask"
-                  operator="in"
-                  result="sporadicShadow"
-                />
-
-                <feMerge>
-                  <feMergeNode in="sporadicShadow" />
-                  <feMergeNode in="displaced" />
-                </feMerge>
-              </filter>
-            </defs>
-          </svg>
-
-          {/* Desktop Right Side Bright Green Panel */}
-          <div className="hidden md:block absolute top-0 bottom-0 right-0 left-[46%] lg:left-[48%] xl:left-[50%] z-0 bg-[#8DC541] overflow-hidden">
-            {/* Doodle Pattern Overlay on Green Right Background */}
-            <div
-              className="absolute inset-0 opacity-[0.55] bg-repeat pointer-events-none mix-blend-multiply"
-              style={{
-                backgroundImage: 'url("/Product/know-your-meat-bg.webp")',
-                backgroundSize: "800px",
-              }}
+          {/* Floating single leaf - left side */}
+          <div className="hidden lg:block absolute top-[16vw] left-[1.5vw] w-[4.5vw] h-auto z-10 opacity-90 animate-pulse">
+            <Image
+              src="/Product/details/section-images/single-leaf-image-1.webp"
+              alt="Leaf"
+              width={120}
+              height={120}
+              className="w-full h-auto object-contain"
             />
-            {/* Real Procedural Hand-Torn Paper SVG Edge Divider */}
-            <svg
-              className="absolute top-0 bottom-0 -left-[45px] h-full w-[50px] overflow-visible"
-              viewBox="0 0 50 1000"
-              preserveAspectRatio="none"
-              style={{ filter: "url(#real-paper-tear)" }}
-            >
-              {/* Dotted Dark Olive Green Torn Fiber Shadow 1 */}
-              <path
-                d="M 35.0 175.0 L 34.7 181.2 L 33.9 187.5 L 31.9 193.8 L 30.7 200.0 L 30.3 206.2 L 28.0 212.5 L 27.6 218.8 L 29.3 225.0 L 28.7 231.2 L 29.4 237.5 L 29.7 243.8 L 31.5 250.0 L 32.2 256.2 L 32.2 262.5 L 33.6 268.8"
-                fill="none"
-                stroke="#5B8817"
-                strokeWidth="3"
-                strokeDasharray="2 3"
-                strokeLinecap="round"
-                className="opacity-40"
-                transform="translate(-2, 0)"
-              />
-
-              {/* Dotted Dark Olive Green Torn Fiber Shadow 2 */}
-              <path
-                d="M 31.2 512.5 L 30.1 518.8 L 29.7 525.0 L 26.8 531.2 L 25.7 537.5 L 24.5 543.8 L 24.2 550.0 L 23.5 556.2 L 24.0 562.5 L 24.5 568.8 L 23.1 575.0 L 24.5 581.2 L 24.4 587.5 L 25.4 593.8 L 27.9 600.0 L 27.1 606.2"
-                fill="none"
-                stroke="#5B8817"
-                strokeWidth="3"
-                strokeDasharray="2 3"
-                strokeLinecap="round"
-                className="opacity-40"
-                transform="translate(-2, 0)"
-              />
-
-              {/* Dotted Dark Olive Green Torn Fiber Shadow 3 */}
-              <path
-                d="M 29.0 775.0 L 29.6 781.2 L 27.6 787.5 L 27.9 793.8 L 27.8 800.0 L 26.9 806.2 L 25.7 812.5 L 25.4 818.8 L 26.5 825.0 L 27.6 831.2 L 28.7 837.5 L 28.5 843.8 L 31.2 850.0 L 32.1 856.2 L 32.8 862.5 L 33.0 868.8"
-                fill="none"
-                stroke="#5B8817"
-                strokeWidth="3"
-                strokeDasharray="2 3"
-                strokeLinecap="round"
-                className="opacity-40"
-                transform="translate(-2, 0)"
-              />
-
-              {/* Main Green Paper Sheet Path */}
-              <path
-                d="M 50 0 L 31.8 0.0 L 31.3 6.2 L 32.2 12.5 L 30.9 18.8 L 33.2 25.0 L 32.5 31.2 L 33.3 37.5 L 32.4 43.8 L 32.7 50.0 L 32.7 56.2 L 34.6 62.5 L 35.0 68.8 L 33.5 75.0 L 35.1 81.2 L 35.2 87.5 L 35.0 93.8 L 34.7 100.0 L 34.3 106.2 L 35.3 112.5 L 36.3 118.8 L 35.0 125.0 L 34.8 131.2 L 36.2 137.5 L 34.8 143.8 L 35.2 150.0 L 34.3 156.2 L 36.1 162.5 L 34.0 168.8 L 35.0 175.0 L 34.7 181.2 L 33.9 187.5 L 31.9 193.8 L 30.7 200.0 L 30.3 206.2 L 28.0 212.5 L 27.6 218.8 L 29.3 225.0 L 28.7 231.2 L 29.4 237.5 L 29.7 243.8 L 31.5 250.0 L 32.2 256.2 L 32.2 262.5 L 33.6 268.8 L 32.6 275.0 L 32.4 281.2 L 31.3 287.5 L 31.1 293.8 L 32.8 300.0 L 31.0 306.2 L 32.4 312.5 L 31.2 318.8 L 30.7 325.0 L 32.6 331.2 L 32.5 337.5 L 32.6 343.8 L 31.0 350.0 L 31.0 356.2 L 30.4 362.5 L 31.4 368.8 L 31.9 375.0 L 30.9 381.2 L 32.8 387.5 L 32.1 393.8 L 30.5 400.0 L 32.5 406.2 L 32.3 412.5 L 31.3 418.8 L 32.1 425.0 L 32.2 431.2 L 30.6 437.5 L 31.0 443.8 L 30.9 450.0 L 32.1 456.2 L 32.6 462.5 L 30.3 468.8 L 32.2 475.0 L 31.5 481.2 L 31.8 487.5 L 30.5 493.8 L 31.3 500.0 L 30.3 506.2 L 31.2 512.5 L 30.1 518.8 L 29.7 525.0 L 26.8 531.2 L 25.7 537.5 L 24.5 543.8 L 24.2 550.0 L 23.5 556.2 L 24.0 562.5 L 24.5 568.8 L 23.1 575.0 L 24.5 581.2 L 24.4 587.5 L 25.4 593.8 L 27.9 600.0 L 27.1 606.2 L 26.3 612.5 L 27.3 618.8 L 25.4 625.0 L 26.0 631.2 L 26.9 637.5 L 26.5 643.8 L 25.3 650.0 L 26.0 656.2 L 26.8 662.5 L 26.3 668.8 L 24.9 675.0 L 25.5 681.2 L 26.4 687.5 L 27.3 693.8 L 26.2 700.0 L 26.8 706.2 L 27.4 712.5 L 27.4 718.8 L 27.5 725.0 L 27.2 731.2 L 26.4 737.5 L 27.5 743.8 L 27.5 750.0 L 27.3 756.2 L 28.4 762.5 L 29.7 768.8 L 29.0 775.0 L 29.6 781.2 L 27.6 787.5 L 27.9 793.8 L 27.8 800.0 L 26.9 806.2 L 25.7 812.5 L 25.4 818.8 L 26.5 825.0 L 27.6 831.2 L 28.7 837.5 L 28.5 843.8 L 31.2 850.0 L 32.1 856.2 L 32.8 862.5 L 33.0 868.8 L 33.5 875.0 L 33.8 881.2 L 33.3 887.5 L 35.1 893.8 L 35.6 900.0 L 35.1 906.2 L 35.0 912.5 L 35.1 918.8 L 33.5 925.0 L 33.7 931.2 L 34.1 937.5 L 34.3 943.8 L 35.2 950.0 L 33.8 956.2 L 34.9 962.5 L 34.8 968.8 L 35.0 975.0 L 33.5 981.2 L 34.4 987.5 L 33.8 993.8 L 32.9 1000.0 L 50 1000 Z"
-                className="fill-[#8DC541]"
-              />
-            </svg>
+          </div>
+          {/* Floating single leaf - right side */}
+          <div className="hidden lg:block absolute bottom-[18vw] right-[2vw] w-[5.5vw] h-auto z-10 opacity-90 animate-pulse">
+            <Image
+              src="/Product/details/section-images/single-leaf-image-right-corner.webp"
+              alt="Leaf"
+              width={140}
+              height={140}
+              className="w-full h-auto object-contain"
+            />
           </div>
         </div>
 
-        {/* Mobile-only close button */}
-        <button
-          onClick={() => setHasSelectedAnyPart(false)}
-          className="md:hidden absolute top-[74px] right-3 z-50 w-8 h-8 rounded-full bg-white/90 shadow-md flex items-center justify-center text-slate-700 hover:bg-white active:scale-90 transition-all duration-200 border border-slate-200"
-          aria-label="Close"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-        <div className="relative z-10 w-full h-full flex flex-col md:flex-row items-stretch px-3 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-          {/* Left Column (50% flex) - Green panel area with 70% showcase preview & 30% bottom carousel */}
-          <motion.div
-            key={`detail-left-${manuallySelectedPartIdx}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full md:w-1/2 relative h-auto md:h-full flex flex-col items-center justify-between py-2 md:py-4 px-3 sm:px-6 md:px-4 lg:px-6 select-none detail-left-col"
-          >
-            {/* Top 70%: Showcase Area for Image and 3D Model */}
-            <div className="w-full h-auto md:h-[70%] detail-top-70 flex items-center justify-center relative overflow-visible">
-              <div
-                className={`relative w-full h-full detail-showcase-box ${
-                  activeViewTab === "3d" ? "is-3d" : ""
-                } flex items-center justify-center ml-0 md:ml-0 lg:-ml-4 xl:-ml-8 2xl:-ml-12 overflow-visible`}
-              >
-                {/* Showcase Box Content: Interactive 3D Model Viewer OR 2D Product Image */}
-                <div
-                  ref={centerCircleRef}
-                  className="relative w-full h-full flex items-center justify-center z-30 overflow-visible"
-                >
-                  {/* CLEAN INTERACTIVE 360° 3D GLB MODEL VIEWER (Rendered only when 3D tab is active) */}
-                  {activeViewTab === "3d" && (
-                    <div
-                      onWheel={(e) => {
-                        e.stopPropagation();
-                      }}
-                      className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-auto z-40 overflow-visible"
-                    >
-                      <div className="w-full h-full relative flex items-center justify-center overflow-visible">
-                        {/* @ts-ignore */}
-                        <model-viewer
-                          src={
-                            partGlbMap[
-                              chickenParts[manuallySelectedPartIdx].name
-                            ] || "/Product/details/glb/drumsticks.glb"
-                          }
-                          alt={`360 3D Model of ${chickenParts[manuallySelectedPartIdx].name}`}
-                          auto-rotate
-                          camera-controls
-                          bounds="tight"
-                          field-of-view="35deg"
-                          min-field-of-view="10deg"
-                          max-field-of-view="75deg"
-                          shadow-intensity="1.5"
-                          shadow-softness="0.8"
-                          exposure="1.25"
-                          camera-orbit="0deg 75deg 105%"
-                          rotation-per-second="30deg"
-                          interaction-prompt="none"
-                          loading="eager"
-                          reveal="auto"
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            backgroundColor: "transparent",
-                            filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.35))",
-                            overflow: "visible",
-                          }}
-                        />
-                      </div>
-                    </div>
-                  )}
+        {/* TOP MAIN CONTENT CONTAINER */}
+        <div className="relative w-full max-w-[100vw] mx-auto px-4 lg:px-[3.5vw] flex-1 flex flex-col justify-start z-10 pt-2 lg:pt-[0.5vw]">
+          
+          {/* Top Left Slogan Badge: Goodness Begins at Our Farms + Two Leaves */}
+          <div className="hidden lg:flex flex-col items-start absolute top-[1.2vw] left-[3.5vw] z-20 pointer-events-none">
+            <div className="w-[13.5vw] h-auto">
+              <Image
+                src="/Product/details/section-images/goodness-begins-image.webp"
+                alt="Goodness Begins at Our Farms"
+                width={260}
+                height={160}
+                className="w-full h-auto object-contain drop-shadow-md"
+              />
+            </div>
+            <div className="w-[7.5vw] h-auto -mt-[1.2vw] ml-[2vw]">
+              <Image
+                src="/Product/details/section-images/two-leaves-images.webp"
+                alt="Leaves"
+                width={140}
+                height={100}
+                className="w-full h-auto object-contain"
+              />
+            </div>
+          </div>
 
-                  {/* 2D Image View (Raw, Platter, or Packed) */}
-                  {activeViewTab !== "3d" && (
-                    <div
-                      className={`relative w-full h-full flex items-center justify-center transition-opacity duration-300 pointer-events-none ${
-                        isLandedInSection2
-                          ? "opacity-100"
-                          : "opacity-0"
-                      }`}
-                    >
-                      <img
-                        ref={stationaryImgRef}
-                        src={
-                          activeViewTab === "raw"
-                            ? chickenParts[manuallySelectedPartIdx].img
-                            : activeViewTab === "platter"
-                              ? chickenParts[manuallySelectedPartIdx]
-                                  .platterImg ||
-                                chickenParts[manuallySelectedPartIdx].img
-                              : "/Product/details/packedProduct.webp"
-                        }
-                        alt={chickenParts[manuallySelectedPartIdx]?.name || "Chicken Part"}
-                        className={`${
-                          chickenParts[manuallySelectedPartIdx]?.name
-                            .toLowerCase()
-                            .includes("wing")
-                            ? "w-[75vw] sm:w-[65vw] md:w-[35vw]"
-                            : "w-[60vw] sm:w-[50vw] md:w-[20vw]"
-                        } h-full object-contain filter drop-shadow-2xl transition-all duration-300`}
-                      />
-                    </div>
-                  )}
+          {/* Top Center Title Header */}
+          <div className="text-center w-full max-w-[90%] sm:max-w-[80%] lg:max-w-[42vw] mx-auto z-20 pt-1 lg:pt-[0.2vw]">
+            <h4 className="text-xs sm:text-sm lg:text-[1.15vw] font-black text-slate-800 tracking-widest uppercase font-barlow-condensed leading-none">
+              FRESH PREMIUM CHICKEN
+            </h4>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[3.2vw] font-black text-[#E31E24] tracking-tight uppercase font-barlow-condensed leading-none mt-1 lg:mt-[0.3vw] drop-shadow-sm">
+              {chickenParts[manuallySelectedPartIdx]?.name || "CHICKEN DRUMSTICK"}
+            </h2>
+            <p className="text-xs sm:text-sm lg:text-[0.78vw] font-semibold text-slate-700 font-manrope leading-relaxed max-w-[92%] sm:max-w-[80%] lg:max-w-[36vw] mx-auto mt-2 lg:mt-[0.5vw]">
+              {chickenParts[manuallySelectedPartIdx]?.desc ||
+                "Succulent chicken drumsticks cut with precision. Perfect for grilling, roasting, or frying, offering rich flavor and tender texture in every bite."}
+            </p>
+          </div>
+
+          {/* Top Right Sidebar */}
+          <div className="hidden lg:flex flex-col items-end gap-[1vw] absolute top-[1.2vw] right-[3.5vw] z-20 pointer-events-none">
+            {/* Nutrition Card */}
+            <div className="bg-[#FAF5E9]/90 backdrop-blur-sm rounded-[0.9vw] p-[0.75vw] border border-amber-900/10 shadow-md w-[14vw] flex flex-col gap-[0.4vw] pointer-events-auto">
+              <div className="flex items-center gap-[0.4vw]">
+                <div className="w-[1.4vw] h-[1.4vw] relative">
+                  <Image
+                    src="/Product/details/section-images/pure-natural-nutrition.webp"
+                    alt="Nutrition"
+                    fill
+                    className="object-contain"
+                  />
                 </div>
+                <span className="text-[0.75vw] font-black text-[#E31E24] tracking-wider uppercase font-barlow-condensed">
+                  NUTRITION HIGHLIGHTS
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-[0.3vw] pt-[0.2vw] border-t border-slate-200/80 text-[0.65vw] font-bold text-slate-800 font-manrope">
+                <div>Protein: <span className="font-extrabold text-[#064823]">24g</span></div>
+                <div>Calories: <span className="font-extrabold text-[#064823]">165 kcal</span></div>
+                <div>Fat: <span className="font-extrabold text-[#064823]">7.5g</span></div>
+                <div>Carbs: <span className="font-extrabold text-[#064823]">0g</span></div>
               </div>
             </div>
 
-            {/* Bottom 30%: Carousel Controls Bar */}
-            <div className="w-full h-auto md:h-[30%] detail-bottom-30 flex items-center justify-center relative pb-4 md:pb-8">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.15 }}
-                className="detail-carousel-bar flex items-center justify-center gap-1.5 sm:gap-2.5 md:gap-2 lg:gap-2.5 xl:gap-3.5 z-30 ml-0 md:ml-0 lg:-ml-4 xl:-ml-8 2xl:-ml-16 mt-0 relative -top-3 md:-top-5"
-              >
-                {/* Left Arrow Button */}
-                <button
-                  onClick={() => {
-                    setActiveViewTab((prev) =>
-                      prev === "raw"
-                        ? "3d"
-                        : prev === "3d"
-                          ? "packed"
-                          : prev === "packed"
-                            ? "platter"
-                            : "raw",
-                    );
-                  }}
-                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-white text-slate-800 shadow-md flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
-                  title="Previous Card"
-                >
-                  <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                </button>
-
-                {/* Thumbnail 1: Raw Cut Part Image */}
-                <button
-                  onClick={() => setActiveViewTab("raw")}
-                  className={`relative w-[76px] xs:w-[86px] sm:w-[96px] md:w-[98px] lg:w-[114px] xl:w-[128px] 2xl:w-[142px] aspect-[679/738] rounded-xl sm:rounded-2xl overflow-hidden p-1.5 sm:p-2.5 transition-all duration-300 cursor-pointer detail-carousel-btn bg-[#FEF6DB] shrink-0 ${
-                    activeViewTab === "raw"
-                      ? "border-2 sm:border-4 border-[#D62828] scale-105 shadow-lg"
-                      : "border border-[#F5E5B8] hover:scale-105"
-                  }`}
-                  title="Raw Cut View"
-                >
-                  <img
-                    src={chickenParts[manuallySelectedPartIdx].img}
-                    alt="Raw Cut"
-                    className="w-full h-full object-contain"
-                  />
-                </button>
-
-                {/* Thumbnail 2: Platter View Image */}
-                <button
-                  onClick={() => setActiveViewTab("platter")}
-                  className={`relative w-[76px] xs:w-[86px] sm:w-[96px] md:w-[98px] lg:w-[114px] xl:w-[128px] 2xl:w-[142px] aspect-[679/738] rounded-xl sm:rounded-2xl overflow-hidden p-1.5 sm:p-2.5 transition-all duration-300 cursor-pointer detail-carousel-btn bg-[#FEF6DB] shrink-0 ${
-                    activeViewTab === "platter"
-                      ? "border-2 sm:border-4 border-[#D62828] scale-105 shadow-lg"
-                      : "border border-[#F5E5B8] hover:scale-105"
-                  }`}
-                  title="Platter View"
-                >
-                  <img
-                    src={
-                      chickenParts[manuallySelectedPartIdx].platterImg ||
-                      chickenParts[manuallySelectedPartIdx].img
-                    }
-                    alt="Platter View"
-                    className="w-full h-full object-contain"
-                  />
-                </button>
-
-                {/* Thumbnail 3: Packed Product Image */}
-                <button
-                  onClick={() => setActiveViewTab("packed")}
-                  className={`relative w-[76px] xs:w-[86px] sm:w-[96px] md:w-[98px] lg:w-[114px] xl:w-[128px] 2xl:w-[142px] aspect-[679/738] rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer detail-carousel-btn shrink-0 ${
-                    activeViewTab === "packed"
-                      ? "border-2 sm:border-4 border-[#D62828] scale-105 shadow-lg"
-                      : "border-2 border-[#D62828] hover:scale-105"
-                  }`}
-                  title="Packed Product View"
-                >
-                  <img
-                    src="/Product/details/packedProduct.webp"
-                    alt="Packed Product"
-                    className="w-full h-full object-cover scale-[1.28]"
-                  />
-                </button>
-
-                {/* Thumbnail 4: 360 Image with 3D View Intimation Tag */}
-                <button
-                  onClick={() => setActiveViewTab("3d")}
-                  className={`relative w-[76px] xs:w-[86px] sm:w-[96px] md:w-[98px] lg:w-[114px] xl:w-[128px] 2xl:w-[142px] aspect-[679/738] rounded-xl sm:rounded-2xl overflow-hidden p-1.5 sm:p-2 transition-all duration-300 cursor-pointer detail-carousel-btn flex flex-col items-center justify-between shrink-0 ${
-                    activeViewTab === "3d"
-                      ? "border-2 sm:border-4 border-[#F2CE07] bg-white/50 scale-105"
-                      : "border-2 border-white/60 bg-white/20 hover:bg-white/40"
-                  }`}
-                  title="Click to view 360° 3D Model"
-                >
-                  {/* 360 Image */}
-                  <div className="relative w-full h-[65%] flex items-center justify-center">
-                    <img
-                      src="/Product/details/360.webp"
-                      alt="360 View"
-                      className="w-full h-full object-contain filter drop-shadow"
-                    />
-                  </div>
-                  {/* Intimation badge below 360 image */}
-                  <span className="w-full text-center bg-[#F2CE07] text-slate-900 font-extrabold text-[9px] sm:text-[10px] md:text-[11px] lg:text-[12px] py-1 rounded-md sm:rounded-lg uppercase tracking-wider font-manrope shadow-sm border border-white/90">
-                    3D View
-                  </span>
-                </button>
-
-                {/* Right Arrow Button */}
-                <button
-                  onClick={() => {
-                    setActiveViewTab((prev) =>
-                      prev === "raw"
-                        ? "platter"
-                        : prev === "platter"
-                          ? "packed"
-                          : prev === "packed"
-                            ? "3d"
-                            : "raw",
-                    );
-                  }}
-                  className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-white text-slate-800 shadow-md flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
-                  title="Next Card"
-                >
-                  <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </motion.div>
+            {/* Benefits Badge image */}
+            <div className="w-[13.5vw] h-auto">
+              <Image
+                src="/Product/details/section-images/benefits-texts.svg"
+                alt="Pure & Natural Meat"
+                width={260}
+                height={160}
+                className="w-full h-auto object-contain drop-shadow"
+              />
             </div>
-          </motion.div>
+          </div>
 
-          {/* Right Column (50% flex) - Product Detail Specs */}
-          <motion.div
-            key={`detail-right-${manuallySelectedPartIdx}-${isMobile ? "m" : isLandedInSection2}`}
-            initial="hidden"
-            animate={
-              !isMobile
-                ? isLandedInSection2
-                  ? "visible"
-                  : "hidden"
-                : undefined
-            }
-            whileInView={isMobile ? "visible" : undefined}
-            viewport={{ once: false, amount: 0.1 }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.07,
-                  delayChildren: 0.05,
-                },
-              },
-            }}
-            className="w-full md:w-1/2 h-auto md:h-full px-[4vw] pt-[4vh] flex flex-col justify-start items-start detail-right-col overflow-y-auto selection:bg-[#8DC541] selection:text-white"
-          >
-            {/* Breadcrumbs */}
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, x: 30, y: 10 },
-                visible: {
-                  opacity: 1,
-                  x: 0,
-                  y: 0,
-                  transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-                },
-              }}
-              initial={isMobile ? { opacity: 0, y: 25 } : undefined}
-              whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[12px] sm:text-[13px] md:text-[0.9vw] font-medium  tracking-wider flex items-center gap-1.5 md:gap-[0.35vw] font-manrope mb-1 sm:mb-1.5 md:mb-[1.5vh]"
-            >
-              <Link
-                href="/"
-                className="relative inline-block hover:text-[#14421A] transition-all duration-200 cursor-pointer hover:underline"
-              >
-                Home
-              </Link>
-              <span className="text-[11px] md:text-[0.95vw]">
-                &gt;
-              </span>
-              <Link
-                href="/know-your-meat"
-                className="relative inline-block hover:text-[#14421A] transition-all duration-200 cursor-pointer hover:underline"
-              >
-                Products
-              </Link>
-              <span className=" text-[11px] md:text-[0.95vw]">
-                &gt;
-              </span>
-              <button
-                onClick={() => {
-                  setHasSelectedAnyPart(false);
-                  setIsLandedInSection2(false);
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                className="relative inline-block hover:text-[#14421A] transition-all duration-200 cursor-pointer hover:underline"
-              >
-                Chicken
-              </button>
-              <span className=" text-[11px] md:text-[0.95vw]">
-                &gt;
-              </span>
-              <span className=" font-semibold">
-                {chickenParts[manuallySelectedPartIdx].name}
-              </span>
-            </motion.div>
+          {/* CENTER PRODUCT ORBIT DISPLAY */}
+          <div className="relative w-full max-w-[92vw] sm:max-w-[70vw] lg:max-w-[46vw] h-[250px] sm:h-[320px] lg:h-[25vw] mx-auto mt-4 sm:mt-6 lg:mt-[1.2vw] flex items-center justify-center">
+            
+            {/* Base Wooden Cutting Board (ONLY SHOW WHEN activeViewTab === "raw") */}
+            {activeViewTab === "raw" && (
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+                <Image
+                  src="/Product/details/section-images/round-wooden-block.webp"
+                  alt="Wooden Chopping Board"
+                  width={750}
+                  height={500}
+                  className="w-[280px] sm:w-[360px] lg:w-[42vw] h-auto object-contain drop-shadow-2xl"
+                  priority
+                />
+              </div>
+            )}
 
-            <div className="flex flex-col w-full items-start gap-[2vh]">
-              {/* Title Section */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, x: 30, y: 10 },
-                  visible: {
-                    opacity: 1,
-                    x: 0,
-                    y: 0,
-                    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-                  },
-                }}
-                initial={isMobile ? { opacity: 0, y: 30 } : undefined}
-                whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-0.5 mb-1 sm:mb-1.5 md:mb-[0.8vh]"
-              >
-                <span className="text-[13px] sm:text-[15px] mb-[1.5vh] md:text-[1.5vw] font-bold text-[#D62828] tracking-wider uppercase font-manrope block">
-                  CHICKEN
-                </span>
-                <h2 className="text-3xl sm:text-4xl md:text-[3.5vw] font-bold text-[#14421A] leading-[0.95] tracking-wide font-barlow-condensed uppercase detail-title">
-                  <span className="text-[#F2CE07] md:text-white">
-                    {chickenParts[manuallySelectedPartIdx].name}
+            {/* Main Center Selected Cut / Model Display */}
+            <div className="relative w-[220px] sm:w-[280px] lg:w-[34vw] h-[180px] sm:h-[230px] lg:h-[22vw] flex items-center justify-center z-10">
+              {activeViewTab === "raw" && (
+                <Image
+                  src={chickenParts[manuallySelectedPartIdx]?.img || "/Product/Chicken/ChickenParts/drumstick.webp"}
+                  alt={chickenParts[manuallySelectedPartIdx]?.name || "Cut"}
+                  width={550}
+                  height={420}
+                  className="w-[180px] sm:w-[240px] lg:w-[28vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                  priority
+                />
+              )}
+
+              {activeViewTab === "packed" && (
+                <Image
+                  src={(chickenParts[manuallySelectedPartIdx] as any)?.pouchImg || "/Product/details/section-images/packedProduct.webp"}
+                  alt="Packed Pouch"
+                  width={500}
+                  height={500}
+                  className="w-[150px] sm:w-[200px] lg:w-[24vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                  priority
+                />
+              )}
+
+              {activeViewTab === "platter" && (
+                <Image
+                  src={chickenParts[manuallySelectedPartIdx]?.platterImg || "/Product/Chicken/Platters/drumstick.webp"}
+                  alt="Prepared Platter"
+                  width={550}
+                  height={420}
+                  className="w-[180px] sm:w-[240px] lg:w-[28vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                  priority
+                />
+              )}
+
+              {activeViewTab === "3d" && (
+                <div className="w-full h-full flex flex-col items-center justify-center bg-black/10 backdrop-blur-md rounded-2xl border border-white/40 p-4 shadow-2xl">
+                  <span className="text-white text-xs sm:text-sm lg:text-[1vw] font-bold font-manrope mb-2 uppercase tracking-wide">
+                    Interactive 3D View ({chickenParts[manuallySelectedPartIdx]?.name})
                   </span>
-                </h2>
-              </motion.div>
+                  <Image
+                    src={chickenParts[manuallySelectedPartIdx]?.img || "/Product/Chicken/ChickenParts/drumstick.webp"}
+                    alt="3D Preview"
+                    width={400}
+                    height={300}
+                    className="w-[140px] sm:w-[180px] lg:w-[20vw] h-auto object-contain animate-pulse"
+                  />
+                </div>
+              )}
+            </div>
 
-              {/* Description */}
-              <motion.p
-                variants={{
-                  hidden: { opacity: 0, x: 30, y: 10 },
-                  visible: {
-                    opacity: 1,
-                    x: 0,
-                    y: 0,
-                    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-                  },
-                }}
-                initial={isMobile ? { opacity: 0, y: 25 } : undefined}
-                whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[12px] sm:text-[13px] md:text-[1vw] font-medium text-slate-800 leading-relaxed md:leading-[1.35] font-manrope max-w-[600px] md:max-w-[34vw] detail-desc "
-              >
-                {chickenParts[manuallySelectedPartIdx].desc}
-              </motion.p>
+            {/* ORBIT BADGE 1: Top-Left (Single Raw Cut) */}
+            <div
+              onClick={() => setActiveViewTab("raw")}
+              className="absolute -top-3 -left-1 sm:-top-4 sm:-left-3 lg:-top-[0.8vw] lg:-left-[3.5vw] z-30 group cursor-pointer"
+            >
+              {/* Curved Arrow */}
+              <div className="hidden lg:block absolute -bottom-[1.2vw] -right-[2.4vw] w-[4vw] h-auto pointer-events-none z-10">
+                <Image
+                  src="/Product/details/section-images/arrow-top-left.svg"
+                  alt="Arrow"
+                  width={80}
+                  height={80}
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "raw" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-100"}`}>
+                <Image
+                  src={chickenParts[manuallySelectedPartIdx]?.img || "/Product/Chicken/ChickenParts/drumstick.webp"}
+                  alt="Raw Cut"
+                  width={80}
+                  height={80}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
 
-              {/* Green Line Separator */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, scaleX: 0 },
-                  visible: {
-                    opacity: 1,
-                    scaleX: 1,
-                    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-                  },
-                }}
-                initial={isMobile ? { opacity: 0, scaleX: 0 } : undefined}
-                whileInView={isMobile ? { opacity: 1, scaleX: 1 } : undefined}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.45 }}
-                className="w-14 sm:w-18 md:w-[3.5vw] h-[2.5px] -mt-[0.8vh] bg-[#5B8920] origin-left mb-1.5 sm:mb-2 md:mb-[0.8vh]"
+            {/* ORBIT BADGE 2: Bottom-Left (Pouch / Packaged) */}
+            <div
+              onClick={() => setActiveViewTab("packed")}
+              className="absolute -bottom-3 -left-1 sm:-bottom-4 sm:-left-3 lg:bottom-[0.5vw] lg:-left-[4.8vw] z-30 group cursor-pointer"
+            >
+              {/* Curved Arrow */}
+              <div className="hidden lg:block absolute -top-[1.2vw] -right-[2.4vw] w-[4vw] h-auto pointer-events-none z-10">
+                <Image
+                  src="/Product/details/section-images/arrow-bottom-left.svg"
+                  alt="Arrow"
+                  width={80}
+                  height={80}
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "packed" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-100"}`}>
+                <Image
+                  src={(chickenParts[manuallySelectedPartIdx] as any)?.pouchImg || "/Product/details/section-images/packedProduct.webp"}
+                  alt="Pouch Pack"
+                  width={80}
+                  height={80}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
+
+            {/* ORBIT BADGE 3: Top-Right (Bowl / Platter) */}
+            <div
+              onClick={() => setActiveViewTab("platter")}
+              className="absolute -top-3 -right-1 sm:-top-4 sm:-right-3 lg:-top-[0.8vw] lg:-right-[3.5vw] z-30 group cursor-pointer"
+            >
+              {/* Curved Arrow */}
+              <div className="hidden lg:block absolute -bottom-[1.2vw] -left-[2.4vw] w-[4vw] h-auto pointer-events-none z-10">
+                <Image
+                  src="/Product/details/section-images/arrow-top-right.svg"
+                  alt="Arrow"
+                  width={80}
+                  height={80}
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "platter" ? "border-[#064823] ring-2 ring-[#064823]/30" : "border-slate-100"}`}>
+                <Image
+                  src={chickenParts[manuallySelectedPartIdx]?.platterImg || "/Product/Chicken/Platters/drumstick.webp"}
+                  alt="Platter"
+                  width={80}
+                  height={80}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
+
+            {/* ORBIT BADGE 4: Bottom-Right (View in 360°) */}
+            <div
+              onClick={() => setActiveViewTab(activeViewTab === "3d" ? "raw" : "3d")}
+              className="absolute -bottom-3 -right-1 sm:-bottom-4 sm:-right-3 lg:bottom-[0.5vw] lg:-right-[4.8vw] z-30 group cursor-pointer"
+            >
+              {/* Curved Arrow */}
+              <div className="hidden lg:block absolute -top-[1.2vw] -left-[2.4vw] w-[4vw] h-auto pointer-events-none z-10">
+                <Image
+                  src="/Product/details/section-images/arrow-bottom-right.svg"
+                  alt="Arrow"
+                  width={80}
+                  height={80}
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+              <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-[5vw] lg:h-[5vw] rounded-full bg-white shadow-xl border-2 flex flex-col items-center justify-center p-1 lg:p-[0.25vw] hover:scale-110 transition-transform ${activeViewTab === "3d" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-100"}`}>
+                <Image
+                  src="/Product/details/360.webp"
+                  alt="360 View"
+                  width={40}
+                  height={40}
+                  className="w-5 h-5 lg:w-[1.8vw] lg:h-[1.8vw] object-contain"
+                />
+                <span className="text-[9px] lg:text-[0.55vw] font-black text-slate-800 tracking-tight leading-none mt-0.5 lg:mt-[0.15vw] uppercase font-manrope whitespace-nowrap">
+                  View in 360°
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* BOTTOM GREEN FOOTER SECTION */}
+        <div className="relative w-full z-30 pb-4 sm:pb-6 lg:pb-[1.8vw] px-4 sm:px-8 lg:px-[3.5vw] mt-6 sm:mt-8 lg:mt-[2vw]">
+          
+          {/* Center Stamp Badge (Positioned directly over top wave curve) */}
+          <div className="w-[110px] sm:w-[140px] lg:w-[8vw] h-auto absolute -top-[2.2vw] left-1/2 transform -translate-x-1/2 z-40 drop-shadow-md">
+            <Image
+              src="/Product/details/section-images/keralas_original-meat.webp"
+              alt="Kerala's Original Meat"
+              width={170}
+              height={110}
+              className="w-full h-auto object-contain"
+            />
+          </div>
+
+          {/* Bottom Green Container Row */}
+          <div className="relative z-30 w-full flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-[1.5vw] pt-2">
+            
+            {/* 1. Bottom Left Recipe Card */}
+            <div className="relative w-full max-w-[340px] lg:max-w-none lg:w-[21.5vw] bg-[#FDFBF2] rounded-2xl lg:rounded-[1vw] p-3 lg:p-[0.65vw] lg:pr-[1.2vw] shadow-lg border border-white/80 flex items-center gap-3 lg:gap-[0.8vw]">
+              {/* Chef Icon Red Circular Badge on top-left corner */}
+              <div className="absolute -top-3 -left-3 lg:-top-[0.8vw] lg:-left-[0.8vw] w-8 h-8 lg:w-[2.3vw] lg:h-[2.3vw] rounded-full bg-[#E31E24] shadow-md flex items-center justify-center p-1.5 lg:p-[0.5vw] z-40">
+                <Image
+                  src="/Product/details/section-images/chef-icon.svg"
+                  alt="Chef Icon"
+                  width={30}
+                  height={30}
+                  className="w-full h-full object-contain filter brightness-0 invert"
+                />
+              </div>
+
+              {/* Recipe Dish Image */}
+              <div className="w-20 h-20 lg:w-[7.2vw] lg:h-[7.2vw] rounded-xl lg:rounded-[0.7vw] overflow-hidden relative shrink-0 shadow-sm border border-slate-100">
+                <Image
+                  src="/Product/details/bottomCard.webp"
+                  alt="Recipe"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              {/* Text & CTA Button */}
+              <div className="flex-1 min-w-0 flex flex-col justify-center">
+                <span className="text-xs lg:text-[0.78vw] font-black text-[#E31E24] tracking-widest uppercase font-barlow-condensed leading-none">
+                  WHAT'S COOKING?
+                </span>
+                <h5 className="text-xs lg:text-[0.78vw] font-bold text-slate-900 leading-tight font-manrope mt-1 lg:mt-[0.15vw] truncate">
+                  Spicy Chicken {chickenParts[manuallySelectedPartIdx]?.name || "Drumstick"} Fry
+                </h5>
+                <p className="text-[10px] lg:text-[0.58vw] font-medium text-slate-600 leading-tight mt-1 lg:mt-[0.2vw] line-clamp-2 max-w-full lg:max-w-[11vw]">
+                  A Spicy and flavourful recipe For a perfect family meal.
+                </p>
+
+                <Link
+                  href={`/recipes?part=${chickenParts[manuallySelectedPartIdx]?.name.toLowerCase() || "drumstick"}`}
+                  className="mt-2 lg:mt-[0.55vw] bg-[#E31E24] hover:bg-[#c9181d] text-white text-[10px] lg:text-[0.58vw] font-extrabold py-1 lg:py-[0.35vw] px-2.5 lg:px-[0.85vw] rounded-md lg:rounded-[0.4vw] uppercase tracking-wider inline-flex items-center gap-1 lg:gap-[0.3vw] shadow transition-colors w-max"
+                >
+                  <span>EXPLORE RECIPE</span>
+                  <span>&rarr;</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* 2. Center 4 Feature SVGs directly rendered */}
+            <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-3 lg:gap-[1.2vw] flex-1">
+              {/* Feature 1 */}
+              <img
+                src="/Product/details/section-images/farm-fresh.svg"
+                alt="Farm Fresh"
+                className="h-10 sm:h-12 lg:h-[6.2vw] w-auto object-contain drop-shadow-sm"
               />
 
-              {/* Package Weight specs */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, x: 30, y: 10 },
-                  visible: {
-                    opacity: 1,
-                    x: 0,
-                    y: 0,
-                    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-                  },
-                }}
-                initial={isMobile ? { opacity: 0, y: 25 } : undefined}
-                whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="detail-weight-row w-full max-w-[600px] md:max-w-[34vw] flex items-center gap-3 sm:gap-4 md:gap-[0.8vw] py-1.5 sm:py-2 md:py-[01vh] border-t border-b border-white/70 mb-1.5 sm:mb-2 md:mb-[0.8vh]"
-              >
-                <div className="flex items-center gap-2 md:gap-[0.4vw] shrink-0">
-                  <span className="text-[12px] sm:text-[13px] md:text-[1vw] font-semibold  tracking-wider uppercase font-manrope whitespace-nowrap">
-                    PACKAGE WEIGHT
-                  </span>
-                  <span className="text-lg sm:text-xl md:text-[1.3vw] font-bold text-[#14421A] font-barlow-condensed whitespace-nowrap ml-1 md:ml-[0.2vw]">
-                    {chickenParts[manuallySelectedPartIdx].weight}
-                  </span>
-                </div>
-                <div className="w-[1.5px] h-5 md:h-[1.1vw] bg-[#14421A]/40 shrink-0 mx-1 md:mx-[0.2vw]" />
-                <div className="flex items-center  shrink-0">
-                  <div className="relative w-[4vw] h-[4vh]  shrink-0">
-                    <Image
-                      src="/Product/details/pack.webp"
-                      alt="Pack Icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <span className="text-[12px] sm:text-[13px] md:text-[1vw] font-semibold tracking-wider uppercase font-manrope whitespace-nowrap">
-                    <span className="normal-case">MEATiN</span> PACK
-                  </span>
-                </div>
-              </motion.div>
+              {/* Divider */}
+              <div className="hidden lg:block w-[1.5px] h-[3.8vw] bg-white/40" />
 
-              {/* Nutrition Info Cards */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, x: 30, y: 10 },
-                  visible: {
-                    opacity: 1,
-                    x: 0,
-                    y: 0,
-                    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-                  },
-                }}
-                initial={isMobile ? { opacity: 0, y: 30 } : undefined}
-                whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="detail-nutrition-wrap w-full max-w-[600px] md:max-w-[34vw] space-y-1.5 md:space-y-[0.4vh] mb-1.5 sm:mb-2 md:mb-[0.8vh]"
-              >
-                <h4 className="detail-nutrition-title text-[12px] sm:text-[13px] md:text-[1vw] font-semibold tracking-wider uppercase font-manrope mb-[2vh]">
-                  NUTRITION INFORMATION (PER 100g)
-                </h4>
-                <div className="grid grid-cols-4 gap-2 sm:gap-2.5 md:gap-[0.6vw] detail-nutrition-grid w-full">
-                  {[
-                    {
-                      label: "PROTEIN",
-                      val: chickenParts[manuallySelectedPartIdx].nutrition
-                        .protein,
-                      icon: "/Product/details/protien.svg",
-                    },
-                    {
-                      label: "CALORIES",
-                      val: chickenParts[manuallySelectedPartIdx].nutrition
-                        .calories,
-                      icon: "/Product/details/calories.svg",
-                    },
-                    {
-                      label: "FAT",
-                      val: chickenParts[manuallySelectedPartIdx].nutrition.fat,
-                      icon: "/Product/details/fat.svg",
-                    },
-                    {
-                      label: "CARBS",
-                      val: chickenParts[manuallySelectedPartIdx].nutrition
-                        .carbs,
-                      icon: "/Product/details/carbs.svg",
-                    },
-                  ].map((nut, idx) => (
-                    <div
-                      key={idx}
-                      className="bg-white rounded-2xl md:rounded-[0.8vw] p-2 sm:p-2.5 md:p-[0.5vw] text-center flex flex-col items-center justify-between min-h-[68px] sm:min-h-[76px] md:min-h-[4.6vw] gap-1 md:gap-[0.4vw] shadow-sm border border-white detail-nutrition-card"
-                    >
-                      <div className="relative w-[4vw] h-[4vh]">
-                        <Image
-                          src={nut.icon}
-                          alt={nut.label}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <span className="text-[9.5px] sm:text-[10.5px] md:text-[0.82vw] font-semibold text-[#111111] tracking-wider uppercase font-manrope">
-                        {nut.label}
-                      </span>
-                      <span className="text-[13px] sm:text-[15px] md:text-[1.2vw] font-bold text-black font-barlow-condensed">
-                        {nut.val}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
+              {/* Feature 2 */}
+              <img
+                src="/Product/details/section-images/hygienic-processing.svg"
+                alt="Hygienic Processing"
+                className="h-10 sm:h-12 lg:h-[6.2vw] w-auto object-contain drop-shadow-sm"
+              />
 
-              {/* Cooking recipe card */}
-              <Link
-                href={`/recipes?part=${chickenParts[manuallySelectedPartIdx].name.toLowerCase()}&recipeId=${chickenParts[manuallySelectedPartIdx].name.toLowerCase()}-1`}
-                className="block w-full max-w-[600px] md:max-w-[34vw]"
-              >
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0, x: 30, y: 15 },
-                    visible: {
-                      opacity: 1,
-                      x: 0,
-                      y: 0,
-                      transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
-                    },
-                  }}
-                  initial={isMobile ? { opacity: 0, y: 35 } : undefined}
-                  whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
-                  viewport={{ once: false, amount: 0.2 }}
-                  whileHover={{
-                    y: -3,
-                    boxShadow: "0 14px 30px -5px rgba(214, 40, 40, 0.18)",
-                  }}
-                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                  className="group border border-[#E4D5D3] bg-[#EFE4E2] rounded-2xl md:rounded-[1vw] shadow-sm relative flex flex-row items-center p-2.5 sm:p-3.5 md:p-[0.75vw] gap-2.5 sm:gap-3.5 md:gap-[0.9vw] detail-cooking-card cursor-pointer mt-1 md:mt-[0.6vh] w-full"
-                >
-                  {/* Left - Inset Rounded Square Image */}
-                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-[6.2vw] md:h-[6.2vw] aspect-square rounded-xl md:rounded-[0.65vw] overflow-hidden shrink-0 shadow-sm">
-                    <Image
-                      src="/Product/details/bottomCard.webp"
-                      alt="Recipe"
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
+              {/* Divider */}
+              <div className="hidden lg:block w-[1.5px] h-[3.8vw] bg-white/40" />
 
-                  {/* Right - Content */}
-                  <div className="flex-1 flex flex-col justify-between self-stretch gap-1 md:gap-[0.25vw] detail-cooking-content min-w-0">
-                    {/* Header row */}
-                    <div className="flex items-center justify-between">
-                      <span className="text-[14px] sm:text-[16px] md:text-[1.05vw] font-bold text-[#D62828] tracking-widest uppercase font-barlow-condensed">
-                        WHAT'S COOKING?
-                      </span>
-                      <span className="bg-[#D62828] text-white text-[8.5px] sm:text-[9.5px] md:text-[0.55vw] font-black px-2 md:px-[0.5vw] py-0.5 md:py-[0.15vw] rounded md:rounded-[0.25vw] uppercase tracking-wider font-manrope shadow-sm shrink-0">
-                        TRENDING
-                      </span>
-                    </div>
+              {/* Feature 3 */}
+              <img
+                src="/Product/details/section-images/quality-checked.svg"
+                alt="Quality Checked"
+                className="h-10 sm:h-12 lg:h-[6.2vw] w-auto object-contain drop-shadow-sm"
+              />
 
-                    {/* Title */}
-                    <h5 className="text-[13px] sm:text-[14.5px] md:text-[0.85vw] font-bold text-[#111111] leading-tight font-manrope group-hover:text-[#D62828] transition-colors">
-                      Spicy Chicken {chickenParts[manuallySelectedPartIdx].name}{" "}
-                      Fry
-                    </h5>
+              {/* Divider */}
+              <div className="hidden lg:block w-[1.5px] h-[3.8vw] bg-white/40" />
 
-                    {/* Description */}
-                    <p className="text-[11px] sm:text-[12px] md:text-[0.65vw] text-[#444444] leading-relaxed md:leading-[1.25] font-manrope line-clamp-2">
-                      A Spicy and flavourful recipe that brings out the best in
-                      every{" "}
-                      {chickenParts[manuallySelectedPartIdx].name.toLowerCase()}
-                      .
-                    </p>
-
-                    {/* CTA Button */}
-                    <motion.button
-                      whileHover={{
-                        scale: 1.02,
-                        backgroundColor: "#0a5e30",
-                        boxShadow: "0 6px 16px rgba(6, 72, 35, 0.35)",
-                      }}
-                      whileTap={{ scale: 0.97 }}
-                      className="w-auto inline-flex items-center justify-center self-start bg-[#D62828] text-white text-[10px] sm:text-[11px] md:text-[0.62vw] font-extrabold py-1.5 md:py-[0.3vw] px-3.5 md:px-[0.8vw] rounded-xl md:rounded-[0.5vw] whitespace-nowrap gap-1 md:gap-[0.3vw] uppercase tracking-wider font-manrope cursor-pointer transition-colors shadow-sm mt-0.5"
-                    >
-                      <span>EXPLORE RECIPE</span>
-                      <span className="text-sm md:text-[0.75vw] group-hover:translate-x-1 transition-transform">
-                        &rarr;
-                      </span>
-                    </motion.button>
-                  </div>
-                </motion.div>
-              </Link>
+              {/* Feature 4 */}
+              <img
+                src="/Product/details/section-images/ready-natural-taste.svg"
+                alt="Ready Natural Taste"
+                className="h-10 sm:h-12 lg:h-[6.2vw] w-auto object-contain drop-shadow-sm"
+              />
             </div>
-          </motion.div>
+
+            {/* 3. Right Truck Vector Graphic Banner */}
+            <div className="flex items-center justify-end shrink-0">
+              <img
+                src="/Product/details/section-images/keep-fresh-delivered-fresh.svg"
+                alt="Keep Fresh Delivered Fresh"
+                className="h-10 sm:h-12 lg:h-[5.5vw] w-auto object-contain drop-shadow-sm"
+              />
+            </div>
+
+          </div>
+
         </div>
       </section>
 
-      {/* 3. Recipes Section (Hidden by default, shown ONLY after part is selected in Section 1) */}
+      {/* Section 4: Recipes Section */}
       <section
-        className={`relative z-30 w-full bg-[#E4E4E4] pt-16 pb-28 px-4 md:px-12 lg:px-20 recipe-section-wrap overflow-hidden select-none transition-all duration-700 ${
-          hasSelectedAnyPart
-            ? "block opacity-100"
+        className={`relative z-20 w-full bg-[#FAF8F5] py-16 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-[4vw] overflow-hidden transition-all duration-700 ${
+          hasSelectedAnyPart && activeMeatType === "chicken"
+            ? "block opacity-100 pointer-events-auto"
             : "hidden opacity-0 pointer-events-none"
         }`}
       >

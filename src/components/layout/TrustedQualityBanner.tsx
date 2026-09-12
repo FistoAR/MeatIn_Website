@@ -180,14 +180,14 @@ export default function TrustedQualityBanner({ className }: { className?: string
           {/* Visual Graphics Area (2nd Partition): Wrapped below (100% width) on screens <= 990px (below lg), 68% on desktop */}
           <div className="relative z-20 w-full lg:w-[68%] flex-1 h-[140px] sm:h-[170px] md:h-[210px] lg:h-auto min-h-[140px] sm:min-h-[170px] md:min-h-[210px] lg:min-h-full flex flex-col justify-end overflow-hidden">
             
-            {/* Kerala's Original Meat Badge */}
+            {/* Kerala's Original Meat Badge Mobile */}
             <motion.div
               initial={{ opacity: 0, scale: 0.5, y: -30, rotate: -6 }}
               whileInView={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
               viewport={{ once: false }}
               style={{ x: badgeParallaxX, y: badgeParallaxY }}
               transition={{ duration: 0.9, delay: 0.35, type: "spring", stiffness: 110, damping: 13 }}
-              className="absolute top-1 sm:top-2 lg:top-[8%] left-1/2 -translate-x-1/2 lg:left-[8%] lg:translate-x-0 z-30 w-[75px] sm:w-[100px] md:w-[120px] lg:w-[149px] xl:w-[171px] h-[32px] sm:h-[42px] md:h-[50px] lg:h-[64px] pointer-events-none"
+              className="absolute lg:hidden top-1 sm:top-2 lg:top-[8%] left-1/2 -translate-x-1/2 lg:left-[8%] lg:translate-x-0 z-30 w-[75px] sm:w-[100px] md:w-[120px] lg:w-[149px] xl:w-[171px] h-[32px] sm:h-[42px] md:h-[50px] lg:h-[64px] pointer-events-none"
             >
               <motion.div
                 animate={{
@@ -203,6 +203,28 @@ export default function TrustedQualityBanner({ className }: { className?: string
               >
                 <Image
                   src="/TrustedQualityBanner/keralas-original-meat.webp"
+                  alt="Kerala's Original Meat Badge"
+                  fill
+                  className="object-contain object-center lg:object-left-top filter drop-shadow-md"
+                />
+              </motion.div>
+            </motion.div>
+          
+            {/* Kerala's Original Meat Badge Desktop*/}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5, y: -30, rotate: -6 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+              viewport={{ once: false }}
+              style={{ x: badgeParallaxX, y: badgeParallaxY }}
+              transition={{ duration: 0.9, delay: 0.35, type: "spring", stiffness: 110, damping: 13 }}
+              className="absolute hidden lg:block top-1 sm:top-0 lg:top-[0%] left-1/2 -translate-x-1/2 lg:left-[8%] lg:translate-x-0 z-30 w-[75px] sm:w-[100px] md:w-[120px] lg:w-[149px] xl:w-[171px] h-[32px] sm:h-[42px] md:h-[50px] lg:h-[64px] pointer-events-none"
+            >
+              <motion.div
+                
+                className="relative w-full h-full"
+              >
+                <Image
+                  src="/TrustedQualityBanner/keralas-original-hanging.webp"
                   alt="Kerala's Original Meat Badge"
                   fill
                   className="object-contain object-center lg:object-left-top filter drop-shadow-md"

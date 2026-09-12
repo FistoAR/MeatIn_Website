@@ -25,7 +25,15 @@ export default function FranchisePage() {
   const [selectedOutlet, setSelectedOutlet] = useState<OutletInfo | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
-  // Mouse hover spotlight position state for Hero Store reveal
+  // Preload both map images immediately at page load to avoid viewport or toggle fetch delays
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const img1 = new window.Image();
+      img1.src = "/Franchies/india-map-image.webp";
+      const img2 = new window.Image();
+      img2.src = "/Franchies/kerala-map.webp";
+    }
+  }, []);
   const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [autoPos, setAutoPos] = useState<{ xPercent: number; yPercent: number; radius: number }>({
@@ -323,6 +331,25 @@ export default function FranchisePage() {
 
   return (
     <div className="relative min-h-screen bg-[#FDFBF7] text-slate-800 font-manrope selection:bg-[#8DC541] selection:text-white overflow-x-clip pt-0">
+      {/* Hidden Eager Preloader for Map Images (Instant load at page mount) */}
+      <div className="hidden" aria-hidden="true">
+        <Image
+          src="/Franchies/india-map-image.webp"
+          alt="Preload India Map"
+          width={888}
+          height={982}
+          priority
+          loading="eager"
+        />
+        <Image
+          src="/Franchies/kerala-map.webp"
+          alt="Preload Kerala Map"
+          width={888}
+          height={982}
+          priority
+          loading="eager"
+        />
+      </div>
       {/* ============================================================ */}
       {/* SECTION 1: HERO & STORE SHOWCASE (EXACT MATCH TO DESIGN) */}
       {/* ============================================================ */}
@@ -1068,6 +1095,7 @@ export default function FranchisePage() {
                         }
                         fill
                         priority
+                        loading="eager"
                         draggable={false}
                         className="object-contain select-none pointer-events-none"
                       />

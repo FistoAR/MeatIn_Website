@@ -233,77 +233,77 @@ export default function AboutUsPage() {
           />
         </div>
 
-        {/* Top/Middle Content Area: Left Glass Card */}
+        {/* Top/Middle Content Area: Left Hero Graphic */}
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 flex-1 flex items-center pt-4 lg:pt-8 pb-6">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="w-full sm:w-[540px] lg:w-[560px] bg-[#1d3d2e]/70 backdrop-blur-md rounded-[20px] p-6 sm:p-8 lg:p-10 border border-white/20 shadow-2xl"
+            className="relative w-full sm:w-[520px] lg:w-[580px] xl:w-[640px] max-w-full"
           >
-            {/* Tagline */}
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-5 h-[2px] bg-[#8DC541]" />
-              <span className="text-[#8DC541] font-bold text-xs sm:text-sm tracking-[0.18em] uppercase font-manrope">
-                WHAT IS MEATiN?
-              </span>
-            </div>
+            {/* Soft white shadow glow backdrop behind the graphic for readability */}
+            <div className="absolute -inset-4 sm:-inset-6 bg-white/50 blur-2xl rounded-[30px] pointer-events-none -z-10" />
 
-            {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[56px] xl:text-[62px] font-bold font-barlow-condensed tracking-normal uppercase leading-[0.95] text-white">
-              WE ENGINEER <br />
-              <span className="text-[#8DC541]">QUALITY INTO</span> <br />
-              EVERY CUT<span className="text-[#E31E24]">.</span>
-            </h1>
-
-            {/* Subtext */}
-            <p className="text-white/90 text-sm sm:text-base font-normal leading-relaxed mt-5 font-manrope max-w-md">
-              Integrated farming, scientific processing, and cold-chain distribution.
-            </p>
+            <Image
+              src="/AboutUs/heroimage.webp"
+              alt="What is MEATiN? We Engineer Quality Into Every Cut."
+              width={1706}
+              height={1138}
+              priority
+              className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.9)] drop-shadow-[0_0_30px_rgba(255,255,255,0.8)]"
+            />
           </motion.div>
         </div>
 
         {/* Bottom Glassmorphism Stats Bar */}
-        <div className="w-full px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center">
+        <div className="w-full px-3 sm:px-6 lg:px-8 relative z-10 flex justify-center">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="w-full max-w-fit bg-white/75 backdrop-blur-md rounded-[22px] p-4 sm:p-5 lg:py-5 lg:px-8 border border-white/80 shadow-2xl"
+            className="w-full max-w-[1240px] bg-white/85 backdrop-blur-md rounded-[22px] sm:rounded-[28px] lg:rounded-[36px] p-3 sm:p-4 lg:py-4 lg:px-6 border border-white/90 shadow-2xl"
           >
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-y-5 gap-x-6 lg:gap-x-0 lg:divide-x lg:divide-black/20 items-center">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-y-5 gap-x-3 sm:gap-x-4 lg:gap-x-0 lg:divide-x lg:divide-slate-300/70 items-center">
               {stats.map((stat, idx) => {
                 return (
                   <motion.div
                     key={idx}
                     variants={springScale}
-                    className="flex flex-col items-start px-2 sm:px-4 lg:px-6 shrink-0"
+                    className={`flex items-center gap-2.5 sm:gap-3.5 lg:gap-4 px-2 sm:px-3 lg:px-5 xl:px-6 py-1.5 ${
+                      idx === 4 ? 'col-span-2 sm:col-span-1 justify-center sm:justify-start' : 'justify-start'
+                    }`}
                   >
-                    {/* Big Counter Number */}
-                    <div className="text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px] font-bold text-[#064823] font-barlow-condensed tracking-tight leading-none">
-                      <Counter value={stat.value} />
+                    {/* Green Circle Icon Badge with 0.15px Black Outer Stroke */}
+                    <div className="w-11 h-11 sm:w-13 sm:h-13 lg:w-[54px] lg:h-[54px] xl:w-[60px] xl:h-[60px] rounded-full bg-[#138047] border-[0.15px] border-[#333333] flex items-center justify-center shrink-0 shadow-sm p-1 sm:p-1.5">
+                      <Image
+                        src={stat.icon}
+                        alt={stat.label}
+                        width={48}
+                        height={48}
+                        className="w-[92%] h-[92%] object-contain"
+                      />
                     </div>
 
-                    {/* Icon + Label Row */}
-                    <div className="flex items-center gap-2 mt-2">
-                      <div className="w-6 h-6 sm:w-7 sm:h-7 shrink-0 relative flex items-center justify-center">
-                        <Image
-                          src={stat.icon}
-                          alt={stat.label}
-                          width={28}
-                          height={28}
-                          className="w-full h-full object-contain [filter:invert(22%)_sepia(45%)_saturate(1480%)_hue-rotate(114deg)_brightness(92%)_contrast(95%)]"
-                        />
+                    {/* Stat Content: Number + Red Bar + Labels */}
+                    <div className="flex flex-col items-start leading-none min-w-0">
+                      {/* Counter Number */}
+                      <div className="text-xl sm:text-2xl lg:text-[32px] xl:text-[36px] font-bold text-[#093d24] font-barlow-condensed tracking-tight leading-none">
+                        <Counter value={stat.value} />
                       </div>
-                      <div className="flex flex-col leading-tight">
-                        <span className="text-[10px] sm:text-[11px] font-bold text-[#E31E24] tracking-wider uppercase font-barlow-condensed whitespace-nowrap">
-                          {stat.label}
-                        </span>
-                        <span className="text-[9px] sm:text-[10px] font-medium text-slate-900 uppercase tracking-tight font-manrope whitespace-nowrap">
-                          {stat.desc}
-                        </span>
-                      </div>
+
+                      {/* Red Accent Underline */}
+                      <div className="w-8 sm:w-10 lg:w-11 h-[2px] bg-[#E31E24] my-1" />
+
+                      {/* Red Label */}
+                      <span className="text-[10px] sm:text-xs xl:text-[13px] font-bold text-[#E31E24] tracking-wider uppercase font-barlow-condensed leading-none">
+                        {stat.label}
+                      </span>
+
+                      {/* Dark Description */}
+                      <span className="text-[8px] sm:text-[9.5px] xl:text-[10.5px] font-semibold text-[#093d24] uppercase tracking-tight font-manrope leading-tight whitespace-nowrap mt-0.5">
+                        {stat.desc}
+                      </span>
                     </div>
                   </motion.div>
                 );

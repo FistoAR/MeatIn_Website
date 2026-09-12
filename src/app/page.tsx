@@ -532,7 +532,7 @@ export default function HomePage() {
         <div className="w-full max-w-[95%] px-4 sm:px-8 relative z-10 flex justify-start items-center my-auto">
           <motion.div
             style={{ x: smoothTruckX, opacity: smoothTruckOpacity }}
-            className="relative w-full aspect-[4096/1339] max-w-[294px] sm:max-w-[357px] md:max-w-[420px] lg:max-w-[645px] min-[1375px]:max-w-[708px] min-[1531px]:max-w-[819px]"
+            className="relative w-full aspect-[4096/1339] max-w-[294px] sm:max-w-[357px] md:max-w-[420px] lg:max-w-[750px] min-[1375px]:max-w-[835px] min-[1531px]:max-w-[900px]"
           >
             {/* Ground Soft Shadow */}
             <div className="absolute -bottom-[4%] left-[4%] right-[4%] h-[12%] bg-black/20 blur-lg rounded-full z-0" />
