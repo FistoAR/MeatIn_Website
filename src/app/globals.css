@@ -126,3 +126,11 @@
 .is-moving svg .truck-tire {
   animation-play-state: running !important;
 }
+
+#goat-parts g {
+  transition: all .3s ease-in-out;
+}
+
+#goat-parts g:hover {
+  scale: 1.25;
+}

@@ -11,6 +11,8 @@ import {
   useMotionValueEvent,
   AnimatePresence,
 } from "framer-motion";
+import GoatParts from "../../components/know-your-meat/GoatParts";
+import BuffaloParts from "../../components/know-your-meat/BeefParts";
 
 export default function KnowYourMeatPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -42,6 +44,7 @@ export default function KnowYourMeatPage() {
     }, 1600);
     return () => clearInterval(categoryTimer);
   }, []);
+
 
   // GLB Model paths for 360 viewer (using updated GLB models from /Product/details/glb/)
   const partGlbMap: Record<string, string> = {
@@ -4098,7 +4101,7 @@ export default function KnowYourMeatPage() {
               </div>
             ) : (
               /* Beef & Goat Visualizer - 100% Mockup Match */
-              <div className="w-full h-full relative flex flex-col items-center justify-end pb-12 z-30 viz-beef-section">
+              <div className="w-full h-full relative flex flex-col items-center justify-end pb-12 z-30 viz-beef-section relative">
                 {/* Central Animal Photo — positioned so hooves touch the grassland hill */}
                 <motion.div
                   key={`beefgoat-${activeMeatType}`}
@@ -4109,18 +4112,37 @@ export default function KnowYourMeatPage() {
                     delay: 0.1,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="relative -top-[3vh] w-full max-w-[780px] xl:max-w-[850px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[480px] max-h-[50vh] lg:max-h-[54vh] flex items-center justify-center z-20 viz-beef-img-wrap"
+                  className="relative -top-[3vh] w-full max-w-[780px] xl:max-w-[520px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[450px] max-h-[50vh] lg:max-h-[54vh] flex items-center justify-center z-20 viz-beef-img-wrap mb-[-1.5vw]"
                 >
                   <Image
                     src={
                       activeMeatType === "beef"
-                        ? "/Product/GoatBeef/beef-image.webp"
-                        : "/Product/GoatBeef/goat-image.webp"
+                        ? "/Product/GoatBeef/buffalo-img.webp"
+                        : "/Product/GoatBeef/goat-img.webp"
                     }
                     alt={activeMeatType}
                     fill
                     className="object-contain drop-shadow-2xl"
                   />
+                </motion.div>
+               
+                {/* Central Animal Photo — positioned so hooves touch the grassland hill */}
+                <motion.div
+                  key={`animal-${activeMeatType}`}
+                  initial={{ opacity: 0, y: 140, scale: 0.88 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 1.15,
+                    delay: 0.1,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="absolute top-[30vh] w-full max-w-[780px] xl:max-w-[300px] h-[240px] sm:h-[400px] md:h-[440px] lg:h-[450px] max-h-[50vh] lg:max-h-[54vh] flex items-center justify-center z-30 viz-beef-img-wrap mb-[-1.5vw] scale-[0.8]"
+                >
+                  {activeMeatType === "beef" ? (
+                    <BuffaloParts />
+                  ) : (
+                    <GoatParts />
+                  )}
                 </motion.div>
 
                 {/* Bottom Grassland Bar with 4 Feature Badges (Animal stands directly on this hill - 100vw full width) */}
@@ -4132,7 +4154,7 @@ export default function KnowYourMeatPage() {
                     backgroundPosition: "center bottom",
                   }}
                 >
-                  <div className="flex flex-wrap items-center justify-center gap-8 text-white font-barlow-condensed font-medium uppercase text-lg tracking-wider mb-1">
+                  <div className="flex flex-wrap items-center justify-center gap-8 text-white font-barlow-condensed font-medium uppercase text-lg tracking-wider mb-[3.5vw]">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full border-2 border-[#E1C609] flex items-center justify-center p-1.5 bg-black/5">
                         <img
@@ -4378,7 +4400,7 @@ export default function KnowYourMeatPage() {
       {/* 3. Interactive Details Section - 1:1 Match with Reference Layout */}
       <section
         ref={detailsSectionRef}
-        className={`relative z-30 w-full min-h-screen pt-8 lg:pt-[2.5vw] pb-6 sm:pb-8 lg:pb-0 flex flex-col justify-between m-0 overflow-x-hidden bg-[#8DC541] transition-all duration-700 detail-section-wrap ${
+        className={`relative z-30 w-full h-[100vh] pt-8 lg:pt-[2.5vw] pb-6 sm:pb-8 lg:pb-0 flex flex-col justify-between m-0 overflow-x-hidden bg-[#8DC541] transition-all duration-700 detail-section-wrap ${
           hasSelectedAnyPart && activeMeatType === "chicken"
             ? "block opacity-100 pointer-events-auto"
             : "hidden opacity-0 pointer-events-none"
@@ -4394,18 +4416,20 @@ export default function KnowYourMeatPage() {
             className="object-cover object-center w-full h-full"
           />
 
-          {/* Floating single leaf - left side */}
-          <div className="hidden lg:block absolute top-[16vw] left-[1.5vw] w-[4.5vw] h-auto z-10 opacity-90 animate-pulse">
+            
+          {/* Floating single leaf - right side */}
+          <div className="hidden lg:block absolute bottom-[11vw] right-[7vw] w-[5.5vw] h-auto z-10">
             <Image
               src="/Product/details/section-images/single-leaf-image-1.webp"
               alt="Leaf"
-              width={120}
-              height={120}
+              width={140}
+              height={140}
               className="w-full h-auto object-contain"
             />
           </div>
+
           {/* Floating single leaf - right side */}
-          <div className="hidden lg:block absolute bottom-[18vw] right-[2vw] w-[5.5vw] h-auto z-10 opacity-90 animate-pulse">
+          <div className="hidden lg:block absolute bottom-[12vw] right-[0vw] w-[3.5vw] h-auto z-10 opacity-90 animate-pulse">
             <Image
               src="/Product/details/section-images/single-leaf-image-right-corner.webp"
               alt="Leaf"
@@ -4430,7 +4454,7 @@ export default function KnowYourMeatPage() {
                 className="w-full h-auto object-contain drop-shadow-md"
               />
             </div>
-            <div className="w-[7.5vw] h-auto -mt-[1.2vw] ml-[2vw]">
+            <div className="w-[8.5vw] h-auto ml-[3vw]">
               <Image
                 src="/Product/details/section-images/two-leaves-images.webp"
                 alt="Leaves"
@@ -4442,58 +4466,57 @@ export default function KnowYourMeatPage() {
           </div>
 
           {/* Top Center Title Header */}
-          <div className="text-center w-full max-w-[90%] sm:max-w-[80%] lg:max-w-[42vw] mx-auto z-20 pt-1 lg:pt-[0.2vw]">
-            <h4 className="text-xs sm:text-sm lg:text-[1.15vw] font-black text-slate-800 tracking-widest uppercase font-barlow-condensed leading-none">
+          <div className="text-center w-full max-w-[90%] sm:max-w-[80%] lg:max-w-[42vw] mx-auto z-20 pt-1 lg:pt-[0.2vw] -mt-[1vw]">
+            <h4 className="text-xs sm:text-sm lg:text-[1vw] font-medium text-[#d52828] tracking-widest uppercase leading-none"> 
               FRESH PREMIUM CHICKEN
             </h4>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[3.2vw] font-black text-[#E31E24] tracking-tight uppercase font-barlow-condensed leading-none mt-1 lg:mt-[0.3vw] drop-shadow-sm">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[3vw] font-bold text-[#17442d] tracking-normal uppercase leading-none mt-1 lg:mt-[0.3vw] drop-shadow-sm">
               {chickenParts[manuallySelectedPartIdx]?.name || "CHICKEN DRUMSTICK"}
             </h2>
-            <p className="text-xs sm:text-sm lg:text-[0.78vw] font-semibold text-slate-700 font-manrope leading-relaxed max-w-[92%] sm:max-w-[80%] lg:max-w-[36vw] mx-auto mt-2 lg:mt-[0.5vw]">
+            <p className="text-xs sm:text-sm lg:text-[0.78vw] font-semibold text-slate-900 font-manrope leading-relaxed max-w-[92%] sm:max-w-[80%] lg:max-w-[36vw] mx-auto mt-2 lg:mt-[0.5vw]">
               {chickenParts[manuallySelectedPartIdx]?.desc ||
                 "Succulent chicken drumsticks cut with precision. Perfect for grilling, roasting, or frying, offering rich flavor and tender texture in every bite."}
             </p>
           </div>
 
-          {/* Top Right Sidebar */}
-          <div className="hidden lg:flex flex-col items-end gap-[1vw] absolute top-[1.2vw] right-[3.5vw] z-20 pointer-events-none">
-            {/* Nutrition Card */}
-            <div className="bg-[#FAF5E9]/90 backdrop-blur-sm rounded-[0.9vw] p-[0.75vw] border border-amber-900/10 shadow-md w-[14vw] flex flex-col gap-[0.4vw] pointer-events-auto">
-              <div className="flex items-center gap-[0.4vw]">
-                <div className="w-[1.4vw] h-[1.4vw] relative">
-                  <Image
-                    src="/Product/details/section-images/pure-natural-nutrition.webp"
-                    alt="Nutrition"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <span className="text-[0.75vw] font-black text-[#E31E24] tracking-wider uppercase font-barlow-condensed">
-                  NUTRITION HIGHLIGHTS
-                </span>
-              </div>
-              <div className="grid grid-cols-2 gap-[0.3vw] pt-[0.2vw] border-t border-slate-200/80 text-[0.65vw] font-bold text-slate-800 font-manrope">
-                <div>Protein: <span className="font-extrabold text-[#064823]">24g</span></div>
-                <div>Calories: <span className="font-extrabold text-[#064823]">165 kcal</span></div>
-                <div>Fat: <span className="font-extrabold text-[#064823]">7.5g</span></div>
-                <div>Carbs: <span className="font-extrabold text-[#064823]">0g</span></div>
-              </div>
-            </div>
-
-            {/* Benefits Badge image */}
-            <div className="w-[13.5vw] h-auto">
+          {/* Top Right Nutrition Card */}
+          <div className="absolute top-[0] right-[3vw]">
               <Image
-                src="/Product/details/section-images/benefits-texts.svg"
-                alt="Pure & Natural Meat"
-                width={260}
-                height={160}
-                className="w-full h-auto object-contain drop-shadow"
-              />
-            </div>
+               src={"/Product/details/section-images/nutrition-information.svg"} 
+               alt="Nutrition information card"
+              width={350}
+              height={150}
+              className="w-[180px] sm:w-[360px] lg:w-[17vw] h-auto object-contain drop-shadow-2xl"
+              priority
+               />
+          </div>
+          
+          {/* Leaf - Pure nutritional information */}
+          <div className="absolute top-[7.5vw] right-[6.5vw]">
+              <Image
+               src={"/Product/details/section-images/pure-natural-nutrition.webp"} 
+               alt="Leaf - Pure nutritional information"
+              width={350}
+              height={150}
+              className="w-[180px] sm:w-[360px] lg:w-[9vw] h-auto object-contain drop-shadow-2xl"
+              priority
+               />
+          </div>
+          
+          {/* Benefits */}
+          <div className="absolute top-[12.5vw] right-[6.5vw]">
+              <Image
+               src={"/Product/details/section-images/benefits-texts.svg"} 
+               alt="Benefits"
+              width={350}
+              height={150}
+              className="w-[180px] sm:w-[360px] lg:w-[10.5vw] h-auto object-contain drop-shadow-2xl"
+              priority
+               />
           </div>
 
           {/* CENTER PRODUCT ORBIT DISPLAY */}
-          <div className="relative w-full max-w-[92vw] sm:max-w-[70vw] lg:max-w-[46vw] h-[250px] sm:h-[320px] lg:h-[25vw] mx-auto mt-4 sm:mt-6 lg:mt-[1.2vw] flex items-center justify-center">
+          <div className="relative w-full max-w-[92vw] sm:max-w-[70vw] lg:max-w-[35vw] h-[220px] sm:h-[320px] lg:h-[20vw] mx-auto mt-4 sm:mt-6 lg:mt-[0.75vw] flex items-center justify-center">
             
             {/* Base Wooden Cutting Board (ONLY SHOW WHEN activeViewTab === "raw") */}
             {activeViewTab === "raw" && (
@@ -4503,28 +4526,28 @@ export default function KnowYourMeatPage() {
                   alt="Wooden Chopping Board"
                   width={750}
                   height={500}
-                  className="w-[280px] sm:w-[360px] lg:w-[42vw] h-auto object-contain drop-shadow-2xl"
+                  className="w-[280px] sm:w-[360px] lg:w-[30vw] h-auto object-contain drop-shadow-2xl"
                   priority
                 />
               </div>
             )}
 
             {/* Main Center Selected Cut / Model Display */}
-            <div className="relative w-[220px] sm:w-[280px] lg:w-[34vw] h-[180px] sm:h-[230px] lg:h-[22vw] flex items-center justify-center z-10">
+            <div className="relative w-[220px] sm:w-[280px] lg:w-[20vw] h-[150px] sm:h-[230px] lg:h-[20vw] flex items-center justify-center z-10">
               {activeViewTab === "raw" && (
                 <Image
                   src={chickenParts[manuallySelectedPartIdx]?.img || "/Product/Chicken/ChickenParts/drumstick.webp"}
                   alt={chickenParts[manuallySelectedPartIdx]?.name || "Cut"}
                   width={550}
                   height={420}
-                  className="w-[180px] sm:w-[240px] lg:w-[28vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                  className="w-[150px] sm:w-[240px] lg:w-[20vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                   priority
                 />
               )}
 
               {activeViewTab === "packed" && (
                 <Image
-                  src={(chickenParts[manuallySelectedPartIdx] as any)?.pouchImg || "/Product/details/section-images/packedProduct.webp"}
+                  src={(chickenParts[manuallySelectedPartIdx] as any)?.pouchImg || "/Product/details/packedProduct.webp"}
                   alt="Packed Pouch"
                   width={500}
                   height={500}
@@ -4563,10 +4586,10 @@ export default function KnowYourMeatPage() {
             {/* ORBIT BADGE 1: Top-Left (Single Raw Cut) */}
             <div
               onClick={() => setActiveViewTab("raw")}
-              className="absolute -top-3 -left-1 sm:-top-4 sm:-left-3 lg:-top-[0.8vw] lg:-left-[3.5vw] z-30 group cursor-pointer"
+              className="absolute -top-3 -left-1 sm:-top-4 sm:-left-3 lg:-top-[0.8vw] lg:-left-[5.5vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
-              <div className="hidden lg:block absolute -bottom-[1.2vw] -right-[2.4vw] w-[4vw] h-auto pointer-events-none z-10">
+              <div className="hidden lg:block absolute bottom-[0.5vw] -right-[4.8vw] w-[4vw] h-auto pointer-events-none z-10">
                 <Image
                   src="/Product/details/section-images/arrow-top-left.svg"
                   alt="Arrow"
@@ -4575,7 +4598,7 @@ export default function KnowYourMeatPage() {
                   className="w-full h-auto object-contain"
                 />
               </div>
-              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "raw" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-100"}`}>
+              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "raw" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-300"}`}>
                 <Image
                   src={chickenParts[manuallySelectedPartIdx]?.img || "/Product/Chicken/ChickenParts/drumstick.webp"}
                   alt="Raw Cut"
@@ -4589,10 +4612,10 @@ export default function KnowYourMeatPage() {
             {/* ORBIT BADGE 2: Bottom-Left (Pouch / Packaged) */}
             <div
               onClick={() => setActiveViewTab("packed")}
-              className="absolute -bottom-3 -left-1 sm:-bottom-4 sm:-left-3 lg:bottom-[0.5vw] lg:-left-[4.8vw] z-30 group cursor-pointer"
+              className="absolute -bottom-3 -left-1 sm:-bottom-4 sm:-left-3 lg:bottom-[2.5vw] lg:-left-[5.8vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
-              <div className="hidden lg:block absolute -top-[1.2vw] -right-[2.4vw] w-[4vw] h-auto pointer-events-none z-10">
+              <div className="hidden lg:block absolute top-[1.2vw] -right-[4.8vw] w-[4vw] h-auto pointer-events-none z-10">
                 <Image
                   src="/Product/details/section-images/arrow-bottom-left.svg"
                   alt="Arrow"
@@ -4601,9 +4624,9 @@ export default function KnowYourMeatPage() {
                   className="w-full h-auto object-contain"
                 />
               </div>
-              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "packed" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-100"}`}>
+              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "packed" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-300"}`}>
                 <Image
-                  src={(chickenParts[manuallySelectedPartIdx] as any)?.pouchImg || "/Product/details/section-images/packedProduct.webp"}
+                  src={(chickenParts[manuallySelectedPartIdx] as any)?.pouchImg || "/Product/details/packedProduct.webp"}
                   alt="Pouch Pack"
                   width={80}
                   height={80}
@@ -4618,7 +4641,7 @@ export default function KnowYourMeatPage() {
               className="absolute -top-3 -right-1 sm:-top-4 sm:-right-3 lg:-top-[0.8vw] lg:-right-[3.5vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
-              <div className="hidden lg:block absolute -bottom-[1.2vw] -left-[2.4vw] w-[4vw] h-auto pointer-events-none z-10">
+              <div className="hidden lg:block absolute bottom-[1.2vw] -left-[4.4vw] w-[4vw] h-auto pointer-events-none z-10">
                 <Image
                   src="/Product/details/section-images/arrow-top-right.svg"
                   alt="Arrow"
@@ -4627,7 +4650,7 @@ export default function KnowYourMeatPage() {
                   className="w-full h-auto object-contain"
                 />
               </div>
-              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "platter" ? "border-[#064823] ring-2 ring-[#064823]/30" : "border-slate-100"}`}>
+              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "platter" ? "border-[#064823] ring-2 ring-[#E31E24]/30" : "border-slate-300"}`}>
                 <Image
                   src={chickenParts[manuallySelectedPartIdx]?.platterImg || "/Product/Chicken/Platters/drumstick.webp"}
                   alt="Platter"
@@ -4641,10 +4664,10 @@ export default function KnowYourMeatPage() {
             {/* ORBIT BADGE 4: Bottom-Right (View in 360°) */}
             <div
               onClick={() => setActiveViewTab(activeViewTab === "3d" ? "raw" : "3d")}
-              className="absolute -bottom-3 -right-1 sm:-bottom-4 sm:-right-3 lg:bottom-[0.5vw] lg:-right-[4.8vw] z-30 group cursor-pointer"
+              className="absolute -bottom-3 -right-1 sm:-bottom-4 sm:-right-3 lg:bottom-[3.5vw] lg:-right-[8.8vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
-              <div className="hidden lg:block absolute -top-[1.2vw] -left-[2.4vw] w-[4vw] h-auto pointer-events-none z-10">
+              <div className="hidden lg:block absolute top-[1.2vw] -left-[4.4vw] w-[4vw] h-auto pointer-events-none z-10">
                 <Image
                   src="/Product/details/section-images/arrow-bottom-right.svg"
                   alt="Arrow"
@@ -4653,15 +4676,15 @@ export default function KnowYourMeatPage() {
                   className="w-full h-auto object-contain"
                 />
               </div>
-              <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-[5vw] lg:h-[5vw] rounded-full bg-white shadow-xl border-2 flex flex-col items-center justify-center p-1 lg:p-[0.25vw] hover:scale-110 transition-transform ${activeViewTab === "3d" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-100"}`}>
+              <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-[5vw] lg:h-[5vw] rounded-full bg-white shadow-xl border-2 flex flex-col items-center justify-center p-1 lg:p-[0.25vw] hover:scale-110 transition-transform ${activeViewTab === "3d" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-300"}`}>
                 <Image
                   src="/Product/details/360.webp"
                   alt="360 View"
                   width={40}
                   height={40}
-                  className="w-5 h-5 lg:w-[1.8vw] lg:h-[1.8vw] object-contain"
+                  className="w-5 h-5 lg:w-[2.5vw] lg:h-[2.5vw] object-contain -mt-[0.5vw]"
                 />
-                <span className="text-[9px] lg:text-[0.55vw] font-black text-slate-800 tracking-tight leading-none mt-0.5 lg:mt-[0.15vw] uppercase font-manrope whitespace-nowrap">
+                <span className="text-[9px] lg:text-[0.55vw] font-black text-slate-800 tracking-tight leading-none mt-0.5 lg:-mt-[0.25vw] uppercase font-manrope whitespace-nowrap">
                   View in 360°
                 </span>
               </div>
@@ -4675,7 +4698,7 @@ export default function KnowYourMeatPage() {
         <div className="relative w-full z-30 pb-4 sm:pb-6 lg:pb-[1.8vw] px-4 sm:px-8 lg:px-[3.5vw] mt-6 sm:mt-8 lg:mt-[2vw]">
           
           {/* Center Stamp Badge (Positioned directly over top wave curve) */}
-          <div className="w-[110px] sm:w-[140px] lg:w-[8vw] h-auto absolute -top-[2.2vw] left-1/2 transform -translate-x-1/2 z-40 drop-shadow-md">
+          <div className="w-[110px] sm:w-[140px] lg:w-[8vw] h-auto absolute -top-[1.2vw] left-[52%] transform -translate-x-1/2 z-40 drop-shadow-md">
             <Image
               src="/Product/details/section-images/keralas_original-meat.webp"
               alt="Kerala's Original Meat"
@@ -4686,23 +4709,23 @@ export default function KnowYourMeatPage() {
           </div>
 
           {/* Bottom Green Container Row */}
-          <div className="relative z-30 w-full flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-[1.5vw] pt-2">
+          <div className="relative z-30 w-full flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-[1.5vw] pt-0">
             
             {/* 1. Bottom Left Recipe Card */}
-            <div className="relative w-full max-w-[340px] lg:max-w-none lg:w-[21.5vw] bg-[#FDFBF2] rounded-2xl lg:rounded-[1vw] p-3 lg:p-[0.65vw] lg:pr-[1.2vw] shadow-lg border border-white/80 flex items-center gap-3 lg:gap-[0.8vw]">
+            <div className="relative w-full max-w-[340px] lg:max-w-none lg:w-[21.5vw] bg-[#FDFBF2] rounded-2xl lg:rounded-[1vw] shadow-lg border border-white/80 flex items-center gap-3 lg:gap-[0.8vw]">
               {/* Chef Icon Red Circular Badge on top-left corner */}
-              <div className="absolute -top-3 -left-3 lg:-top-[0.8vw] lg:-left-[0.8vw] w-8 h-8 lg:w-[2.3vw] lg:h-[2.3vw] rounded-full bg-[#E31E24] shadow-md flex items-center justify-center p-1.5 lg:p-[0.5vw] z-40">
+              <div className="absolute -top-3 -left-3 lg:-top-[0.8vw] lg:left-[0.25vw] lg:top-[0.25vw] w-10 h-10 lg:w-[1.85vw] lg:h-[1.85vw] rounded-full shadow-md flex items-center justify-center z-40">
                 <Image
                   src="/Product/details/section-images/chef-icon.svg"
                   alt="Chef Icon"
-                  width={30}
-                  height={30}
-                  className="w-full h-full object-contain filter brightness-0 invert"
+                  width={50}
+                  height={50}
+                  className="w-full h-full object-contain"
                 />
               </div>
 
               {/* Recipe Dish Image */}
-              <div className="w-20 h-20 lg:w-[7.2vw] lg:h-[7.2vw] rounded-xl lg:rounded-[0.7vw] overflow-hidden relative shrink-0 shadow-sm border border-slate-100">
+              <div className="w-20 h-20 lg:w-[9.2vw] lg:h-[7.2vw] rounded-xl lg:rounded-[0] overflow-hidden relative shrink-0 shadow-sm">
                 <Image
                   src="/Product/details/bottomCard.webp"
                   alt="Recipe"
@@ -4713,19 +4736,19 @@ export default function KnowYourMeatPage() {
 
               {/* Text & CTA Button */}
               <div className="flex-1 min-w-0 flex flex-col justify-center">
-                <span className="text-xs lg:text-[0.78vw] font-black text-[#E31E24] tracking-widest uppercase font-barlow-condensed leading-none">
+                <span className="text-xs lg:text-[0.85vw] font-bold text-[#E31E24] uppercase font-barlow-condensed tracking-widest leading-none">
                   WHAT'S COOKING?
                 </span>
-                <h5 className="text-xs lg:text-[0.78vw] font-bold text-slate-900 leading-tight font-manrope mt-1 lg:mt-[0.15vw] truncate">
+                <h5 className="text-xs lg:text-[0.75vw] font-bold text-black leading-tight font-manrope mt-1 lg:mt-[0.35vw] truncate">
                   Spicy Chicken {chickenParts[manuallySelectedPartIdx]?.name || "Drumstick"} Fry
                 </h5>
-                <p className="text-[10px] lg:text-[0.58vw] font-medium text-slate-600 leading-tight mt-1 lg:mt-[0.2vw] line-clamp-2 max-w-full lg:max-w-[11vw]">
+                <p className="text-[10px] lg:text-[0.6vw] font-medium text-slate-900 leading-tight mt-1 lg:mt-[0.2vw] line-clamp-2 max-w-full lg:max-w-[11vw]">
                   A Spicy and flavourful recipe For a perfect family meal.
                 </p>
 
                 <Link
                   href={`/recipes?part=${chickenParts[manuallySelectedPartIdx]?.name.toLowerCase() || "drumstick"}`}
-                  className="mt-2 lg:mt-[0.55vw] bg-[#E31E24] hover:bg-[#c9181d] text-white text-[10px] lg:text-[0.58vw] font-extrabold py-1 lg:py-[0.35vw] px-2.5 lg:px-[0.85vw] rounded-md lg:rounded-[0.4vw] uppercase tracking-wider inline-flex items-center gap-1 lg:gap-[0.3vw] shadow transition-colors w-max"
+                  className="mt-2 lg:mt-[0.55vw] bg-[#E31E24] hover:bg-[#c9181d] text-white text-[10px] lg:text-[0.6vw] font-extrabold py-1 lg:py-[0.35vw] px-2.5 lg:px-[0.85vw] rounded-md lg:rounded-[0.4vw] uppercase tracking-wider inline-flex items-center gap-1 lg:gap-[0.3vw] shadow transition-colors w-max"
                 >
                   <span>EXPLORE RECIPE</span>
                   <span>&rarr;</span>
@@ -4734,12 +4757,12 @@ export default function KnowYourMeatPage() {
             </div>
 
             {/* 2. Center 4 Feature SVGs directly rendered */}
-            <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-3 lg:gap-[1.2vw] flex-1">
+            <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-3 lg:gap-[1.2vw] flex-1 mt-[2.5vw]">
               {/* Feature 1 */}
               <img
                 src="/Product/details/section-images/farm-fresh.svg"
                 alt="Farm Fresh"
-                className="h-10 sm:h-12 lg:h-[6.2vw] w-auto object-contain drop-shadow-sm"
+                className="h-10 sm:h-12 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm"
               />
 
               {/* Divider */}
@@ -4749,7 +4772,7 @@ export default function KnowYourMeatPage() {
               <img
                 src="/Product/details/section-images/hygienic-processing.svg"
                 alt="Hygienic Processing"
-                className="h-10 sm:h-12 lg:h-[6.2vw] w-auto object-contain drop-shadow-sm"
+                className="h-10 sm:h-12 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm"
               />
 
               {/* Divider */}
@@ -4759,7 +4782,7 @@ export default function KnowYourMeatPage() {
               <img
                 src="/Product/details/section-images/quality-checked.svg"
                 alt="Quality Checked"
-                className="h-10 sm:h-12 lg:h-[6.2vw] w-auto object-contain drop-shadow-sm"
+                className="h-10 sm:h-12 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm"
               />
 
               {/* Divider */}
@@ -4769,7 +4792,7 @@ export default function KnowYourMeatPage() {
               <img
                 src="/Product/details/section-images/ready-natural-taste.svg"
                 alt="Ready Natural Taste"
-                className="h-10 sm:h-12 lg:h-[6.2vw] w-auto object-contain drop-shadow-sm"
+                className="h-10 sm:h-12 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm"
               />
             </div>
 
@@ -4778,7 +4801,7 @@ export default function KnowYourMeatPage() {
               <img
                 src="/Product/details/section-images/keep-fresh-delivered-fresh.svg"
                 alt="Keep Fresh Delivered Fresh"
-                className="h-10 sm:h-12 lg:h-[5.5vw] w-auto object-contain drop-shadow-sm"
+                className="h-10 sm:h-12 lg:h-[4.75vw] w-auto object-contain drop-shadow-sm"
               />
             </div>
 
