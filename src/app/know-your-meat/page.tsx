@@ -2196,8 +2196,9 @@ export default function KnowYourMeatPage() {
       `}</style>
       <div
         ref={containerRef}
-        className={`relative w-full z-10 bg-[#FDFCF7] ${activeMeatType === "chicken" ? "h-[200vh]" : "h-[100vh]"
-          }`}
+        className={`relative w-full z-10 bg-[#FDFCF7] ${
+          activeMeatType === "chicken" ? "h-[200vh]" : "h-[100vh]"
+        }`}
       >
         {/* Section 1 Doodle Repeat Overlay */}
         <div
@@ -2207,9 +2208,9 @@ export default function KnowYourMeatPage() {
             backgroundSize: "800px",
           }}
         />
-        <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col justify-between pt-16 md:pt-20 lg:pt-24 xl:pt-32 pb-4 viz-sticky-wrap">
+        <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col justify-between pt-14 sm:pt-16 md:pt-18 lg:pt-24 xl:pt-32 pb-0 viz-sticky-wrap">
           {/* Main Visualizer Content Area */}
-          <div className="flex-1 w-full px-4 md:px-8 flex items-center justify-center relative pt-2 viz-main-wrap">
+          <div className="flex-1 w-full px-4 md:px-8 flex items-center justify-center relative pt-0 viz-main-wrap">
             {/* Top Right Sub-category tabs */}
             <div className="absolute top-0 right-4 lg:right-12 flex items-stretch bg-white border border-[#CCCCCC] shadow-sm z-40 text-[13px] md:text-[14px] font-bold tracking-wider h-9 md:h-10 select-none viz-switcher-container">
               <motion.button
@@ -2262,8 +2263,9 @@ export default function KnowYourMeatPage() {
 
             {/* Title Section (Centered above animal visualizer - 100% centered horizontally) */}
             <div
-              className={`absolute left-1/2 transform -translate-x-1/2 text-center z-30 flex flex-col items-center viz-title-block ${activeMeatType === "chicken" ? "top-2" : "top-2 sm:top-3 lg:top-3"
-                }`}
+              className={`absolute left-1/2 transform -translate-x-1/2 text-center z-10 flex flex-col items-center viz-title-block ${
+                activeMeatType === "chicken" ? "top-2" : "top-1 sm:top-2 lg:top-3"
+              }`}
             >
               {/* Row 1: Icon + sub-label */}
               <motion.div
@@ -4328,7 +4330,7 @@ export default function KnowYourMeatPage() {
                       delay: 0.1,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="relative top-[6vh] sm:top-[6.5vh] lg:top-[7vh] xl:-top-[5vh] 2xl:-top-[7vh] w-full max-w-[400px] sm:max-w-[480px] md:max-w-[540px] lg:max-w-[580px] xl:max-w-[760px] 2xl:max-w-[820px] h-[180px] sm:h-[220px] md:h-[250px] lg:h-[270px] xl:h-[360px] 2xl:h-[400px] max-h-[25vh] sm:max-h-[26vh] lg:max-h-[28vh] xl:max-h-[38vh] 2xl:max-h-[42vh] flex items-center justify-center z-20 viz-beef-img-wrap mb-0 overflow-visible"
+                    className="relative top-[4vh] sm:top-[2vh] md:top-[1vh] lg:top-[7vh] xl:-top-[5vh] 2xl:-top-[7vh] w-[98%] sm:w-[92%] md:w-[88%] max-w-[440px] sm:max-w-[640px] md:max-w-[700px] lg:max-w-[580px] xl:max-w-[760px] 2xl:max-w-[820px] h-[220px] sm:h-[360px] md:h-[420px] lg:h-[270px] xl:h-[360px] 2xl:h-[400px] flex items-center justify-center z-20 viz-beef-img-wrap mb-0 overflow-visible"
                   >
                     <BuffaloParts partsDx={100} partsDy={-90} />
                   </motion.div>
@@ -4342,7 +4344,7 @@ export default function KnowYourMeatPage() {
                       delay: 0.1,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="relative -top-[3.5vh] sm:-top-[4vh] xl:-top-[10.5vh] 2xl:-top-[6vh] w-full max-w-[680px] sm:max-w-[780px] md:max-w-[840px] lg:max-w-[900px] xl:max-w-[940px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[470px] max-h-[50vh] flex items-center justify-center z-20 viz-goat-img-wrap mb-0 overflow-visible"
+                    className="relative top-[0.5vh] sm:-top-[3vh] md:-top-[4vh] lg:-top-[4vh] xl:-top-[10.5vh] 2xl:-top-[6vh] w-[98%] sm:w-[94%] md:w-[90%] max-w-[460px] sm:max-w-[720px] md:max-w-[800px] lg:max-w-[900px] xl:max-w-[940px] h-[260px] sm:h-[420px] md:h-[480px] lg:h-[470px] flex items-center justify-center z-20 viz-goat-img-wrap mb-0 overflow-visible"
                   >
                     <GoatParts partsDx={70} partsDy={-20} />
                   </motion.div>
@@ -4350,7 +4352,7 @@ export default function KnowYourMeatPage() {
 
                 {/* Bottom Grassland Bar with 4 Feature Badges (Animal stands directly on this hill - 100vw full width) */}
                 <div
-                  className="w-screen absolute bottom-[-1vh] left-1/2 transform -translate-x-1/2 h-[140px] sm:h-[155px] lg:h-[155px] xl:h-[175px] bg-no-repeat flex items-end pb-4 px-8 justify-center z-10 viz-grassland-bar"
+                  className="w-screen absolute bottom-0 left-1/2 transform -translate-x-1/2 h-[115px] sm:h-[125px] md:h-[130px] lg:h-[155px] xl:h-[175px] bg-no-repeat flex items-end pb-2 sm:pb-3 px-8 justify-center z-10 viz-grassland-bar"
                   style={{
                     backgroundImage: 'url("/Product/GoatBeef/grassLand.webp")',
                     backgroundSize: "100% 100%",
@@ -4869,7 +4871,7 @@ export default function KnowYourMeatPage() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.88 }}
                         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                        className="w-full h-full relative flex items-center justify-center rounded-2xl overflow-hidden drop-shadow-2xl z-20"
+                        className="w-[90%] h-[90%] relative flex items-center justify-center rounded-2xl overflow-hidden drop-shadow-2xl z-20"
                       >
                         <style>{`
                           model-viewer::part(default-progress-bar),
@@ -4894,9 +4896,9 @@ export default function KnowYourMeatPage() {
                             exposure: "1.15",
                             loading: "eager",
                             style: {
-                              width: "100%",
-                              height: "100%",
-                              minHeight: "180px",
+                              width: "88%",
+                              height: "88%",
+                              minHeight: "150px",
                               outline: "none",
                               cursor: "grab",
                               backgroundColor: "transparent",
