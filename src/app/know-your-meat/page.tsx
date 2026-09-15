@@ -19,6 +19,8 @@ export default function KnowYourMeatPage() {
   const detailsSectionRef = useRef<HTMLDivElement>(null);
   const centerCircleRef = useRef<HTMLDivElement>(null);
   const stationaryImgRef = useRef<HTMLImageElement>(null);
+  const stationaryPlateRef = useRef<HTMLDivElement>(null);
+  const woodPlateContainerRef = useRef<HTMLDivElement>(null);
   const [activeStage, setActiveStage] = useState<
     "skin" | "skinless" | "inside"
   >("skin");
@@ -36,7 +38,164 @@ export default function KnowYourMeatPage() {
   const [hoveredPart, setHoveredPart] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [screenSize, setScreenSize] = useState<"mobile" | "tablet" | "desktop">("desktop");
   const [highlightedCategoryIdx, setHighlightedCategoryIdx] = useState(0);
+  const [isAutoSwitchStopped, setIsAutoSwitchStopped] = useState(false);
+  const [isOrbitHovered, setIsOrbitHovered] = useState(false);
+  const userInteractionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const registerUserInteraction = () => {
+    setIsAutoSwitchStopped(true);
+    if (userInteractionTimeoutRef.current) {
+      clearTimeout(userInteractionTimeoutRef.current);
+    }
+    // Resume auto-play after 5 seconds of inactivity
+    userInteractionTimeoutRef.current = setTimeout(() => {
+      setIsAutoSwitchStopped(false);
+      setIsOrbitHovered(false);
+    }, 5000);
+  };
+
+  // Rotating dashed ring with alternating odd Red (with red shadow) & even Dark Green (with green shadow) dashes
+  const renderAlternatingDottedRing = () => {
+    const count = 16;
+    const radius = 47.5;
+    const dashSpan = 13.5;
+
+    return (
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none animate-spin z-0 overflow-visible"
+        style={{
+          animationDuration: "12s",
+          animationTimingFunction: "linear",
+        }}
+        viewBox="0 0 100 100"
+      >
+        {Array.from({ length: count }, (_, i) => {
+          const startAngle = (i * 360) / count;
+          const endAngle = startAngle + dashSpan;
+          const startRad = (startAngle * Math.PI) / 180;
+          const endRad = (endAngle * Math.PI) / 180;
+          const x1 = 50 + radius * Math.cos(startRad);
+          const y1 = 50 + radius * Math.sin(startRad);
+          const x2 = 50 + radius * Math.cos(endRad);
+          const y2 = 50 + radius * Math.sin(endRad);
+
+          const isOdd = (i + 1) % 2 === 1;
+          const color = isOdd ? "#E31E24" : "#15803D";
+          const shadowStyle = isOdd
+            ? "drop-shadow(0px 0px 2.5px rgba(227, 30, 36, 0.35))"
+            : "drop-shadow(0px 0px 2.5px rgba(21, 128, 61, 0.35))";
+
+          return (
+            <path
+              key={i}
+              d={`M ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2}`}
+              stroke={color}
+              strokeWidth={2.8}
+              strokeLinecap="round"
+              fill="none"
+              style={{ filter: shadowStyle }}
+            />
+          );
+        })}
+      </svg>
+    );
+  };
+
+  // Animated flowing curved arrow with alternating red & dark green dashes entering dead-center into the arrowhead
+  const renderAnimatedCurvedArrow = (
+    direction: "top-left" | "bottom-left" | "top-right" | "bottom-right",
+    isActive: boolean
+  ) => {
+    let curvePath = "";
+    let arrowHead = "";
+
+    if (direction === "top-left") {
+      curvePath = "M 2 3 C 60 1, 115 12, 145 44";
+      arrowHead = "M 153.2 41.8 L 156.6 56.4 L 142.2 52.0 L 145 44 Z";
+    } else if (direction === "bottom-left") {
+      curvePath = "M 2 61 C 60 63, 115 52, 145 20";
+      arrowHead = "M 142.2 12.0 L 156.6 7.6 L 153.2 22.2 L 145 20 Z";
+    } else if (direction === "top-right") {
+      curvePath = "M 163 3 C 105 1, 50 12, 20 44";
+      arrowHead = "M 11.8 41.8 L 8.4 56.4 L 22.8 52.0 L 20 44 Z";
+    } else {
+      // bottom-right
+      curvePath = "M 163 61 C 105 63, 50 52, 20 20";
+      arrowHead = "M 22.8 12.0 L 8.4 7.6 L 11.8 22.2 L 20 20 Z";
+    }
+
+    if (!isActive) {
+      return (
+        <svg
+          width="165"
+          height="65"
+          viewBox="0 0 165 65"
+          fill="none"
+          className="w-full h-auto opacity-75 hover:opacity-100 transition-opacity duration-300"
+        >
+          <path
+            d={curvePath}
+            stroke="#000000"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          />
+          <path d={arrowHead} fill="#000000" />
+        </svg>
+      );
+    }
+
+    return (
+      <svg
+        width="165"
+        height="65"
+        viewBox="0 0 165 65"
+        fill="none"
+        className="w-full h-auto overflow-visible"
+      >
+        <style>{`
+          @keyframes arrowFlow {
+            from { stroke-dashoffset: 0; }
+            to { stroke-dashoffset: -24; }
+          }
+        `}</style>
+        {/* Red Dashes - Bolder weight */}
+        <path
+          d={curvePath}
+          stroke="#E31E24"
+          strokeWidth="3.8"
+          strokeDasharray="14 10"
+          strokeLinecap="round"
+          style={{
+            animation: "arrowFlow 1.3s linear infinite",
+            filter: "drop-shadow(0px 0px 3px rgba(227, 30, 36, 0.4))",
+          }}
+        />
+        {/* Dark Green Dashes - Bolder weight */}
+        <path
+          d={curvePath}
+          stroke="#15803D"
+          strokeWidth="3.8"
+          strokeDasharray="14 10"
+          strokeDashoffset="12"
+          strokeLinecap="round"
+          style={{
+            animation: "arrowFlow 1.3s linear infinite",
+            filter: "drop-shadow(0px 0px 3px rgba(21, 128, 61, 0.4))",
+          }}
+        />
+        {/* Sharp Seamless Arrowhead */}
+        <path
+          d={arrowHead}
+          fill="#E31E24"
+          style={{
+            filter: "drop-shadow(0px 0px 3px rgba(227, 30, 36, 0.45))",
+          }}
+        />
+      </svg>
+    );
+  };
 
   useEffect(() => {
     const categoryTimer = setInterval(() => {
@@ -45,6 +204,26 @@ export default function KnowYourMeatPage() {
     return () => clearInterval(categoryTimer);
   }, []);
 
+  // Auto-switch through the 4 Section 2 view tabs every 3.5s unless hovered or clicked
+  useEffect(() => {
+    if (isAutoSwitchStopped || isOrbitHovered || !hasSelectedAnyPart) return;
+
+    const tabs: ("raw" | "packed" | "platter" | "3d")[] = [
+      "raw",
+      "packed",
+      "platter",
+      "3d",
+    ];
+    const autoTimer = setInterval(() => {
+      setActiveViewTab((prev) => {
+        const idx = tabs.indexOf(prev);
+        const nextIdx = (idx + 1) % tabs.length;
+        return tabs[nextIdx];
+      });
+    }, 3500);
+
+    return () => clearInterval(autoTimer);
+  }, [isAutoSwitchStopped, isOrbitHovered, hasSelectedAnyPart]);
 
   // GLB Model paths for 360 viewer (using updated GLB models from /Product/details/glb/)
   const partGlbMap: Record<string, string> = {
@@ -89,7 +268,11 @@ export default function KnowYourMeatPage() {
   useEffect(() => {
     setMounted(true);
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      const w = window.innerWidth;
+      setIsMobile(w < 768);
+      if (w < 640) setScreenSize("mobile");
+      else if (w < 1024) setScreenSize("tablet");
+      else setScreenSize("desktop");
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -182,20 +365,25 @@ export default function KnowYourMeatPage() {
     targetRect?: { top: number; left: number; width: number; height: number };
     timestamp: number;
   } | null>(null);
+  // Single flying target — direct flight from clicked badge to wood plate
+  const [flyTarget, setFlyTarget] = useState<{
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+  } | null>(null);
 
   useEffect(() => {
     if (animatingPart) {
-      let isCancelled = false;
-      let rafId: number;
-
       // Instantly dismiss flying animation if user manually scrolls on desktop or mobile
       const handleUserScroll = () => {
         setIsLandedInSection2(true);
         setAnimatingPart(null);
+        setFlyTarget(null);
         if (typeof window !== "undefined" && (window as any).lenis) {
           (window as any).lenis.scrollTo(
             window.pageYOffset || document.documentElement.scrollTop,
-            { immediate: true }
+            { immediate: true },
           );
         }
       };
@@ -237,84 +425,13 @@ export default function KnowYourMeatPage() {
       };
 
       window.addEventListener("wheel", handleWheel, { passive: true });
-      window.addEventListener("touchstart", handleTouchStart, { passive: true });
+      window.addEventListener("touchstart", handleTouchStart, {
+        passive: true,
+      });
       window.addEventListener("touchmove", handleTouchMove, { passive: true });
       window.addEventListener("keydown", handleKeyDown, { passive: true });
 
-      const updateTarget = () => {
-        if (isCancelled) return;
-
-        let exactTarget:
-          | { top: number; left: number; width: number; height: number }
-          | null = null;
-
-        if (detailsSectionRef.current) {
-          const dRect = detailsSectionRef.current.getBoundingClientRect();
-
-          // Priority 1: Directly measure the actual stationary image element
-          if (stationaryImgRef.current) {
-            const imgR = stationaryImgRef.current.getBoundingClientRect();
-            if (imgR.width > 0 && imgR.height > 0) {
-              exactTarget = {
-                // When detailsSection reaches top: 0, img center is at (imgR.top - dRect.top) + imgR.height / 2
-                top: imgR.top - dRect.top + imgR.height / 2,
-                left: imgR.left - dRect.left + imgR.width / 2,
-                width: imgR.width,
-                height: imgR.height,
-              };
-            }
-          }
-
-          // Priority 2: Measure centerCircleRef container if image not yet laid out
-          if (!exactTarget && centerCircleRef.current) {
-            const cr = centerCircleRef.current.getBoundingClientRect();
-            if (cr.width > 0 && cr.height > 0) {
-              const isWing = animatingPart.name.toLowerCase().includes("wing");
-              const targetW =
-                typeof window !== "undefined"
-                  ? window.innerWidth >= 768
-                    ? window.innerWidth * (isWing ? 0.35 : 0.2)
-                    : window.innerWidth >= 640
-                      ? window.innerWidth * (isWing ? 0.65 : 0.50)
-                      : window.innerWidth * (isWing ? 0.75 : 0.60)
-                  : cr.width;
-
-              exactTarget = {
-                top: cr.top - dRect.top + cr.height / 2,
-                left: cr.left - dRect.left + cr.width / 2,
-                width: targetW,
-                height: cr.height,
-              };
-            }
-          }
-        }
-
-        if (exactTarget) {
-          setAnimatingPart((prev) => {
-            if (!prev) return null;
-            if (
-              prev.targetRect &&
-              Math.abs(prev.targetRect.top - exactTarget.top) < 0.5 &&
-              Math.abs(prev.targetRect.left - exactTarget.left) < 0.5 &&
-              Math.abs(prev.targetRect.width - exactTarget.width) < 0.5 &&
-              Math.abs(prev.targetRect.height - exactTarget.height) < 0.5
-            ) {
-              return prev;
-            }
-            return {
-              ...prev,
-              targetRect: exactTarget,
-            };
-          });
-        }
-
-        rafId = requestAnimationFrame(updateTarget);
-      };
-
-      rafId = requestAnimationFrame(updateTarget);
       return () => {
-        isCancelled = true;
-        cancelAnimationFrame(rafId);
         window.removeEventListener("wheel", handleWheel);
         window.removeEventListener("touchstart", handleTouchStart);
         window.removeEventListener("touchmove", handleTouchMove);
@@ -353,6 +470,8 @@ export default function KnowYourMeatPage() {
 
     setHasSelectedAnyPart(true);
     setIsLandedInSection2(false);
+    setIsAutoSwitchStopped(false);
+    setIsOrbitHovered(false);
 
     // 2. Immediately unhide both details section and recipe section in DOM to guarantee full scroll headroom
     if (detailsSectionRef.current) {
@@ -361,7 +480,7 @@ export default function KnowYourMeatPage() {
       void detailsSectionRef.current.offsetHeight;
     }
     const recipesEl = document.querySelector(
-      ".recipe-section-wrap"
+      ".recipe-section-wrap",
     ) as HTMLElement | null;
     if (recipesEl) {
       recipesEl.classList.remove("hidden");
@@ -370,7 +489,8 @@ export default function KnowYourMeatPage() {
 
     // Update stationary image preview immediately if ref is already present
     if (stationaryImgRef.current) {
-      stationaryImgRef.current.src = matchedPart.img || item.img;
+      stationaryImgRef.current.src =
+        matchedPart.productImg || matchedPart.img || item.img;
     }
 
     // Notify Lenis smooth scroll of new document height
@@ -391,58 +511,84 @@ export default function KnowYourMeatPage() {
     const startWidth = r.width || 85;
     const startHeight = r.height || 85;
 
-    // Shift popup image initial starting position ONLY for Breast product
-    const isBreast = matchedPart?.name?.toLowerCase().trim().includes("breast");
-    if (isBreast) {
-      startTop -= 85;
+    // 4. Compute destination position directly on the Wood Plate in Section 2 for the clicked part
+    const targetIdx = foundIdx !== -1 ? foundIdx : selectedPartIdx;
+    const partStyle = getPlateStyleForPart(targetIdx);
+    const isMob = typeof window !== "undefined" && window.innerWidth < 640;
+    const isTablet = typeof window !== "undefined" && window.innerWidth < 1024;
+
+    let plateBoxW = 0;
+    let plateBoxH = 0;
+    let plateBoxTop = 0;
+    let plateBoxLeft = 0;
+
+    const plateBox =
+      woodPlateContainerRef.current ||
+      (centerCircleRef.current?.firstElementChild as HTMLElement | null) ||
+      centerCircleRef.current;
+
+    if (plateBox && plateBox.offsetWidth > 0 && detailsSectionRef.current) {
+      const boxRect = plateBox.getBoundingClientRect();
+      const sectionRect = detailsSectionRef.current.getBoundingClientRect();
+      plateBoxW = plateBox.offsetWidth;
+      plateBoxH = plateBox.offsetHeight;
+      plateBoxTop = boxRect.top - sectionRect.top;
+      plateBoxLeft = boxRect.left;
     }
 
-    // 4. Compute destination position in viewport for fixed overlay (standard center target)
-    let targetRect:
-      | { top: number; left: number; width: number; height: number }
-      | undefined;
+    if (!plateBoxW || !plateBoxH || !plateBoxTop) {
+      plateBoxW = isMob
+        ? 280
+        : isTablet
+          ? 480
+          : Math.min(
+              540,
+              (typeof window !== "undefined" ? window.innerWidth : 1200) * 0.34,
+            );
+      plateBoxH = isMob
+        ? 210
+        : isTablet
+          ? 360
+          : Math.min(
+              400,
+              (typeof window !== "undefined" ? window.innerWidth : 1200) * 0.28,
+            );
+      plateBoxLeft =
+        (typeof window !== "undefined" ? window.innerWidth - plateBoxW : 600) /
+        2;
+      const headerH = isMob ? 130 : isTablet ? 160 : 180;
+      plateBoxTop = headerH + 20;
+    }
 
-    // Priority 1: Direct measurement of stationary image element
-    if (stationaryImgRef.current) {
-      const imgR = stationaryImgRef.current.getBoundingClientRect();
-      if (imgR.width > 0 && imgR.height > 0) {
-        targetRect = {
-          top: imgR.top + imgR.height / 2,
-          left: imgR.left + imgR.width / 2,
-          width: imgR.width,
-          height: imgR.height,
-        };
+    const widthPct = parseFloat(partStyle.width) / 100 || 0.42;
+    const heightPct = parseFloat(partStyle.height) / 100 || 0.62;
+    const targetW = plateBoxW * widthPct;
+    const targetH = plateBoxH * heightPct;
+
+    // Parse negative marginTop offset (e.g. "-14%", "-12%")
+    let marginTopPx = 0;
+    if (partStyle.marginTop) {
+      const mtStr = String(partStyle.marginTop).trim();
+      if (mtStr.endsWith("%")) {
+        marginTopPx = (parseFloat(mtStr) / 100) * plateBoxH;
+      } else {
+        marginTopPx = parseFloat(mtStr) || 0;
       }
     }
 
-    // Priority 2: Center circle showcase container measurement
-    if (!targetRect && centerCircleRef.current) {
-      const cr = centerCircleRef.current.getBoundingClientRect();
-      if (cr.width > 0 && cr.height > 0) {
-        targetRect = {
-          top: cr.top + cr.height / 2,
-          left: cr.left + cr.width / 2,
-          width: cr.width,
-          height: cr.height,
-        };
-      }
-    }
+    // Exact landing coordinates matching the flex-centered wood plate
+    const targetLeft = plateBoxLeft + (plateBoxW - targetW) / 2;
+    // Shift slightly down to place accurately onto the wood plate surface (reduced by 2px to 18px)
+    const targetTop =
+      plateBoxTop + (plateBoxH - targetH) / 2 + marginTopPx + (isMob ? 20 : 21);
 
-    // Priority 3: Fallback calculation (viewport dead center)
-    if (!targetRect && typeof window !== "undefined") {
-      const isMob = window.innerWidth < 768;
-      const boxW = isMob
-        ? window.innerWidth * 0.75
-        : window.innerWidth * 0.35;
-      const boxH = isMob ? Math.min(270, window.innerHeight * 0.33) : boxW;
-      targetRect = {
-        top: window.innerHeight * 0.45,
-        left: window.innerWidth * 0.5,
-        width: boxW,
-        height: boxH,
-      };
-    }
-
+    // Set direct destination on the Wood Plate with matching height, width, and elevation
+    setFlyTarget({
+      top: targetTop,
+      left: targetLeft,
+      width: targetW,
+      height: targetH,
+    });
     setAnimatingPart({
       img: matchedPart.productImg || matchedPart.img || item.img,
       name: matchedPart.name || item.name,
@@ -453,14 +599,13 @@ export default function KnowYourMeatPage() {
         width: startWidth,
         height: startHeight,
       },
-      targetRect,
       timestamp: Date.now(),
     });
 
     // 5. Smooth scroll directly to the destination details section with layout-shift auto-correction
     const fastSmoothScrollToElement = (
       targetEl: HTMLElement,
-      duration = 650
+      duration = 800,
     ) => {
       if (typeof window !== "undefined" && (window as any).lenis) {
         const lenis = (window as any).lenis;
@@ -472,7 +617,7 @@ export default function KnowYourMeatPage() {
         });
 
         // Periodic realignment checkpoints to neutralize mobile browser address bar collapse & Section 2 reflow
-        const checkPoints = [150, 300, 450, 650];
+        const checkPoints = [150, 350, 550, 800];
         checkPoints.forEach((ms) => {
           setTimeout(() => {
             if (targetEl && targetEl.isConnected) {
@@ -480,7 +625,7 @@ export default function KnowYourMeatPage() {
               const currentTop = targetEl.getBoundingClientRect().top;
               if (Math.abs(currentTop) > 2) {
                 lenis.scrollTo(targetEl, {
-                  duration: 0.25,
+                  duration: 0.2,
                   offset: 0,
                   immediate: false,
                 });
@@ -496,7 +641,7 @@ export default function KnowYourMeatPage() {
     };
 
     if (detailsSectionRef.current) {
-      fastSmoothScrollToElement(detailsSectionRef.current, 650);
+      fastSmoothScrollToElement(detailsSectionRef.current, 800);
     }
   };
 
@@ -553,6 +698,11 @@ export default function KnowYourMeatPage() {
       img: "/Product/Chicken/raw-meat/wing.webp",
       pouchImg: "/Product/Chicken/packed-meat/wings.webp",
       platterImg: "/Product/Chicken/Platters/wings.webp",
+      plateStyle: {
+        mobile: { width: "68%", height: "76%", marginTop: "-12%" },
+        tablet: { width: "45%", height: "60%", marginTop: "-10%" },
+        desktop: { width: "80%", height: "62%", marginTop: "-12%" },
+      },
       desc: "Crispy and delicious chicken wings, perfect for deep frying, barbecue, or baking with your favorite glaze.",
       weight: "500g",
       nutrition: {
@@ -569,6 +719,11 @@ export default function KnowYourMeatPage() {
       img: "/Product/Chicken/raw-meat/heart.webp",
       pouchImg: "/Product/Chicken/packed-meat/heart.webp",
       platterImg: "/Product/Chicken/Platters/heart.webp",
+      plateStyle: {
+        mobile: { width: "62%", height: "72%", marginTop: "-10%" },
+        tablet: { width: "40%", height: "56%", marginTop: "-8%" },
+        desktop: { width: "42%", height: "100%", marginTop: "-12%" },
+      },
       desc: "Clean and trimmed chicken hearts. High in protein and iron with a firm, chewy texture, excellent for skewers and stir-fries.",
       weight: "500g",
       nutrition: {
@@ -585,6 +740,11 @@ export default function KnowYourMeatPage() {
       img: "/Product/Chicken/raw-meat/drumette.webp",
       pouchImg: "/Product/Chicken/packed-meat/drumette.webp",
       platterImg: "/Product/Chicken/Platters/drumette.webp",
+      plateStyle: {
+        mobile: { width: "66%", height: "76%", marginTop: "-12%" },
+        tablet: { width: "44%", height: "60%", marginTop: "-10%" },
+        desktop: { width: "60%", height: "90%", marginTop: "-14%" },
+      },
       desc: "Juicy and meaty drumettes, the perfect party starter. Great for spicy buffalo wings or crispy batter fry.",
       weight: "500g",
       nutrition: {
@@ -601,6 +761,11 @@ export default function KnowYourMeatPage() {
       img: "/Product/Chicken/raw-meat/thigh.webp",
       pouchImg: "/Product/Chicken/packed-meat/thigh.webp",
       platterImg: "/Product/Chicken/Platters/thigh.webp",
+      plateStyle: {
+        mobile: { width: "70%", height: "80%", marginTop: "-12%" },
+        tablet: { width: "46%", height: "64%", marginTop: "-10%" },
+        desktop: { width: "54%", height: "84%", marginTop: "-12%" },
+      },
       desc: "Flavorful and tender chicken thighs, bone-in and skin-on. Holds moisture perfectly for slow cooking and roasts.",
       weight: "500g",
       nutrition: {
@@ -617,6 +782,11 @@ export default function KnowYourMeatPage() {
       img: "/Product/Chicken/raw-meat/neck.webp",
       pouchImg: "/Product/Chicken/packed-meat/neck.webp",
       platterImg: "/Product/Chicken/Platters/neck.webp",
+      plateStyle: {
+        mobile: { width: "66%", height: "76%", marginTop: "-12%" },
+        tablet: { width: "44%", height: "60%", marginTop: "-10%" },
+        desktop: { width: "48%", height: "82%", marginTop: "-12%" },
+      },
       desc: "Rich bone-in chicken necks, perfect for preparing highly nutritious stocks, soups, and slow-cooked gravies.",
       weight: "500g",
       nutrition: {
@@ -634,6 +804,11 @@ export default function KnowYourMeatPage() {
       img: "/Product/Chicken/raw-meat/brest.webp",
       pouchImg: "/Product/Chicken/packed-meat/breast.webp",
       platterImg: "/Product/Chicken/Platters/breast.webp",
+      plateStyle: {
+        mobile: { width: "72%", height: "82%", marginTop: "-12%" },
+        tablet: { width: "48%", height: "64%", marginTop: "-10%" },
+        desktop: { width: "84%", height: "94%", marginTop: "-14%" },
+      },
       desc: "Lean and protein-rich boneless chicken breast fillets. Extremely versatile and perfect for healthy salads, grilling, and baking.",
       weight: "500g",
       nutrition: {
@@ -650,6 +825,11 @@ export default function KnowYourMeatPage() {
       img: "/Product/Chicken/raw-meat/back.webp",
       pouchImg: "/Product/Chicken/packed-meat/back.webp",
       platterImg: "/Product/Chicken/Platters/back.webp",
+      plateStyle: {
+        mobile: { width: "70%", height: "80%", marginTop: "-12%" },
+        tablet: { width: "46%", height: "62%", marginTop: "-10%" },
+        desktop: { width: "45%", height: "82%", marginTop: "-15%" },
+      },
       desc: "Clean-cut chicken backs, rich in marrow and collagen. The ultimate choice for deep, flavorful bone broths and stocks.",
       weight: "500g",
       nutrition: {
@@ -666,6 +846,11 @@ export default function KnowYourMeatPage() {
       img: "/Product/Chicken/raw-meat/liver.webp",
       pouchImg: "/Product/Chicken/packed-meat/liver.webp",
       platterImg: "/Product/Chicken/Platters/liver.webp",
+      plateStyle: {
+        mobile: { width: "64%", height: "74%", marginTop: "-12%" },
+        tablet: { width: "42%", height: "58%", marginTop: "-10%" },
+        desktop: { width: "65%", height: "80%", marginTop: "-12%" },
+      },
       desc: "Fresh and nutrient-dense chicken liver, rich in iron, vitamin A, and essential vitamins. Soft texture and rich taste.",
       weight: "500g",
       nutrition: {
@@ -682,6 +867,11 @@ export default function KnowYourMeatPage() {
       img: "/Product/Chicken/raw-meat/drumstick.webp",
       pouchImg: "/Product/Chicken/packed-meat/drumstick.webp",
       platterImg: "/Product/Chicken/Platters/drumstick.webp",
+      plateStyle: {
+        mobile: { width: "68%", height: "78%", marginTop: "-12%" },
+        tablet: { width: "44%", height: "62%", marginTop: "-10%" },
+        desktop: { width: "70%", height: "82%", marginTop: "-14%" },
+      },
       desc: "Tender and juicy drumsticks, perfectly cut and hygienically packed to retain natural freshness and rich taste in every bite.",
       weight: "500g",
       nutrition: {
@@ -698,6 +888,11 @@ export default function KnowYourMeatPage() {
       img: "/Product/Chicken/raw-meat/gizzard.webp",
       pouchImg: "/Product/Chicken/packed-meat/gizzard.webp",
       platterImg: "/Product/Chicken/Platters/gizzard.webp",
+      plateStyle: {
+        mobile: { width: "64%", height: "74%", marginTop: "-12%" },
+        tablet: { width: "42%", height: "58%", marginTop: "-10%" },
+        desktop: { width: "55%", height: "80%", marginTop: "-14%" },
+      },
       desc: "Tough and highly flavorful chicken gizzards. Firm texture that becomes beautifully tender when braised or slow-cooked.",
       weight: "500g",
       nutrition: {
@@ -708,6 +903,28 @@ export default function KnowYourMeatPage() {
       },
     },
   ];
+
+  const getPlateStyleForPart = (idx: number) => {
+    const part = chickenParts[idx];
+    const custom = (part as any)?.plateStyle;
+    const fallback = {
+      mobile: { width: "68%", height: "76%", marginTop: "-12%" },
+      tablet: { width: "44%", height: "62%", marginTop: "-10%" },
+      desktop: { width: "42%", height: "62%", marginTop: "-10%" },
+    };
+
+    if (!mounted) {
+      return custom?.desktop || fallback.desktop;
+    }
+
+    if (screenSize === "mobile") {
+      return custom?.mobile || fallback.mobile;
+    } else if (screenSize === "tablet") {
+      return custom?.tablet || fallback.tablet;
+    } else {
+      return custom?.desktop || fallback.desktop;
+    }
+  };
 
   const partRecipesMap: Record<
     string,
@@ -2033,10 +2250,11 @@ export default function KnowYourMeatPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.34, ease: "easeOut" }}
                 onClick={() => handleMeatTabChange("goat")}
-                className={`px-8 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${activeMeatType === "goat"
-                  ? "bg-[#064823] text-white"
-                  : "text-slate-700 hover:bg-slate-50"
-                  }`}
+                className={`px-8 flex items-center justify-center uppercase relative font-bold cursor-pointer transition-colors viz-switcher-btn ${
+                  activeMeatType === "goat"
+                    ? "bg-[#064823] text-white"
+                    : "text-slate-700 hover:bg-slate-50"
+                }`}
               >
                 GOAT
                 {activeMeatType === "goat" && (
@@ -3402,8 +3620,10 @@ export default function KnowYourMeatPage() {
 
                         {/* BACK (#7) → spine/back bone in cavity */}
                         {(() => {
-                          const active = isPartActive("BACK") || isPartActive("BACT");
-                          const isHovered = isPartHovered("BACK") || isPartHovered("BACT");
+                          const active =
+                            isPartActive("BACK") || isPartActive("BACT");
+                          const isHovered =
+                            isPartHovered("BACK") || isPartHovered("BACT");
                           const color = active ? "#F2CE07" : "#222222";
                           const r = active ? 4.5 : 3.5;
                           const sx = isHovered ? 1025 : 1080;
@@ -3969,7 +4189,7 @@ export default function KnowYourMeatPage() {
                     return (
                       <div
                         onClick={(e) => handlePartClick(e, currentPart)}
-                        className="w-[92%] max-w-[360px] bg-white/15 backdrop-blur-md border border-white/30 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-lg active:scale-95 transition-transform duration-200 cursor-pointer"
+                        className="w-[92%] max-w-[360px] bg-white/85 backdrop-blur-md border border-slate-200/80 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-md active:scale-95 transition-transform duration-200 cursor-pointer"
                       >
                         {/* Circle image */}
                         <div className="w-[50px] h-[50px] rounded-full bg-white flex items-center justify-center p-1.5 shrink-0 border-2 border-[#F2CE07] shadow-sm">
@@ -3980,17 +4200,17 @@ export default function KnowYourMeatPage() {
                           />
                         </div>
                         {/* Content */}
-                        <div className="flex-1 min-w-0 text-left">
-                          <span className="block text-[16px] font-black uppercase tracking-wider text-[#F2CE07] truncate leading-tight">
+                        <div className="flex-1 min-w-0 text-left flex flex-col justify-center self-center py-0.5">
+                          <span className="block text-[16px] font-black uppercase tracking-wider text-[#b45309] truncate leading-tight">
                             {currentPart.name}
                           </span>
-                          <p className="text-[12px] font-medium text-white/80 line-clamp-1 leading-snug mt-0.5">
+                          <p className="text-[12px] font-semibold text-slate-600 line-clamp-1 leading-snug mt-0.5">
                             {currentPart.desc}
                           </p>
                         </div>
                         {/* CTA */}
-                        <div className="w-8 h-8 rounded-full bg-[#F2CE07] flex items-center justify-center shrink-0 shadow-sm">
-                          <span className="text-[#064823] font-black text-[14px] leading-none">
+                        <div className="w-8 h-8 rounded-full bg-[#F2CE07] flex items-center justify-center shrink-0 shadow-sm self-center">
+                          <span className="text-[#064823] font-black text-[14px] leading-none flex items-center justify-center">
                             →
                           </span>
                         </div>
@@ -4135,7 +4355,7 @@ export default function KnowYourMeatPage() {
                     className="object-contain drop-shadow-2xl"
                   />
                 </motion.div>
-               
+
                 {/* Central Animal Photo — positioned so hooves touch the grassland hill */}
                 <motion.div
                   key={`animal-${activeMeatType}`}
@@ -4148,11 +4368,7 @@ export default function KnowYourMeatPage() {
                   }}
                   className="absolute top-[30vh] w-full max-w-[780px] xl:max-w-[300px] h-[240px] sm:h-[400px] md:h-[440px] lg:h-[450px] max-h-[50vh] lg:max-h-[54vh] flex items-center justify-center z-30 viz-beef-img-wrap mb-[-1.5vw] scale-[0.8]"
                 >
-                  {activeMeatType === "beef" ? (
-                    <BuffaloParts />
-                  ) : (
-                    <GoatParts />
-                  )}
+                  {activeMeatType === "beef" ? <BuffaloParts /> : <GoatParts />}
                 </motion.div>
 
                 {/* Bottom Grassland Bar with 4 Feature Badges (Animal stands directly on this hill - 100vw full width) */}
@@ -4213,16 +4429,14 @@ export default function KnowYourMeatPage() {
                       </div>
                       <span className="font-medium">
                         PERFECT FOR EVERY RECIPE
-
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
             )}
-
           </div>
-              </div>
+        </div>
       </div>
 
       {/* 2. Categories Section */}
@@ -4437,7 +4651,6 @@ export default function KnowYourMeatPage() {
             className="object-cover object-center w-full h-full relative z-10"
           />
 
-            
           {/* Floating single leaf - right side */}
           <div className="hidden md:block lg:block absolute bottom-[11vw] right-[7vw] w-[5.5vw] h-auto z-10">
             <Image
@@ -4463,7 +4676,6 @@ export default function KnowYourMeatPage() {
 
         {/* TOP MAIN CONTENT CONTAINER */}
         <div className="relative w-full max-w-[100vw] mx-auto px-4 lg:px-[3.5vw] flex-1 flex flex-col justify-start z-10 pt-1 lg:pt-[0.5vw]">
-          
           {/* Top Left Slogan Badge: Goodness Begins at Our Farms + Two Leaves */}
           <div className="hidden md:flex lg:flex flex-col items-start absolute top-[1.5rem] lg:top-[1.8rem] xl:top-[2.2rem] 2xl:top-[2.5rem] left-[2.5vw] md:left-[3.5vw] z-20 pointer-events-none scale-90 md:scale-100">
             <div className="w-[13.5vw] max-w-[240px] h-auto">
@@ -4488,11 +4700,12 @@ export default function KnowYourMeatPage() {
 
           {/* Top Center Title Header */}
           <div className="text-center w-full max-w-[90%] sm:max-w-[80%] lg:max-w-[42vw] mx-auto z-20 pt-1 lg:pt-[0.2vw] mt-0 lg:mt-1">
-            <h4 className="text-xs sm:text-sm lg:text-[1vw] font-medium text-[#d52828] tracking-widest uppercase leading-none"> 
+            <h4 className="text-xs sm:text-sm lg:text-[1vw] font-medium text-[#d52828] tracking-widest uppercase leading-none">
               FRESH PREMIUM CHICKEN
             </h4>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[3vw] font-bold text-[#17442d] tracking-normal uppercase leading-none mt-1 lg:mt-[0.3vw] drop-shadow-sm">
-              {chickenParts[manuallySelectedPartIdx]?.name || "CHICKEN DRUMSTICK"}
+              {chickenParts[manuallySelectedPartIdx]?.name ||
+                "CHICKEN DRUMSTICK"}
             </h2>
             <p className="text-xs sm:text-sm lg:text-[0.78vw] font-semibold text-slate-900 font-manrope leading-relaxed max-w-[92%] sm:max-w-[80%] lg:max-w-[36vw] mx-auto mt-2 lg:mt-[0.5vw]">
               {chickenParts[manuallySelectedPartIdx]?.desc ||
@@ -4502,38 +4715,40 @@ export default function KnowYourMeatPage() {
 
           {/* Top Right Nutrition Card (Desktop only to prevent text collision on tablet) */}
           <div className="hidden lg:block absolute top-[1.2rem] lg:top-[1.5rem] xl:top-[1.8rem] 2xl:top-[2.2rem] right-[3vw]">
-              <Image
-               src={"/Product/details/section-images/nutrition-information.svg"} 
-               alt="Nutrition information card"
+            <Image
+              src={"/Product/details/section-images/nutrition-information.svg"}
+              alt="Nutrition information card"
               width={350}
               height={150}
               className="w-[180px] sm:w-[360px] lg:w-[17vw] max-w-[340px] h-auto object-contain drop-shadow-2xl"
               priority
-               />
+            />
           </div>
-          
+
           {/* Leaf - Pure nutritional information */}
           <div className="hidden lg:block absolute top-[calc(1.2rem+8.2vw)] lg:top-[calc(1.5rem+8.4vw)] xl:top-[calc(1.8rem+7.5vw)] 2xl:top-[calc(2.2rem+7vw)] right-[6.5vw]">
-              <Image
-               src={"/Product/details/section-images/pure-natural-nutrition.webp"} 
-               alt="Leaf - Pure nutritional information"
+            <Image
+              src={
+                "/Product/details/section-images/pure-natural-nutrition.webp"
+              }
+              alt="Leaf - Pure nutritional information"
               width={350}
               height={150}
               className="w-[180px] sm:w-[360px] lg:w-[9vw] max-w-[170px] h-auto object-contain drop-shadow-2xl"
               priority
-               />
+            />
           </div>
-          
+
           {/* Benefits */}
           <div className="hidden lg:block absolute top-[calc(1.2rem+13.8vw)] lg:top-[calc(1.5rem+13.6vw)] xl:top-[calc(1.8rem+12.8vw)] 2xl:top-[calc(2.2rem+12vw)] right-[6.5vw]">
-              <Image
-               src={"/Product/details/section-images/benefits-texts.svg"} 
-               alt="Benefits"
+            <Image
+              src={"/Product/details/section-images/benefits-texts.svg"}
+              alt="Benefits"
               width={350}
               height={150}
               className="w-[180px] sm:w-[360px] lg:w-[10.5vw] max-w-[190px] h-auto object-contain drop-shadow-2xl"
               priority
-               />
+            />
           </div>
 
           {/* Top Right Decorative Leaf Prop for Tablet Viewports */}
@@ -4552,185 +4767,338 @@ export default function KnowYourMeatPage() {
           {/* CENTER PRODUCT ORBIT DISPLAY */}
           <div
             ref={centerCircleRef}
-            className="relative w-full max-w-[92vw] sm:max-w-[85vw] md:max-w-[75vw] lg:max-w-[42vw] xl:max-w-[44vw] h-[250px] sm:h-[360px] md:h-[410px] lg:h-[25vw] xl:h-[27vw] mx-auto my-2 sm:my-4 md:my-5 flex items-center justify-center"
+            className="relative w-full max-w-[80vw] sm:max-w-[85vw] md:max-w-[75vw] lg:max-w-[42vw] xl:max-w-[44vw] h-[210px] sm:h-[360px] md:h-[410px] lg:h-[25vw] xl:h-[27vw] mx-auto my-2 sm:my-4 md:my-5 flex items-center justify-center"
           >
-            
             {/* Main Center Selected Cut / Model Display */}
-            <div className="relative w-[340px] sm:w-[480px] md:w-[540px] lg:w-[37vw] xl:w-[39vw] h-[250px] sm:h-[360px] md:h-[400px] lg:h-[27vw] xl:h-[28vw] flex items-center justify-center z-10">
-              {activeViewTab === "raw" && (
-                <Image
-                  ref={stationaryImgRef}
-                  src={chickenParts[manuallySelectedPartIdx]?.img || "/Product/Chicken/raw-meat/drumstick.webp"}
-                  alt={chickenParts[manuallySelectedPartIdx]?.name || "Cut"}
-                  width={850}
-                  height={650}
-                  className="w-[340px] sm:w-[480px] md:w-[540px] lg:w-[37vw] xl:w-[39vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-                  priority
-                />
-              )}
+            <div
+              ref={woodPlateContainerRef}
+              className="relative w-[280px] sm:w-[480px] md:w-[540px] lg:w-[37vw] xl:w-[34vw] h-[210px] sm:h-[360px] md:h-[400px] lg:h-[27vw] xl:h-[28vw] flex items-center justify-center z-10"
+            >
+              <AnimatePresence mode="wait">
+                {activeViewTab === "raw" && (
+                  <motion.div
+                    key="raw-plate-wrapper"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -16 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative w-full h-full flex items-center justify-center"
+                  >
+                    {/* Static Wood Plate — never re-animates on part change */}
+                    <img
+                      src="/Product/Chicken/ChickenParts/woodPlate.webp"
+                      alt="Wood Plate"
+                      className="absolute inset-0 w-full h-full object-contain select-none pointer-events-none"
+                    />
 
-              {activeViewTab === "packed" && (
-                <Image
-                  src={(chickenParts[manuallySelectedPartIdx] as any)?.pouchImg || "/Product/details/packedProduct.webp"}
-                  alt="Packed Pouch"
-                  width={550}
-                  height={550}
-                  className="w-[190px] sm:w-[260px] md:w-[310px] lg:w-[20vw] xl:w-[21vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-                  priority
-                />
-              )}
+                    {/* Animated Chicken Part — sits centered on the plate top surface */}
+                    <div
+                      ref={stationaryPlateRef}
+                      suppressHydrationWarning
+                      className="relative z-10 flex items-center justify-center"
+                      style={getPlateStyleForPart(manuallySelectedPartIdx)}
+                    >
+                      <div
+                        className="w-full h-full flex items-center justify-center absolute inset-0"
+                        style={{
+                          opacity: isLandedInSection2 ? 1 : 0,
+                        }}
+                      >
+                        <img
+                          ref={stationaryImgRef as any}
+                          src={
+                            chickenParts[manuallySelectedPartIdx]?.productImg ||
+                            "/Product/Chicken/ChickenParts/drumstick.webp"
+                          }
+                          alt={
+                            chickenParts[manuallySelectedPartIdx]?.name || "Cut"
+                          }
+                          className="w-full h-full object-contain select-none pointer-events-none"
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
 
-              {activeViewTab === "platter" && (
-                <Image
-                  src={chickenParts[manuallySelectedPartIdx]?.platterImg || "/Product/Chicken/Platters/drumstick.webp"}
-                  alt="Prepared Platter"
-                  width={550}
-                  height={420}
-                  className="w-[200px] sm:w-[300px] md:w-[350px] lg:w-[28vw] xl:w-[29vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-                  priority
-                />
-              )}
+                {activeViewTab === "packed" && (
+                  <motion.div
+                    key={`packed-${manuallySelectedPartIdx}`}
+                    initial={{ opacity: 0, scale: 0.82, y: 32 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.88, y: -18 }}
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full h-full flex items-center justify-center"
+                  >
+                    <Image
+                      src={
+                        (chickenParts[manuallySelectedPartIdx] as any)
+                          ?.pouchImg || "/Product/details/packedProduct.webp"
+                      }
+                      alt="Packed Pouch"
+                      width={550}
+                      height={550}
+                      className="w-[190px] sm:w-[260px] md:w-[310px] lg:w-[20vw] xl:w-[21vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                      priority
+                    />
+                  </motion.div>
+                )}
 
-              {activeViewTab === "3d" && (() => {
-                const currentPartName = chickenParts[manuallySelectedPartIdx]?.name || "Drumstick";
-                const glbPath =
-                  partGlbMap[currentPartName] ||
-                  partGlbMap[currentPartName.toLowerCase()] ||
-                  partGlbMap[currentPartName.trim()] ||
-                  "/Product/details/glb/drumstick.glb";
+                {activeViewTab === "platter" && (
+                  <motion.div
+                    key={`platter-${manuallySelectedPartIdx}`}
+                    initial={{ opacity: 0, scale: 0.82, y: 32 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.88, y: -18 }}
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full h-full flex items-center justify-center"
+                  >
+                    <Image
+                      src={
+                        chickenParts[manuallySelectedPartIdx]?.platterImg ||
+                        "/Product/Chicken/Platters/drumstick.webp"
+                      }
+                      alt="Prepared Platter"
+                      width={550}
+                      height={420}
+                      className="w-[200px] sm:w-[300px] md:w-[350px] lg:w-[28vw] xl:w-[29vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                      priority
+                    />
+                  </motion.div>
+                )}
 
-                return (
-                  <div className="w-full h-full relative flex items-center justify-center rounded-2xl overflow-hidden drop-shadow-2xl z-20">
-                    {React.createElement("model-viewer", {
-                      src: glbPath,
-                      alt: `3D model of ${currentPartName}`,
-                      "auto-rotate": true,
-                      "camera-controls": true,
-                      "touch-action": "pan-y",
-                      "shadow-intensity": "1.2",
-                      "shadow-softness": "0.8",
-                      exposure: "1.15",
-                      style: {
-                        width: "100%",
-                        height: "100%",
-                        minHeight: "180px",
-                        outline: "none",
-                        cursor: "grab",
-                        backgroundColor: "transparent",
-                      },
-                    })}
-                  </div>
-                );
-              })()}
+                {activeViewTab === "3d" &&
+                  (() => {
+                    const currentPartName =
+                      chickenParts[manuallySelectedPartIdx]?.name ||
+                      "Drumstick";
+                    const glbPath =
+                      partGlbMap[currentPartName] ||
+                      partGlbMap[currentPartName.toLowerCase()] ||
+                      partGlbMap[currentPartName.trim()] ||
+                      "/Product/details/glb/drumstick.glb";
+
+                    return (
+                      <motion.div
+                        key={`3d-${manuallySelectedPartIdx}`}
+                        initial={{ opacity: 0, scale: 0.88 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.88 }}
+                        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-full h-full relative flex items-center justify-center rounded-2xl overflow-hidden drop-shadow-2xl z-20"
+                      >
+                        <style>{`
+                          model-viewer::part(default-progress-bar),
+                          model-viewer::part(default-progress-mask),
+                          model-viewer > #default-progress-bar {
+                            display: none !important;
+                          }
+                        `}</style>
+                        {React.createElement(
+                          "model-viewer",
+                          {
+                            src: glbPath,
+                            alt: `3D model of ${currentPartName}`,
+                            "auto-rotate": true,
+                            "auto-rotate-delay": 0,
+                            "rotation-per-second": "30deg",
+                            "camera-controls": true,
+                            "disable-zoom": true,
+                            "touch-action": "pan-y",
+                            "shadow-intensity": "1.2",
+                            "shadow-softness": "0.8",
+                            exposure: "1.15",
+                            loading: "eager",
+                            style: {
+                              width: "100%",
+                              height: "100%",
+                              minHeight: "180px",
+                              outline: "none",
+                              cursor: "grab",
+                              backgroundColor: "transparent",
+                            },
+                          },
+                          React.createElement("div", {
+                            slot: "progress-bar",
+                            style: { display: "none" },
+                          })
+                        )}
+                      </motion.div>
+                    );
+                  })()}
+              </AnimatePresence>
             </div>
 
             {/* DESKTOP ORBIT BADGE 1: Top-Left (Single Raw Cut) */}
             <div
-              onClick={() => setActiveViewTab("raw")}
-              className="hidden lg:block absolute lg:-top-[0.8vw] lg:-left-[5.5vw] z-30 group cursor-pointer"
+              onClick={() => {
+                registerUserInteraction();
+                setActiveViewTab("raw");
+              }}
+              onMouseEnter={() => {
+                setIsOrbitHovered(true);
+                if (userInteractionTimeoutRef.current)
+                  clearTimeout(userInteractionTimeoutRef.current);
+              }}
+              onMouseLeave={() => {
+                setIsOrbitHovered(false);
+                registerUserInteraction();
+              }}
+              className="hidden lg:block absolute lg:top-[0.8vw] lg:-left-[3.8vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
-              <div className="hidden lg:block absolute bottom-[0.5vw] -right-[4.8vw] w-[4vw] h-auto pointer-events-none z-10">
-                <Image
-                  src="/Product/details/section-images/arrow-top-left.svg"
-                  alt="Arrow"
-                  width={80}
-                  height={80}
-                  className="w-full h-auto object-contain"
-                />
+              <div className="hidden lg:block absolute top-[2.2vw] -right-[6.6vw] w-[6.4vw] h-auto pointer-events-none z-10">
+                {renderAnimatedCurvedArrow("top-left", activeViewTab === "raw")}
               </div>
-              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "raw" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-300"}`}>
+              <div
+                className={`relative w-[54px] h-[54px] sm:w-[64px] sm:h-[64px] lg:w-[6.2vw] lg:h-[6.2vw] rounded-full flex items-center justify-center p-2 lg:p-[0.7vw] hover:scale-110 transition-all duration-300 ${
+                  activeViewTab === "raw"
+                    ? "border-[1.5px] border-transparent scale-110"
+                    : "border-[1.5px] border-black hover:border-black"
+                }`}
+              >
+                {/* Clockwise Running Dotted Ring: Odd Red & Even Green */}
+                {activeViewTab === "raw" && renderAlternatingDottedRing()}
                 <Image
-                  src={chickenParts[manuallySelectedPartIdx]?.productImg || "/Product/Chicken/ChickenParts/drumstick.webp"}
+                  src={
+                    chickenParts[manuallySelectedPartIdx]?.productImg ||
+                    "/Product/Chicken/ChickenParts/drumstick.webp"
+                  }
                   alt="Raw Cut"
-                  width={80}
-                  height={80}
-                  className="w-full h-full object-contain"
+                  width={100}
+                  height={100}
+                  className="w-full h-full object-contain relative z-10"
                 />
               </div>
             </div>
 
             {/* DESKTOP ORBIT BADGE 2: Bottom-Left (Pouch / Packaged) */}
             <div
-              onClick={() => setActiveViewTab("packed")}
-              className="hidden lg:block absolute lg:bottom-[5.2vw] lg:-left-[5.8vw] z-30 group cursor-pointer"
+              onClick={() => {
+                registerUserInteraction();
+                setActiveViewTab("packed");
+              }}
+              onMouseEnter={() => {
+                setIsOrbitHovered(true);
+                if (userInteractionTimeoutRef.current)
+                  clearTimeout(userInteractionTimeoutRef.current);
+              }}
+              onMouseLeave={() => {
+                setIsOrbitHovered(false);
+                registerUserInteraction();
+              }}
+              className="hidden lg:block absolute lg:bottom-[3.8vw] lg:-left-[4.5vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
-              <div className="hidden lg:block absolute top-[1.2vw] -right-[4.8vw] w-[4vw] h-auto pointer-events-none z-10">
-                <Image
-                  src="/Product/details/section-images/arrow-bottom-left.svg"
-                  alt="Arrow"
-                  width={80}
-                  height={80}
-                  className="w-full h-auto object-contain"
-                />
+              <div className="hidden lg:block absolute bottom-[2.2vw] -right-[6.6vw] w-[6.4vw] h-auto pointer-events-none z-10">
+                {renderAnimatedCurvedArrow("bottom-left", activeViewTab === "packed")}
               </div>
-              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "packed" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-300"}`}>
+              <div
+                className={`relative w-[54px] h-[54px] sm:w-[64px] sm:h-[64px] lg:w-[6.2vw] lg:h-[6.2vw] rounded-full flex items-center justify-center p-2 lg:p-[0.7vw] hover:scale-110 transition-all duration-300 ${
+                  activeViewTab === "packed"
+                    ? "border-[1.5px] border-transparent scale-110"
+                    : "border-[1.5px] border-black hover:border-black"
+                }`}
+              >
+                {/* Clockwise Running Dotted Ring: Odd Red & Even Green */}
+                {activeViewTab === "packed" && renderAlternatingDottedRing()}
                 <Image
-                  src={(chickenParts[manuallySelectedPartIdx] as any)?.pouchImg || "/Product/details/packedProduct.webp"}
+                  src={
+                    (chickenParts[manuallySelectedPartIdx] as any)?.pouchImg ||
+                    "/Product/details/packedProduct.webp"
+                  }
                   alt="Pouch Pack"
-                  width={80}
-                  height={80}
-                  className="w-full h-full object-contain"
+                  width={100}
+                  height={100}
+                  className="w-full h-full object-contain relative z-10"
                 />
               </div>
             </div>
 
             {/* DESKTOP ORBIT BADGE 3: Top-Right (Bowl / Platter) */}
             <div
-              onClick={() => setActiveViewTab("platter")}
-              className="hidden lg:block absolute lg:-top-[0.8vw] lg:-right-[3.5vw] z-30 group cursor-pointer"
+              onClick={() => {
+                registerUserInteraction();
+                setActiveViewTab("platter");
+              }}
+              onMouseEnter={() => {
+                setIsOrbitHovered(true);
+                if (userInteractionTimeoutRef.current)
+                  clearTimeout(userInteractionTimeoutRef.current);
+              }}
+              onMouseLeave={() => {
+                setIsOrbitHovered(false);
+                registerUserInteraction();
+              }}
+              className="hidden lg:block absolute lg:top-[0.8vw] lg:-right-[2.5vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
-              <div className="hidden lg:block absolute bottom-[1.2vw] -left-[4.4vw] w-[4vw] h-auto pointer-events-none z-10">
-                <Image
-                  src="/Product/details/section-images/arrow-top-right.svg"
-                  alt="Arrow"
-                  width={80}
-                  height={80}
-                  className="w-full h-auto object-contain"
-                />
+              <div className="hidden lg:block absolute top-[2.2vw] -left-[6.6vw] w-[6.4vw] h-auto pointer-events-none z-10">
+                {renderAnimatedCurvedArrow("top-right", activeViewTab === "platter")}
               </div>
-              <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "platter" ? "border-[#064823] ring-2 ring-[#E31E24]/30" : "border-slate-300"}`}>
+              <div
+                className={`relative w-[54px] h-[54px] sm:w-[64px] sm:h-[64px] lg:w-[6.2vw] lg:h-[6.2vw] rounded-full flex items-center justify-center p-2 lg:p-[0.7vw] hover:scale-110 transition-all duration-300 ${
+                  activeViewTab === "platter"
+                    ? "border-[1.5px] border-transparent scale-110"
+                    : "border-[1.5px] border-black hover:border-black"
+                }`}
+              >
+                {/* Clockwise Running Dotted Ring: Odd Red & Even Green */}
+                {activeViewTab === "platter" && renderAlternatingDottedRing()}
                 <Image
-                  src={chickenParts[manuallySelectedPartIdx]?.platterImg || "/Product/Chicken/Platters/drumstick.webp"}
+                  src={
+                    chickenParts[manuallySelectedPartIdx]?.platterImg ||
+                    "/Product/Chicken/Platters/drumstick.webp"
+                  }
                   alt="Platter"
-                  width={80}
-                  height={80}
-                  className="w-full h-full object-contain"
+                  width={100}
+                  height={100}
+                  className="w-full h-full object-contain relative z-10"
                 />
               </div>
             </div>
 
             {/* DESKTOP ORBIT BADGE 4: Bottom-Right (View in 360°) */}
             <div
-              onClick={() => setActiveViewTab(activeViewTab === "3d" ? "raw" : "3d")}
-              className="hidden lg:block absolute lg:bottom-[6.2vw] lg:-right-[8.8vw] z-30 group cursor-pointer"
+              onClick={() => {
+                registerUserInteraction();
+                setActiveViewTab(activeViewTab === "3d" ? "raw" : "3d");
+              }}
+              onMouseEnter={() => {
+                setIsOrbitHovered(true);
+                if (userInteractionTimeoutRef.current)
+                  clearTimeout(userInteractionTimeoutRef.current);
+              }}
+              onMouseLeave={() => {
+                setIsOrbitHovered(false);
+                registerUserInteraction();
+              }}
+              className="hidden lg:block absolute lg:bottom-[4.5vw] lg:-right-[6.8vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
-              <div className="hidden lg:block absolute top-[1.2vw] -left-[4.4vw] w-[4vw] h-auto pointer-events-none z-10">
-                <Image
-                  src="/Product/details/section-images/arrow-bottom-right.svg"
-                  alt="Arrow"
-                  width={80}
-                  height={80}
-                  className="w-full h-auto object-contain"
-                />
+              <div className="hidden lg:block absolute bottom-[2.2vw] -left-[6.6vw] w-[6.4vw] h-auto pointer-events-none z-10">
+                {renderAnimatedCurvedArrow("bottom-right", activeViewTab === "3d")}
               </div>
-              <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-[5vw] lg:h-[5vw] rounded-full bg-white shadow-xl border-2 flex flex-col items-center justify-center p-1 lg:p-[0.25vw] hover:scale-110 transition-transform ${activeViewTab === "3d" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-300"}`}>
+              <div
+                className={`relative w-[58px] h-[58px] sm:w-[68px] sm:h-[68px] lg:w-[6.6vw] lg:h-[6.6vw] rounded-full flex flex-col items-center justify-center p-1.5 lg:p-[0.45vw] hover:scale-110 transition-all duration-300 ${
+                  activeViewTab === "3d"
+                    ? "border-[1.5px] border-transparent scale-110"
+                    : "border-[1.5px] border-black hover:border-black"
+                }`}
+              >
+                {/* Clockwise Running Dotted Ring: Odd Red & Even Green */}
+                {activeViewTab === "3d" && renderAlternatingDottedRing()}
                 <Image
                   src="/Product/details/360.webp"
                   alt="360 View"
-                  width={40}
-                  height={40}
-                  className="w-5 h-5 lg:w-[2.5vw] lg:h-[2.5vw] object-contain -mt-[0.5vw]"
+                  width={50}
+                  height={50}
+                  className="w-6 h-6 lg:w-[3.2vw] lg:h-[3.2vw] object-contain -mt-[0.3vw] relative z-10"
                 />
-                <span className="text-[9px] lg:text-[0.55vw] font-black text-slate-800 tracking-tight leading-none mt-0.5 lg:-mt-[0.25vw] uppercase font-manrope whitespace-nowrap">
+                <span className="text-[10px] lg:text-[0.68vw] font-black text-slate-800 tracking-tight leading-none mt-0.5 lg:-mt-[0.2vw] uppercase font-manrope whitespace-nowrap relative z-10">
                   View in 360°
                 </span>
               </div>
             </div>
-
           </div>
 
           {/* MOBILE / TABLET FLOATING BUTTONS ROW (HIDDEN ON DESKTOP) */}
@@ -4738,16 +5106,31 @@ export default function KnowYourMeatPage() {
             {/* Tab 1: Raw Cut */}
             <button
               type="button"
-              onClick={() => setActiveViewTab("raw")}
-              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
+              onClick={() => {
+                registerUserInteraction();
+                setActiveViewTab("raw");
+              }}
+              onMouseEnter={() => {
+                setIsOrbitHovered(true);
+                if (userInteractionTimeoutRef.current)
+                  clearTimeout(userInteractionTimeoutRef.current);
+              }}
+              onMouseLeave={() => {
+                setIsOrbitHovered(false);
+                registerUserInteraction();
+              }}
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
                 activeViewTab === "raw"
-                  ? "bg-[#E31E24] text-white ring-2 ring-[#E31E24]/30 shadow-md scale-[1.02]"
+                  ? "bg-[#F2CE07] text-[#17442d] border-2 border-dotted border-[#17442d] ring-2 ring-[#F2CE07]/50 shadow-md scale-[1.04]"
                   : "bg-white text-slate-800 border border-slate-200/90 hover:bg-slate-50"
               }`}
             >
               <div className="w-5 h-5 sm:w-6 sm:h-6 relative shrink-0">
                 <Image
-                  src={chickenParts[manuallySelectedPartIdx]?.productImg || "/Product/Chicken/ChickenParts/drumstick.webp"}
+                  src={
+                    chickenParts[manuallySelectedPartIdx]?.productImg ||
+                    "/Product/Chicken/ChickenParts/drumstick.webp"
+                  }
                   alt="Raw Cut"
                   width={30}
                   height={30}
@@ -4760,16 +5143,31 @@ export default function KnowYourMeatPage() {
             {/* Tab 2: Pouch Pack */}
             <button
               type="button"
-              onClick={() => setActiveViewTab("packed")}
-              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
+              onClick={() => {
+                registerUserInteraction();
+                setActiveViewTab("packed");
+              }}
+              onMouseEnter={() => {
+                setIsOrbitHovered(true);
+                if (userInteractionTimeoutRef.current)
+                  clearTimeout(userInteractionTimeoutRef.current);
+              }}
+              onMouseLeave={() => {
+                setIsOrbitHovered(false);
+                registerUserInteraction();
+              }}
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
                 activeViewTab === "packed"
-                  ? "bg-[#E31E24] text-white ring-2 ring-[#E31E24]/30 shadow-md scale-[1.02]"
+                  ? "bg-[#F2CE07] text-[#17442d] border-2 border-dotted border-[#17442d] ring-2 ring-[#F2CE07]/50 shadow-md scale-[1.04]"
                   : "bg-white text-slate-800 border border-slate-200/90 hover:bg-slate-50"
               }`}
             >
               <div className="w-5 h-5 sm:w-6 sm:h-6 relative shrink-0">
                 <Image
-                  src={(chickenParts[manuallySelectedPartIdx] as any)?.pouchImg || "/Product/details/packedProduct.webp"}
+                  src={
+                    (chickenParts[manuallySelectedPartIdx] as any)?.pouchImg ||
+                    "/Product/details/packedProduct.webp"
+                  }
                   alt="Pouch Pack"
                   width={30}
                   height={30}
@@ -4782,16 +5180,31 @@ export default function KnowYourMeatPage() {
             {/* Tab 3: Platter */}
             <button
               type="button"
-              onClick={() => setActiveViewTab("platter")}
-              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
+              onClick={() => {
+                registerUserInteraction();
+                setActiveViewTab("platter");
+              }}
+              onMouseEnter={() => {
+                setIsOrbitHovered(true);
+                if (userInteractionTimeoutRef.current)
+                  clearTimeout(userInteractionTimeoutRef.current);
+              }}
+              onMouseLeave={() => {
+                setIsOrbitHovered(false);
+                registerUserInteraction();
+              }}
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
                 activeViewTab === "platter"
-                  ? "bg-[#064823] text-white ring-2 ring-[#064823]/30 shadow-md scale-[1.02]"
+                  ? "bg-[#F2CE07] text-[#17442d] border-2 border-dotted border-[#17442d] ring-2 ring-[#F2CE07]/50 shadow-md scale-[1.04]"
                   : "bg-white text-slate-800 border border-slate-200/90 hover:bg-slate-50"
               }`}
             >
               <div className="w-5 h-5 sm:w-6 sm:h-6 relative shrink-0">
                 <Image
-                  src={chickenParts[manuallySelectedPartIdx]?.platterImg || "/Product/Chicken/Platters/drumstick.webp"}
+                  src={
+                    chickenParts[manuallySelectedPartIdx]?.platterImg ||
+                    "/Product/Chicken/Platters/drumstick.webp"
+                  }
                   alt="Platter"
                   width={30}
                   height={30}
@@ -4804,10 +5217,22 @@ export default function KnowYourMeatPage() {
             {/* Tab 4: 360 / 3D Model */}
             <button
               type="button"
-              onClick={() => setActiveViewTab(activeViewTab === "3d" ? "raw" : "3d")}
-              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
+              onClick={() => {
+                registerUserInteraction();
+                setActiveViewTab(activeViewTab === "3d" ? "raw" : "3d");
+              }}
+              onMouseEnter={() => {
+                setIsOrbitHovered(true);
+                if (userInteractionTimeoutRef.current)
+                  clearTimeout(userInteractionTimeoutRef.current);
+              }}
+              onMouseLeave={() => {
+                setIsOrbitHovered(false);
+                registerUserInteraction();
+              }}
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
                 activeViewTab === "3d"
-                  ? "bg-[#E31E24] text-white ring-2 ring-[#E31E24]/30 shadow-md scale-[1.02]"
+                  ? "bg-[#F2CE07] text-[#17442d] border-2 border-dotted border-[#17442d] ring-2 ring-[#F2CE07]/50 shadow-md scale-[1.04]"
                   : "bg-white text-slate-800 border border-slate-200/90 hover:bg-slate-50"
               }`}
             >
@@ -4823,12 +5248,10 @@ export default function KnowYourMeatPage() {
               <span className="whitespace-nowrap">360° View</span>
             </button>
           </div>
-
         </div>
 
         {/* BOTTOM GREEN FOOTER SECTION */}
         <div className="relative w-full z-30 pb-4 sm:pb-6 lg:pb-[1.5vw] px-4 sm:px-8 lg:px-[3.5vw] mt-8 sm:mt-10 lg:mt-[1vw]">
-          
           {/* Center Stamp Badge (Positioned over top wave curve with clean clearance above & below) */}
           <div className="w-[90px] sm:w-[120px] lg:w-[8vw] h-auto absolute -top-[18px] sm:-top-[24px] lg:-top-[2vw] left-1/2 -translate-x-1/2 z-40 drop-shadow-md">
             <Image
@@ -4842,7 +5265,6 @@ export default function KnowYourMeatPage() {
 
           {/* Bottom Green Container Row */}
           <div className="relative z-30 w-full flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-[1.5vw] pt-6 sm:pt-7 lg:pt-0">
-            
             {/* 1. Bottom Left Recipe Card (Moved to bottom of section on mobile/tablet) */}
             <div className="relative w-full max-w-[350px] sm:max-w-[420px] lg:max-w-none lg:w-[21.5vw] bg-[#FDFBF2] rounded-2xl lg:rounded-[1vw] shadow-lg border border-white/80 flex items-center gap-3 lg:gap-[0.8vw] p-2.5 sm:p-3 lg:p-0 order-3 lg:order-1">
               {/* Chef Icon Red Circular Badge on top-left corner */}
@@ -4872,7 +5294,9 @@ export default function KnowYourMeatPage() {
                   WHAT'S COOKING?
                 </span>
                 <h5 className="text-xs lg:text-[0.75vw] font-bold text-black leading-tight font-manrope mt-1 lg:mt-[0.35vw] truncate">
-                  Spicy Chicken {chickenParts[manuallySelectedPartIdx]?.name || "Drumstick"} Fry
+                  Spicy Chicken{" "}
+                  {chickenParts[manuallySelectedPartIdx]?.name || "Drumstick"}{" "}
+                  Fry
                 </h5>
                 <p className="text-[10px] lg:text-[0.6vw] font-medium text-slate-900 leading-tight mt-1 lg:mt-[0.2vw] line-clamp-2 max-w-full lg:max-w-[11vw]">
                   A Spicy and flavourful recipe For a perfect family meal.
@@ -4936,9 +5360,7 @@ export default function KnowYourMeatPage() {
                 className="h-10 sm:h-12 lg:h-[4.75vw] w-auto object-contain drop-shadow-sm"
               />
             </div>
-
           </div>
-
         </div>
       </section>
 
@@ -5222,96 +5644,60 @@ export default function KnowYourMeatPage() {
         </div>
       </section>
 
-      {/* Shared Element Flying Overlay - Bonds Section 1 and Section 2 */}
-      {animatingPart && (
+      {/* ── Single continuous flying overlay: callout → exact plate position ── */}
+      {animatingPart && flyTarget && (
         <motion.div
-          key={`fly-${animatingPart?.name}-${animatingPart?.timestamp}`}
+          key={`fly-${animatingPart.timestamp}`}
           initial={{
-            position: "fixed",
-            top:
-              animatingPart.startRect.top + animatingPart.startRect.height / 2,
-            left:
-              animatingPart.startRect.left + animatingPart.startRect.width / 2,
+            top: animatingPart.startRect.top,
+            left: animatingPart.startRect.left,
             width: animatingPart.startRect.width,
             height: animatingPart.startRect.height,
             opacity: 1,
-            x: "-50%",
-            y: "-50%",
-            scale: 1,
-            zIndex: 99999,
+            scale: 0.88,
+            rotate: 0,
           }}
           animate={{
-            top: animatingPart.targetRect
-              ? animatingPart.targetRect.top
-              : typeof window !== "undefined" && window.innerWidth < 768
-                ? 74 + Math.min(270, window.innerHeight * 0.33) / 2
-                : "46.3vh",
-            left: animatingPart.targetRect
-              ? animatingPart.targetRect.left
-              : typeof window !== "undefined" && window.innerWidth < 768
-                ? "50vw"
-                : "calc(25vw - 0.5rem)",
-            width: animatingPart.targetRect
-              ? animatingPart.targetRect.width
-              : typeof window !== "undefined"
-                ? window.innerWidth >= 768
-                  ? window.innerWidth *
-                    (animatingPart.name.toLowerCase().includes("wing")
-                      ? 0.35
-                      : 0.2)
-                  : window.innerWidth >= 640
-                    ? window.innerWidth *
-                      (animatingPart.name.toLowerCase().includes("wing")
-                        ? 0.65
-                        : 0.50)
-                    : window.innerWidth *
-                      (animatingPart.name.toLowerCase().includes("wing")
-                        ? 0.75
-                        : 0.60)
-                : 240,
-            height: animatingPart.targetRect
-              ? animatingPart.targetRect.height
-              : typeof window !== "undefined" && window.innerWidth < 768
-                ? Math.min(270, window.innerHeight * 0.33)
-                : typeof window !== "undefined" && window.innerHeight <= 620
-                  ? 320
-                  : typeof window !== "undefined" && window.innerHeight <= 750
-                    ? 380
-                    : typeof window !== "undefined" && window.innerWidth >= 1400
-                      ? 480
-                      : 440,
+            top: flyTarget.top,
+            left: flyTarget.left,
+            width: flyTarget.width,
+            height: flyTarget.height,
             opacity: 1,
-            x: "-50%",
-            y: "-50%",
-            scale: 1,
+            scale: [0.88, 1.1, 1],
+            rotate: [0, -3, 0],
           }}
           transition={{
-            duration: 1.1,
-            ease: [0.16, 1, 0.3, 1],
+            duration: 0.82,
+            ease: [0.25, 0.1, 0.25, 1],
+            scale: {
+              duration: 0.82,
+              times: [0, 0.45, 1],
+              ease: "easeInOut",
+            },
+            rotate: {
+              duration: 0.82,
+              times: [0, 0.5, 1],
+              ease: "easeInOut",
+            },
           }}
           onAnimationComplete={() => {
+            // Synchronous handoff: only one image is ever visible at any moment
             setIsLandedInSection2(true);
-            setTimeout(() => {
-              setAnimatingPart(null);
-            }, 900);
+            setAnimatingPart(null);
+            setFlyTarget(null);
           }}
           className="fixed pointer-events-none flex items-center justify-center z-[99999]"
         >
-          <motion.img
+          <img
             src={animatingPart.img}
             alt={animatingPart.name}
-            initial={{ scale: 1, rotate: animatingPart.rotation || 0 }}
-            animate={{ scale: 1, rotate: animatingPart.rotation || 0 }}
-            transition={{
-              duration: 1.1,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="w-full h-full object-contain filter drop-shadow-2xl"
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         </motion.div>
       )}
 
       {/* Fullscreen Lightbox Modal */}
+
       <AnimatePresence>
         {lightboxImage && (
           <motion.div
