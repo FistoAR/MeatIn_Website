@@ -54,8 +54,8 @@ export default function KnowYourMeatPage() {
     wings: "/Product/details/glb/wing.glb",
     Heart: "/Product/details/glb/heart.glb",
     heart: "/Product/details/glb/heart.glb",
-    Drumette: "/Product/details/glb/drumsticks.glb",
-    drumette: "/Product/details/glb/drumsticks.glb",
+    Drumette: "/Product/details/glb/drumstick.glb",
+    drumette: "/Product/details/glb/drumstick.glb",
     Thigh: "/Product/details/glb/thighs.glb",
     thigh: "/Product/details/glb/thighs.glb",
     Thighs: "/Product/details/glb/thighs.glb",
@@ -70,10 +70,10 @@ export default function KnowYourMeatPage() {
     chest: "/Product/details/glb/chest.glb",
     Liver: "/Product/details/glb/liver.glb",
     liver: "/Product/details/glb/liver.glb",
-    Drumstick: "/Product/details/glb/drumsticks.glb",
-    drumstick: "/Product/details/glb/drumsticks.glb",
-    Drumsticks: "/Product/details/glb/drumsticks.glb",
-    drumsticks: "/Product/details/glb/drumsticks.glb",
+    Drumstick: "/Product/details/glb/drumstick.glb",
+    drumstick: "/Product/details/glb/drumstick.glb",
+    Drumsticks: "/Product/details/glb/drumstick.glb",
+    drumsticks: "/Product/details/glb/drumstick.glb",
     Gizzard: "/Product/details/glb/gizzard.glb",
     gizzard: "/Product/details/glb/gizzard.glb",
     Feet: "/Product/details/glb/feet.glb",
@@ -177,6 +177,7 @@ export default function KnowYourMeatPage() {
   const [animatingPart, setAnimatingPart] = useState<{
     img: string;
     name: string;
+    rotation?: number;
     startRect: { top: number; left: number; width: number; height: number };
     targetRect?: { top: number; left: number; width: number; height: number };
     timestamp: number;
@@ -324,7 +325,7 @@ export default function KnowYourMeatPage() {
 
   const handlePartClick = (
     e: React.MouseEvent<HTMLElement>,
-    item: { name: string; img: string },
+    item: { name: string; img: string; rotation?: number },
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -342,10 +343,12 @@ export default function KnowYourMeatPage() {
       );
     });
 
+    let matchedPart = item as any;
     if (foundIdx !== -1) {
       setSelectedPartIdx(foundIdx);
       setManuallySelectedPartIdx(foundIdx);
       setActiveViewTab("raw");
+      matchedPart = chickenParts[foundIdx];
     }
 
     setHasSelectedAnyPart(true);
@@ -367,7 +370,7 @@ export default function KnowYourMeatPage() {
 
     // Update stationary image preview immediately if ref is already present
     if (stationaryImgRef.current) {
-      stationaryImgRef.current.src = item.img;
+      stationaryImgRef.current.src = matchedPart.img || item.img;
     }
 
     // Notify Lenis smooth scroll of new document height
@@ -383,91 +386,67 @@ export default function KnowYourMeatPage() {
       targetEl;
 
     const r = circleEl.getBoundingClientRect();
-    const startTop = r.top !== undefined && r.top !== 0 ? r.top : 150;
+    let startTop = r.top !== undefined && r.top !== 0 ? r.top : 150;
     const startLeft = r.left !== undefined && r.left !== 0 ? r.left : 150;
     const startWidth = r.width || 85;
     const startHeight = r.height || 85;
 
-    // 4. Compute destination position relative to detailsSection container
+    // Shift popup image initial starting position ONLY for Breast product
+    const isBreast = matchedPart?.name?.toLowerCase().trim().includes("breast");
+    if (isBreast) {
+      startTop -= 85;
+    }
+
+    // 4. Compute destination position in viewport for fixed overlay (standard center target)
     let targetRect:
       | { top: number; left: number; width: number; height: number }
       | undefined;
 
-    if (detailsSectionRef.current) {
-      const dRect = detailsSectionRef.current.getBoundingClientRect();
-
-      // Priority 1: Direct measurement of stationary image element
-      if (stationaryImgRef.current) {
-        const imgR = stationaryImgRef.current.getBoundingClientRect();
-        if (imgR.width > 0 && imgR.height > 0) {
-          targetRect = {
-            top: imgR.top - dRect.top + imgR.height / 2,
-            left: imgR.left - dRect.left + imgR.width / 2,
-            width: imgR.width,
-            height: imgR.height,
-          };
-        }
-      }
-
-      // Priority 2: Showcase container measurement
-      if (!targetRect && centerCircleRef.current) {
-        const cr = centerCircleRef.current.getBoundingClientRect();
-        if (cr.width > 0 && cr.height > 0) {
-          const isWing = item.name.toLowerCase().includes("wing");
-          const targetW =
-            typeof window !== "undefined"
-              ? window.innerWidth >= 768
-                ? window.innerWidth * (isWing ? 0.35 : 0.2)
-                : window.innerWidth >= 640
-                  ? window.innerWidth * (isWing ? 0.65 : 0.50)
-                  : window.innerWidth * (isWing ? 0.75 : 0.60)
-              : cr.width;
-          targetRect = {
-            top: cr.top - dRect.top + cr.height / 2,
-            left: cr.left - dRect.left + cr.width / 2,
-            width: targetW,
-            height: cr.height,
-          };
-        }
+    // Priority 1: Direct measurement of stationary image element
+    if (stationaryImgRef.current) {
+      const imgR = stationaryImgRef.current.getBoundingClientRect();
+      if (imgR.width > 0 && imgR.height > 0) {
+        targetRect = {
+          top: imgR.top + imgR.height / 2,
+          left: imgR.left + imgR.width / 2,
+          width: imgR.width,
+          height: imgR.height,
+        };
       }
     }
 
-    // Priority 3: Fallback calculation
+    // Priority 2: Center circle showcase container measurement
+    if (!targetRect && centerCircleRef.current) {
+      const cr = centerCircleRef.current.getBoundingClientRect();
+      if (cr.width > 0 && cr.height > 0) {
+        targetRect = {
+          top: cr.top + cr.height / 2,
+          left: cr.left + cr.width / 2,
+          width: cr.width,
+          height: cr.height,
+        };
+      }
+    }
+
+    // Priority 3: Fallback calculation (viewport dead center)
     if (!targetRect && typeof window !== "undefined") {
       const isMob = window.innerWidth < 768;
-      const isWing = item.name.toLowerCase().includes("wing");
-      const isShort = window.innerHeight <= 620;
-      const isMed = window.innerHeight <= 750;
-      const boxW =
-        window.innerWidth >= 768
-          ? isShort
-            ? 320
-            : isMed
-              ? 380
-              : window.innerWidth >= 1400
-                ? 480
-                : 440
-          : window.innerWidth >= 640
-            ? window.innerWidth * (isWing ? 0.65 : 0.50)
-            : window.innerWidth * (isWing ? 0.75 : 0.60);
+      const boxW = isMob
+        ? window.innerWidth * 0.75
+        : window.innerWidth * 0.35;
       const boxH = isMob ? Math.min(270, window.innerHeight * 0.33) : boxW;
-      const targetLeft = isMob
-        ? window.innerWidth * 0.5
-        : window.innerWidth * 0.25 - 40;
-      const targetTop = isMob
-        ? 74 + Math.min(270, window.innerHeight * 0.33) / 2
-        : window.innerHeight * 0.46;
       targetRect = {
-        top: targetTop,
-        left: targetLeft,
+        top: window.innerHeight * 0.45,
+        left: window.innerWidth * 0.5,
         width: boxW,
         height: boxH,
       };
     }
 
     setAnimatingPart({
-      img: item.img,
-      name: item.name,
+      img: matchedPart.productImg || matchedPart.img || item.img,
+      name: matchedPart.name || item.name,
+      rotation: matchedPart.rotation || 0,
       startRect: {
         top: startTop,
         left: startLeft,
@@ -569,7 +548,10 @@ export default function KnowYourMeatPage() {
   const chickenParts = [
     {
       name: "Wing",
-      img: "/Product/Chicken/ChickenParts/wing.webp",
+      rotation: 0,
+      productImg: "/Product/Chicken/ChickenParts/wing.webp",
+      img: "/Product/Chicken/raw-meat/wing.webp",
+      pouchImg: "/Product/Chicken/packed-meat/wings.webp",
       platterImg: "/Product/Chicken/Platters/wings.webp",
       desc: "Crispy and delicious chicken wings, perfect for deep frying, barbecue, or baking with your favorite glaze.",
       weight: "500g",
@@ -582,7 +564,10 @@ export default function KnowYourMeatPage() {
     },
     {
       name: "Heart",
-      img: "/Product/Chicken/ChickenParts/heart.webp",
+      rotation: 0,
+      productImg: "/Product/Chicken/ChickenParts/heart.webp",
+      img: "/Product/Chicken/raw-meat/heart.webp",
+      pouchImg: "/Product/Chicken/packed-meat/heart.webp",
       platterImg: "/Product/Chicken/Platters/heart.webp",
       desc: "Clean and trimmed chicken hearts. High in protein and iron with a firm, chewy texture, excellent for skewers and stir-fries.",
       weight: "500g",
@@ -595,7 +580,10 @@ export default function KnowYourMeatPage() {
     },
     {
       name: "Drumette",
-      img: "/Product/Chicken/ChickenParts/drumette.webp",
+      rotation: 0,
+      productImg: "/Product/Chicken/ChickenParts/drumette.webp",
+      img: "/Product/Chicken/raw-meat/drumette.webp",
+      pouchImg: "/Product/Chicken/packed-meat/drumette.webp",
       platterImg: "/Product/Chicken/Platters/drumette.webp",
       desc: "Juicy and meaty drumettes, the perfect party starter. Great for spicy buffalo wings or crispy batter fry.",
       weight: "500g",
@@ -608,8 +596,11 @@ export default function KnowYourMeatPage() {
     },
     {
       name: "Thigh",
-      img: "/Product/Chicken/ChickenParts/thig.webp",
-      platterImg: "/Product/Chicken/Platters/thig.webp",
+      rotation: 0,
+      productImg: "/Product/Chicken/ChickenParts/thig.webp",
+      img: "/Product/Chicken/raw-meat/thigh.webp",
+      pouchImg: "/Product/Chicken/packed-meat/thigh.webp",
+      platterImg: "/Product/Chicken/Platters/thigh.webp",
       desc: "Flavorful and tender chicken thighs, bone-in and skin-on. Holds moisture perfectly for slow cooking and roasts.",
       weight: "500g",
       nutrition: {
@@ -621,7 +612,10 @@ export default function KnowYourMeatPage() {
     },
     {
       name: "Neck",
-      img: "/Product/Chicken/ChickenParts/neck.webp",
+      rotation: 0,
+      productImg: "/Product/Chicken/ChickenParts/neck.webp",
+      img: "/Product/Chicken/raw-meat/neck.webp",
+      pouchImg: "/Product/Chicken/packed-meat/neck.webp",
       platterImg: "/Product/Chicken/Platters/neck.webp",
       desc: "Rich bone-in chicken necks, perfect for preparing highly nutritious stocks, soups, and slow-cooked gravies.",
       weight: "500g",
@@ -634,8 +628,12 @@ export default function KnowYourMeatPage() {
     },
     {
       name: "Breast",
-      img: "/Product/Chicken/ChickenParts/brest.webp",
-      platterImg: "/Product/Chicken/Platters/brest.webp",
+      rotation: 108,
+      offsetY: -150,
+      productImg: "/Product/Chicken/ChickenParts/brest.webp",
+      img: "/Product/Chicken/raw-meat/brest.webp",
+      pouchImg: "/Product/Chicken/packed-meat/breast.webp",
+      platterImg: "/Product/Chicken/Platters/breast.webp",
       desc: "Lean and protein-rich boneless chicken breast fillets. Extremely versatile and perfect for healthy salads, grilling, and baking.",
       weight: "500g",
       nutrition: {
@@ -647,8 +645,11 @@ export default function KnowYourMeatPage() {
     },
     {
       name: "Back",
-      img: "/Product/Chicken/ChickenParts/bact.webp",
-      platterImg: "/Product/Chicken/Platters/bact.webp",
+      rotation: 0,
+      productImg: "/Product/Chicken/ChickenParts/bact.webp",
+      img: "/Product/Chicken/raw-meat/back.webp",
+      pouchImg: "/Product/Chicken/packed-meat/back.webp",
+      platterImg: "/Product/Chicken/Platters/back.webp",
       desc: "Clean-cut chicken backs, rich in marrow and collagen. The ultimate choice for deep, flavorful bone broths and stocks.",
       weight: "500g",
       nutrition: {
@@ -660,7 +661,10 @@ export default function KnowYourMeatPage() {
     },
     {
       name: "Liver",
-      img: "/Product/Chicken/ChickenParts/liver.webp",
+      rotation: 0,
+      productImg: "/Product/Chicken/ChickenParts/liver.webp",
+      img: "/Product/Chicken/raw-meat/liver.webp",
+      pouchImg: "/Product/Chicken/packed-meat/liver.webp",
       platterImg: "/Product/Chicken/Platters/liver.webp",
       desc: "Fresh and nutrient-dense chicken liver, rich in iron, vitamin A, and essential vitamins. Soft texture and rich taste.",
       weight: "500g",
@@ -673,7 +677,10 @@ export default function KnowYourMeatPage() {
     },
     {
       name: "Drumstick",
-      img: "/Product/Chicken/ChickenParts/drumstick.webp",
+      rotation: -84,
+      productImg: "/Product/Chicken/ChickenParts/drumstick.webp",
+      img: "/Product/Chicken/raw-meat/drumstick.webp",
+      pouchImg: "/Product/Chicken/packed-meat/drumstick.webp",
       platterImg: "/Product/Chicken/Platters/drumstick.webp",
       desc: "Tender and juicy drumsticks, perfectly cut and hygienically packed to retain natural freshness and rich taste in every bite.",
       weight: "500g",
@@ -686,7 +693,10 @@ export default function KnowYourMeatPage() {
     },
     {
       name: "Gizzard",
-      img: "/Product/Chicken/ChickenParts/gizzard.webp",
+      rotation: 0,
+      productImg: "/Product/Chicken/ChickenParts/gizzard.webp",
+      img: "/Product/Chicken/raw-meat/gizzard.webp",
+      pouchImg: "/Product/Chicken/packed-meat/gizzard.webp",
       platterImg: "/Product/Chicken/Platters/gizzard.webp",
       desc: "Tough and highly flavorful chicken gizzards. Firm texture that becomes beautifully tender when braised or slow-cooked.",
       weight: "500g",
@@ -1501,10 +1511,10 @@ export default function KnowYourMeatPage() {
             }
           }
 
-          /* Tier 1: Ultra-compact (height <= 630px) */
-          @media (max-height: 630px) and (min-width: 768px) {
+          /* Tier 1: Ultra-compact & short desktop screens (e.g. 1351x607, 1275x575) */
+          @media (max-height: 680px) and (min-width: 768px) {
             .detail-section-wrap {
-              padding-top: 80px !important;
+              padding-top: 58px !important;
               padding-bottom: 2px !important;
             }
             .detail-left-col {
@@ -1514,9 +1524,9 @@ export default function KnowYourMeatPage() {
               gap: 14px !important;
             }
             .detail-showcase-box:not(.is-3d) {
-              width: min(290px, 40vh) !important;
-              height: min(290px, 40vh) !important;
-              max-height: 42vh !important;
+              width: min(340px, 44vh) !important;
+              height: min(340px, 44vh) !important;
+              max-height: 46vh !important;
             }
             .detail-carousel-bar {
               margin-top: 2px !important;
@@ -1534,7 +1544,7 @@ export default function KnowYourMeatPage() {
           /* Tier 2: Compact laptops (height 631px to 710px, e.g. 1305x651, 1519x695) */
           @media (min-height: 631px) and (max-height: 710px) and (min-width: 768px) {
             .detail-section-wrap {
-              padding-top: 86px !important;
+              padding-top: 90px !important;
               padding-bottom: 4px !important;
             }
             .detail-left-col {
@@ -1564,7 +1574,7 @@ export default function KnowYourMeatPage() {
           /* Tier 3: Medium laptops (height 711px to 790px) */
           @media (min-height: 711px) and (max-height: 790px) and (min-width: 768px) {
             .detail-section-wrap {
-              padding-top: 92px !important;
+              padding-top: 96px !important;
               padding-bottom: 6px !important;
             }
             .detail-left-col {
@@ -1593,7 +1603,7 @@ export default function KnowYourMeatPage() {
           /* Tier 4: Standard & tall desktop screens (height >= 791px) */
           @media (min-height: 791px) and (min-width: 768px) {
             .detail-section-wrap {
-              padding-top: 96px !important;
+              padding-top: 88px !important;
               padding-bottom: 12px !important;
             }
             .detail-showcase-box:not(.is-3d) {
@@ -4210,8 +4220,9 @@ export default function KnowYourMeatPage() {
                 </div>
               </div>
             )}
+
           </div>
-        </div>
+              </div>
       </div>
 
       {/* 2. Categories Section */}
@@ -4400,7 +4411,7 @@ export default function KnowYourMeatPage() {
       {/* 3. Interactive Details Section - 1:1 Match with Reference Layout */}
       <section
         ref={detailsSectionRef}
-        className={`relative z-30 w-full h-[100vh] pt-8 lg:pt-[2.5vw] pb-6 sm:pb-8 lg:pb-0 flex flex-col justify-between m-0 overflow-x-hidden bg-[#8DC541] transition-all duration-700 detail-section-wrap ${
+        className={`relative z-30 w-full min-h-screen lg:h-[100vh] pt-20 sm:pt-24 lg:pt-[5rem] xl:pt-[5.5rem] 2xl:pt-[6rem] pb-6 sm:pb-8 lg:pb-0 flex flex-col justify-between m-0 overflow-x-hidden bg-[#8DC541] transition-all duration-700 detail-section-wrap ${
           hasSelectedAnyPart && activeMeatType === "chicken"
             ? "block opacity-100 pointer-events-auto"
             : "hidden opacity-0 pointer-events-none"
@@ -4408,17 +4419,27 @@ export default function KnowYourMeatPage() {
       >
         {/* Background Image Container */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+          {/* Layer 1: Background Doodle Pattern Overlay (BEHIND green bg image, scoped to top white section) */}
+          <div
+            className="absolute top-0 inset-x-0 h-[65%] pointer-events-none bg-repeat z-0 opacity-[0.18] filter brightness-0"
+            style={{
+              backgroundImage: 'url("/Product/know-your-meat-bg.webp")',
+              backgroundSize: "700px",
+            }}
+          />
+
+          {/* Layer 2: Main Section Background Image (Green wave on top of doodle pattern) */}
           <Image
             src="/Product/details/section-images/product-details-bg.webp"
             alt="Section Background"
             fill
             priority
-            className="object-cover object-center w-full h-full"
+            className="object-cover object-center w-full h-full relative z-10"
           />
 
             
           {/* Floating single leaf - right side */}
-          <div className="hidden lg:block absolute bottom-[11vw] right-[7vw] w-[5.5vw] h-auto z-10">
+          <div className="hidden md:block lg:block absolute bottom-[11vw] right-[7vw] w-[5.5vw] h-auto z-10">
             <Image
               src="/Product/details/section-images/single-leaf-image-1.webp"
               alt="Leaf"
@@ -4429,7 +4450,7 @@ export default function KnowYourMeatPage() {
           </div>
 
           {/* Floating single leaf - right side */}
-          <div className="hidden lg:block absolute bottom-[12vw] right-[0vw] w-[3.5vw] h-auto z-10 opacity-90 animate-pulse">
+          <div className="hidden md:block lg:block absolute bottom-[12vw] right-[0vw] w-[3.5vw] h-auto z-10 opacity-90 animate-pulse">
             <Image
               src="/Product/details/section-images/single-leaf-image-right-corner.webp"
               alt="Leaf"
@@ -4441,11 +4462,11 @@ export default function KnowYourMeatPage() {
         </div>
 
         {/* TOP MAIN CONTENT CONTAINER */}
-        <div className="relative w-full max-w-[100vw] mx-auto px-4 lg:px-[3.5vw] flex-1 flex flex-col justify-start z-10 pt-2 lg:pt-[0.5vw]">
+        <div className="relative w-full max-w-[100vw] mx-auto px-4 lg:px-[3.5vw] flex-1 flex flex-col justify-start z-10 pt-1 lg:pt-[0.5vw]">
           
           {/* Top Left Slogan Badge: Goodness Begins at Our Farms + Two Leaves */}
-          <div className="hidden lg:flex flex-col items-start absolute top-[1.2vw] left-[3.5vw] z-20 pointer-events-none">
-            <div className="w-[13.5vw] h-auto">
+          <div className="hidden md:flex lg:flex flex-col items-start absolute top-[1.5rem] lg:top-[1.8rem] xl:top-[2.2rem] 2xl:top-[2.5rem] left-[2.5vw] md:left-[3.5vw] z-20 pointer-events-none scale-90 md:scale-100">
+            <div className="w-[13.5vw] max-w-[240px] h-auto">
               <Image
                 src="/Product/details/section-images/goodness-begins-image.webp"
                 alt="Goodness Begins at Our Farms"
@@ -4454,7 +4475,7 @@ export default function KnowYourMeatPage() {
                 className="w-full h-auto object-contain drop-shadow-md"
               />
             </div>
-            <div className="w-[8.5vw] h-auto ml-[3vw]">
+            <div className="w-[8.5vw] max-w-[150px] h-auto ml-[3vw]">
               <Image
                 src="/Product/details/section-images/two-leaves-images.webp"
                 alt="Leaves"
@@ -4466,7 +4487,7 @@ export default function KnowYourMeatPage() {
           </div>
 
           {/* Top Center Title Header */}
-          <div className="text-center w-full max-w-[90%] sm:max-w-[80%] lg:max-w-[42vw] mx-auto z-20 pt-1 lg:pt-[0.2vw] -mt-[1vw]">
+          <div className="text-center w-full max-w-[90%] sm:max-w-[80%] lg:max-w-[42vw] mx-auto z-20 pt-1 lg:pt-[0.2vw] mt-0 lg:mt-1">
             <h4 className="text-xs sm:text-sm lg:text-[1vw] font-medium text-[#d52828] tracking-widest uppercase leading-none"> 
               FRESH PREMIUM CHICKEN
             </h4>
@@ -4479,68 +4500,71 @@ export default function KnowYourMeatPage() {
             </p>
           </div>
 
-          {/* Top Right Nutrition Card */}
-          <div className="absolute top-[0] right-[3vw]">
+          {/* Top Right Nutrition Card (Desktop only to prevent text collision on tablet) */}
+          <div className="hidden lg:block absolute top-[1.2rem] lg:top-[1.5rem] xl:top-[1.8rem] 2xl:top-[2.2rem] right-[3vw]">
               <Image
                src={"/Product/details/section-images/nutrition-information.svg"} 
                alt="Nutrition information card"
               width={350}
               height={150}
-              className="w-[180px] sm:w-[360px] lg:w-[17vw] h-auto object-contain drop-shadow-2xl"
+              className="w-[180px] sm:w-[360px] lg:w-[17vw] max-w-[340px] h-auto object-contain drop-shadow-2xl"
               priority
                />
           </div>
           
           {/* Leaf - Pure nutritional information */}
-          <div className="absolute top-[7.5vw] right-[6.5vw]">
+          <div className="hidden lg:block absolute top-[calc(1.2rem+8.2vw)] lg:top-[calc(1.5rem+8.4vw)] xl:top-[calc(1.8rem+7.5vw)] 2xl:top-[calc(2.2rem+7vw)] right-[6.5vw]">
               <Image
                src={"/Product/details/section-images/pure-natural-nutrition.webp"} 
                alt="Leaf - Pure nutritional information"
               width={350}
               height={150}
-              className="w-[180px] sm:w-[360px] lg:w-[9vw] h-auto object-contain drop-shadow-2xl"
+              className="w-[180px] sm:w-[360px] lg:w-[9vw] max-w-[170px] h-auto object-contain drop-shadow-2xl"
               priority
                />
           </div>
           
           {/* Benefits */}
-          <div className="absolute top-[12.5vw] right-[6.5vw]">
+          <div className="hidden lg:block absolute top-[calc(1.2rem+13.8vw)] lg:top-[calc(1.5rem+13.6vw)] xl:top-[calc(1.8rem+12.8vw)] 2xl:top-[calc(2.2rem+12vw)] right-[6.5vw]">
               <Image
                src={"/Product/details/section-images/benefits-texts.svg"} 
                alt="Benefits"
               width={350}
               height={150}
-              className="w-[180px] sm:w-[360px] lg:w-[10.5vw] h-auto object-contain drop-shadow-2xl"
+              className="w-[180px] sm:w-[360px] lg:w-[10.5vw] max-w-[190px] h-auto object-contain drop-shadow-2xl"
               priority
                />
           </div>
 
-          {/* CENTER PRODUCT ORBIT DISPLAY */}
-          <div className="relative w-full max-w-[92vw] sm:max-w-[70vw] lg:max-w-[35vw] h-[220px] sm:h-[320px] lg:h-[20vw] mx-auto mt-4 sm:mt-6 lg:mt-[0.75vw] flex items-center justify-center">
-            
-            {/* Base Wooden Cutting Board (ONLY SHOW WHEN activeViewTab === "raw") */}
-            {activeViewTab === "raw" && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-                <Image
-                  src="/Product/details/section-images/round-wooden-block.webp"
-                  alt="Wooden Chopping Board"
-                  width={750}
-                  height={500}
-                  className="w-[280px] sm:w-[360px] lg:w-[30vw] h-auto object-contain drop-shadow-2xl"
-                  priority
-                />
-              </div>
-            )}
+          {/* Top Right Decorative Leaf Prop for Tablet Viewports */}
+          <div className="hidden md:block lg:hidden absolute top-[2rem] right-[4vw] z-20 pointer-events-none">
+            <div className="w-[10vw] max-w-[110px] h-auto opacity-80">
+              <Image
+                src="/Product/details/section-images/two-leaves-images.webp"
+                alt="Leaves"
+                width={120}
+                height={90}
+                className="w-full h-auto object-contain transform rotate-45"
+              />
+            </div>
+          </div>
 
+          {/* CENTER PRODUCT ORBIT DISPLAY */}
+          <div
+            ref={centerCircleRef}
+            className="relative w-full max-w-[92vw] sm:max-w-[85vw] md:max-w-[75vw] lg:max-w-[42vw] xl:max-w-[44vw] h-[250px] sm:h-[360px] md:h-[410px] lg:h-[25vw] xl:h-[27vw] mx-auto my-2 sm:my-4 md:my-5 flex items-center justify-center"
+          >
+            
             {/* Main Center Selected Cut / Model Display */}
-            <div className="relative w-[220px] sm:w-[280px] lg:w-[20vw] h-[150px] sm:h-[230px] lg:h-[20vw] flex items-center justify-center z-10">
+            <div className="relative w-[340px] sm:w-[480px] md:w-[540px] lg:w-[37vw] xl:w-[39vw] h-[250px] sm:h-[360px] md:h-[400px] lg:h-[27vw] xl:h-[28vw] flex items-center justify-center z-10">
               {activeViewTab === "raw" && (
                 <Image
-                  src={chickenParts[manuallySelectedPartIdx]?.img || "/Product/Chicken/ChickenParts/drumstick.webp"}
+                  ref={stationaryImgRef}
+                  src={chickenParts[manuallySelectedPartIdx]?.img || "/Product/Chicken/raw-meat/drumstick.webp"}
                   alt={chickenParts[manuallySelectedPartIdx]?.name || "Cut"}
-                  width={550}
-                  height={420}
-                  className="w-[150px] sm:w-[240px] lg:w-[20vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                  width={850}
+                  height={650}
+                  className="w-[340px] sm:w-[480px] md:w-[540px] lg:w-[37vw] xl:w-[39vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                   priority
                 />
               )}
@@ -4549,9 +4573,9 @@ export default function KnowYourMeatPage() {
                 <Image
                   src={(chickenParts[manuallySelectedPartIdx] as any)?.pouchImg || "/Product/details/packedProduct.webp"}
                   alt="Packed Pouch"
-                  width={500}
-                  height={500}
-                  className="w-[150px] sm:w-[200px] lg:w-[24vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                  width={550}
+                  height={550}
+                  className="w-[190px] sm:w-[260px] md:w-[310px] lg:w-[20vw] xl:w-[21vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                   priority
                 />
               )}
@@ -4562,31 +4586,48 @@ export default function KnowYourMeatPage() {
                   alt="Prepared Platter"
                   width={550}
                   height={420}
-                  className="w-[180px] sm:w-[240px] lg:w-[28vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                  className="w-[200px] sm:w-[300px] md:w-[350px] lg:w-[28vw] xl:w-[29vw] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                   priority
                 />
               )}
 
-              {activeViewTab === "3d" && (
-                <div className="w-full h-full flex flex-col items-center justify-center bg-black/10 backdrop-blur-md rounded-2xl border border-white/40 p-4 shadow-2xl">
-                  <span className="text-white text-xs sm:text-sm lg:text-[1vw] font-bold font-manrope mb-2 uppercase tracking-wide">
-                    Interactive 3D View ({chickenParts[manuallySelectedPartIdx]?.name})
-                  </span>
-                  <Image
-                    src={chickenParts[manuallySelectedPartIdx]?.img || "/Product/Chicken/ChickenParts/drumstick.webp"}
-                    alt="3D Preview"
-                    width={400}
-                    height={300}
-                    className="w-[140px] sm:w-[180px] lg:w-[20vw] h-auto object-contain animate-pulse"
-                  />
-                </div>
-              )}
+              {activeViewTab === "3d" && (() => {
+                const currentPartName = chickenParts[manuallySelectedPartIdx]?.name || "Drumstick";
+                const glbPath =
+                  partGlbMap[currentPartName] ||
+                  partGlbMap[currentPartName.toLowerCase()] ||
+                  partGlbMap[currentPartName.trim()] ||
+                  "/Product/details/glb/drumstick.glb";
+
+                return (
+                  <div className="w-full h-full relative flex items-center justify-center rounded-2xl overflow-hidden drop-shadow-2xl z-20">
+                    {React.createElement("model-viewer", {
+                      src: glbPath,
+                      alt: `3D model of ${currentPartName}`,
+                      "auto-rotate": true,
+                      "camera-controls": true,
+                      "touch-action": "pan-y",
+                      "shadow-intensity": "1.2",
+                      "shadow-softness": "0.8",
+                      exposure: "1.15",
+                      style: {
+                        width: "100%",
+                        height: "100%",
+                        minHeight: "180px",
+                        outline: "none",
+                        cursor: "grab",
+                        backgroundColor: "transparent",
+                      },
+                    })}
+                  </div>
+                );
+              })()}
             </div>
 
-            {/* ORBIT BADGE 1: Top-Left (Single Raw Cut) */}
+            {/* DESKTOP ORBIT BADGE 1: Top-Left (Single Raw Cut) */}
             <div
               onClick={() => setActiveViewTab("raw")}
-              className="absolute -top-3 -left-1 sm:-top-4 sm:-left-3 lg:-top-[0.8vw] lg:-left-[5.5vw] z-30 group cursor-pointer"
+              className="hidden lg:block absolute lg:-top-[0.8vw] lg:-left-[5.5vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
               <div className="hidden lg:block absolute bottom-[0.5vw] -right-[4.8vw] w-[4vw] h-auto pointer-events-none z-10">
@@ -4600,7 +4641,7 @@ export default function KnowYourMeatPage() {
               </div>
               <div className={`w-11 h-11 sm:w-13 sm:h-13 lg:w-[4.8vw] lg:h-[4.8vw] rounded-full bg-white shadow-xl border-2 flex items-center justify-center p-1.5 lg:p-[0.55vw] hover:scale-110 transition-transform ${activeViewTab === "raw" ? "border-[#E31E24] ring-2 ring-[#E31E24]/30" : "border-slate-300"}`}>
                 <Image
-                  src={chickenParts[manuallySelectedPartIdx]?.img || "/Product/Chicken/ChickenParts/drumstick.webp"}
+                  src={chickenParts[manuallySelectedPartIdx]?.productImg || "/Product/Chicken/ChickenParts/drumstick.webp"}
                   alt="Raw Cut"
                   width={80}
                   height={80}
@@ -4609,10 +4650,10 @@ export default function KnowYourMeatPage() {
               </div>
             </div>
 
-            {/* ORBIT BADGE 2: Bottom-Left (Pouch / Packaged) */}
+            {/* DESKTOP ORBIT BADGE 2: Bottom-Left (Pouch / Packaged) */}
             <div
               onClick={() => setActiveViewTab("packed")}
-              className="absolute -bottom-3 -left-1 sm:-bottom-4 sm:-left-3 lg:bottom-[2.5vw] lg:-left-[5.8vw] z-30 group cursor-pointer"
+              className="hidden lg:block absolute lg:bottom-[5.2vw] lg:-left-[5.8vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
               <div className="hidden lg:block absolute top-[1.2vw] -right-[4.8vw] w-[4vw] h-auto pointer-events-none z-10">
@@ -4635,10 +4676,10 @@ export default function KnowYourMeatPage() {
               </div>
             </div>
 
-            {/* ORBIT BADGE 3: Top-Right (Bowl / Platter) */}
+            {/* DESKTOP ORBIT BADGE 3: Top-Right (Bowl / Platter) */}
             <div
               onClick={() => setActiveViewTab("platter")}
-              className="absolute -top-3 -right-1 sm:-top-4 sm:-right-3 lg:-top-[0.8vw] lg:-right-[3.5vw] z-30 group cursor-pointer"
+              className="hidden lg:block absolute lg:-top-[0.8vw] lg:-right-[3.5vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
               <div className="hidden lg:block absolute bottom-[1.2vw] -left-[4.4vw] w-[4vw] h-auto pointer-events-none z-10">
@@ -4661,10 +4702,10 @@ export default function KnowYourMeatPage() {
               </div>
             </div>
 
-            {/* ORBIT BADGE 4: Bottom-Right (View in 360°) */}
+            {/* DESKTOP ORBIT BADGE 4: Bottom-Right (View in 360°) */}
             <div
               onClick={() => setActiveViewTab(activeViewTab === "3d" ? "raw" : "3d")}
-              className="absolute -bottom-3 -right-1 sm:-bottom-4 sm:-right-3 lg:bottom-[3.5vw] lg:-right-[8.8vw] z-30 group cursor-pointer"
+              className="hidden lg:block absolute lg:bottom-[6.2vw] lg:-right-[8.8vw] z-30 group cursor-pointer"
             >
               {/* Curved Arrow */}
               <div className="hidden lg:block absolute top-[1.2vw] -left-[4.4vw] w-[4vw] h-auto pointer-events-none z-10">
@@ -4692,13 +4733,104 @@ export default function KnowYourMeatPage() {
 
           </div>
 
+          {/* MOBILE / TABLET FLOATING BUTTONS ROW (HIDDEN ON DESKTOP) */}
+          <div className="grid lg:hidden grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-2 sm:gap-3.5 max-w-[340px] sm:max-w-none mx-auto mt-2 mb-1 sm:mt-3 sm:mb-2 z-30 px-3">
+            {/* Tab 1: Raw Cut */}
+            <button
+              type="button"
+              onClick={() => setActiveViewTab("raw")}
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
+                activeViewTab === "raw"
+                  ? "bg-[#E31E24] text-white ring-2 ring-[#E31E24]/30 shadow-md scale-[1.02]"
+                  : "bg-white text-slate-800 border border-slate-200/90 hover:bg-slate-50"
+              }`}
+            >
+              <div className="w-5 h-5 sm:w-6 sm:h-6 relative shrink-0">
+                <Image
+                  src={chickenParts[manuallySelectedPartIdx]?.productImg || "/Product/Chicken/ChickenParts/drumstick.webp"}
+                  alt="Raw Cut"
+                  width={30}
+                  height={30}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <span className="whitespace-nowrap">Raw Cut</span>
+            </button>
+
+            {/* Tab 2: Pouch Pack */}
+            <button
+              type="button"
+              onClick={() => setActiveViewTab("packed")}
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
+                activeViewTab === "packed"
+                  ? "bg-[#E31E24] text-white ring-2 ring-[#E31E24]/30 shadow-md scale-[1.02]"
+                  : "bg-white text-slate-800 border border-slate-200/90 hover:bg-slate-50"
+              }`}
+            >
+              <div className="w-5 h-5 sm:w-6 sm:h-6 relative shrink-0">
+                <Image
+                  src={(chickenParts[manuallySelectedPartIdx] as any)?.pouchImg || "/Product/details/packedProduct.webp"}
+                  alt="Pouch Pack"
+                  width={30}
+                  height={30}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <span className="whitespace-nowrap">Packed</span>
+            </button>
+
+            {/* Tab 3: Platter */}
+            <button
+              type="button"
+              onClick={() => setActiveViewTab("platter")}
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
+                activeViewTab === "platter"
+                  ? "bg-[#064823] text-white ring-2 ring-[#064823]/30 shadow-md scale-[1.02]"
+                  : "bg-white text-slate-800 border border-slate-200/90 hover:bg-slate-50"
+              }`}
+            >
+              <div className="w-5 h-5 sm:w-6 sm:h-6 relative shrink-0">
+                <Image
+                  src={chickenParts[manuallySelectedPartIdx]?.platterImg || "/Product/Chicken/Platters/drumstick.webp"}
+                  alt="Platter"
+                  width={30}
+                  height={30}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <span className="whitespace-nowrap">Platter</span>
+            </button>
+
+            {/* Tab 4: 360 / 3D Model */}
+            <button
+              type="button"
+              onClick={() => setActiveViewTab(activeViewTab === "3d" ? "raw" : "3d")}
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all w-full sm:w-auto ${
+                activeViewTab === "3d"
+                  ? "bg-[#E31E24] text-white ring-2 ring-[#E31E24]/30 shadow-md scale-[1.02]"
+                  : "bg-white text-slate-800 border border-slate-200/90 hover:bg-slate-50"
+              }`}
+            >
+              <div className="w-5 h-5 sm:w-6 sm:h-6 relative shrink-0">
+                <Image
+                  src="/Product/details/360.webp"
+                  alt="360 View"
+                  width={30}
+                  height={30}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <span className="whitespace-nowrap">360° View</span>
+            </button>
+          </div>
+
         </div>
 
         {/* BOTTOM GREEN FOOTER SECTION */}
-        <div className="relative w-full z-30 pb-4 sm:pb-6 lg:pb-[1.8vw] px-4 sm:px-8 lg:px-[3.5vw] mt-6 sm:mt-8 lg:mt-[2vw]">
+        <div className="relative w-full z-30 pb-4 sm:pb-6 lg:pb-[1.5vw] px-4 sm:px-8 lg:px-[3.5vw] mt-8 sm:mt-10 lg:mt-[1vw]">
           
-          {/* Center Stamp Badge (Positioned directly over top wave curve) */}
-          <div className="w-[110px] sm:w-[140px] lg:w-[8vw] h-auto absolute -top-[1.2vw] left-[52%] transform -translate-x-1/2 z-40 drop-shadow-md">
+          {/* Center Stamp Badge (Positioned over top wave curve with clean clearance above & below) */}
+          <div className="w-[90px] sm:w-[120px] lg:w-[8vw] h-auto absolute -top-[18px] sm:-top-[24px] lg:-top-[2vw] left-1/2 -translate-x-1/2 z-40 drop-shadow-md">
             <Image
               src="/Product/details/section-images/keralas_original-meat.webp"
               alt="Kerala's Original Meat"
@@ -4709,10 +4841,10 @@ export default function KnowYourMeatPage() {
           </div>
 
           {/* Bottom Green Container Row */}
-          <div className="relative z-30 w-full flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-[1.5vw] pt-0">
+          <div className="relative z-30 w-full flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-[1.5vw] pt-6 sm:pt-7 lg:pt-0">
             
-            {/* 1. Bottom Left Recipe Card */}
-            <div className="relative w-full max-w-[340px] lg:max-w-none lg:w-[21.5vw] bg-[#FDFBF2] rounded-2xl lg:rounded-[1vw] shadow-lg border border-white/80 flex items-center gap-3 lg:gap-[0.8vw]">
+            {/* 1. Bottom Left Recipe Card (Moved to bottom of section on mobile/tablet) */}
+            <div className="relative w-full max-w-[350px] sm:max-w-[420px] lg:max-w-none lg:w-[21.5vw] bg-[#FDFBF2] rounded-2xl lg:rounded-[1vw] shadow-lg border border-white/80 flex items-center gap-3 lg:gap-[0.8vw] p-2.5 sm:p-3 lg:p-0 order-3 lg:order-1">
               {/* Chef Icon Red Circular Badge on top-left corner */}
               <div className="absolute -top-3 -left-3 lg:-top-[0.8vw] lg:left-[0.25vw] lg:top-[0.25vw] w-10 h-10 lg:w-[1.85vw] lg:h-[1.85vw] rounded-full shadow-md flex items-center justify-center z-40">
                 <Image
@@ -4757,7 +4889,7 @@ export default function KnowYourMeatPage() {
             </div>
 
             {/* 2. Center 4 Feature SVGs directly rendered */}
-            <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-3 lg:gap-[1.2vw] flex-1 mt-[2.5vw]">
+            <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-3 lg:gap-[1.2vw] flex-1 mt-3 lg:mt-[1.6vw] order-1 lg:order-2">
               {/* Feature 1 */}
               <img
                 src="/Product/details/section-images/farm-fresh.svg"
@@ -4797,7 +4929,7 @@ export default function KnowYourMeatPage() {
             </div>
 
             {/* 3. Right Truck Vector Graphic Banner */}
-            <div className="flex items-center justify-end shrink-0">
+            <div className="flex items-center justify-end shrink-0 order-2 lg:order-3">
               <img
                 src="/Product/details/section-images/keep-fresh-delivered-fresh.svg"
                 alt="Keep Fresh Delivered Fresh"
@@ -5027,7 +5159,7 @@ export default function KnowYourMeatPage() {
                   <div className="absolute bottom-0 left-0 right-0 h-[80%] z-10 bg-gradient-to-t from-black/95 via-black/80 to-transparent pointer-events-none" />
 
                   {/* Top-Left Red Badge Pill */}
-                  <span className="absolute top-4 left-4 z-20 bg-[#064823] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
+                  <span className="absolute top-4 left-4 z-20 bg-[#d62828] text-white text-[11px] font-extrabold px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-lg pointer-events-none">
                     {recipe.label}
                   </span>
 
@@ -5093,7 +5225,7 @@ export default function KnowYourMeatPage() {
       {/* Shared Element Flying Overlay - Bonds Section 1 and Section 2 */}
       {animatingPart && (
         <motion.div
-          key={`fly-${animatingPart.name}-${animatingPart.timestamp}`}
+          key={`fly-${animatingPart?.name}-${animatingPart?.timestamp}`}
           initial={{
             position: "fixed",
             top:
@@ -5168,8 +5300,8 @@ export default function KnowYourMeatPage() {
           <motion.img
             src={animatingPart.img}
             alt={animatingPart.name}
-            initial={{ scale: 1 }}
-            animate={{ scale: 1 }}
+            initial={{ scale: 1, rotate: animatingPart.rotation || 0 }}
+            animate={{ scale: 1, rotate: animatingPart.rotation || 0 }}
             transition={{
               duration: 1.1,
               ease: [0.16, 1, 0.3, 1],
