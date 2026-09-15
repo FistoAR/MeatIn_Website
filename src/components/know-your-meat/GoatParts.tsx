@@ -16,7 +16,7 @@ export default function GoatParts({ partsDx = 0, partsDy = 0 }: GoatPartsProps) 
       .then((data) => {
         if (data) {
           let cleaned = data.replace(/<image[^>]*\/>/g, "");
-          const imageTag = `<image href="/Product/GoatBeef/goat-img.webp" x="0" y="0" width="900" height="555" preserveAspectRatio="xMidYMid meet" style="pointer-events: none;" />`;
+          const imageTag = `<image href="/Product/GoatBeef/goat-img.webp" x="0" y="0" width="900" height="555" preserveAspectRatio="none" style="pointer-events: none;" />`;
           const transformAttr = partsDx !== 0 || partsDy !== 0 ? ` transform="translate(${partsDx}, ${partsDy})"` : "";
           const updated = cleaned
             .replace(/<svg\b([^>]*)>/, '<svg $1 style="overflow: visible;">')

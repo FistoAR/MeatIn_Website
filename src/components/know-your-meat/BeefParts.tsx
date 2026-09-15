@@ -17,7 +17,7 @@ export default function BuffaloParts({ partsDx = 0, partsDy = 0 }: BuffaloPartsP
         if (data) {
           // Remove any previously inserted image tag if re-processing
           let cleaned = data.replace(/<image[^>]*\/>/g, "");
-          const imageTag = `<image href="/Product/GoatBeef/buffalo-img.webp" x="0" y="0" width="971" height="517" preserveAspectRatio="xMidYMid meet" style="pointer-events: none;" />`;
+          const imageTag = `<image href="/Product/GoatBeef/buffalo-img.webp" x="0" y="0" width="971" height="517" preserveAspectRatio="none" style="pointer-events: none;" />`;
           const transformAttr = partsDx !== 0 || partsDy !== 0 ? ` transform="translate(${partsDx}, ${partsDy})"` : "";
           const updated = cleaned
             .replace(/<svg\b([^>]*)>/, '<svg $1 style="overflow: visible;">')
