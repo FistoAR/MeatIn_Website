@@ -4,6 +4,7 @@ import './globals.css';
 import Preloader from '@/components/layout/Preloader';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import MeatSliderMarquee from '@/components/know-your-meat/MeatSliderMarquee';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -142,6 +143,7 @@ export default function RootLayout({
             {children}
           </SmoothScroll>
         </main>
+        <MeatSliderMarquee />
         <Footer />
         <ScrollToTop />
       </body>

@@ -1377,7 +1377,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
       part: "Drumstick",
       label: "BEST FOR TANDOORI",
       desc: "Classic tandoori drumsticks charred over open flame.",
-      img: "/Recipies/drumstick/drumstick-1.webp",
+      img: "/Recipies/drumstick/spicy-thandoori-drumsticks.webp",
       time: "35 mins",
       prepTime: "15 mins",
       cookTime: "20 mins",
@@ -1417,7 +1417,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
       part: "Drumstick",
       label: "BEST FOR FRY",
       desc: "Golden crunchy drumsticks seasoned with Southern spices.",
-      img: "/Recipies/drumstick/drumstick-2.webp",
+      img: "/Recipies/drumstick/crispy-fried-drumstick-Box.webp",
       time: "30 mins",
       prepTime: "10 mins",
       cookTime: "20 mins",
@@ -1457,7 +1457,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
       part: "Drumstick",
       label: "BEST FOR CURRY",
       desc: "Fiery South Indian drumstick curry with freshly ground spices.",
-      img: "/Recipies/drumstick/drumstick-3.webp",
+      img: "/Recipies/drumstick/chettinad-drumstick-curry.webp",
       time: "40 mins",
       prepTime: "15 mins",
       cookTime: "25 mins",
@@ -1497,7 +1497,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
       part: "Drumstick",
       label: "BEST FOR ROAST",
       desc: "Oven-roasted drumsticks brushed with rich garlic herb butter.",
-      img: "/Recipies/drumstick/drumstick-4.webp",
+      img: "/Recipies/drumstick/garlic-butter-glazed-leg.webp",
       time: "35 mins",
       prepTime: "10 mins",
       cookTime: "25 mins",
@@ -1539,7 +1539,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
       part: "Gizzard",
       label: "BEST FOR FRY",
       desc: "Chewy and crispy fried gizzards with green chillies & pepper.",
-      img: "/Recipies/gizzard/gizzard-1.webp",
+      img: "/Recipies/gizzard/crunchy-grizzard-pepper-fry.webp",
       time: "30 mins",
       prepTime: "10 mins",
       cookTime: "20 mins",
@@ -1579,7 +1579,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
       part: "Gizzard",
       label: "BEST FOR GRAVY",
       desc: "Slow-braised gizzards in rich caramelized onion gravy.",
-      img: "/Recipies/gizzard/gizzard-2.webp",
+      img: "/Recipies/gizzard/spicy-braised-gizzard-gravy.webp",
       time: "45 mins",
       prepTime: "15 mins",
       cookTime: "30 mins",
@@ -1619,7 +1619,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
       part: "Gizzard",
       label: "BEST FOR GRILL",
       desc: "Marinated chicken gizzards grilled to savory perfection.",
-      img: "/Recipies/gizzard/gizzard-3.webp",
+      img: "/Recipies/gizzard/grilled-gizzard-skewers.webp",
       time: "25 mins",
       prepTime: "10 mins",
       cookTime: "15 mins",
@@ -1659,7 +1659,7 @@ const recipesDatabase: Record<string, RecipeItem[]> = {
       part: "Gizzard",
       label: "BEST FOR SNACK",
       desc: "Tangy and spicy pickled gizzards infused with mustard oil.",
-      img: "/Recipies/gizzard/gizzard-4.webp",
+      img: "/Recipies/gizzard/pickled-gizzard-delicacy.webp",
       time: "40 mins",
       prepTime: "15 mins",
       cookTime: "25 mins",
@@ -1707,6 +1707,8 @@ export default function RecipesPage() {
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeItem | null>(null);
   // Auto-highlight index for parts circles
   const [highlightedPartIdx, setHighlightedPartIdx] = useState<number>(0);
+  // Pending category section to scroll to when detail view exits
+  const [pendingScrollPart, setPendingScrollPart] = useState<string | null>(null);
 
   // Auto-cycle yellow highlight through parts circles every 2 seconds
   useEffect(() => {
@@ -1762,9 +1764,79 @@ export default function RecipesPage() {
         if (partIdx !== -1) {
           setHighlightedPartIdx(partIdx);
         }
+        window.history.pushState(
+          { recipeDetail: true, part: found.part.toLowerCase() },
+          "",
+          window.location.href
+        );
       }
     }
   }, []);
+
+  const handleBackToCategory = (targetPart?: string) => {
+    const partToScroll =
+      targetPart ||
+      (selectedRecipe ? selectedRecipe.part.toLowerCase() : null) ||
+      (typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("part")?.toLowerCase()
+        : null);
+
+    setSelectedRecipe(null);
+    if (partToScroll) {
+      setPendingScrollPart(partToScroll);
+    }
+    if (typeof window !== "undefined") {
+      window.history.replaceState({}, "", "/recipes");
+    }
+  };
+
+  // Intercept browser back button when recipe detail or URL parameters are active
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const hasUrlParams =
+        params.has("part") || params.has("recipeId") || params.has("title");
+
+      if (selectedRecipe || hasUrlParams) {
+        handleBackToCategory();
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [selectedRecipe]);
+
+  // Reliable, retrying scroll to targeted category section after main list re-mounts
+  useEffect(() => {
+    if (!selectedRecipe && pendingScrollPart) {
+      let attempts = 0;
+      const maxAttempts = 20;
+
+      const scrollToTarget = () => {
+        const el = document.getElementById(`part-section-${pendingScrollPart}`);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          const navOffset = 90;
+          const targetY = Math.max(0, rect.top + window.scrollY - navOffset);
+
+          window.scrollTo({
+            top: targetY,
+            behavior: "smooth",
+          });
+
+          setPendingScrollPart(null);
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          setTimeout(scrollToTarget, 50);
+        }
+      };
+
+      const timer = setTimeout(scrollToTarget, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedRecipe, pendingScrollPart]);
 
   // Auto-scroll to recipe detail view when a recipe is selected
   useEffect(() => {
@@ -1798,15 +1870,10 @@ export default function RecipesPage() {
   const handlePartClick = (partId: string) => {
     setActiveFilter("all");
     setSelectedRecipe(null);
+    setPendingScrollPart(partId.toLowerCase());
     if (typeof window !== "undefined") {
       window.history.replaceState({}, "", "/recipes");
     }
-    setTimeout(() => {
-      const el = document.getElementById(`part-section-${partId}`);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }, 100);
   };
 
   // Filter parts list to render
@@ -2146,8 +2213,8 @@ export default function RecipesPage() {
                         onClick={() => {
                           setSelectedRecipe(recipe);
                           if (typeof window !== "undefined") {
-                            window.history.replaceState(
-                              {},
+                            window.history.pushState(
+                              { recipeDetail: true, part: recipe.part.toLowerCase() },
                               "",
                               `/recipes?part=${recipe.part.toLowerCase()}&recipeId=${recipe.id}&title=${encodeURIComponent(recipe.title)}`
                             );
@@ -2169,7 +2236,7 @@ export default function RecipesPage() {
                         />
 
                         {/* Dark Gradient Overlay */}
-                        <div className="absolute bottom-0 left-0 right-0 h-[80%] z-10 bg-gradient-to-t from-black/95 via-black/80 to-transparent pointer-events-none" />
+                        <div className="absolute bottom-0 left-0 right-0 h-[70%] z-10 bg-gradient-to-t from-black/85 via-black/50 to-transparent pointer-events-none" />
 
                         {/* Card Content */}
                         <div className="relative z-10 space-y-3 font-inter">
@@ -2287,10 +2354,10 @@ export default function RecipesPage() {
                   priority
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-0" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-0" />
 
                 <div className="relative z-10 p-4 sm:p-6 lg:pl-8 xl:pl-12 space-y-2 font-inter">
-                  <span className="bg-[#064823] text-white text-[11px] font-extrabold px-3 py-1 rounded-md uppercase tracking-wider shadow-md inline-block">
+                  <span className="bg-[#d62828] text-white text-[11px] font-extrabold px-3 py-1 rounded-md uppercase tracking-wider shadow-md inline-block">
                     {selectedRecipe.label}
                   </span>
                   <h1 className="text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-bold text-white font-barlow-condensed tracking-wide uppercase leading-tight">
@@ -2320,15 +2387,12 @@ export default function RecipesPage() {
                         {/* BACK Button inside Recipe Detail Section */}
                         <button
                           onClick={() => {
-                            setSelectedRecipe(null);
-                            if (typeof window !== "undefined") {
-                              window.history.replaceState({}, "", "/recipes");
-                            }
+                            handleBackToCategory();
                           }}
-                          className="bg-[#064823] hover:bg-[#0a5e30] text-white font-bold text-xs sm:text-sm uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+                          className="bg-[#d62828] hover:bg-[#0a5e30] text-white font-bold text-xs sm:text-sm uppercase tracking-wider py-1.5 px-4 rounded-md transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                         >
                           <span>←</span>
-                          <span>BACK TO ALL RECIPES</span>
+                          <span>BACK TO RECIPIES</span>
                         </button>
 
                         <div className="relative w-14 sm:w-32 h-7 sm:h-16 shrink-0">
