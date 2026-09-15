@@ -4101,7 +4101,7 @@ export default function KnowYourMeatPage() {
                       delay: 0.1,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="relative -top-[3.5vh] sm:-top-[4vh] w-full max-w-[680px] sm:max-w-[780px] md:max-w-[840px] lg:max-w-[900px] xl:max-w-[940px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[470px] max-h-[50vh] flex items-center justify-center z-20 viz-goat-img-wrap mb-0 overflow-visible"
+                    className="relative -top-[3.5vh] sm:-top-[4vh] xl:-top-[10.5vh] 2xl:-top-[6vh] w-full max-w-[680px] sm:max-w-[780px] md:max-w-[840px] lg:max-w-[900px] xl:max-w-[940px] h-[340px] sm:h-[400px] md:h-[440px] lg:h-[470px] max-h-[50vh] flex items-center justify-center z-20 viz-goat-img-wrap mb-0 overflow-visible"
                   >
                     <GoatParts partsDx={70} partsDy={-20} />
                   </motion.div>
@@ -4109,14 +4109,14 @@ export default function KnowYourMeatPage() {
 
                 {/* Bottom Grassland Bar with 4 Feature Badges (Animal stands directly on this hill - 100vw full width) */}
                 <div
-                  className="w-screen absolute bottom-[-3vh] sm:bottom-[-3.5vh] lg:bottom-[-4vh] xl:bottom-[-2vh] left-1/2 transform -translate-x-1/2 h-[140px] sm:h-[155px] lg:h-[155px] xl:h-[175px] bg-no-repeat flex items-end pb-3 px-8 justify-center z-10 viz-grassland-bar"
+                  className="w-screen absolute bottom-[-1vh] left-1/2 transform -translate-x-1/2 h-[140px] sm:h-[155px] lg:h-[155px] xl:h-[175px] bg-no-repeat flex items-end pb-4 px-8 justify-center z-10 viz-grassland-bar"
                   style={{
                     backgroundImage: 'url("/Product/GoatBeef/grassLand.webp")',
                     backgroundSize: "100% 100%",
                     backgroundPosition: "center bottom",
                   }}
                 >
-                  <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-white font-barlow-condensed font-medium uppercase text-base sm:text-lg tracking-wider mb-[1.8vw] lg:mb-[1.8vw] xl:mb-[2.4vw]">
+                  <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-white font-barlow-condensed font-medium uppercase text-base sm:text-lg tracking-wider mb-[2.6vw] sm:mb-[2.4vw]">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full border-2 border-[#E1C609] flex items-center justify-center p-1.5 bg-black/5">
                         <img

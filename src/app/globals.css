@@ -142,12 +142,16 @@
 }
 
 #buffalo-parts g:hover,
-#goat-parts g:hover {
-  filter: drop-shadow(0px 0px 14px rgba(247, 132, 15, 0.95)) brightness(1.25);
+#goat-parts g:hover,
+#buffalo-parts g.auto-active-part,
+#goat-parts g.auto-active-part {
+  filter: none;
 }
 
 #buffalo-parts g:hover path,
-#goat-parts g:hover path {
+#goat-parts g:hover path,
+#buffalo-parts g.auto-active-part path,
+#goat-parts g.auto-active-part path {
   fill: #F7840F !important;
   stroke: #F7840F !important;
   stroke-width: 0.8px;
