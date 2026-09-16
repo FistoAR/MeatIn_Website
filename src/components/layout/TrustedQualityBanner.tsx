@@ -179,7 +179,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
 
           {/* Visual Graphics Area (2nd Partition): Wrapped below (100% width) on screens <= 990px (below lg), 68% on desktop */}
           <div className="relative z-20 w-full lg:w-[68%] flex-1 h-[140px] sm:h-[170px] md:h-[210px] lg:h-auto min-h-[140px] sm:min-h-[170px] md:min-h-[210px] lg:min-h-full flex flex-col justify-end overflow-hidden">
-            
+
             {/* Kerala's Original Meat Badge Mobile */}
             <motion.div
               initial={{ opacity: 0, scale: 0.5, y: -30, rotate: -6 }}
@@ -209,7 +209,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
                 />
               </motion.div>
             </motion.div>
-          
+
             {/* Kerala's Original Meat Badge Desktop*/}
             <motion.div
               initial={{ opacity: 0, scale: 0.5, y: -30, rotate: -6 }}
@@ -220,7 +220,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
               className="absolute hidden lg:block top-1 sm:top-0 lg:top-[0%] left-1/2 -translate-x-1/2 lg:left-[8%] lg:translate-x-0 z-30 w-[75px] sm:w-[100px] md:w-[120px] lg:w-[149px] xl:w-[171px] h-[32px] sm:h-[42px] md:h-[50px] lg:h-[64px] pointer-events-none"
             >
               <motion.div
-                
+
                 className="relative w-full h-full"
               >
                 <Image
@@ -263,30 +263,37 @@ export default function TrustedQualityBanner({ className }: { className?: string
 
             {/* Chicken Popup */}
             <motion.div
-              initial={{ opacity: 0, y: 45, scale: 0.8 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: false }}
-              transition={{
-                type: "spring",
-                stiffness: 240,
-                damping: 15,
-                mass: 0.85,
-                delay: 0.5,
+              initial={{
+                x: -50,
+                y: 85,
+                scale: 0.7,
               }}
+              whileInView={{
+                x: [-150, -60, 0],
+                y: [85, 20, 0],
+                scale: [0.7, 0.85, 1],
+              }}
+              viewport={{
+                once: false,
+                amount: 0.5,
+              }}
+              transition={{
+                duration: 1.8,
+                times: [0, 0.5, 1],
+                ease: "easeInOut",
+              }}
+
               className="absolute right-[-1%] min-[390px]:right-[1%] sm:right-[3%] md:right-[5%] lg:right-auto lg:left-[65%] lg:-translate-x-1/2 bottom-0 z-[9] w-[85px] min-[390px]:w-[98px] sm:w-[135px] md:w-[165px] lg:w-[285px] xl:w-[320px] h-[82%] sm:h-[88%] lg:h-[95%] pointer-events-none origin-bottom"
             >
               <motion.div
-                animate={{
-                  y: [0, -6, 0],
-                  rotate: [0, 2, -1.5, 0],
-                }}
+                
                 transition={{
                   repeat: Infinity,
                   duration: 3.6,
                   ease: "easeInOut",
                 }}
                 style={{ x: personParallaxX, y: personParallaxY }}
-                className="relative w-full h-full origin-bottom" 
+                className="relative w-full h-full origin-bottom"
               >
                 <Image
                   src="/TrustedQualityBanner/character-popup.webp"
@@ -313,10 +320,10 @@ export default function TrustedQualityBanner({ className }: { className?: string
 
           {/* Absolute Items Overlay (Packed Chicken, Chicken in Bowl, Knife) Sitting Directly ON Top of Wooden Bar (z-30) */}
           <div className="absolute bottom-0 right-0 w-full lg:w-[68%] z-30 flex items-end justify-between px-2 sm:px-5 lg:px-6 pb-1 sm:pb-1.5 lg:pb-2.5 pointer-events-none">
-            
+
             {/* Left Group: Packed Chicken + Chicken in Bowl */}
-            <motion.div 
-              
+            <motion.div
+
               className="flex items-end gap-1 sm:gap-2.5"
             >
               {/* Packed Chicken Products */}

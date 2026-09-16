@@ -355,8 +355,8 @@ export default function AboutUsPage() {
                 preload="auto"
                 className="w-full h-full object-cover"
               >
-                <source src="/AboutUs/who-is-vdo.mp4" type="video/mp4" />
-                <source src="/AboutUs/who-meat-in.webm" type="video/webm" />
+                <source src="/AboutUs/about-us-video.mp4" type="video/mp4" />
+                <source src="/AboutUs/about-us-video.webm" type="video/webm" />
                 Your browser does not support the video tag.
               </video>
             </motion.div>
