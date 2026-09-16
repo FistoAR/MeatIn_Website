@@ -13,10 +13,10 @@ export default function VlogPage() {
           muted
           loop
           playsInline
-          poster="/vlog/hero.jpg"
+          preload="auto"
         >
           <source src="/vlog/vlog-video.mp4" type="video/mp4" />
-          <source src="/vlog/vlog-video.webm" type="video/webm" />
+          <source src="/vlog/Vlog-video.webm" type="video/webm" />
           Your browser does not support the video tag.
         </video>
       </div>
