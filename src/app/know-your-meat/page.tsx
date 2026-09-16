@@ -2002,7 +2002,7 @@ export default function KnowYourMeatPage() {
           }
           .viz-beef-section > div:first-child {
             width: 100% !important;
-            max-width: 100vw !important;
+            
             height: 220px !important;
             transform: none !important;
           }
@@ -2016,7 +2016,8 @@ export default function KnowYourMeatPage() {
             height: auto !important;
             background-image: none !important;
             background-color: #3d5c0a !important;
-            border-radius: 16px !important;
+            border-top-left-radius: 20px !important;
+            border-top-right-radius: 20px !important;
             padding: 16px !important;
             align-items: center !important;
             justify-content: center !important;
@@ -2024,7 +2025,6 @@ export default function KnowYourMeatPage() {
           }
           .viz-grassland-bar > div {
             display: grid !important;
-            grid-template-columns: 1fr 1fr !important;
             gap: 10px 16px !important;
             width: 100% !important;
             flex-wrap: unset !important;
@@ -2196,7 +2196,7 @@ export default function KnowYourMeatPage() {
       `}</style>
       <div
         ref={containerRef}
-        className={`relative w-full z-10 bg-[#FDFCF7] ${activeMeatType === "chicken" ? "h-[200vh]" : "h-[100vh]"
+        className={`relative w-full z-10 bg-[#FDFCF7] ${activeMeatType === "chicken" ? "h-[200vh]" : "h-auto"
           }`}
       >
         {/* Section 1 Doodle Repeat Overlay */}
@@ -2207,9 +2207,10 @@ export default function KnowYourMeatPage() {
             backgroundSize: "800px",
           }}
         />
-        <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col justify-between pt-14 sm:pt-16 md:pt-24 lg:pt-24 xl:pt-32 pb-0 viz-sticky-wrap">
+        <div className={`sticky top-0 left-0 w-full overflow-hidden flex flex-col justify-between pt-14 sm:pt-16 md:pt-24 lg:pt-24 xl:pt-32 pb-0 viz-sticky-wrap  ${activeMeatType === "chicken" ? "h-screen" : "h-auto lg:h-screen"
+          }`}>
           {/* Main Visualizer Content Area */}
-          <div className="flex-1 w-full px-4 md:px-8 flex items-center justify-center relative pt-0 viz-main-wrap">
+          <div className="flex-1 w-full px-0 md:px-8 flex items-center justify-center relative pt-0 viz-main-wrap">
             {/* Top Right Sub-category tabs */}
             <div className="absolute top-0 right-4 lg:right-12 flex items-stretch bg-white border border-[#CCCCCC] shadow-sm z-40 text-[13px] md:text-[14px] font-bold tracking-wider h-9 md:h-10 select-none viz-switcher-container">
               <motion.button
@@ -4315,7 +4316,7 @@ export default function KnowYourMeatPage() {
               </div>
             ) : (
               /* Beef & Goat Visualizer - 100% Mockup Match */
-              <div className="w-full h-full relative flex flex-col items-center justify-end pb-12 z-30 viz-beef-section relative">
+              <div className="w-full h-full relative flex flex-col items-center justify-end pb-12 md:pb-0 lg:pb-12 z-30 viz-beef-section relative">
                 {/* Central Animal Container — Split Independent Containers for Beef & Goat */}
                 {activeMeatType === "beef" ? (
                   <motion.div
@@ -4327,7 +4328,7 @@ export default function KnowYourMeatPage() {
                       delay: 0.1,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="relative top-[4vh] sm:top-[2vh] md:top-[1vh] lg:top-[7vh] xl:-top-[5vh] 2xl:-top-[7vh] w-[98%] sm:w-[92%] md:w-[88%] max-w-[440px] sm:max-w-[640px] md:max-w-[600px] lg:max-w-[580px] xl:max-w-[760px] 2xl:max-w-[820px] h-[220px] sm:h-[360px] md:h-[420px] lg:h-[270px] xl:h-[360px] 2xl:h-[400px] flex items-center justify-center z-20 viz-beef-img-wrap mb-0 overflow-visible"
+                    className="relative top-[4vh] sm:top-[2vh] md:top-[1vh] lg:top-[7vh] xl:-top-[5vh] 2xl:-top-[7vh] w-[98%] sm:w-[92%] md:w-[88%] max-w-[300px] sm:max-w-[640px] md:max-w-[600px] lg:max-w-[580px] xl:max-w-[760px] 2xl:max-w-[820px] h-[220px] sm:h-[360px] md:h-[420px] lg:h-[270px] xl:h-[360px] 2xl:h-[400px] flex items-center justify-center z-20 viz-beef-img-wrap mt-[5%] mb-[1.5%] md:mt-[24%] md:mb-[-8%] lg:mt-0 lg:mb-0 overflow-visible"
                   >
                     <BuffaloParts partsDx={100} partsDy={-90} />
                   </motion.div>
@@ -4341,7 +4342,7 @@ export default function KnowYourMeatPage() {
                       delay: 0.1,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="relative top-[0.5vh] sm:-top-[3vh] md:-top-[4vh] lg:-top-[4vh] xl:-top-[10.5vh] 2xl:-top-[6vh] w-[98%] sm:w-[94%] md:w-[90%] max-w-[460px] sm:max-w-[720px] md:max-w-[800px] lg:max-w-[900px] xl:max-w-[940px] h-[260px] sm:h-[420px] md:h-[480px] lg:h-[470px] flex items-center justify-center z-20 viz-goat-img-wrap mb-0 overflow-visible"
+                    className="relative top-[0.5vh] sm:-top-[3vh] md:-top-[4vh] lg:-top-[4vh] xl:-top-[10.5vh] 2xl:-top-[6vh] w-[98%] sm:w-[94%] md:w-[90%] max-w-[460px] sm:max-w-[720px] md:max-w-[800px] lg:max-w-[900px] xl:max-w-[940px] h-[260px] sm:h-[420px] md:h-[480px] lg:h-[470px] flex items-center justify-center z-20 viz-goat-img-wrap mt-[28%] mb-[-13.5%] lg:mt-0 lg:mb-0 overflow-visible"
                   >
                     <GoatParts partsDx={70} partsDy={-20} />
                   </motion.div>
@@ -4349,13 +4350,7 @@ export default function KnowYourMeatPage() {
 
                 {/* Bottom Grassland Bar with 4 Feature Badges (Animal stands directly on this hill - 100vw full width) */}
                 <div
-                  className="w-screen absolute bottom-0 left-1/2 transform -translate-x-1/2 h-[115px] sm:h-[125px] md:h-[130px] lg:h-[155px] xl:h-[175px] bg-no-repeat flex items-end pb-2 sm:pb-3 px-8 justify-center z-10 viz-grassland-bar"
-                  style={{
-                    backgroundImage: 'url("/Product/GoatBeef/grassLand.webp")',
-                    backgroundSize: "100% 100%",
-                    backgroundPosition: "center bottom",
-                  }}
-                >
+                  className="w-screen absolute md:relative lg:absolute bottom-0 left-1/2 transform translate-x-0 sm:translate-x-[-46%] lg:translate-x-[-50%] h-auto pt-[4%] sm:h-auto md:h-auto lg:h-[155px] lg:pt-0 bg-no-repeat flex items-end pb-2 sm:pb-3 px-8 justify-center z-10 viz-grassland-bar bg-[#4e7610] lg:bg-transparent lg:bg-[url('/Product/GoatBeef/grassLand.webp')] lg:bg-no-repeat lg:bg-[length:100%_100%] lg:bg-center-bottom xl:h-[175px]">
                   <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-white font-barlow-condensed font-medium uppercase text-base sm:text-lg tracking-wider mb-[2.6vw] sm:mb-[2.4vw]">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full border-2 border-[#E1C609] flex items-center justify-center p-1.5 bg-black/5">

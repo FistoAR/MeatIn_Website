@@ -156,6 +156,7 @@
   stroke: #F7840F !important;
   stroke-width: 0.8px;
   paint-order: stroke fill;
+  transition: all .3s ease-in-out;
 }
 
 /* Specific styling for 1519x695 screen range (1400px+ width with <= 720px short height) */

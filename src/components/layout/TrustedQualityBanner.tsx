@@ -75,7 +75,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
           ref={cardRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+          // style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           initial={{ opacity: 0, y: 40, scale: 0.96 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: false, margin: "-40px" }}
@@ -237,7 +237,6 @@ export default function TrustedQualityBanner({ className }: { className?: string
               initial={{ opacity: 0, y: 85, scale: 0.9 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: false }}
-              style={{ x: personParallaxX, y: personParallaxY }}
               transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
               className="absolute right-[10%] min-[390px]:right-[12%] sm:right-[16%] md:right-[18%] lg:left-1/2 lg:-translate-x-1/2 bottom-0 z-10 w-[115px] min-[390px]:w-[125px] sm:w-[165px] md:w-[195px] lg:w-[285px] xl:w-[320px] h-[88%] sm:h-[92%] lg:h-[95%] pointer-events-none"
             >
@@ -286,6 +285,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
                   duration: 3.6,
                   ease: "easeInOut",
                 }}
+                style={{ x: personParallaxX, y: personParallaxY }}
                 className="relative w-full h-full origin-bottom" 
               >
                 <Image
