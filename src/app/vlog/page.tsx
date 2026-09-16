@@ -16,6 +16,7 @@ export default function VlogPage() {
           poster="/vlog/hero.jpg"
         >
           <source src="/vlog/vlog-video.mp4" type="video/mp4" />
+          <source src="/vlog/vlog-video.webm" type="video/webm" />
           Your browser does not support the video tag.
         </video>
       </div>
