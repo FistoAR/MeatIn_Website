@@ -2198,7 +2198,7 @@ export default function RecipesPage() {
                   </motion.div>
 
                   {/* 4 Recipe Cards Grid for this part */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-[1550px] mx-auto">
+                  <div className="grid grid-cols-2 max-[480px]:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-[1550px] mx-auto">
                     {recipes.map((recipe, idx) => (
                       <motion.div
                         key={recipe.id}
