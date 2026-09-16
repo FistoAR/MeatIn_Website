@@ -188,7 +188,7 @@ export default function HomePage() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const totalFrames = 832;
+    const totalFrames = 836;
     const safeTarget = Math.max(1, Math.min(totalFrames, Math.round(targetFrame)));
     const map = imagesMapRef.current;
 
@@ -279,7 +279,7 @@ export default function HomePage() {
 
   // Priority-based frame preloading system to avoid network queue starvation
   React.useEffect(() => {
-    const totalFrames = 832;
+    const totalFrames = 836;
     const map = imagesMapRef.current;
 
     const loadFrame = (frameNum: number): HTMLImageElement => {
@@ -331,7 +331,7 @@ export default function HomePage() {
 
   // Connect scroll progress directly to canvas drawing (60FPS without React re-renders)
   useMotionValueEvent(smoothProgress, "change", (latest) => {
-    const totalFrames = 832;
+    const totalFrames = 836;
     const frame = Math.min(
       totalFrames,
       Math.max(1, Math.floor(latest * totalFrames)),

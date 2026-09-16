@@ -33,44 +33,16 @@ interface ChickenPart {
 
 // 10 Chicken Parts Data
 const chickenPartsList: ChickenPart[] = [
+  { id: "breast", name: "Breast", img: "/Product/Chicken/ChickenParts/brest.webp", },
+  { id: "drumstick", name: "Drumstick", img: "/Product/Chicken/ChickenParts/drumstick.webp",},
+  { id: "thigh", name: "Thigh", img: "/Product/Chicken/ChickenParts/thig.webp", },  
   { id: "wing", name: "Wing", img: "/Product/Chicken/ChickenParts/wing.webp" },
-  {
-    id: "heart",
-    name: "Heart",
-    img: "/Product/Chicken/ChickenParts/heart.webp",
-  },
-  {
-    id: "drumette",
-    name: "Drumette",
-    img: "/Product/Chicken/ChickenParts/drumette.webp",
-  },
-  {
-    id: "thigh",
-    name: "Thigh",
-    img: "/Product/Chicken/ChickenParts/thig.webp",
-  },
-  { id: "neck", name: "Neck", img: "/Product/Chicken/ChickenParts/neck.webp" },
-  {
-    id: "breast",
-    name: "Breast",
-    img: "/Product/Chicken/ChickenParts/brest.webp",
-  },
+  { id: "drumette", name: "Drumette", img: "/Product/Chicken/ChickenParts/drumette.webp", },
   { id: "back", name: "Back", img: "/Product/Chicken/ChickenParts/bact.webp" },
-  {
-    id: "liver",
-    name: "Liver",
-    img: "/Product/Chicken/ChickenParts/liver.webp",
-  },
-  {
-    id: "drumstick",
-    name: "Drumstick",
-    img: "/Product/Chicken/ChickenParts/drumstick.webp",
-  },
-  {
-    id: "gizzard",
-    name: "Gizzard",
-    img: "/Product/Chicken/ChickenParts/gizzard.webp",
-  },
+  { id: "liver", name: "Liver", img: "/Product/Chicken/ChickenParts/liver.webp", },
+  { id: "gizzard", name: "Gizzard", img: "/Product/Chicken/ChickenParts/gizzard.webp", },
+  { id: "neck", name: "Neck", img: "/Product/Chicken/ChickenParts/neck.webp" },
+  { id: "heart", name: "Heart", img: "/Product/Chicken/ChickenParts/heart.webp",},
 ];
 
 // Complete Recipe Database for All 10 Chicken Parts (40 recipes total)
