@@ -1,13 +1,25 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export default function VlogPage() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch((err) => {
+        console.log("Vlog video autoplay error:", err);
+      });
+    }
+  }, []);
+
   return (
     <div className="w-full bg-white font-inter relative flex flex-col justify-center overflow-hidden pt-24 sm:pt-28">
       {/* Full Width Video with Light Background */}
       <div className="w-full relative overflow-hidden bg-slate-100 min-h-[70vh] md:min-h-[85vh]">
         <video
+          ref={videoRef}
           className="w-full h-full object-cover"
           autoPlay
           muted
@@ -16,7 +28,7 @@ export default function VlogPage() {
           preload="auto"
         >
           <source src="/vlog/vlog-video.mp4" type="video/mp4" />
-          <source src="/vlog/Vlog-video.webm" type="video/webm" />
+          <source src="/vlog/Vlog-Video.webm" type="video/webm" />
           Your browser does not support the video tag.
         </video>
       </div>

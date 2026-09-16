@@ -316,7 +316,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
             
             {/* Left Group: Packed Chicken + Chicken in Bowl */}
             <motion.div 
-              style={{ x: itemsParallaxX, y: itemsParallaxY }}
+              
               className="flex items-end gap-1 sm:gap-2.5"
             >
               {/* Packed Chicken Products */}
@@ -331,6 +331,7 @@ export default function TrustedQualityBanner({ className }: { className?: string
                   animate={{
                     y: [0, -2.5, 0],
                   }}
+                  style={{ x: itemsParallaxX, y: itemsParallaxY }}
                   transition={{
                     repeat: Infinity,
                     duration: 4.6,
@@ -384,7 +385,6 @@ export default function TrustedQualityBanner({ className }: { className?: string
               initial={{ opacity: 0, y: 35, x: 25, scale: 0.85 }}
               whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
               viewport={{ once: false }}
-              style={{ x: knifeParallaxX, y: knifeParallaxY }}
               transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 110, damping: 14 }}
               className="relative z-40 w-[55px] sm:w-[75px] md:w-[90px] lg:w-[125px] xl:w-[145px] aspect-[180/70] mb-0.5 mr-1 sm:mr-2 lg:mr-3"
             >
