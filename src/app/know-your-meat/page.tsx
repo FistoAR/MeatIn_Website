@@ -4328,7 +4328,7 @@ export default function KnowYourMeatPage() {
                       delay: 0.1,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="relative top-[4vh] sm:top-[2vh] md:top-[1vh] lg:top-[7vh] xl:-top-[5vh] 2xl:-top-[7vh] w-[98%] sm:w-[92%] md:w-[88%] max-w-[300px] sm:max-w-[640px] md:max-w-[600px] lg:max-w-[580px] xl:max-w-[760px] 2xl:max-w-[820px] h-[220px] sm:h-[360px] md:h-[420px] lg:h-[270px] xl:h-[360px] 2xl:h-[400px] flex items-center justify-center z-20 viz-beef-img-wrap mt-[5%] mb-[1.5%] md:mt-[24%] md:mb-[-8%] lg:mt-0 lg:mb-0 overflow-visible"
+                    className="relative top-[4vh] sm:top-[2vh] md:top-[1vh] lg:top-[7vh] xl:-top-[5vh] 2xl:-top-[7vh] w-[98%] sm:w-[92%] md:w-[88%] max-w-[300px] sm:max-w-[640px] md:max-w-[600px] lg:max-w-[580px] xl:max-w-[760px] 2xl:max-w-[820px] h-[220px] sm:h-[360px] md:h-[420px] lg:h-[270px] xl:h-[360px] 2xl:h-[400px] flex items-center justify-center z-20 viz-beef-img-wrap mt-[0%] mb-[-3.5%] ml-[-7%] md:ml-[0%] md:mt-[24%] md:mb-[-8%] lg:mt-0 lg:mb-0 overflow-visible"
                   >
                     <BuffaloParts partsDx={100} partsDy={-90} />
                   </motion.div>
@@ -4342,7 +4342,7 @@ export default function KnowYourMeatPage() {
                       delay: 0.1,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="relative top-[0.5vh] sm:-top-[3vh] md:-top-[4vh] lg:-top-[4vh] xl:-top-[10.5vh] 2xl:-top-[6vh] w-[98%] sm:w-[94%] md:w-[90%] max-w-[460px] sm:max-w-[720px] md:max-w-[800px] lg:max-w-[900px] xl:max-w-[940px] h-[260px] sm:h-[420px] md:h-[480px] lg:h-[470px] flex items-center justify-center z-20 viz-goat-img-wrap mt-[28%] mb-[-13.5%] lg:mt-0 lg:mb-0 overflow-visible"
+                    className="relative top-[0.5vh] sm:-top-[3vh] md:-top-[4vh] lg:-top-[4vh] xl:-top-[10.5vh] 2xl:-top-[6vh] w-[98%] sm:w-[94%] md:w-[90%] max-w-[300px] sm:max-w-[720px] md:max-w-[800px] lg:max-w-[900px] xl:max-w-[940px] h-[260px] sm:h-[420px] md:h-[480px] lg:h-[470px] flex items-center justify-center z-20 viz-goat-img-wrap mt-[0%] mb-[-6.5%] ml-[-4%] md:ml-[0] md:mt-[28%] md:mb-[-13.5%] lg:mt-0 lg:mb-0 overflow-visible"
                   >
                     <GoatParts partsDx={70} partsDy={-20} />
                   </motion.div>
@@ -4409,7 +4409,7 @@ export default function KnowYourMeatPage() {
           </div>
           {/* Temperature & Storage Card Badge (Bottom-Right of Hero Section for Chicken) */}
           {activeMeatType === "chicken" && (
-            <div className="absolute bottom-6 right-4 sm:bottom-6 lg:bottom-[2vw] lg:right-12 z-30 pointer-events-none drop-shadow-xl">
+            <div className="absolute hidden md:block bottom-6 right-4 sm:bottom-6 lg:bottom-[2vw] lg:right-12 z-30 pointer-events-none drop-shadow-xl">
               <Image
                 src="/Product/temp-and-storage-card.webp"
                 alt="Temperature & Storage Card"
@@ -4523,80 +4523,85 @@ export default function KnowYourMeatPage() {
             </div>
 
             {/* Category Circular Badges */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.2 }}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.1 },
-                },
-              }}
-              className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:items-center sm:justify-around items-center justify-items-center gap-y-6 gap-x-4 sm:gap-0 px-4 sm:px-8 w-full md:pl-[180px] lg:pl-[220px] xl:pl-[240px]"
-            >
-              {categories.map((cat, idx) => {
-                const isHighlighted = idx === highlightedCategoryIdx;
-                return (
-                  <React.Fragment key={idx}>
-                    <motion.div
-                      variants={{
-                        hidden: { opacity: 0, scale: 0.7, y: 25 },
-                        visible: {
-                          opacity: 1,
-                          scale: 1,
-                          y: 0,
-                          transition: { duration: 0.5, ease: "easeOut" },
-                        },
-                      }}
-                      animate={
-                        isHighlighted
-                          ? { scale: [1, 1.14, 1.08] }
-                          : { scale: 1 }
-                      }
-                      transition={{ duration: 0.5, ease: "easeOut" }}
-                    >
-                      <div className="group flex flex-col items-center gap-2">
-                        <div
-                          className={`w-20 h-20 rounded-full border-[5px] bg-white flex items-center justify-center transition-all duration-500 ${isHighlighted
-                            ? "border-[#F2CE07] ring-4 ring-[#F2CE07]/40 shadow-xl shadow-[#F2CE07]/30 scale-108"
-                            : "border-[#CCCCCC] shadow-md shadow-slate-200/50 group-hover:scale-105 group-hover:border-[#153520]"
-                            }`}
-                        >
-                          <div
-                            className={`w-[68px] h-[68px] rounded-full border-2 border-white flex items-center justify-center transition-all duration-500 bg-[#82B224] group-hover:bg-[#153520] ${isHighlighted ? "scale-105 shadow-inner" : ""
-                              }`}
-                          >
-                            <div className="relative w-12 h-12">
-                              <Image
-                                src={cat.icon}
-                                alt={cat.name}
-                                fill
-                                sizes="36px"
-                                className="object-contain filter brightness-0 invert"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <span
-                          className={`text-[14px] font-black tracking-wider uppercase transition-all duration-300 group-hover:text-[#153520] ${isHighlighted
-                            ? "text-[#127431] scale-110"
-                            : "text-slate-800 group-hover:text-[#127431]"
-                            }`}
-                        >
-                          {cat.name}
-                        </span>
-                      </div>
-                    </motion.div>
+           <motion.div
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: false, amount: 0.2 }}
+  variants={{
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 },
+    },
+  }}
+  className="grid grid-cols-3 sm:grid-cols-3 lg:flex lg:flex-nowrap lg:items-center lg:justify-around items-center justify-items-center gap-y-4 gap-x-1 sm:gap-y-5 sm:gap-x-2 lg:gap-0 px-2 sm:px-4 lg:px-8 w-full md:pl-[180px] lg:pl-[220px] xl:pl-[240px]"
+>
+  {categories.map((cat, idx) => {
+    const isHighlighted = idx === highlightedCategoryIdx;
 
-                    {idx < categories.length - 1 && (
-                      <div className="hidden sm:block w-[1px] h-10 bg-slate-300/60 self-start mt-5 shrink-0" />
-                    )}
-                  </React.Fragment>
-                );
-              })}
-            </motion.div>
+    return (
+      <React.Fragment key={idx}>
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, scale: 0.7, y: 25 },
+            visible: {
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              transition: { duration: 0.5, ease: "easeOut" },
+            },
+          }}
+          animate={
+            isHighlighted
+              ? { scale: [1, 1.14, 1.08] }
+              : { scale: 1 }
+          }
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <div className="group flex flex-col items-center gap-1 sm:gap-1.5 lg:gap-2">
+            <div
+              className={`w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full border-[3px] lg:border-[5px] bg-white flex items-center justify-center transition-all duration-500 ${
+                isHighlighted
+                  ? "border-[#F2CE07] ring-2 sm:ring-3 lg:ring-4 ring-[#F2CE07]/40 shadow-lg lg:shadow-xl shadow-[#F2CE07]/30 scale-105 lg:scale-108"
+                  : "border-[#CCCCCC] shadow-sm sm:shadow-md shadow-slate-200/50 group-hover:scale-105 group-hover:border-[#153520]"
+              }`}
+            >
+              <div
+                className={`w-11 h-11 sm:w-12 sm:h-12 lg:w-[68px] lg:h-[68px] rounded-full border-2 border-white flex items-center justify-center transition-all duration-500 bg-[#82B224] group-hover:bg-[#153520] ${
+                  isHighlighted ? "scale-105 shadow-inner" : ""
+                }`}
+              >
+                <div className="relative w-7 h-7 sm:w-8 sm:h-8 lg:w-12 lg:h-12">
+                  <Image
+                    src={cat.icon}
+                    alt={cat.name}
+                    fill
+                    sizes="36px"
+                    className="object-contain filter brightness-0 invert"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <span
+              className={`text-[10px] sm:text-[11px] lg:text-[14px] font-black tracking-wide lg:tracking-wider uppercase text-center leading-tight transition-all duration-300 group-hover:text-[#153520] ${
+                isHighlighted
+                  ? "text-[#127431] scale-105 lg:scale-110"
+                  : "text-slate-800 group-hover:text-[#127431]"
+              }`}
+            >
+              {cat.name}
+            </span>
+          </div>
+        </motion.div>
+
+        {idx < categories.length - 1 && (
+          <div className="hidden lg:block w-[1px] h-10 bg-slate-300/60 self-start mt-5 shrink-0" />
+        )}
+      </React.Fragment>
+    );
+  })}
+</motion.div>
           </div>
         </div>
       </section>
