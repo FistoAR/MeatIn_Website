@@ -130,9 +130,16 @@ export default function AboutUsPage() {
     const video = videoRef.current;
     if (!video) return;
 
+    // Explicitly set native DOM muted property (React's muted prop doesn't always set native attribute)
+    video.muted = true;
+
     if (isVideoInView) {
-      video.currentTime = 0;
-      video.play().catch((err) => console.log("Video autoplay blocked or failed:", err));
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.log("Video autoplay blocked or failed:", err);
+        });
+      }
     } else {
       video.pause();
     }
@@ -341,11 +348,17 @@ export default function AboutUsPage() {
             >
               <video
                 ref={videoRef}
-                src="/AboutUs/who-is-meatin-video.mp4"
+                autoPlay
                 muted
+                loop
                 playsInline
+                preload="auto"
                 className="w-full h-full object-cover"
-              />
+              >
+                <source src="/AboutUs/who-is-meatin-video.mp4" type="video/mp4" />
+                <source src="/AboutUs/about-us-video.webm" type="video/webm" />
+                Your browser does not support the video tag.
+              </video>
             </motion.div>
 
             {/* Right Side: Description (Right 50% Column with comfortable padding) */}
