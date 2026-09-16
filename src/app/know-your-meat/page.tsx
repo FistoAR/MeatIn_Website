@@ -2039,23 +2039,25 @@ export default function KnowYourMeatPage() {
             display: none !important;
           }
 
-          /* Section 2 detail mobile overrides - only apply layout when visible */
-          .detail-section-wrap.block {
-            background-image: url("/Product/know-your-meat-bg.webp") !important;
-            background-size: 500px !important;
-            background-repeat: repeat !important;
-            background-color: #FAF6F0 !important;
-            height: auto !important;
-            min-height: auto !important;
-            max-height: none !important;
-            overflow-y: visible !important;
-            overflow-x: hidden !important;
-            padding-top: 74px !important;
-            padding-bottom: 40px !important;
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: stretch !important;
-            justify-content: flex-start !important;
+          /* Section 2 detail mobile & tablet overrides - remove height & whitespace gaps */
+          @media (max-width: 1023px) {
+            .detail-section-wrap.block {
+              background-image: url("/Product/know-your-meat-bg.webp") !important;
+              background-size: 500px !important;
+              background-repeat: repeat !important;
+              background-color: #FAF6F0 !important;
+              height: auto !important;
+              min-height: auto !important;
+              max-height: none !important;
+              overflow-y: visible !important;
+              overflow-x: hidden !important;
+              // padding-top: 76px !important;
+              padding-bottom: 20px !important;
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: stretch !important;
+              justify-content: flex-start !important;
+            }
           }
           .detail-section-wrap > div {
             flex-direction: column !important;
@@ -4609,7 +4611,7 @@ export default function KnowYourMeatPage() {
       {/* 3. Interactive Details Section - 1:1 Match with Reference Layout */}
       <section
         ref={detailsSectionRef}
-        className={`relative z-30 w-full min-h-screen lg:h-[100vh] pt-20 sm:pt-24 lg:pt-[5rem] xl:pt-[5.5rem] 2xl:pt-[6rem] pb-6 sm:pb-8 lg:pb-0 flex flex-col justify-between m-0 overflow-x-hidden bg-[#8DC541] transition-all duration-700 detail-section-wrap ${hasSelectedAnyPart && activeMeatType === "chicken"
+        className={`relative z-30 w-full h-auto lg:h-[100vh] pt-10 sm:pt-24 lg:pt-[5rem] xl:pt-[5.5rem] 2xl:pt-[6rem] pb-6 sm:pb-8 lg:pb-0 flex flex-col justify-between m-0 overflow-x-hidden bg-[#8DC541] transition-all duration-700 detail-section-wrap ${hasSelectedAnyPart && activeMeatType === "chicken"
           ? "block opacity-100 pointer-events-auto"
           : "hidden opacity-0 pointer-events-none"
           }`}
@@ -4631,7 +4633,7 @@ export default function KnowYourMeatPage() {
             alt="Section Background"
             fill
             priority
-            className="object-cover object-center w-full h-full relative z-10"
+            className="object-cover object-[15%_0%] lg:object-center w-full h-full relative z-10"
           />
 
           {/* Floating single leaf - right side */}
@@ -4751,12 +4753,12 @@ export default function KnowYourMeatPage() {
           {/* CENTER PRODUCT ORBIT DISPLAY */}
           <div
             ref={centerCircleRef}
-            className="relative w-full max-w-[80vw] sm:max-w-[85vw] md:max-w-[75vw] lg:max-w-[42vw] xl:max-w-[44vw] h-[210px] sm:h-[360px] md:h-[410px] lg:h-[25vw] xl:h-[27vw] mx-auto my-2 sm:my-4 md:my-5 flex items-center justify-center"
+            className="relative w-full max-w-[85vw] sm:max-w-[70vw] md:max-w-[60vw] lg:max-w-[42vw] xl:max-w-[44vw] h-[200px] sm:h-[300px] md:h-[340px] lg:h-[25vw] xl:h-[27vw] mx-auto my-1 sm:my-2 md:my-3 flex items-center justify-center"
           >
             {/* Main Center Selected Cut / Model Display */}
             <div
               ref={woodPlateContainerRef}
-              className="relative w-[280px] sm:w-[480px] md:w-[540px] lg:w-[37vw] xl:w-[34vw] h-[210px] sm:h-[360px] md:h-[400px] lg:h-[27vw] xl:h-[28vw] flex items-center justify-center z-10"
+              className="relative w-[270px] sm:w-[420px] md:w-[480px] lg:w-[37vw] xl:w-[34vw] h-[200px] sm:h-[300px] md:h-[340px] lg:h-[27vw] xl:h-[28vw] flex items-center justify-center z-10"
             >
               <AnimatePresence mode="wait">
                 {activeViewTab === "raw" && (
@@ -5082,7 +5084,7 @@ export default function KnowYourMeatPage() {
           </div>
 
           {/* MOBILE / TABLET FLOATING BUTTONS ROW (HIDDEN ON DESKTOP) */}
-          <div className="grid lg:hidden grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-2 sm:gap-3.5 max-w-[340px] sm:max-w-none mx-auto mt-2 mb-1 sm:mt-3 sm:mb-2 z-30 px-3">
+          <div className="grid lg:hidden grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-2 sm:gap-3 max-w-[340px] sm:max-w-none mx-auto mt-1 mb-2 sm:mt-2 sm:mb-3 z-30 px-3">
             {/* Tab 1: Raw Cut */}
             <button
               type="button"
@@ -5227,9 +5229,9 @@ export default function KnowYourMeatPage() {
         </div>
 
         {/* BOTTOM GREEN FOOTER SECTION */}
-        <div className="relative w-full z-30 pb-4 sm:pb-6 lg:pb-[1.5vw] px-4 sm:px-8 lg:px-[3.5vw] mt-8 sm:mt-10 lg:mt-[1vw]">
+        <div className="relative w-full z-30 pb-4 sm:pb-6 lg:pb-[1.5vw] px-4 sm:px-8 lg:px-[3.5vw] mt-6 sm:mt-8 lg:mt-[1.2vw]">
           {/* Center Stamp Badge (Positioned over top wave curve with clean clearance above & below) */}
-          <div className="w-[90px] sm:w-[120px] lg:w-[8vw] h-auto absolute -top-[18px] sm:-top-[24px] lg:-top-[2vw] left-1/2 -translate-x-1/2 z-40 drop-shadow-md">
+          <div className="w-[150px] hidden lg:block lg:w-[8vw] h-auto absolute -top-[16px] sm:-top-[20px] lg:-top-[2vw] left-1/2 -translate-x-1/2 z-40 drop-shadow-md">
             <Image
               src="/Product/details/section-images/keralas_original-meat.webp"
               alt="Kerala's Original Meat"
@@ -5240,7 +5242,7 @@ export default function KnowYourMeatPage() {
           </div>
 
           {/* Bottom Green Container Row */}
-          <div className="relative z-30 w-full flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-[1.5vw] pt-6 sm:pt-7 lg:pt-0">
+          <div className="relative z-30 w-full flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-[1.5vw] pt-5 sm:pt-6 lg:pt-0">
             {/* 1. Bottom Left Recipe Card (Moved to bottom of section on mobile/tablet) */}
             <div className="relative w-full max-w-[350px] sm:max-w-[420px] lg:max-w-none lg:w-[21.5vw] bg-[#FDFBF2] rounded-2xl lg:rounded-[1vw] shadow-lg border border-white/80 flex items-center gap-3 lg:gap-[0.8vw] p-2.5 sm:p-3 lg:p-0 order-3 lg:order-1">
               {/* Chef Icon Red Circular Badge on top-left corner */}
@@ -5288,52 +5290,52 @@ export default function KnowYourMeatPage() {
               </div>
             </div>
 
-            {/* 2. Center 4 Feature SVGs directly rendered */}
-            <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-3 lg:gap-[1.2vw] flex-1 mt-3 lg:mt-[1.6vw] order-1 lg:order-2">
+            {/* 2. Center 4 Feature SVGs directly rendered (Strictly 1 single row) */}
+            <div className="flex flex-nowrap items-center justify-center gap-1.5 sm:gap-3 lg:gap-[1.2vw] shrink-0 mt-0 lg:mt-[1.6vw] order-1 lg:order-2 max-w-full overflow-x-auto no-scrollbar">
               {/* Feature 1 */}
               <img
                 src="/Product/details/section-images/farm-fresh.svg"
                 alt="Farm Fresh"
-                className="h-10 sm:h-12 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm"
+                className="h-16 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm shrink-0"
               />
 
               {/* Divider */}
-              <div className="hidden lg:block w-[1.5px] h-[3.8vw] bg-white/40" />
+              <div className="w-5 h-auto lg:w-[1.5px] lg:h-[3.8vw] bg-white/40" />
 
               {/* Feature 2 */}
               <img
                 src="/Product/details/section-images/hygienic-processing.svg"
                 alt="Hygienic Processing"
-                className="h-10 sm:h-12 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm"
+                className="h-16 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm shrink-0"
               />
 
               {/* Divider */}
-              <div className="hidden lg:block w-[1.5px] h-[3.8vw] bg-white/40" />
+              <div className="w-5 h-auto lg:w-[1.5px] lg:h-[3.8vw] bg-white/40" />
 
               {/* Feature 3 */}
               <img
                 src="/Product/details/section-images/quality-checked.svg"
                 alt="Quality Checked"
-                className="h-10 sm:h-12 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm"
+                className="h-16 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm shrink-0"
               />
 
               {/* Divider */}
-              <div className="hidden lg:block w-[1.5px] h-[3.8vw] bg-white/40" />
+              <div className="w-5 h-auto lg:w-[1.5px] lg:h-[3.8vw] bg-white/40" />
 
               {/* Feature 4 */}
               <img
                 src="/Product/details/section-images/ready-natural-taste.svg"
                 alt="Ready Natural Taste"
-                className="h-10 sm:h-12 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm"
+                className="h-16 lg:h-[5.2vw] w-auto object-contain drop-shadow-sm shrink-0"
               />
             </div>
 
             {/* 3. Right Truck Vector Graphic Banner */}
-            <div className="flex items-center justify-end shrink-0 order-2 lg:order-3">
+            <div className="hidden lg:flex items-center justify-center lg:justify-end shrink-0 order-2 lg:order-3 mt-1 sm:mt-2 lg:mt-0">
               <img
                 src="/Product/details/section-images/keep-fresh-delivered-fresh.svg"
                 alt="Keep Fresh Delivered Fresh"
-                className="h-10 sm:h-12 lg:h-[4.75vw] w-auto object-contain drop-shadow-sm"
+                className="h-9 sm:h-11 lg:h-[4.75vw] w-auto object-contain drop-shadow-sm"
               />
             </div>
           </div>
@@ -5507,8 +5509,7 @@ export default function KnowYourMeatPage() {
                 },
               },
             }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1400px] mx-auto recipe-grid-wrap"
-          >
+            className="grid grid-cols-2 max-[480px]:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1400px] mx-auto recipe-grid-wrap">
             {(
               partRecipesMap[
               chickenParts[manuallySelectedPartIdx]?.name
