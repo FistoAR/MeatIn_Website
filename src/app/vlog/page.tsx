@@ -15,9 +15,9 @@ export default function VlogPage() {
   }, []);
 
   return (
-    <div className="w-full bg-white font-inter relative flex flex-col justify-center overflow-hidden pt-24 sm:pt-28">
+    <div className="w-full bg-white font-inter relative flex flex-col justify-center overflow-hidden pt-20 lg:pt-0">
       {/* Full Width Video with Light Background */}
-      <div className="w-full relative overflow-hidden bg-slate-100 min-h-[70vh] md:min-h-[85vh]">
+      <div className="w-full relative overflow-hidden bg-slate-100 min-h-auto lg:min-h-[65vh] lg:max-h-[100vh]">
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
