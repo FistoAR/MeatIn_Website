@@ -513,7 +513,7 @@ export default function FranchisePage() {
                   className="flex items-center gap-2 lg:gap-2.5 xl:gap-3 bg-[#FDFBF7]/95 hover:bg-white backdrop-blur-md border border-slate-200/90 p-2 lg:p-2.5 xl:p-3.5 2xl:p-4 rounded-xl lg:rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_22px_rgba(11,60,42,0.12)] transition-all duration-300 w-[165px] lg:w-[170px] xl:w-[230px] 2xl:w-[275px] shrink-0 pointer-events-auto"
                 >
                   <div className="w-8 h-8 lg:w-8.5 lg:h-8.5 xl:w-11 xl:h-11 2xl:w-[50px] 2xl:h-[50px] rounded-full bg-[#0B3C2A] text-white flex items-center justify-center shrink-0 shadow-md">
-                    <Icon icon="ph:microscope-bold" className="w-4 h-4 lg:w-4.5 lg:h-4.5 xl:w-5.5 xl:h-5.5 2xl:w-6.5 2xl:h-6.5" />
+                    <Icon icon="ph:microscope-bold" className="w-4 h-4 lg:w-5 lg:h-5 xl:w-6.5 xl:h-6.5 2xl:w-7 2xl:h-7" />
                   </div>
                   <div className="flex flex-col items-start text-left min-w-0">
                     <span className="text-xs lg:text-xs xl:text-sm 2xl:text-base font-black text-[#D93829] font-manrope leading-none block">
@@ -554,7 +554,7 @@ export default function FranchisePage() {
                   className="flex items-center gap-2 lg:gap-2.5 xl:gap-3 bg-[#FDFBF7]/95 hover:bg-white backdrop-blur-md border border-slate-200/90 p-2 lg:p-2.5 xl:p-3.5 2xl:p-4 rounded-xl lg:rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_22px_rgba(11,60,42,0.12)] transition-all duration-300 w-[165px] lg:w-[170px] xl:w-[230px] 2xl:w-[275px] shrink-0 pointer-events-auto"
                 >
                   <div className="w-8 h-8 lg:w-8.5 lg:h-8.5 xl:w-11 xl:h-11 2xl:w-[50px] 2xl:h-[50px] rounded-full bg-[#0B3C2A] text-white flex items-center justify-center shrink-0 shadow-md">
-                    <Icon icon="ph:shield-check-bold" className="w-4 h-4 lg:w-4.5 lg:h-4.5 xl:w-5.5 xl:h-5.5 2xl:w-6.5 2xl:h-6.5" />
+                    <Icon icon="ph:shield-check-bold" className="w-4 h-4 lg:w-5 lg:h-5 xl:w-6.5 xl:h-6.5 2xl:w-7 2xl:h-7" />
                   </div>
                   <div className="flex flex-col items-start text-left min-w-0">
                     <span className="text-xs lg:text-xs xl:text-sm 2xl:text-base font-black text-[#D93829] font-manrope leading-none block">
@@ -595,7 +595,7 @@ export default function FranchisePage() {
                   className="flex items-center gap-2 lg:gap-2.5 xl:gap-3 bg-[#FDFBF7]/95 hover:bg-white backdrop-blur-md border border-slate-200/90 p-2 lg:p-2.5 xl:p-3.5 2xl:p-4 rounded-xl lg:rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_22px_rgba(11,60,42,0.12)] transition-all duration-300 w-[165px] lg:w-[170px] xl:w-[230px] 2xl:w-[275px] shrink-0 pointer-events-auto"
                 >
                   <div className="w-8 h-8 lg:w-8.5 lg:h-8.5 xl:w-11 xl:h-11 2xl:w-[50px] 2xl:h-[50px] rounded-full bg-[#0B3C2A] text-white flex items-center justify-center shrink-0 shadow-md">
-                    <Icon icon="ph:house-line-bold" className="w-4 h-4 lg:w-4.5 lg:h-4.5 xl:w-5.5 xl:h-5.5 2xl:w-6.5 2xl:h-6.5" />
+                    <Icon icon="ph:house-line-bold" className="w-4 h-4 lg:w-5 lg:h-5 xl:w-6.5 xl:h-6.5 2xl:w-7 2xl:h-7" />
                   </div>
                   <div className="flex flex-col items-start text-left min-w-0">
                     <span className="text-xs lg:text-xs xl:text-sm 2xl:text-base font-black text-[#D93829] font-manrope leading-none block">
@@ -652,7 +652,7 @@ export default function FranchisePage() {
                   className="flex items-center gap-2 lg:gap-2.5 xl:gap-3 bg-[#FDFBF7]/95 hover:bg-white backdrop-blur-md border border-slate-200/90 p-2 lg:p-2.5 xl:p-3.5 2xl:p-4 rounded-xl lg:rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_22px_rgba(11,60,42,0.12)] transition-all duration-300 w-[165px] lg:w-[170px] xl:w-[230px] 2xl:w-[275px] shrink-0 pointer-events-auto"
                 >
                   <div className="w-8 h-8 lg:w-8.5 lg:h-8.5 xl:w-11 xl:h-11 2xl:w-[50px] 2xl:h-[50px] rounded-full bg-[#0B3C2A] text-white flex items-center justify-center shrink-0 shadow-md">
-                    <Icon icon="ph:leaf-bold" className="w-4 h-4 lg:w-4.5 lg:h-4.5 xl:w-5.5 xl:h-5.5 2xl:w-6.5 2xl:h-6.5" />
+                    <Icon icon="ph:leaf-bold" className="w-4 h-4 lg:w-5 lg:h-5 xl:w-6.5 xl:h-6.5 2xl:w-7 2xl:h-7" />
                   </div>
                   <div className="flex flex-col items-start text-left min-w-0">
                     <span className="text-xs lg:text-xs xl:text-sm 2xl:text-base font-black text-[#D93829] font-manrope leading-none block">
@@ -693,7 +693,7 @@ export default function FranchisePage() {
                   className="flex items-center gap-2 lg:gap-2.5 xl:gap-3 bg-[#FDFBF7]/95 hover:bg-white backdrop-blur-md border border-slate-200/90 p-2 lg:p-2.5 xl:p-3.5 2xl:p-4 rounded-xl lg:rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_22px_rgba(11,60,42,0.12)] transition-all duration-300 w-[165px] lg:w-[170px] xl:w-[230px] 2xl:w-[275px] shrink-0 pointer-events-auto"
                 >
                   <div className="w-8 h-8 lg:w-8.5 lg:h-8.5 xl:w-11 xl:h-11 2xl:w-[50px] 2xl:h-[50px] rounded-full bg-[#0B3C2A] text-white flex items-center justify-center shrink-0 shadow-md">
-                    <Icon icon="ph:package-bold" className="w-4 h-4 lg:w-4.5 lg:h-4.5 xl:w-5.5 xl:h-5.5 2xl:w-6.5 2xl:h-6.5" />
+                    <Icon icon="ph:package-bold" className="w-4 h-4 lg:w-5 lg:h-5 xl:w-6.5 xl:h-6.5 2xl:w-7 2xl:h-7" />
                   </div>
                   <div className="flex flex-col items-start text-left min-w-0">
                     <span className="text-xs lg:text-xs xl:text-sm 2xl:text-base font-black text-[#D93829] font-manrope leading-none block">
@@ -734,7 +734,7 @@ export default function FranchisePage() {
                   className="flex items-center gap-2 lg:gap-2.5 xl:gap-3 bg-[#FDFBF7]/95 hover:bg-white backdrop-blur-md border border-slate-200/90 p-2 lg:p-2.5 xl:p-3.5 2xl:p-4 rounded-xl lg:rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_22px_rgba(11,60,42,0.12)] transition-all duration-300 w-[165px] lg:w-[170px] xl:w-[230px] 2xl:w-[275px] shrink-0 pointer-events-auto"
                 >
                   <div className="w-8 h-8 lg:w-8.5 lg:h-8.5 xl:w-11 xl:h-11 2xl:w-[50px] 2xl:h-[50px] rounded-full bg-[#0B3C2A] text-white flex items-center justify-center shrink-0 shadow-md">
-                    <Icon icon="ph:truck-bold" className="w-4 h-4 lg:w-4.5 lg:h-4.5 xl:w-5.5 xl:h-5.5 2xl:w-6.5 2xl:h-6.5" />
+                    <Icon icon="ph:truck-bold" className="w-4 h-4 lg:w-5 lg:h-5 xl:w-6.5 xl:h-6.5 2xl:w-7 2xl:h-7" />
                   </div>
                   <div className="flex flex-col items-start text-left min-w-0">
                     <span className="text-xs lg:text-xs xl:text-sm 2xl:text-base font-black text-[#D93829] font-manrope leading-none block">

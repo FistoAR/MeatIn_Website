@@ -27,8 +27,8 @@ export default function VlogPage() {
           playsInline
           preload="auto"
         >
-          <source src="/vlog/vlog-video.mp4" type="video/mp4" />
-          <source src="/vlog/Vlog-Video.webm" type="video/webm" />
+          <source src="/vlog/vlog-vdo.mp4" type="video/mp4" />
+          <source src="/vlog/vlog-vdo.webm" type="video/webm" />
           Your browser does not support the video tag.
         </video>
       </div>
